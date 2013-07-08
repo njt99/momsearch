@@ -1,0 +1,79 @@
+{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
+{\fonttbl\f0\fswiss\fcharset77 Helvetica-Bold;\f1\fswiss\fcharset77 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww12580\viewh18560\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\b\fs24 \cf0 Framing the problem\
+
+\f1\b0 \
+0. I'm going to follow the GMT practice of using "quasi" to call attention to the fact that we aren't actually dealing with manifolds, but rather with classes of hyperbolic groups which *might* contain one or more (possibly infinitely many) discrete groups.\
+\
+1. The starting point is a quasi-relator -- a word which is necessarily a group identity for any manifold in the region\
+\
+2. Given a quasi-relator, it's straightforward to construct a number of "geometric quasi-MOMs" by following closed paths in the "O(1) cusp graph" whose vertices are centers of horoballs and whose edges are the edges of length equal to O(1).\
+\
+3. The aim is to convert one of these "geometric quasi-MOMs" into a full topological internal MOM structure and thereby identify a "quasi-parent manifold".  As in GMM2, there are three obstacles:\
+	3a. embeddedness\
+	3b. torus boundary components\
+	3c. fullness\
+In this case, the combinatorics of the geometrical MOM structure are fixed, and so it's straightforward to directly compute the boundary components and to show fullness.  Embeddedness is more difficult to show.\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\b \cf0 Constructing a geometrical quasi-MOM\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \
+Consider first the situation without any quasi-relator.  In this case, the O(1) cusp graph is a tree -- the unique path to any group element can be read off from its representation as a word.\
+\
+Adding a quasi-relator adds extra connections in the graph, creating closed circuits which start and end at the infinity horoball.  By following one of these circuits, adding the implied triangle for each edge traversed, we have a complex of triangles.  In practice, by following the most obvious circuits, we find that the structure is in fact a geometrical quasi-MOM.\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+\cf0 \
+
+\f0\b Embedding a geometrical quasi-MOM
+\f1\b0 \
+\
+The basic approach I'm following is to combine pure mathematical analysis of the situation with the  inexact geometrical data which will be available for any particular region.  In lieu of testing it out each time on all of the relevant regions, I think we have a very nice proxy: the SnapPea census.  If we can find a method that works for all of the regions surrounding the manifolds in the SnapPea census, I have a strong hunch that the same method will work for all regions in the parameter space.\
+\
+Happily, the first two steps of the GMM2 approach to embeddedness work well.  The longest edge required to make a MOM from a census manifold with cusp area < 5 is approximately 1.831872.  Lemma 6.2 applies directly, and by taking into account the fact that each triangle has at least one O(1) edge, the approach of lemma 6.3 works as well.\
+\
+The final step is to show that the cellular complex doesn't intersect itself.  For area <= 4.45, this may be straightforward, as none of the census manifolds with area <= 4.45 require O(i) larger than 1.5152 in their MOM structures.  Arriving at a formal proof for this case, is, I think, a matter of dotting i's and crossing t's (but, as with GMT, that may be a substantial and time-consuming effort)\
+\
+The challenge is to solve the embeddedness question for 4.45 <= area <= 5.  \
+\
+
+\f0\b Embedding for area > 4.45\
+
+\f1\b0 \
+The basic situation is that we have "canonical represenative" of the cellular complex, chosen so that it appears to be of maximal size in the cusp diagram, and we'd like to show that no other image of the complex intersects it except in the obvious ways.\
+\
+It seems like it should be provable, but I haven't found a proof yet.  Possible avenues of approach:\
+\
+1. Exhaustive enumeration.\
+It is possible to enumerate all relevant edges coming from a given horoball, as most of them are "too tiny" and their highest point is below lowest point of the canonical complex.  I haven't gone into the details, but it seems straightforward to pick some compact region in the cusp-translation lattice of the horoball and show that all edges which aren't based in that region are "tiny"\
+\
+It might be possible to show that an enumeration of horoballs is similarly complete.  This is complicated by the quasi- nature of the problem, as we're not dealing with hypothetically discrete groups, not with groups which are discrete in practice, but Jeff Weeks' published work and/or thoughts about how one can show completeness of enumeration of horoballs might have bearing here.\
+\
+With a complete enumeration of relevant horoballs and of relevant edges, all we'd have to do is to compute, numerically, whether or not any of these edges interesects any of the 2-cells in the complex, which is again a straightforward if time-consuming task suitable only for a computer.\
+\
+2. Combinatorics.\
+It is interesting and potentially useful to observe that we can pick out a "fundamental region" for the cellular complex which has what I'd like to call an "impenetrable boundary".\
+By impenetrable boundary, I mean that the boundary consists solely of components which can't possibly intersect the interior of any 2-cell.  Horoballs fit into this category (by lemmas 6.2 and 6.3~); and so do O(1) edges because they have length 0.\
+\
+Determining the existence of such a fundamental region can be done on a case-by-case basis -- there are only a few dozen quasi-MOM structures we'll need to use, and so constructing such a "fundamental region" by hand for each case isn't too much work.\
+\
+The utility of this observation is as follows: suppose there is an offending edge, i.e., an edge which intersects the interior of our fundamental region, and further suppose that this edge intersects the complex an odd number of times.  I contend that this isn't possible.\
+\
+To state it a little more formally:\
+Suppose we have a fundamental region R with impenetrable boundary, an image w(R), and an edge e of w(R) which intersects the interior of R an odd number of times.  Then, by "tracing along" the boundary of w(R) between the two endpoints of e, we have gone from "one side" of R to the "other side".   There are three ways in which this is possible:\
+	1. a crossing on the interior of R -- but then the boundary of w(R) intersects the interior of R\
+	2. a crossing on the boundary of R -- but then R and w(R) must share a common horoball, which in turn means that the "island/bridge" graph on this common horoball is self-intersecting.. which is easy to check directly. [ I'm a little uncertain about the rigor of this argument ]\
+	3. a crossing on the exterior of R -- but then the boundary of R intersects the interior of w(R)\
+\
+3. Combining combinatorics with geometry\
+It seems likely that, given (2), we should be able to make a stronger geometrical argument -- to have an offending edge, that edge *must* cross two or more times.  This double crossing gives us a better "purchase" on such an edge and makes it easier to show that it's too long; but I haven't made much progress in constructing the argument.\
+\
+4. Modifying the geometry\
+Another approach is to tweak the geometry as we did with the "corona" method in GMT.  The obvious candidate is the minimal surface for the boundary of the "fundamental region with impenetrable boundary".  It seems less likely to be self-intersecting, but I really don't know whether proving something in this situation would be easier or more difficult.\
+}
