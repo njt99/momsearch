@@ -17,7 +17,7 @@ FILE* openBox(char* boxcode)
 	char fileName[1000];
 	char fileboxcode[1000];
 	strcpy(fileboxcode, boxcode);
-	if (!*fileboxcode)
+	if (strcmp(fileboxcode, "") == 0)
 		strcpy(fileboxcode, "root");
 	sprintf(fileName, "%s/%s.out", g_treeLocation, fileboxcode);
 	struct stat sb;
@@ -30,7 +30,7 @@ FILE* openBox(char* boxcode)
 	if (0 == stat(fileName, &sb)) {
 		char commandBuf[1000];
 		if (g_verbose) fprintf(stderr, "opening %s\n", fileName);
-		sprintf(commandBuf, "gzcat %s", fileName);
+		sprintf(commandBuf, "gzcat %s", fileName); // cool trick
 		fp = popen(commandBuf, "r");
 		return fp;
 	}
@@ -61,10 +61,10 @@ void processTree(FILE* fp, bool print, char* boxcode)
 			boxcode[boxdepth + depth] = '0';
 			++depth;
 		} else {
-			for (; depth > 0 && boxcode[boxdepth + depth-1] == '1'; --depth) {
-			}
+			for (; depth > 0 && boxcode[boxdepth + depth-1] == '1'; --depth) {}
 			if (depth > 0) {
 				boxcode[boxdepth + depth-1] = '1';
+				boxcode[boxdepth + depth] = '\0';
 			} else {
 				boxcode[boxdepth] = '\0';
 				return;
@@ -77,49 +77,61 @@ void processTree(FILE* fp, bool print, char* boxcode)
 		
 int main(int argc, char** argv)
 {
-	if (argc > 1 && !strcmp(argv[1], "-v")) {
+	if (argc > 1 && strcmp(argv[1], "-v") == 0) {
 		g_verbose = true;
 		++argv;
 		--argc;
 	}
-	if (argc > 1 && !strcmp(argv[1], "-r")) {
+
+	if (argc > 1 && strcmp(argv[1], "-r") == 0) {
 		g_recursive = true;
 		++argv;
 		--argc;
 	}
+
 	if (argc != 3) {
-		fprintf(stderr, "Usage: treecat treeLocation boxcode\n");
+		fprintf(stderr, "Usage: treecat [-v] [-r]  treeLocation boxcode\n");
 		exit(1);
 	}
-
-	char* boxcode = argv[2];
-	g_treeLocation = argv[1];
+    
+    // The fullboxcode parameter can specify the filename and sequetial box code
+    char fullboxcode[1000];
 	char fileboxcode[1000];
-	strcpy(fileboxcode, boxcode);
+	strncpy(fullboxcode, argv[2], 1000);
+	strncpy(fileboxcode, argv[2], 1000);
+	g_treeLocation = argv[1];
+    
+    // See if a file with the tree for a prefix of the box exists
 	FILE* fp = 0;
 	int fileBoxLength;
-	for (fileBoxLength = strlen(boxcode); fileBoxLength >= 0; --fileBoxLength) {
+	for (fileBoxLength = strlen(fullboxcode); fileBoxLength >= 0; --fileBoxLength) {
 		fileboxcode[fileBoxLength] = '\0';
 		fp = openBox(fileboxcode);
 		if (fp)
 			break;
 	}
-	boxcode += fileBoxLength;
 
-	char fullboxcode[1000];
-	strcpy(fullboxcode, fileboxcode);
-	strcat(fullboxcode, boxcode);
+    if (!fp) exit(1);
+    
+    char * boxcode_const = (char *)calloc(1000, sizeof(char));
+    char * boxcode = boxcode_const;
+	strncpy(boxcode, fullboxcode+fileBoxLength, 1000);
+    
 	char buf[10000];
 	while (*boxcode && fgets(buf, sizeof(buf), fp)) {
-		if (buf[0] != 'X') {
+		if (buf[0] != 'X') { // If not a splitting, print the test failed by the truncated box
 			*boxcode = '\0';
-			fprintf(stderr, "box = %s\n", argv[2]);
+			fprintf(stderr, "box = %s\n", boxcode_const);
 			fputs(buf, stdout);
+            free(boxcode_const);
+            fclose(fp);
 			exit(0);
 		}
-		if (*boxcode == '1')
+		if (*boxcode == '1') // If 0 we just keep traversing the tree? This seems strange
 			processTree(fp, false, boxcode);
 		++boxcode;
 	}
+    free(boxcode_const);
 	processTree(fp, true, fullboxcode);
+    fclose(fp);
 }
