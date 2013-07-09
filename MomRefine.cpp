@@ -317,12 +317,44 @@ void setOptStr() {
 
 void usage()
 {
-	
-	fprintf(stderr, "usage: %s %s", g_programName, optStr);
-	
-	for (int i = 0; longOptions[i].name; ++i) {
-		fprintf(stderr, " %c : set %s\n", longOptions[i].val, longOptions[i].name);
-	}
+	const char* longUsage = "\
+       --box <box_id>\n\
+       		Box ID for the root of the input and output trees.\n\
+		May include characters not in [01], which are ignored.\n\
+\n\
+Options controlling which relators to use:\n\
+	[ --words	<words_file> ]\n\
+		File containing starting list of words to try.\n\
+	[ --ballSearchDepth <n> ]\n\
+		Perform a search for relators when visiting a node at least n levels deep.\n\
+\n\
+Options controlling which relators eliminate boxes:\n\
+	[ --powers <powers_file> ]\n\
+		File containing impossible relator definitions.\n\
+		See ImpossibleRelators::load(...)\n\
+	[ --mom <mom_varieties_file> ]\n\
+	[ --parameterized <parameterized_varieties_file ]\n\
+		Files containg varieties which the user wishes to ignore.\n\
+		The ony functional difference is that they produce different log messages.\n\
+	[ --maxArea <v> ]\n\
+		Eliminate boxes which have area > maxArea.\n\
+\n\
+Options controlling tree manipulation:\n\
+	[ --maxDepth <n> ]\n\
+		Don't descend more than n levels deeper than the root box.\n\
+	[ --inventDepth <n> ]\n\
+		Don't descend more than n levels deeper than the terminal node of the input tree.\n\
+	[ --maxSize <n> ]\n\
+		Don't allow the output tree to have more than n nodes.\n\
+	[ --truncateDepth <n> ]\n\
+		Don't emit holes more than n levels deeper than the root node.\n\
+		Instead, replace the subtree-with-holes with a single hole.\n\
+	[ --improveTree ]\n\
+		If set, attempt to directly eliminate internal nodes of the input tree.\n\
+	[ --fillHoles ]\n\
+		If set, attempt to patch holes in the input tree.\n\
+"
+	fprintf(stderr, "Usage: %s %s\n\n%s", g_programName, optStr, longUsage);
 }
 
 void loadWords(set<string>& s, const char* fileName)
