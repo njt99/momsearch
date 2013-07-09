@@ -3,6 +3,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <stdlib.h>
+
+// Takes a tree from an sstream and writes to disk
+
 bool g_recursive = false;
 bool g_verbose = false;
 char* g_treeLocation;

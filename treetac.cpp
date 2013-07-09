@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <vector>
 #include <string>
+#include <stdlib.h>
+
+// Takes a tree from disk and outputs to std output
 
 using namespace std;
 
