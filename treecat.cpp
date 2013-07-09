@@ -17,6 +17,7 @@ FILE* openBox(char* boxcode)
 	char fileName[1000];
 	char fileboxcode[1000];
 	strcpy(fileboxcode, boxcode);
+    // Open the root file if empty
 	if (strcmp(fileboxcode, "") == 0)
 		strcpy(fileboxcode, "root");
 	sprintf(fileName, "%s/%s.out", g_treeLocation, fileboxcode);
@@ -26,6 +27,7 @@ FILE* openBox(char* boxcode)
 		fp = fopen(fileName, "r");
 		return fp;
 	}
+    // Look for a gzipped file
 	sprintf(fileName, "%s/%s.out.gz", g_treeLocation, fileboxcode);
 	if (0 == stat(fileName, &sb)) {
 		char commandBuf[1000];
@@ -94,7 +96,9 @@ int main(int argc, char** argv)
 		exit(1);
 	}
     
-    // The fullboxcode parameter can specify the filename and sequetial box code
+    // The fullboxcode parameter can specify the filename and sequetial boxcode
+    // A boxcode is just a sequence of zeros and ones giving a posiiton in a binary tree depth-first traversal
+    // The treeFile will also be in pre-order depth-first
     char fullboxcode[1000];
 	char fileboxcode[1000];
 	strncpy(fullboxcode, argv[2], 1000);
@@ -127,9 +131,9 @@ int main(int argc, char** argv)
             fclose(fp);
 			exit(0);
 		}
-		if (*boxcode == '1') // If 0 we just keep traversing the tree? This seems strange
+		if (*boxcode == '1') // Actually have to process the tree is we go right at any point in the boxcode
 			processTree(fp, false, boxcode);
-		++boxcode;
+		++boxcode; // Keeps going left in the tree as *boxcode == 0
 	}
     free(boxcode_const);
 	processTree(fp, true, fullboxcode);
