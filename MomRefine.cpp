@@ -353,7 +353,7 @@ Options controlling tree manipulation:\n\
 		If set, attempt to directly eliminate internal nodes of the input tree.\n\
 	[ --fillHoles ]\n\
 		If set, attempt to patch holes in the input tree.\n\
-"
+";
 	fprintf(stderr, "Usage: %s %s\n\n%s", g_programName, optStr, longUsage);
 }
 
