@@ -39,42 +39,45 @@ FILE* openBox(char* boxcode)
 	return 0;
 }
 
-void processTree(FILE* fp, bool print, char* boxcode)
+int processTree(FILE* fp, bool print, char* boxcode)
 {
 	int boxdepth = strlen(boxcode);
 	char buf[10000];
 	int depth = 0;
 	while (fgets(buf, sizeof(buf), fp)) {
 		bool filledHole = false;
-		if (g_recursive && print && buf[0] == 'H') {
-			boxcode[boxdepth + depth] = '\0';
+        // Open HOLE file is exist, mark as missing otherwise
+		if (print && buf[0] == 'H' && g_recursive) {
 			FILE* fpH = openBox(boxcode);
 			if (fpH) {
-				processTree(fpH, print, boxcode);
+				int success = processTree(fpH, print, boxcode);
 				fclose(fpH);
 				filledHole = true;
+                if (!success) return 0;
 			} else {
 				fprintf(stderr, "missing %s\n", boxcode);
 			}
 		}
 		if (print && !filledHole)
-			fputs(buf, stdout);
+			fputs(buf, stdout); // Print the buffer if we are printing out the filled tree
 		if (buf[0] == 'X') {
-			boxcode[boxdepth + depth] = '0';
+			boxcode[boxdepth + depth] = '0'; // Descend via left branch
 			++depth;
+			boxcode[boxdepth + depth] = '\0';
 		} else {
+            // Go up as many nodes as necessary
 			for (; depth > 0 && boxcode[boxdepth + depth-1] == '1'; --depth) {}
 			if (depth > 0) {
-				boxcode[boxdepth + depth-1] = '1';
-				boxcode[boxdepth + depth] = '\0';
+				boxcode[boxdepth + depth-1] = '1'; // Jump from left to right node
+				boxcode[boxdepth + depth] = '\0'; // Truncate to keep box current
 			} else {
-				boxcode[boxdepth] = '\0';
-				return;
+				boxcode[boxdepth] = '\0'; // Truncate to keep box current
+				return 1;
 			}
 		}
 	}
-	boxcode[boxdepth + depth] = '\0';
-	fprintf(stderr, "premature EOF at %s\n", boxcode);
+    fprintf(stderr, "premature EOF at %s\n", boxcode);
+    return 0; 
 }
 		
 int main(int argc, char** argv)
@@ -131,11 +134,15 @@ int main(int argc, char** argv)
             fclose(fp);
 			exit(0);
 		}
-		if (*boxcode == '1') // Actually have to process the tree is we go right at any point in the boxcode
-			processTree(fp, false, boxcode);
+		if (*boxcode == '1') { // Actually have to process the tree is we go right at any point in the boxcode
+		    int success = processTree(fp, false, boxcode);
+            if (!success) exit(1); // Incomplete tree!
+        }
 		++boxcode; // Keeps going left in the tree as *boxcode == 0
 	}
     free(boxcode_const);
-	processTree(fp, true, fullboxcode);
+	int success = processTree(fp, true, fullboxcode);
     fclose(fp);
+    if (!success) exit(1);
+    else exit(0);
 }
