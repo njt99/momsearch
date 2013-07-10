@@ -20,10 +20,10 @@
 using namespace std;
 
 struct Options {
-	Options() :boxName(""), wordsFile("/Users/njt/projects/mom/allWords"),
-		powersFile("/Users/njt/projects/mom/wordpowers.out"),
-		momFile("/Users/njt/projects/mom/momWords"),
-		parameterizedFile("/Users/njt/projects/mom/parameterizedWords"),
+	Options() :boxName(""), wordsFile("./allWords"),
+		powersFile("./wordpowers.out"),
+		momFile("./momWords"),
+		parameterizedFile("./parameterizedWords"),
 		maxDepth(18), truncateDepth(6), inventDepth(12), maxSize(1000000),
 		improveTree(false),
 		ballSearchDepth(-1),
