@@ -17,6 +17,7 @@ FILE* openBox(char* boxcode)
 	char fileName[1000];
 	char fileboxcode[1000];
 	strcpy(fileboxcode, boxcode);
+    // Open the root file if empty
 	if (strcmp(fileboxcode, "") == 0)
 		strcpy(fileboxcode, "root");
 	sprintf(fileName, "%s/%s.out", g_treeLocation, fileboxcode);
@@ -26,6 +27,7 @@ FILE* openBox(char* boxcode)
 		fp = fopen(fileName, "r");
 		return fp;
 	}
+    // Look for a gzipped file
 	sprintf(fileName, "%s/%s.out.gz", g_treeLocation, fileboxcode);
 	if (0 == stat(fileName, &sb)) {
 		char commandBuf[1000];
@@ -37,42 +39,60 @@ FILE* openBox(char* boxcode)
 	return 0;
 }
 
-void processTree(FILE* fp, bool print, char* boxcode)
+int processTree(FILE* fp, bool print, char* boxcode)
 {
 	int boxdepth = strlen(boxcode);
 	char buf[10000];
 	int depth = 0;
 	while (fgets(buf, sizeof(buf), fp)) {
 		bool filledHole = false;
-		if (g_recursive && print && buf[0] == 'H') {
-			boxcode[boxdepth + depth] = '\0';
+        // Open HOLE file is exist, mark as missing otherwise
+		if (print && buf[0] == 'H' && g_recursive) {
 			FILE* fpH = openBox(boxcode);
 			if (fpH) {
-				processTree(fpH, print, boxcode);
+				int success = processTree(fpH, print, boxcode);
 				fclose(fpH);
 				filledHole = true;
+                if (!success) break; // the HOLE subtree is incomplete!
 			} else {
 				fprintf(stderr, "missing %s\n", boxcode);
 			}
 		}
 		if (print && !filledHole)
-			fputs(buf, stdout);
+			fputs(buf, stdout); // Print the buffer if we are printing out the filled tree
 		if (buf[0] == 'X') {
-			boxcode[boxdepth + depth] = '0';
+			boxcode[boxdepth + depth] = '0'; // Descend via left branch
 			++depth;
+			boxcode[boxdepth + depth] = '\0';
 		} else {
+            // Go up as many nodes as necessary
 			for (; depth > 0 && boxcode[boxdepth + depth-1] == '1'; --depth) {}
 			if (depth > 0) {
-				boxcode[boxdepth + depth-1] = '1';
-				boxcode[boxdepth + depth] = '\0';
+				boxcode[boxdepth + depth-1] = '1'; // Jump from left to right node
+				boxcode[boxdepth + depth] = '\0'; // Truncate to keep box current
 			} else {
-				boxcode[boxdepth] = '\0';
-				return;
+				boxcode[boxdepth] = '\0'; // Truncate to keep box current
+				return 1;
 			}
 		}
 	}
-	boxcode[boxdepth + depth] = '\0';
-	fprintf(stderr, "premature EOF at %s\n", boxcode);
+    
+    // If we get to this point, the tree is incomplete
+    // Print the box we "should" be at as missing
+    fprintf(stderr, "missing %s\n", boxcode);
+    
+    // We list all other missing boxes
+    for (int i = depth; i > 0; --i) {
+        if (boxcode[boxdepth + i-1] != '1') {
+            boxcode[boxdepth + i-1] = '1'; // Jump from left to right node
+            boxcode[boxdepth + i] = '\0'; // Truncate to keep box current
+            fprintf(stderr, "missing %s\n", boxcode);
+        } else {
+		    boxcode[boxdepth + i] = '\0'; // Truncate to keep box current
+        } 
+    }            
+
+    return 0; 
 }
 		
 int main(int argc, char** argv)
@@ -94,7 +114,9 @@ int main(int argc, char** argv)
 		exit(1);
 	}
     
-    // The fullboxcode parameter can specify the filename and sequetial box code
+    // The fullboxcode parameter can specify the filename and sequetial boxcode
+    // A boxcode is just a sequence of zeros and ones giving a posiiton in a binary tree depth-first traversal
+    // The treeFile will also be in pre-order depth-first
     char fullboxcode[1000];
 	char fileboxcode[1000];
 	strncpy(fullboxcode, argv[2], 1000);
@@ -113,9 +135,9 @@ int main(int argc, char** argv)
 
     if (!fp) exit(1);
     
-    char * boxcode_const = (char *)calloc(1000, sizeof(char));
+    char * boxcode_const = (char *)calloc(10000, sizeof(char));
     char * boxcode = boxcode_const;
-	strncpy(boxcode, fullboxcode+fileBoxLength, 1000);
+	strncpy(boxcode, fullboxcode+fileBoxLength, 10000);
     
 	char buf[10000];
 	while (*boxcode && fgets(buf, sizeof(buf), fp)) {
@@ -127,11 +149,15 @@ int main(int argc, char** argv)
             fclose(fp);
 			exit(0);
 		}
-		if (*boxcode == '1') // If 0 we just keep traversing the tree? This seems strange
-			processTree(fp, false, boxcode);
-		++boxcode;
+		if (*boxcode == '1') { // Actually have to process the tree is we go right at any point in the boxcode
+		    int success = processTree(fp, false, boxcode);
+            if (!success) exit(1); // Incomplete tree!
+        }
+		++boxcode; // Keeps going left in the tree as *boxcode == 0
 	}
     free(boxcode_const);
-	processTree(fp, true, fullboxcode);
+	int success = processTree(fp, true, fullboxcode);
     fclose(fp);
+    if (!success) exit(1);
+    else exit(0);
 }
