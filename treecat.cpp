@@ -53,7 +53,7 @@ int processTree(FILE* fp, bool print, char* boxcode)
 				int success = processTree(fpH, print, boxcode);
 				fclose(fpH);
 				filledHole = true;
-                if (!success) return 0;
+                if (!success) break; // the HOLE subtree is incomplete!
 			} else {
 				fprintf(stderr, "missing %s\n", boxcode);
 			}
@@ -76,7 +76,22 @@ int processTree(FILE* fp, bool print, char* boxcode)
 			}
 		}
 	}
-    fprintf(stderr, "premature EOF at %s\n", boxcode);
+    
+    // If we get to this point, the tree is incomplete
+    // Print the box we "should" be at as missing
+    fprintf(stderr, "missing %s\n", boxcode);
+    
+    // We list all other missing boxes
+    for (int i = depth; i > 0; --i) {
+        if (boxcode[boxdepth + i-1] != '1') {
+            boxcode[boxdepth + i-1] = '1'; // Jump from left to right node
+            boxcode[boxdepth + i] = '\0'; // Truncate to keep box current
+            fprintf(stderr, "missing %s\n", boxcode);
+        } else {
+		    boxcode[boxdepth + i] = '\0'; // Truncate to keep box current
+        } 
+    }            
+
     return 0; 
 }
 		
@@ -120,9 +135,9 @@ int main(int argc, char** argv)
 
     if (!fp) exit(1);
     
-    char * boxcode_const = (char *)calloc(1000, sizeof(char));
+    char * boxcode_const = (char *)calloc(10000, sizeof(char));
     char * boxcode = boxcode_const;
-	strncpy(boxcode, fullboxcode+fileBoxLength, 1000);
+	strncpy(boxcode, fullboxcode+fileBoxLength, 10000);
     
 	char buf[10000];
 	while (*boxcode && fgets(buf, sizeof(buf), fp)) {
