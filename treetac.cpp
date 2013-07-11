@@ -8,7 +8,7 @@
 using namespace std;
 
 struct Node {
-	Node(string value_ = string()) :value(value_), treeSize(1), depth(0), lChild(0), rChild(), isComplete(value != "X\n") {}
+	Node(string value_ = string()) :value(value_), treeSize(1), depth(0), lChild(), rChild(), isComplete(value != "X\n") {}
 	string value;
 	int treeSize;
 	int depth;
