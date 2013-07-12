@@ -15,6 +15,8 @@ if len(args) != 3:
 
 # Executables
 treecat = './treecat'
+treeholes = './treecat --holes'
+treecheck = './treecat --mark -s'
 refine = './refine'
 
 # Set up the rest of the arguments
@@ -42,9 +44,12 @@ def command_output(command):
         print('Error in {0}\n'.format(command)) 
         sys.exit(1)
 
-def add_holes(holes, treecat, directory, boxfile):
-    command = '{0} -r --holes {1} \'{2}\''.format(treecat, directory, boxfile)
-    newHoles = set(command_output(command).rstrip().split('\n'))
+def add_holes(holes, treeholes, directory, boxfile):
+    command = '{0} -r {1} \'{2}\''.format(treeholes, directory, boxfile)
+    byte_string = command_output(command)
+    if not byte_string: return
+    byte_string.replace('root','')
+    newHoles = set(byte_string.rstrip().split('\n'))
     holes |= newHoles
 
 def add_words(words, fp):
@@ -68,14 +73,17 @@ for opt, val in opts:
         wordsFile = val
         add_words(seenWords, wordsFile)
 
+# Check for incomplete trees
+subprocess.call('{0} -r {1} \'{2}\''.format(treecheck, destDir, ''), shell=True)
+
 # Get holes. Note, treecat will check that all files are complete trees
 holes = set();
-add_holes(holes, treecat, destDir, '')
+add_holes(holes, treeholes, destDir, '')
 
 # Get done words
 done = set()
 try:
-    done = {os.path.basename(boxfile) for boxfile in glob.glob(destDir + '/*.out')}
+    done = {os.path.basename(boxfile).replace('.out','') for boxfile in glob.glob(destDir + '/*.out')}
 except:
     print('Error reading {0}\n'.format(destDir)) 
     sys.exit(1)
@@ -94,7 +102,8 @@ while True:
             continue 
 
         print 'Completed {0} {1}\n'.format(doneHole,donePid)
-        add_holes(holes, treecat, destDir, doneHole) 
+        subprocess.call('{0} {1} \'{2}\''.format(treecheck, destDir, doneHole), shell=True)
+        add_holes(holes, treeholes, destDir, doneHole)
 
         numPatched = command_output('grep -c Patched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
         numUnpatched = command_output('grep -c Unpatched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
@@ -118,10 +127,14 @@ while True:
 
     bestHole = '1'*200
     for hole in holes:
+        if not hole:
+            print holes
+            time.sleep(5)
         if hole not in done and len(hole) < len(bestHole):
             bestHole = hole    
 
     if len(bestHole) > 95: break
+
     if not bestHole:
         bestHole = 'root'
 

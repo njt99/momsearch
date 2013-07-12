@@ -9,6 +9,7 @@
 
 bool g_recursive = false;
 bool g_verbose = false;
+bool g_mark_incomplete = false;
 char* g_treeLocation;
 
 FILE* openBox(char* boxcode, char* fileName)
@@ -78,8 +79,8 @@ bool processTree(FILE* fp, FILE* out, bool printTree, bool printHoles, char* box
                         fclose(outH);
                         // The tree is incomplete, so we rename the boxfile to mark as incomplete
                         // TODO: Not sure if treecat should have the power to rename files
-                        if (!markIncomplete(fileName)) 
-                            fprintf(stderr, "failed to mark %s as incomplete\n", fileName);
+                        if (g_mark_incomplete)
+                            if (!markIncomplete(fileName)) fprintf(stderr, "failed to mark %s as incomplete\n", fileName);
                     } else {
                         // If the HOLE subtree is complete, print it to the output stream
                         rewind(outH);
@@ -140,6 +141,29 @@ bool processTree(FILE* fp, FILE* out, bool printTree, bool printHoles, char* box
 		
 int main(int argc, char** argv)
 {
+    bool printTree = true;
+    bool printHoles = false;
+	if (argc > 1 && strcmp(argv[1], "--holes") == 0) {
+        printTree = false;
+        printHoles = true;
+		++argv;
+		--argc;
+	}
+
+	if (argc > 1 && strcmp(argv[1], "--mark") == 0) {
+        g_mark_incomplete = true;
+		++argv;
+		--argc;
+	}
+
+	if (argc > 1 && strcmp(argv[1], "-s") == 0) {
+        printTree = false;
+        printHoles = false;
+		++argv;
+		--argc;
+	}
+
+
 	if (argc > 1 && strcmp(argv[1], "-v") == 0) {
 		g_verbose = true;
 		++argv;
@@ -152,17 +176,8 @@ int main(int argc, char** argv)
 		--argc;
 	}
 
-    bool printTree = true;
-    bool printHoles = false;
-	if (argc > 1 && strcmp(argv[1], "--holes") == 0) {
-        printTree = false;
-        printHoles = true;
-		++argv;
-		--argc;
-	}
-
 	if (argc != 3) {
-		fprintf(stderr, "Usage: treecat [-v] [-r] [--holes]  treeLocation boxcode\n");
+		fprintf(stderr, "Usage: treecat [--holes] [--mark] [-s] [-v] [-r] treeLocation boxcode\n");
 		exit(1);
 	}
     
@@ -199,7 +214,7 @@ int main(int argc, char** argv)
 		if (buf[0] != 'X') { // If not a splitting, print the test failed by the truncated box
 			*boxcode = '\0';
 			fprintf(stderr, "terminal box = %s\n", boxcode_const);
-			fputs(buf, stdout);
+			if (printTree) fputs(buf, stdout);
             free(boxcode_const);
             fclose(fp);
 			exit(0);
@@ -221,8 +236,8 @@ int main(int argc, char** argv)
         fclose(out);
         // The tree is incomplete, so we rename the boxfile to mark as incomplete
         // TODO: Not sure if treecat should have the power to rename files
-        if (!markIncomplete(fileName))
-            fprintf(stderr, "failed to mark %s as incomplete\n", fileName);
+        if (g_mark_incomplete)    
+            if (!markIncomplete(fileName)) fprintf(stderr, "failed to mark %s as incomplete\n", fileName);
         exit(1);
     } else {
         rewind(out);
