@@ -96,14 +96,16 @@ while True:
         donePid, status = os.wait()
         exitStatus = os.WEXITSTATUS(status)
         doneHole = pidToHole[donePid]
- 
+
+        # We should check the output either way to make sure it is clean 
+        subprocess.call('{0} {1} \'{2}\''.format(treecheck, destDir, doneHole), shell=True)
+
         # If there was an error refining
         if exitStatus != 0:
             done.remove(doneHole)
             continue 
 
         print 'Completed {0} {1}\n'.format(doneHole,donePid)
-        subprocess.call('{0} {1} \'{2}\''.format(treecheck, destDir, doneHole), shell=True)
         add_holes(holes, treeholes, destDir, doneHole)
 
         numPatched = command_output('grep -c Patched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
