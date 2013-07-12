@@ -128,9 +128,6 @@ while True:
 
     bestHole = '1'*200
     for hole in holes:
-        if not hole:
-            print holes
-            time.sleep(5)
         if hole not in done and len(hole) < len(bestHole):
             bestHole = hole    
 
