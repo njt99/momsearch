@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os subprocess sys getopt glob
+import os, subprocess, sys, getopt, glob, time
 
 try:
     opts, args = getopt.getopt(sys.argv[1:],'w:',['words='], )
@@ -17,115 +17,151 @@ if len(args) != 3:
 treecat = './treecat'
 refine = './refine'
 
-seenWords = {}
-
-for opt, val in opts:
-    if opt in ('-w', '--words'):
-        try:
-            seenWords = {word.rstrip() : True for word in open(val)}
-        except:
-            print('Error loading words file %s'.format(val))
-            sys.exit(1)
-
+# Set up the rest of the arguments
 srcDir = args[0]
 destDir = args[1]
 backingDir = args[2]
 childLimit = 2
 childCount = 0
+
+maxSize = '3000000'
+maxDepth = '42'
+truncateDepth = '6'
+inventDepth = '42'
 ballSearchDepth = '9'
+maxArea = '5'
+mom = '/dev/null'
+parameterized = '/dev/null'
 
-holes = [];
+# A few useful functions
+def command_output(command):
+    try:
+        # Note that subprocess.check_output retuns a byte string
+        return subprocess.check_output(command, shell=True)
+    except:
+        print('Error in {0}\n'.format(command)) 
+        sys.exit(1)
+
+def add_holes(holes, treecat, directory, boxfile):
+    command = '{0} -r --holes {1} \'{2}\''.format(treecat, directory, boxfile)
+    newHoles = set(command_output(command).rstrip().split('\n'))
+    holes |= newHoles
+
+def add_words(words, fp):
+    try:
+        for line in open(fp):
+            word = line.rstrip()
+            if word[0].isdigit() or\
+               word[0] == 'X'    or\
+               word[0] == 'H': continue
+            else:
+                words.add(word)
+    except:
+        print('Error loading words file {0}\n'.format(fp))
+        sys.exit(1)
+
+# Get the seen words
+wordsFile = 'allWords_{0:.0f}'.format(time.time())
+seenWords = set()
+for opt, val in opts:
+    if opt in ('-w', '--words'):
+        wordsFile = val
+        add_words(seenWords, wordsFile)
+
+# Get holes. Note, treecat will check that all files are complete trees
+holes = set();
+add_holes(holes, treecat, destDir, '')
+
+# Get done words
+done = set()
 try:
-    # Get the holes in the destination directory
-    holes = subprocess.check_output([treecat, '-r', '--holes', destDir, '']).rstrip().split('\n')
+    done = {os.path.basename(boxfile) for boxfile in glob.glob(destDir + '/*.out')}
 except:
-    print('Error in treecat -r %s \'\''.format(destDir)) 
+    print('Error reading {0}\n'.format(destDir)) 
     sys.exit(1)
 
-done = {}
-try:
-    done = {os.path.basename(boxfile) : True for boxfile in glob.glob(destDir + '/*.out')}
-except:
-    print('Error reading %s'.format(destDir)) 
-    sys.exit(1)
-
-pidHole = {};
+# Launch the refine runs
+pidToHole = {};
 while True:
-	if ($childCount >= $childLimit) {
-		$donePid = wait;
-		$doneHole = $pidHole{$donePid};
-		print "$donePid $doneHole done\n";
-		@newHoles = `perl mkHoles.pl $destDir/$doneHole.out`;
-		chomp @newHoles;
-		push(@holes, @newHoles);
+    if childCount >= childLimit:
+        donePid, status = os.wait()
+        exitStatus = os.WEXITSTATUS(status)
+        doneHole = pidToHole[donePid]
+ 
+        # If there was an error refining
+        if exitStatus != 0:
+            done.remove(doneHole)
+            continue 
 
-		$numPatched = `grep -c Patched $destDir/$doneHole.err`;
-		$numUnpatched = `grep -c Unpatched $destDir/$doneHole.err`;
-		$numHoles = `grep -c HOLE $destDir/$doneHole.err`;
-		chomp $numPatched;
-		chomp $numUnpatched;
-		chomp $numHoles;
-		print "Holes: $numPatched patched, $numUnpatched unpatched, $numHoles holes\n";
-		@newWords = ();
-		@seenWords = `sortuniq $destDir/$doneHole.out`;
-		chomp @seenWords;
-		foreach (@seenWords) {
-			($null, $count, $word) = split(/\s+/);
-			next if $word =~ /\d/ || $word eq 'HOLE' || $word eq 'X';
-			next if defined $seenWord{$word};
-			$seenWord{$word} = 1;
-			print "adding word $word\n";
-			push(@newWords, $word);
-		}
-		if ($#newWords > -1) {
-			open(WORDS, ">>allWords_s6");
-			foreach (@newWords) {
-				print WORDS "$_\n";
-			}
-			close WORDS;
-		}
-		--$childCount;
-	}
+        print 'Completed {0} {1}\n'.format(doneHole,donePid)
+        add_holes(holes, treecat, destDir, doneHole) 
 
-	bestHole = '1'*200
-	for hole in holes:
-	    if done[hole]: continue
-        if len(hole) < len(bestHole):
-            bestHole = hole	
+        numPatched = command_output('grep -c Patched {0}/{1}.err'.format(destDir, doneHole)).rstrip()
+        numUnpatched = command_output('grep -c Unpatched {0}/{1}.err'.format(destDir, doneHole)).rstrip()
+        numHoles = command_output('grep -c HOLE {0}/{1}.err'.format(destDir, doneHole)).rstrip()
+        
+        print 'Holes: {0} patched, {1} unpatched, {2} holes\n'.format(numPatched, numUnpatched, numHoles)
+
+        boxWords = set()
+        add_words(boxWords, '{0}/{1}.out'.format(destDir, doneHole))        
+        newWords = boxWords - seenWords
+        seenWords += newWords
+
+        if len(newWords) > 0: 
+            f = open(wordsFile, 'a')
+            for word in newWords:
+                print 'Adding word {0}'.format(word)
+                f.write(word + '\n')
+            f.close()
+
+        childCount -= 1
+
+    bestHole = '1'*200
+    for hole in holes:
+        if hole not in done and len(hole) < len(bestHole):
+            bestHole = hole    
 
     if len(bestHole) > 95: break
 
-    done[bestHole] = True
+    done.add(bestHole)
     childCount += 1   
  
-	pid = os.fork()
-	if pid == 0:
-        bsdOpt = '--ballSeachDepth ' + ballSearchDepth
-		if not bestHole:
-			bestHole = 'root'
-		    bsdOpt = ''
+    pid = os.fork()
+    if pid == 0:
+        pidBallSearchDepth = ballSearchDepth
+        if not bestHole:
+            bestHole = 'root'
+            bsdOpt = ''
+            pidBallSearchDepth = ''
 
-        maxSize = '3000000'
-        maxDepth = '42'
-        truncateDepth = '6'
-        inventDepth = '42'
+        out = destDir + '/' + bestHole + '.out'
+        err = destDir + '/' + bestHole + '.err'
 
-		command = treecat + srcDir + bestHole + ' | ' + refine + \
-                    ' --box ' + bestHole\
-                    ' --maxDepth ' + maxDepth\
-                    ' --truncateDepth ' + truncateDepth\
-                    ' --inventDepth ' + inventDepth\
-                    ' --maxSize ' + maxSize\
-                    -w allWords_s6 $searchWords -a 5 -M /dev/null -P /dev/null > $destDir/$bestHole.out 2> $destDir/$bestHole.err";
-		$first = `./treecat $srcDir $bestHole | head -1`;
-		chomp $first;
-		if ($first eq 'HOLE') {
-			$command =~ s/$srcDir/$backingDir/;
-		}
-		print "doing $command\n";
-	    system $command;
-	    exit;
-	else:
-	    pidHole[pid] = bestHole
-	}
-}
+        command = treecat + ' ' +  srcDir + ' ' + bestHole + \
+                    ' | ' + refine + \
+                    ' --box ' + bestHole + \
+                    ' --maxDepth ' + maxDepth + \
+                    ' --truncateDepth ' + truncateDepth + \
+                    ' --inventDepth ' + inventDepth + \
+                    ' --maxSize ' + maxSize + \
+                    ' --words ' + wordsFile + \
+                    ' --ballSearchDepth ' + pidBallSearchDepth + \
+                    ' --maxArea ' + maxArea + \
+                    ' --mom ' + mom + \
+                    ' --parameterized ' + parameterized + \
+                    ' > ' + out  + ' 2> ' + err
+
+
+
+        first_command = '{0} {1} {2} | head -1'.format(treecat, srcDir, bestHole)
+        first = command_output(first_command).rstrip()
+
+        if first[:1] == 'H': # HOLE
+            command = command.replace(srcDir, backingDir)
+
+        print 'Running {0}\n'.format(command)
+        returnCode = subprocess.call(command, shell=True)
+        if returnCode == 0: sys.exit(0) 
+        else: sys.exit(1)
+    else:
+        pidToHole[pid] = bestHole
