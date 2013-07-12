@@ -96,16 +96,16 @@ while True:
         print 'Completed {0} {1}\n'.format(doneHole,donePid)
         add_holes(holes, treecat, destDir, doneHole) 
 
-        numPatched = command_output('grep -c Patched {0}/{1}.err'.format(destDir, doneHole)).rstrip()
-        numUnpatched = command_output('grep -c Unpatched {0}/{1}.err'.format(destDir, doneHole)).rstrip()
-        numHoles = command_output('grep -c HOLE {0}/{1}.err'.format(destDir, doneHole)).rstrip()
+        numPatched = command_output('grep -c Patched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
+        numUnpatched = command_output('grep -c Unpatched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
+        numHoles = command_output('grep -c HOLE {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
         
         print 'Holes: {0} patched, {1} unpatched, {2} holes\n'.format(numPatched, numUnpatched, numHoles)
 
         boxWords = set()
         add_words(boxWords, '{0}/{1}.out'.format(destDir, doneHole))        
         newWords = boxWords - seenWords
-        seenWords += newWords
+        seenWords |= newWords
 
         if len(newWords) > 0: 
             f = open(wordsFile, 'a')
@@ -122,17 +122,18 @@ while True:
             bestHole = hole    
 
     if len(bestHole) > 95: break
+    if not bestHole:
+        bestHole = 'root'
 
     done.add(bestHole)
     childCount += 1   
  
     pid = os.fork()
     if pid == 0:
-        pidBallSearchDepth = ballSearchDepth
-        if not bestHole:
-            bestHole = 'root'
-            bsdOpt = ''
-            pidBallSearchDepth = ''
+        if bestHole == 'root':
+            pidBallSearchDepth = '-1'
+        else: 
+            pidBallSearchDepth = ballSearchDepth
 
         out = destDir + '/' + bestHole + '.out'
         err = destDir + '/' + bestHole + '.err'
