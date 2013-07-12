@@ -225,12 +225,12 @@ int main(int argc, char** argv)
         }
 		++boxcode; // Keeps going left in the tree as *boxcode == 0
 	}
+    free(boxcode_const);
     FILE* out = tmpfile();
     if (!out) exit(1);
 
 	bool success = processTree(fp, out, printTree, printHoles, fullboxcode);
     fclose(fp);
-    free(boxcode_const);
  
    if (!success) {
         fclose(out);
