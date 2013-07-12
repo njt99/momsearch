@@ -67,7 +67,7 @@ bool processTree(FILE* fp, FILE* out, bool printTree, bool printHoles, char* box
 	while (fgets(buf, sizeof(buf), fp)) {
 		bool filledHole = false;
         // Open HOLE file if exists. If no printing is set, we don't need to traverse HOLEs
-		if (print && buf[0] == 'H' && g_recursive) {
+		if (print && buf[0] == 'H' && depth > 0 && g_recursive) {
 			FILE* fpH = openBox(boxcode, fileName);
 			if (fpH) {
                 FILE* outH = tmpfile();
@@ -210,12 +210,12 @@ int main(int argc, char** argv)
         }
 		++boxcode; // Keeps going left in the tree as *boxcode == 0
 	}
-    free(boxcode_const);
     FILE* out = tmpfile();
     if (!out) exit(1);
 
 	bool success = processTree(fp, out, printTree, printHoles, fullboxcode);
     fclose(fp);
+    free(boxcode_const);
  
    if (!success) {
         fclose(out);
