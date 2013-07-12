@@ -32,6 +32,7 @@ truncateDepth = '6'
 inventDepth = '42'
 ballSearchDepth = '9'
 maxArea = '5'
+fillHoles = ' --fillHoles'
 mom = '/dev/null'
 parameterized = '/dev/null'
 
@@ -162,6 +163,7 @@ while True:
                     ' --ballSearchDepth ' + pidBallSearchDepth + \
                     ' --maxArea ' + maxArea + \
                     ' --mom ' + mom + \
+                    fillHoles + \
                     ' --parameterized ' + parameterized + \
                     ' > ' + out  + ' 2> ' + err
 
