@@ -3,7 +3,7 @@
 import os, subprocess, sys, getopt, glob, time
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:],'w:',['words='], )
+    opts, args = getopt.getopt(sys.argv[1:],'w:',['words='])
 except getopt.GetoptError as err:
     print str(err)
     print('Usage: dosearch [-w,--words <wordsfile>] srcDir destDir backingDir')
