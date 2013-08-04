@@ -2,10 +2,9 @@
 $srcDir = shift;
 $destDir = shift;
 $backingDir = shift;
-$childLimit = 2;
+$childLimit = 12;
 
-system("./treecat -r $destDir '' > /dev/null 2> tmp.holes");
-@holes = `sed -n 's/missing //p' tmp.holes`;
+@holes = `treecat --holes -r $destDir ''`;
 chomp @holes;
 @done = (`ls $destDir | sed -n 's/.out//p'`);
 chomp @done;
@@ -19,8 +18,7 @@ foreach (@seenWords) {
 	chomp;
 	$seenWord{$_} = 1;
 }
-#@seenWords = `sortUniq $srcDir/*out $destDir/*out`;
-@seenWords = `sortUniq $destDir/*out`;
+@seenWords = `sort $destDir/*out | uniq`;
 foreach (@seenWords) {
 	chomp;
 	($null, $count, $word) = split(/\s+/);
