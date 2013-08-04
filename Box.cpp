@@ -7,7 +7,7 @@
  *
  */
 
-#import "Box.h"
+#include "Box.h"
 #include <math.h>
 
 double scale[6];

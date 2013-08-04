@@ -1,5 +1,6 @@
 #include <set>
 #include <vector>
+#include <algorithm>
 #include "QuasiRelators.h"
 using namespace std;
 

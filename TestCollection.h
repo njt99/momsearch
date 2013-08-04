@@ -7,12 +7,11 @@
  *
  */
 
-#include <ext/hash_map>
 #include <map>
 #include <string>
 #include <vector>
 #include "Params.h"
-#import "Box.h"
+#include "Box.h"
 
 struct ImpossibleRelations;
 

@@ -7,10 +7,10 @@
  *
  */
 
-#import "Params.h"
+#include "Params.h"
 
-#import <vector>
-#import <string>
+#include <vector>
+#include <string>
 
 std::vector<std::string> findWords(
 	Params<Complex> center,

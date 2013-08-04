@@ -16,6 +16,8 @@
 // 6. |sl^2| Im(n) <= 4 (area of fundamental paralleogram)
 // 
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "TestCollection.h"
 #include "ImpossibleRelations.h"
 using namespace std;

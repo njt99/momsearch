@@ -6,8 +6,10 @@
  *  Copyright 2007 THingith ehf.. All rights reserved.
  *
  */
-#import "Params.h"
-#import "AComplex1Jet.h"
+#ifndef __Box_h
+#define __Box_h
+#include "Params.h"
+#include "AComplex1Jet.h"
 #include "QuasiRelators.h"
 
 struct Box {
@@ -34,3 +36,4 @@ struct NamedBox : public Box {
 	NamedBox child(int dir) const;
 };
 
+#endif // __Box_h

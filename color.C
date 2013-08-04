@@ -3,11 +3,12 @@
 #include <vector>
 #include <string>
 #include <queue>
-#import "Params.h"
+#include "Params.h"
 #include "TestSearch.h"
-#import "Box.h"
+#include "Box.h"
 #include "TestCollection.h"
 #include <stdio.h>
+#include <string.h>
 
 using namespace std;
 TestCollection tests;

@@ -14,6 +14,7 @@
 #include <list>
 #include <map>
 #include <queue>
+#include <algorithm>
 using namespace std;
 
 namespace BallSearchImpl {

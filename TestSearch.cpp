@@ -12,6 +12,8 @@
 #include <vector>
 #include <queue>
 #include <string>
+#include <algorithm>
+#include <stdio.h>
 
 using namespace std;
 

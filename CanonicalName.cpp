@@ -9,6 +9,8 @@
 
 #include "CanonicalName.h"
 #include <set>
+#include <algorithm>
+#include <stdio.h>
 
 using namespace std;
 

@@ -13,6 +13,8 @@
 #include <vector>
 #include <map>
 #include <set>
+#include <stdlib.h>
+#include <string.h>
 #include "TestCollection.h"
 #include "BallSearch.h"
 #include "QuasiRelators.h"

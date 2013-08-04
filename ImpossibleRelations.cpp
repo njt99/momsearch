@@ -9,6 +9,7 @@
 
 #include "ImpossibleRelations.h"
 #include <map>
+#include <stdio.h>
 
 using namespace std;
 
