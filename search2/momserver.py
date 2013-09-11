@@ -33,7 +33,7 @@ class MomRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		elif self.path == '/submit':
 			do_submit(form)
 
-	def do_next(form):
+	def do_next(self, form):
 		"""Reserve and return the next unit of work."""
 		self.send_response(200)
 		self.send_header('Content-type', 'text/html')
@@ -41,7 +41,7 @@ class MomRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		# TODO(njt): implement
 
 
-	def do_submit(form):
+	def do_submit(self, form):
 		"""Submit the results of a unit of work."""
 		self.send_response(200)
 		self.send_header('Content-type', 'text/html')
@@ -51,7 +51,8 @@ class MomRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 	def do_GET(self):
 		"""Serve a GET request."""
 		if m = re.match('/tree/[01]*', self.path):
-			self.do_tree(m.group(1))
+			tree_data = subprocess.check_output(['treecat', self.src_dir, m.group(1)])
+			self.wfile.write(tree_data)
 		if self.path == '/args':
 			self.wfile.write('-m 36 -t 6 -i 36 -s 3000000 -a 5.1')
 		if self.path == '/words':
@@ -63,9 +64,6 @@ class MomRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		if self.path == '/parameterized':
 			self.write_file(self.parameterized_file)
 
-	def do_tree(self):
-		"""Respond to a request for the input tree."""
-		# TODO(njt): implement
 			
 		
 
