@@ -40,7 +40,7 @@ parameterized = '/dev/null'
 def command_output(command):
     try:
         # Note that subprocess.check_output retuns a byte string
-        pipe = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+        pipe = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
         out, err = pipe.communicate()
         return out
     except:
