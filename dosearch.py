@@ -40,7 +40,9 @@ parameterized = '/dev/null'
 def command_output(command):
     try:
         # Note that subprocess.check_output retuns a byte string
-        return subprocess.check_output(command, shell=True)
+        pipe = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+        out, err = pipe.communicate()
+        return out
     except:
         print('Error in {0}\n'.format(command)) 
         sys.exit(1)
@@ -84,7 +86,7 @@ add_holes(holes, treeholes, destDir, '')
 # Get done words
 done = set()
 try:
-    done = {os.path.basename(boxfile).replace('.out','') for boxfile in glob.glob(destDir + '/*.out')}
+    done = set([os.path.basename(boxfile).replace('.out','') for boxfile in glob.glob(destDir + '/*.out')])
 except:
     print('Error reading {0}\n'.format(destDir)) 
     sys.exit(1)
