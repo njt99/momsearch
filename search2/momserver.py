@@ -18,7 +18,8 @@ class MomRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 		/parameterized: Get the parameterized words.
 	"""
 
-	def __init__(self):
+	def __init__(self, *args, **kwargs):
+		BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, *args, **kwargs) 
 		self.words_file = 'allWords_s6'
 		self.powers_file = 'wordPowers.out'
 		self.moms_file = 'momWords'
@@ -50,8 +51,9 @@ class MomRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 	def do_GET(self):
 		"""Serve a GET request."""
-		if m = re.match('/tree/[01]*', self.path):
-			tree_data = subprocess.check_output(['treecat', self.src_dir, m.group(1)])
+		match = re.match('/tree/[01]*', self.path)
+		if match:
+			tree_data = subprocess.check_output(['treecat', self.src_dir, match.group(1)])
 			self.wfile.write(tree_data)
 		if self.path == '/args':
 			self.wfile.write('-m 36 -t 6 -i 36 -s 3000000 -a 5.1')
