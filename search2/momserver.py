@@ -3,6 +3,7 @@ import shutil
 import cgi
 import re
 import sys
+import json
 
 class MomRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """HTTP request handler for mom search.
@@ -19,12 +20,22 @@ class MomRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         /parameterized: Get the parameterized words.
     """
 
+    queue = {}
+    config_file = 'mom.config'
+
     def __init__(self, *args, **kwargs):
-        self.words_file = '../allWords_s6'
-        self.powers_file = '../wordPowers.out'
-        self.moms_file = '../momWords'
-        self.parameterized_file = '/dev/null'
-        self.src_dir = '../test_s'
+        if len(sys.argv) > 1:
+            self.config_file = sys.argv[1]
+
+        with open(self.config_file,'r') as config_fp:
+            config = json.loads(config_fp.read())
+            self.words_file = config['words_file']
+            self.powers_file = config['powers_file']
+            self.moms_file = config['moms_file']
+            self.parameterized_file = config['parameterized_file']
+            self.src_dir = config['src_dir']
+            self.treecar = config['treecat']
+
         BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, *args, **kwargs) 
 
     def do_POST(self):
@@ -54,13 +65,14 @@ class MomRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def write_file(self, file):
         with open(file,'r') as fp:
             data  = fp.read()
-            self.wfile.write(data)
+            if data:
+                self.wfile.write(data)
 
     def do_GET(self):
         """Serve a GET request."""
         match = re.match('/tree/[01]*', self.path)
         if match:
-            tree_data = subprocess.check_output(['treecat', self.src_dir, match.group(1)])
+            tree_data = subprocess.check_output([self.treecat, self.src_dir, match.group(1)])
             self.write_file(tree_data)
         if self.path == '/args':
             self.write_file('-m 36 -t 6 -i 36 -s 3000000 -a 5.1')
