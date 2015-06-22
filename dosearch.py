@@ -31,7 +31,7 @@ maxDepth = '42'
 truncateDepth = '6'
 inventDepth = '42'
 ballSearchDepth = '9'
-maxArea = '5'
+maxArea = '5.2'
 fillHoles = ' --fillHoles'
 mom = '/dev/null'
 parameterized = '/dev/null'
@@ -91,6 +91,10 @@ except:
     print('Error reading {0}\n'.format(destDir)) 
     sys.exit(1)
 
+print "Launching Refine"
+
+print holes
+
 # Launch the refine runs
 pidToHole = {};
 while True:
@@ -130,15 +134,15 @@ while True:
 
         childCount -= 1
 
-    bestHole = '1'*200
+    if len(holes) == 0:
+        bestHole = 'root'
+    else :    
+        bestHole = '1'*200
     for hole in holes:
         if hole not in done and len(hole) < len(bestHole):
             bestHole = hole    
-
+    
     if len(bestHole) > 95: break
-
-    if not bestHole:
-        bestHole = 'root'
 
     done.add(bestHole)
     childCount += 1   

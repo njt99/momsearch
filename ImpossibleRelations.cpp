@@ -94,7 +94,7 @@ namespace ImpossibleRelationsImpl {
 				wordBuf, &subWordIdentityAllowed, &matchRequired,
 				&possible.matchingMCoeff, &possible.matchingNCoeff,
 				subWordBuf, &possible.power);
-			if (n == 7) {
+			if (n == 7) { // Filled all the values
 				possible.subWordIdentityAllowed = subWordIdentityAllowed;
 				possible.matchRequired = matchRequired;
 				possible.subWord = subWordBuf;

@@ -21,7 +21,7 @@
 #include "TestCollection.h"
 #include "ImpossibleRelations.h"
 using namespace std;
-using namespace __gnu_cxx;
+// using namespace __gnu_cxx;
 
 double g_maximumArea = 5.1;
 int g_xLattice;
@@ -277,6 +277,8 @@ int TestCollection::evaluateBox(int index, Box& box)
 	}
 }
 
+// Returns the index number for the first basic 7 tests
+// or the quasi-relator if the index is 7 or above
 const char* TestCollection::getName(int index)
 {
 	static char buf[4];

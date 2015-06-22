@@ -7,7 +7,6 @@
  *
  */
 
-#include "Box.h"
 #include <getopt.h>
 #include <stdio.h>
 #include <vector>
@@ -15,6 +14,8 @@
 #include <set>
 #include <stdlib.h>
 #include <string.h>
+
+#include "Box.h"
 #include "TestCollection.h"
 #include "BallSearch.h"
 #include "QuasiRelators.h"
@@ -22,11 +23,16 @@
 using namespace std;
 
 struct Options {
-	Options() :boxName(""), wordsFile("./allWords"),
-		powersFile("./wordpowers.out"),
-		momFile("./momWords"),
-		parameterizedFile("./parameterizedWords"),
-		maxDepth(18), truncateDepth(6), inventDepth(12), maxSize(1000000),
+	Options() :
+        boxName(""), // Binary representation of box
+        wordsFile("./allWords"), // Previously generated words
+		powersFile("./wordpowers.out"), // Output from power parabolic.pl
+		momFile("./momWords"), // TODO: Find what generates
+		parameterizedFile("./parameterizedWords"), // TODO: Find what generates
+		maxDepth(18), // Maximum depth for a file
+        truncateDepth(6), 
+        inventDepth(12),
+        maxSize(1000000),
 		improveTree(false),
 		ballSearchDepth(-1),
 		fillHoles(false),
@@ -48,9 +54,11 @@ struct Options {
 
 Options g_options;
 TestCollection g_tests;
+typedef vector< vector< bool > > TestHistory;
 set<string> g_momVarieties;
 set<string> g_parameterizedVarieties;
 static int g_boxesVisited = 0;
+
 struct PartialTree {
 	PartialTree() :lChild(0), rChild(0), testIndex(-1) {}
 	PartialTree *lChild;
@@ -58,6 +66,8 @@ struct PartialTree {
 	int testIndex;
 };
 
+// Consume tree from stdin. The tree must be
+// provided in pre-order depth-first traversal.
 PartialTree readTree()
 {
 	PartialTree t;
@@ -78,13 +88,12 @@ PartialTree readTree()
 		if (isdigit(buf[0])) {
 			t.testIndex = atoi(buf);
 		} else {
+            // Add word as quasi-relator to test collection
 			t.testIndex = g_tests.add(buf);
 		}
 	}
 	return t;
 }
-
-typedef vector< vector< bool > > TestHistory;
 
 void truncateTree(PartialTree& t)
 {
@@ -100,17 +109,32 @@ void truncateTree(PartialTree& t)
 	}
 }
 
-extern string g_testCollectionFullWord;
+int treeSize(PartialTree& t) {
+	int size = 1;
+	if (t.lChild)
+		size += treeSize(*t.lChild);
+	if (t.rChild)
+		size += treeSize(*t.rChild);
+	return size;
+}
 
+
+extern string g_testCollectionFullWord;
 extern int g_xLattice;
 extern int g_yLattice;
 extern double g_maximumArea;
 
-string relatorName(int testNumber)
+// Provides the word for a testIndex while
+// multplied by g_xLattice copies of m and g_yLattice
+// copies of n on the left. The front abelian subword is
+// rewriteen with all m's first and n's second.
+string relatorName(int testIndex)
 {
+    // The global lattice counts (# of m and n's) should be set
+    // by TestCollection.evaluate(). TODO Check when these get reset
 	int xLattice = g_xLattice;
 	int yLattice = g_yLattice;
-	const char *wordName = g_tests.getName(testNumber);
+	const char *wordName = g_tests.getName(testIndex);
 	bool done = false;
 	for (;;) {
 		switch(*wordName) {
@@ -137,9 +161,12 @@ string relatorName(int testNumber)
 	return buf;
 }
 
-bool isEliminated(int i, int n, NamedBox& box) {
+// For test type n = 6 varfies is valid identity,
+// mom variety, or parametrized variety. Otherwise, tests if 
+// n == 1, 3, 4, or 5.
+bool isEliminated(int testIndex, int n, NamedBox& box) {
 	if (n == 6) {
-		string w = box.qr.getName(relatorName(i));
+		string w = box.qr.getName(relatorName(textIndex));
 		if (!g_tests.validIdentity(w, box))
 			return true;
 		if (g_momVarieties.find(w) != g_momVarieties.end()) {
@@ -153,15 +180,6 @@ bool isEliminated(int i, int n, NamedBox& box) {
 	}
 
 	return (n == 1 || n == 3 || n == 4 || n == 5);
-}
-
-int treeSize(PartialTree& t) {
-	int size = 1;
-	if (t.lChild)
-		size += treeSize(*t.lChild);
-	if (t.rChild)
-		size += treeSize(*t.rChild);
-	return size;
 }
 
 extern double g_latticeArea;
