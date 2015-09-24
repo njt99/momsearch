@@ -135,7 +135,7 @@ while True:
         childCount -= 1
 
     if len(holes) == 0:
-        bestHole = 'root'
+        bestHole = ''
     else :    
         bestHole = '1'*200
     for hole in holes:
@@ -149,7 +149,7 @@ while True:
  
     pid = os.fork()
     if pid == 0:
-        if bestHole == 'root':
+        if bestHole == '':
             pidBallSearchDepth = '-1'
         else: 
             pidBallSearchDepth = ballSearchDepth

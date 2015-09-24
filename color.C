@@ -111,7 +111,7 @@ void ParamNode::testLeafNodes(vector<char> testState, int depthRemaining)
 		}
 		double low, high;
 		box.volumeRange(low, high);
-		printf("BOX %s %d %d %f-%f\n", name.c_str(), testsToTry.size(), elimCount, low, high);
+		printf("BOX %s %lu %d %f-%f\n", name.c_str(), testsToTry.size(), elimCount, low, high);
 	}
 }
 

@@ -158,7 +158,7 @@ namespace BallSearchImpl {
 				l.y = -y;
 				Complex t = centerDiff + double(x) + double(y)*params->lattice;
 				l.distance = norm(t);
-				if (abs(l.x) < 4 && abs(l.y < 4))
+				if (abs(l.x) < 4 && abs(l.y) < 4) // TODO: VERIFY THIS IS NOT AN ERROR
 					distances.push_back(l);
 			}
 		}

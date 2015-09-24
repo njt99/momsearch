@@ -166,7 +166,7 @@ string relatorName(int testIndex)
 // n == 1, 3, 4, or 5.
 bool isEliminated(int testIndex, int n, NamedBox& box) {
 	if (n == 6) {
-		string w = box.qr.getName(relatorName(textIndex));
+		string w = box.qr.getName(relatorName(testIndex));
 		if (!g_tests.validIdentity(w, box))
 			return true;
 		if (g_momVarieties.find(w) != g_momVarieties.end()) {
@@ -185,7 +185,7 @@ bool isEliminated(int testIndex, int n, NamedBox& box) {
 extern double g_latticeArea;
 bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& history, vector< NamedBox >& place, int newDepth, int& searchedDepth)
 {
-//	fprintf(stderr, "rr: %s depth %d placeSize %d\n", box.name.c_str(), depth, place.size());
+	fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
 	place.push_back(box);
 	int oldTestIndex = t.testIndex;
 	if (t.testIndex >= 0 && isEliminated(t.testIndex, g_tests.evaluateBox(t.testIndex, box), box))
@@ -209,13 +209,13 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 			vector<bool>& th = history[i];
 			while (th.size() <= depth && (th.size() < depth-6 || th.empty() || th.back())) {
 				bool result = g_tests.evaluateCenter(i, place[th.size()]);
-//				fprintf(stderr, "test %s(%s) = %s\n", g_tests.getName(i), place[th.size()].name.c_str(),
-//					result ? "true" : "false");
+				fprintf(stderr, "test %s(%s) = %s\n", g_tests.getName(i), place[th.size()].name.c_str(),
+					result ? "true" : "false");
 				th.push_back(result);
 			}
 			if (th.back()) {
 				int result = g_tests.evaluateBox(i, box);
-//				fprintf(stderr, "evaluate %s(%s) = %d\n", g_tests.getName(i), box.name.c_str(), result);
+				fprintf(stderr, "evaluate %s(%s) = %d\n", g_tests.getName(i), box.name.c_str(), result);
 				if (result == 1 || result == 3 || result == 4 || result == 5) {
 					if (result == 3)
 						fprintf(stderr, "impossible identity %s(%s)\n", g_tests.getName(i), box.name.c_str());

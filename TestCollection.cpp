@@ -135,10 +135,10 @@ bool TestCollection::validIdentity(string word, Box& box)
 	for (string::size_type pos = 0; pos < word.size(); ++pos) {
 		string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
 		GL2ACJ w(evaluate1(pword, params));
-		if (minabs(w.a-1) > 0 && minabs(w.a+1) > 0
+		if ((minabs(w.a-1) > 0 && minabs(w.a+1) > 0)
 		 || minabs(w.b) > 0
 		 || minabs(w.c) > 0
-		 || minabs(w.d-1) > 0 && minabs(w.d+1) > 0)
+		 || (minabs(w.d-1) > 0 && minabs(w.d+1) > 0))
 			return false;
 	}
 	return true;
@@ -151,14 +151,14 @@ int TestCollection::evaluate(string word, Params<AComplex1Jet>& params, bool isN
 	GL2ACJ g(~G);
 	if (isNotParabolic) {
 		return minabs(w.c) > 0
-		|| minabs(w.a-1) > 0 && minabs(w.a+1) > 0
-		|| minabs(w.d-1) > 0 && minabs(w.d+1) > 0;
+		|| (minabs(w.a-1) > 0 && minabs(w.a+1) > 0)
+		|| (minabs(w.d-1) > 0 && minabs(w.d+1) > 0);
 	}
 	AComplex1Jet r(w.c / g.c);
 	if (maxabs(r) < 1) {
 		if (minabs(w.c) > 0
-		 || minabs(w.a-1) > 0 && minabs(w.a+1) > 0
-		 || minabs(w.d-1) > 0 && minabs(w.d+1) > 0) {
+		 || (minabs(w.a-1) > 0 && minabs(w.a+1) > 0)
+		 || (minabs(w.d-1) > 0 && minabs(w.d+1) > 0)) {
 			return 1;
 		} else {
 			list<string> mandatory;
