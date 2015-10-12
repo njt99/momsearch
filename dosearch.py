@@ -51,7 +51,7 @@ def add_holes(holes, treeholes, directory, boxfile):
     command = '{0} -r {1} \'{2}\''.format(treeholes, directory, boxfile)
     byte_string = command_output(command)
     if not byte_string: return
-    byte_string.replace('root','')
+    byte_string = byte_string.replace('root','')
     newHoles = set(byte_string.rstrip().split('\n'))
     holes |= newHoles
 
@@ -93,8 +93,6 @@ except:
 
 print "Launching Refine"
 
-print holes
-
 # Launch the refine runs
 pidToHole = {};
 while True:
@@ -120,6 +118,8 @@ while True:
         
         print 'Holes: {0} patched, {1} unpatched, {2} holes\n'.format(numPatched, numUnpatched, numHoles)
 
+        print 'Holes: {0}\n'.format(holes)
+
         boxWords = set()
         add_words(boxWords, '{0}/{1}.out'.format(destDir, doneHole))        
         newWords = boxWords - seenWords
@@ -135,7 +135,7 @@ while True:
         childCount -= 1
 
     if len(holes) == 0:
-        bestHole = ''
+        bestHole = 'root'
     else :    
         bestHole = '1'*200
     for hole in holes:
@@ -146,16 +146,22 @@ while True:
 
     done.add(bestHole)
     childCount += 1   
+
+    print done
  
     pid = os.fork()
     if pid == 0:
-        if bestHole == '':
+        if bestHole == 'root':
             pidBallSearchDepth = '-1'
         else: 
             pidBallSearchDepth = ballSearchDepth
 
         out = destDir + '/' + bestHole + '.out'
         err = destDir + '/' + bestHole + '.err'
+
+        print 'Out file: {}\n'.format(out)
+        print 'Err file: {}\n'.format(err)
+
 
         command = treecat + ' ' +  srcDir + ' ' + bestHole + \
                     ' | ' + refine + \
