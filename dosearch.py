@@ -52,6 +52,7 @@ def add_holes(holes, treeholes, directory, boxfile):
     byte_string = command_output(command)
     if not byte_string: return
     byte_string = byte_string.replace('root','')
+    if len(byte_string) == 0 : byte_string = 'root'
     newHoles = set(byte_string.rstrip().split('\n'))
     holes |= newHoles
 

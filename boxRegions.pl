@@ -171,7 +171,7 @@ foreach $rep (sort keys %boxCount) {
 	}
 	my $bounds = "${$bounds{$rep}}[0]$size[0],${$bounds{$rep}}[1]$size[1],${$bounds{$rep}}[2]$size[2],${$bounds{$rep}}[3]$size[3],${$bounds{$rep}}[4]$size[4],${$bounds{$rep}}[5]$size[5]";
 	print "\t$rep: $boxCount{$rep} $ba $parent{$rep} $bounds $names{$rep}\n";
-#	foreach $box (@boxes) {
-#		print "$box\n" if $boxStatus{$box} eq $rep;
-#	}
+	foreach $box (@boxes) {
+		print "$box\n" if $boxStatus{$box} eq $rep;
+	}
 }

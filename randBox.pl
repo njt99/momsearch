@@ -1,3 +1,4 @@
+#! /usr/bin/perl
 $n = 1;
 $n = $ARGV[0] if $#ARGV >= 0;
 open(RANDOM, "</dev/random");

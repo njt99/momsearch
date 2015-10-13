@@ -256,6 +256,9 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	if (!t.lChild) {
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth) {
 			fprintf(stderr, "HOLE %s (%s)\n", box.name.c_str(), box.qr.desc().c_str());
+	        Params<Complex> params = box.center();
+			double latticeArea = norm(params.loxodromicSqrt)*params.lattice.imag();
+			fprintf(stderr, "PREV HOLE area: %f lattice: %f + I %f lox: %f + I %f para: %f + I %f\n",latticeArea, params.lattice.real(), params.lattice.imag(), params.loxodromicSqrt.real(), params.loxodromicSqrt.imag(), params.parabolic.real(),params.parabolic.imag());
 			return false;
 		}
 		t.lChild = new PartialTree();
