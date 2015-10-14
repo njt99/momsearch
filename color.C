@@ -20,7 +20,7 @@ struct ParamNode {
 	ParamNode() :lChild(0), rChild(0), isOpen(true), contradiction(-1) {}
 	ParamNode(ParamNode& parent, int dir);
 	string name;
-	Box box;
+	NamedBox box;
 	ParamNode* lChild;
 	ParamNode* rChild;
 	
