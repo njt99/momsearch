@@ -20,6 +20,7 @@ struct Box {
 	Params<Complex> minimum() const; // closest to 0
 	Params<Complex> maximum() const; // furthest from 0
 	void volumeRange(double& low, double& high) const;
+    double size() const;
 	Box child(int dir) const;
 private:
 	double centerDigits[6];

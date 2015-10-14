@@ -263,7 +263,6 @@ int TestCollection::evaluateBox(int index, NamedBox& box)
 			if (area > g_maximumArea) {
 				return true;
 			} else {
-			    fprintf(stderr, "Box %s has min area: %f\n", box.name.c_str(), area);
 				return false;
 			}
 		}
