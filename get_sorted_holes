@@ -1,0 +1,7 @@
+#!/bin/bash
+grep -r HOLE output/*.err > holes_err
+treecat --holes -r output '' > holes
+grep "()\$" holes_err > holes_no_quasi
+cut -d ":" -f 2- holes_no_quasi > holes_no_quasi_no_filenames
+while read line; do grep $line holes_no_quasi_no_filenames; done < holes > true_holes_no_quasi
+sort -t" " -k6n,6 true_holes_no_quasi > true_holes_no_quasi_sorted
