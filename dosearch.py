@@ -147,8 +147,6 @@ while True:
 
     done.add(bestHole)
     childCount += 1   
-
-    print done
  
     pid = os.fork()
     if pid == 0:
@@ -159,10 +157,6 @@ while True:
 
         out = destDir + '/' + bestHole + '.out'
         err = destDir + '/' + bestHole + '.err'
-
-        print 'Out file: {}\n'.format(out)
-        print 'Err file: {}\n'.format(err)
-
 
         command = treecat + ' ' +  srcDir + ' ' + bestHole + \
                     ' | ' + refine + \

@@ -185,7 +185,7 @@ bool isEliminated(int testIndex, int n, NamedBox& box) {
 extern double g_latticeArea;
 bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& history, vector< NamedBox >& place, int newDepth, int& searchedDepth)
 {
-	fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
+	//fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
 	place.push_back(box);
 	int oldTestIndex = t.testIndex;
 	if (t.testIndex >= 0 && isEliminated(t.testIndex, g_tests.evaluateBox(t.testIndex, box), box))
@@ -209,13 +209,12 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 			vector<bool>& th = history[i];
 			while (th.size() <= depth && (th.size() < depth-6 || th.empty() || th.back())) {
 				bool result = g_tests.evaluateCenter(i, place[th.size()]);
-				fprintf(stderr, "test %s(%s) = %s\n", g_tests.getName(i), place[th.size()].name.c_str(),
-					result ? "true" : "false");
+				//fprintf(stderr, "test %s(%s) = %s\n", g_tests.getName(i), place[th.size()].name.c_str(), result ? "true" : "false");
 				th.push_back(result);
 			}
 			if (th.back()) {
 				int result = g_tests.evaluateBox(i, box);
-				fprintf(stderr, "evaluate %s(%s) = %d\n", g_tests.getName(i), box.name.c_str(), result);
+				//fprintf(stderr, "evaluate %s(%s) = %d\n", g_tests.getName(i), box.name.c_str(), result);
 				if (result == 1 || result == 3 || result == 4 || result == 5) {
 					if (result == 3)
 						fprintf(stderr, "impossible identity %s(%s)\n", g_tests.getName(i), box.name.c_str());
@@ -255,10 +254,13 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	
 	if (!t.lChild) {
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth) {
-			fprintf(stderr, "HOLE %s (%s)\n", box.name.c_str(), box.qr.desc().c_str());
+			// fprintf(stderr, "HOLE %s (%s)\n", box.name.c_str(), box.qr.desc().c_str());
 	        Params<Complex> params = box.center();
-			double latticeArea = norm(params.loxodromicSqrt)*params.lattice.imag();
-			fprintf(stderr, "PREV HOLE area: %f lattice: %f + I %f lox: %f + I %f para: %f + I %f\n",latticeArea, params.lattice.real(), params.lattice.imag(), params.loxodromicSqrt.real(), params.loxodromicSqrt.imag(), params.parabolic.real(),params.parabolic.imag());
+	        Params<Complex> minimum = box.minimum();
+			Params<AComplex1Jet> cover(box.cover());
+			double absLS = minabs(cover.loxodromicSqrt);
+			double area = absLS * absLS * minimum.lattice.imag();
+			fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f size: %.4e (%s)\n", box.name.c_str(), area, params.lattice.real(), params.lattice.imag(), params.loxodromicSqrt.real(), params.loxodromicSqrt.imag(), params.parabolic.real(),params.parabolic.imag(), box.size(), box.qr.desc().c_str());
 			return false;
 		}
 		t.lChild = new PartialTree();

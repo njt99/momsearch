@@ -203,8 +203,8 @@ int main(int argc, char** argv)
     if (!fp) exit(1);
     
     char * boxcode_const = (char *)calloc(10000, sizeof(char));
+	strncpy(boxcode_const, fullboxcode+fileBoxLength, 10000);
     char * boxcode = boxcode_const;
-	strncpy(boxcode, fullboxcode+fileBoxLength, 10000);
     
 	char buf[10000];
     // If the boxcode is still not empty, we traverse down the tree and print only
@@ -218,7 +218,7 @@ int main(int argc, char** argv)
             fclose(fp);
 			exit(0);
 		}
-		if (*boxcode == '1') { // Actually have to process the tree is we go right at any point in the boxcode
+		if (*boxcode == '1') { // Actually have to process the tree if we go right at any point in the boxcode
 		    int success = processTree(fp, NULL, false, false, boxcode);
             if (!success) exit(1); // Incomplete tree or boxcode not found
         }

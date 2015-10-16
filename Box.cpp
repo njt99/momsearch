@@ -136,6 +136,15 @@ void Box::volumeRange(double& low, double& high) const
 	high = (maxSl.real()*maxSl.real() + maxSl.imag()*maxSl.imag()) * max.lattice.imag();
 }
 
+double Box::size() const
+{
+    double box_size = 1;
+	for (int i = 0; i < 6; ++i) {
+		box_size *= scale[i]*sizeDigits[i];
+    }
+    return box_size;
+}
+
 NamedBox NamedBox::child(int dir) const
 {
 	NamedBox child(Box::child(dir));
