@@ -268,7 +268,7 @@ int TestCollection::evaluateBox(int index, NamedBox& box)
 		}
 		default: {
 			Params<AComplex1Jet> cover(box.cover());
-			int result = evaluate(indexString[index-7], cover);
+			int result = evaluate(indexString[index-7], cover, false);
 			if (result) {
 				enumerate(indexString[index-7].c_str());
 			}
