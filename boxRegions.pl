@@ -1,3 +1,4 @@
+# Collect every 6th box coodriante together. For getting parameters later on
 sub coords {
 	my ($box) = @_;
 	my @coord;

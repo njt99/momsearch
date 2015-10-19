@@ -161,7 +161,7 @@ string relatorName(int testIndex)
 	return buf;
 }
 
-// For test type n = 6 varfies is valid identity,
+// For test type n = 6 varfies if valid identity,
 // mom variety, or parametrized variety. Otherwise, tests if 
 // n == 1, 3, 4, or 5.
 bool isEliminated(int testIndex, int n, NamedBox& box) {
@@ -188,8 +188,15 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	//fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
 	place.push_back(box);
 	int oldTestIndex = t.testIndex;
-	if (t.testIndex >= 0 && isEliminated(t.testIndex, g_tests.evaluateBox(t.testIndex, box), box))
-		return true;
+	if (t.testIndex >= 0) {
+        int result = g_tests.evaluateBox(t.testIndex, box);
+        if (isEliminated(t.testIndex, result, box)) {
+//            fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
+            return true;
+        } else {
+            fprintf(stderr, "FAILED to eliminate %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
+        }
+    }
 	if (t.testIndex == -2 && !g_options.fillHoles)
 		return true;
 	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild)) {

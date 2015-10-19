@@ -212,7 +212,7 @@ int TestCollection::evaluate(string word, Params<AComplex1Jet>& params, bool isN
 }
 
 double g_latticeArea;
-bool TestCollection::evaluateCenter(int index, Box& box)
+int TestCollection::evaluateCenter(int index, Box& box)
 {
 	Params<Complex> params = box.center();
 	switch(index) {
@@ -295,7 +295,7 @@ int TestCollection::add(string word)
 {
 	map<string, int>::iterator it = stringIndex.find(word);
 	if (it == stringIndex.end()) {
-//		printf("adding %d=%s\n", indexString.size(), word.c_str());
+//		fprintf(stderr, "adding %lu=%s\n", indexString.size(), word.c_str());
 		stringIndex[word] = indexString.size();
 		indexString.push_back(word);
 		return indexString.size()+6;

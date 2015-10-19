@@ -17,7 +17,7 @@ struct ImpossibleRelations;
 
 struct TestCollection {
 	int size();
-	bool evaluateCenter(int index, Box& box);
+	int evaluateCenter(int index, Box& box);
 	int evaluateBox(int index, NamedBox& box);
 	bool validIdentity(std::string word, Box& box);
 	const char* getName(int index);
