@@ -13,7 +13,7 @@
 
 // the crucial map taking B_0 to B_infinity (and taking
 // B_infinity to B_1') is of the form
-// g(z) = p + l / z
+// g(z) = p + 1 / (s^2 z)
 //
 
 GL2C constructG(const Params<Complex>& params)

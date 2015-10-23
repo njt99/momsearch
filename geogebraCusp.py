@@ -2,7 +2,6 @@
 
 import os, sys, glob, pprint
 from numpy import *
-from Tkinter import *
 
 scale = map(lambda x : 8 * pow(2, x/6.), range(0,-6,-1))
 
@@ -92,10 +91,10 @@ I = [[1.,0.],[0.,1.]]
 horoballs = { 0 : { '' : { 'center' : 0, 'height' : cusp_height, 'gamma' : I, 'word' : ''}}}
 
 # Print box paramenters and group elements
-print 'Parameters:'
-pprint.pprint(params,width=1)
-print 'Elemnts:'
-pprint.pprint(elements,width=2)
+#print 'Parameters:'
+#pprint.pprint(params,width=1)
+#print 'Elemnts:'
+#pprint.pprint(elements,width=2)
 
 # Generate new horoballs
 d = 0
@@ -146,69 +145,18 @@ while d < depth :
             horoballs[d+1][new_word] = { 'center' : new_center, 'height' : new_height, 'gamma' : new_gamma, 'word' : new_word }
     d += 1
 
-pprint.pprint(horoballs,width=2)
+#pprint.pprint(horoballs,width=2)
 
-def draw_ball(ball, canvas, origin, factor, place_label=False) :
-    center = ball['center']
-    height = ball['height']
-    
-    x = origin[0] + factor*real(center)
-    y = origin[1] - factor*imag(center) # Flip coordinate system 
-    r = factor*height/2.
-
-    print '({0},{1},{2})'.format(x,y,r)
-
-    canvas.create_oval(x-r,y-r,x+r,y+r)
-
-    if place_label :
-        canvas.create_text(x,y,ball['word'])
-
-def add_tuples(v,w) :
-    return tuple(map(sum,zip(v,w)))
-
-def factor_tuple(v,factor) :
-    return tuple(factor*x for x in v)
-
-canvas_width = 640
-canvas_height = 800
-point_rad = 5
-factor = 600/(abs(lattice)+1)
-
-print 'Factor {0}'.format(factor)
-print 'Lattice {0}'.format(lattice)
-
-window = Tk()
-canvas = Canvas(window, width=canvas_width, height=canvas_height)
-canvas.pack()
-
-# Pick an origin. TODO: Make this more robust
-origin = [0.,0.]
-origin[0] = canvas_width/4 if real(lattice) > -0.2 else canvas_width/2.5
-origin[1] = factor*(imag(lattice)+0.5)
-print 'Origin {0}'.format(origin)
-
-# Draw the lattice domain lines and points
-lattice_points = [(1.,0.), (real(lattice) + 1, imag(lattice)),(real(lattice), imag(lattice)), (0.,0.)]
-v_coord = copy(origin)
-prev_coord = copy(origin) 
-for v in lattice_points :
-    print 'Point {0}'.format(v)
-    print origin[0]
-    print factor*v[0] 
-    v_coord[0] = origin[0]+factor*v[0]
-    v_coord[1] = origin[1]-factor*v[1]
-    print 'v_coord {0}'.format(v_coord)
-    canvas.create_oval(v_coord[0]-point_rad,v_coord[1]-point_rad, v_coord[0]+point_rad, v_coord[1]+point_rad,fill='black')
-    canvas.create_line(prev_coord[0],prev_coord[1],v_coord[0],v_coord[1])
-    print 'prev_coord {0}'.format(prev_coord)
-    prev_coord = copy(v_coord)
-
+command = 'Execute[{'
 for d in horoballs :
     depth_level = horoballs[d]
     for word in depth_level :
-        draw_ball(depth_level[word],canvas,origin,factor)
+        ball = depth_level[word]
+        base = ball['center']
+        rad = ball['height']/2.
+        center = (float(real(base)),float(imag(base)),rad)
+        command += '\"Sphere[({0:.20f},{1:.20f},{2:.20f}),{3:.20f}]\",'.format(center[0],center[1],center[2],rad)
 
-mainloop()
-
-
-
+command = command[:-1]
+command += '}]'
+print command
