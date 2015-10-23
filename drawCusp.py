@@ -1,8 +1,9 @@
 #!/usr/bin/python
 
-import os, sys, glob, pprint
+import os, sys, glob
 from numpy import *
 from Tkinter import *
+from pprint import *
 
 scale = map(lambda x : 8 * pow(2, x/6.), range(0,-6,-1))
 
@@ -79,8 +80,14 @@ def get_first(word) :
     else :
         return ''
 
+if len(sys.argv) < 3 :
+    print 'Usage: drawCusp box_code depth <height_cutoff>'
+    sys.exit(2)
+
 box = sys.argv[1]
 depth = int(sys.argv[2])
+height_cutoff = float(sys.argv[3]) if len(sys.argv) > 3 else 0.
+
 params = get_center(box)
 G = get_G(params)
 g = get_g(params)
@@ -93,9 +100,9 @@ horoballs = { 0 : { '' : { 'center' : 0, 'height' : cusp_height, 'gamma' : I, 'w
 
 # Print box paramenters and group elements
 print 'Parameters:'
-pprint.pprint(params,width=1)
+pprint(params,width=1)
 print 'Elemnts:'
-pprint.pprint(elements,width=2)
+pprint(elements,width=2)
 
 # Generate new horoballs
 d = 0
@@ -135,18 +142,22 @@ while d < depth :
             # Keep track of the word and it's representative
             new_word = h_char + word
             new_gamma = dot(h,gamma)
-            M_word = 'M'*M_pow if M_pow > 0 else 'm'*M_pow 
-            new_word = M_word + new_word
-            N_word = 'N'*N_pow if N_pow > 0 else 'n'*N_pow 
-            new_word = N_word + new_word
-            T = get_T(params, M_pow, N_pow)
-            new_gamma = dot(T, new_gamma)
-            new_center = mobius(T, h_center)
+            if new_height > 2*cusp_height :
+                sys.stderr.write('Possible giant horoball with word {0} of height {1} with center {2}\nElement:\n'.format(new_word,new_height,new_center))
+                sys.stderr.write(pformat(new_gamma,width=2)+'\n')
+            else :
+                M_word = 'M'*M_pow if M_pow > 0 else 'm'*M_pow 
+                new_word = M_word + new_word
+                N_word = 'N'*N_pow if N_pow > 0 else 'n'*N_pow 
+                new_word = N_word + new_word
+                T = get_T(params, M_pow, N_pow)
+                new_gamma = dot(T, new_gamma)
+                new_center = mobius(T, h_center)
 
-            horoballs[d+1][new_word] = { 'center' : new_center, 'height' : new_height, 'gamma' : new_gamma, 'word' : new_word }
+                horoballs[d+1][new_word] = { 'center' : new_center, 'height' : new_height, 'gamma' : new_gamma, 'word' : new_word }
     d += 1
 
-pprint.pprint(horoballs,width=2)
+#pprint(horoballs,width=2)
 
 def draw_ball(ball, canvas, origin, factor, place_label=False) :
     center = ball['center']
@@ -155,13 +166,14 @@ def draw_ball(ball, canvas, origin, factor, place_label=False) :
     x = origin[0] + factor*real(center)
     y = origin[1] - factor*imag(center) # Flip coordinate system 
     r = factor*height/2.
-
-    print '({0},{1},{2})'.format(x,y,r)
+    #print '({0},{1},{2})'.format(x,y,r)
 
     canvas.create_oval(x-r,y-r,x+r,y+r)
 
     if place_label :
-        canvas.create_text(x,y,ball['word'])
+        word = ball['word']
+        label_text = word if len(word) > 0 else 'I'
+        canvas.create_text(x,y,text=label_text)
 
 def add_tuples(v,w) :
     return tuple(map(sum,zip(v,w)))
@@ -192,22 +204,23 @@ lattice_points = [(1.,0.), (real(lattice) + 1, imag(lattice)),(real(lattice), im
 v_coord = copy(origin)
 prev_coord = copy(origin) 
 for v in lattice_points :
-    print 'Point {0}'.format(v)
-    print origin[0]
-    print factor*v[0] 
     v_coord[0] = origin[0]+factor*v[0]
     v_coord[1] = origin[1]-factor*v[1]
-    print 'v_coord {0}'.format(v_coord)
     canvas.create_oval(v_coord[0]-point_rad,v_coord[1]-point_rad, v_coord[0]+point_rad, v_coord[1]+point_rad,fill='black')
     canvas.create_line(prev_coord[0],prev_coord[1],v_coord[0],v_coord[1])
-    print 'prev_coord {0}'.format(prev_coord)
     prev_coord = copy(v_coord)
 
+ball_count = 0
 for d in horoballs :
     depth_level = horoballs[d]
     for word in depth_level :
-        draw_ball(depth_level[word],canvas,origin,factor)
+        ball = depth_level[word]
+        height = ball['height']
+        if height > height_cutoff :
+            draw_ball(ball,canvas,origin,factor)
+            ball_count += 1
 
+print 'Ball count: {0}'.format(ball_count)
 mainloop()
 
 
