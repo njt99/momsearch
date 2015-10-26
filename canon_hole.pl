@@ -12,9 +12,9 @@ sub versions
         sort @v;
 }
 while (<>) {
-	if (/HOLE ([01]*) \((.*)\)/) {
-		$box = $1;
-		@words = split(/,/, $2);
+	if (/(.*)HOLE ([01]*) (.+) \((.*)\)/) {
+		$box = $2;
+		@words = split(/,/, $4);
 		%canonWords = ();
 		foreach $word (@words) {
 			if (!defined $canonVersion{$word}) {
