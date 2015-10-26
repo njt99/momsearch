@@ -154,6 +154,7 @@ while d < depth :
                 new_center = mobius(T, h_center)
 
                 horoballs[d+1][new_word] = { 'center' : new_center, 'height' : new_height, 'gamma' : new_gamma, 'word' : new_word }
+    sys.stderr.write('Depth {} complete\n'.format(d))
     d += 1
 
 #pprint.pprint(horoballs,width=2)
