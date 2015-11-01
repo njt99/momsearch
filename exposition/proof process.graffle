@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>ActiveLayerIndex</key>
 	<integer>0</integer>
+	<key>ApplicationVersion</key>
+	<array>
+		<string>com.omnigroup.OmniGraffle6</string>
+		<string>167.2.0.244490</string>
+	</array>
 	<key>AutoAdjust</key>
 	<true/>
-	<key>CanvasColor</key>
+	<key>BackgroundGraphic</key>
 	<dict>
-		<key>w</key>
-		<string>1</string>
+		<key>Bounds</key>
+		<string>{{0, 0}, {1728, 1536}}</string>
+		<key>Class</key>
+		<string>SolidGraphic</string>
+		<key>ID</key>
+		<integer>2</integer>
+		<key>Style</key>
+		<dict>
+			<key>stroke</key>
+			<dict>
+				<key>Draws</key>
+				<string>NO</string>
+			</dict>
+		</dict>
 	</dict>
+	<key>BaseZoom</key>
+	<integer>0</integer>
 	<key>CanvasOrigin</key>
 	<string>{0, 0}</string>
-	<key>CanvasScale</key>
-	<real>1</real>
 	<key>ColumnAlign</key>
 	<integer>1</integer>
 	<key>ColumnSpacing</key>
@@ -24,9 +41,9 @@
 	<key>Creator</key>
 	<string>Nathaniel Thurston</string>
 	<key>DisplayScale</key>
-	<string>1 cm = 1 cm</string>
+	<string>1.0000 cm = 1.0000 cm</string>
 	<key>GraphDocumentVersion</key>
-	<integer>5</integer>
+	<integer>12</integer>
 	<key>GraphicsList</key>
 	<array>
 		<dict>
@@ -47,8 +64,6 @@
 			</dict>
 			<key>ID</key>
 			<integer>708</integer>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>fill</key>
@@ -70,12 +85,14 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fswiss\fcharset77 Helvetica;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs36 \cf0 Finding words}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 			<key>Wrap</key>
 			<string>NO</string>
@@ -94,21 +111,30 @@
 			<integer>707</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
-			<real>8.193756103515625</real>
+			<real>5.0939461742780452</real>
 			<key>Points</key>
 			<array>
-				<string>{1485.37, 266.331}</string>
-				<string>{1547.13, 306.518}</string>
+				<string>{1485.3699999999999, 266.33100000000002}</string>
+				<string>{1547.1324999999999, 300.31889234855606}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -135,21 +161,30 @@
 			<integer>706</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{1361.67, 240.331}</string>
-				<string>{1401.87, 240.331}</string>
+				<string>{1361.6700000000001, 240.33099999999999}</string>
+				<string>{1401.8699999999999, 240.33099999999999}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -166,9 +201,9 @@
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{1401.87, 214.331}, {167, 52}}</string>
+			<string>{{1401.8699999999999, 214.33099999999999}, {167, 52}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -195,16 +230,14 @@
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -216,12 +249,14 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 For each box, try each word in this universe which we can't rule out}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
@@ -236,15 +271,22 @@
 			<integer>704</integer>
 			<key>Points</key>
 			<array>
-				<string>{1349.1, 145.331}</string>
-				<string>{1401.87, 145.331}</string>
+				<string>{1348.605, 145.33100000000002}</string>
+				<string>{1401.8699999999999, 145.33100000000002}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>HeadArrow</key>
 					<string>0</string>
+					<key>Legacy</key>
+					<true/>
 					<key>TailArrow</key>
 					<string>0</string>
 				</dict>
@@ -257,18 +299,15 @@
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{1260.67, 697.331}, {35, 14}}</string>
+			<string>{{1260.6689405906802, 697.33069696949246}, {35, 14}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
 			<string>YES</string>
+			<key>Flow</key>
+			<string>Resize</string>
 			<key>FontInfo</key>
 			<dict>
-				<key>Color</key>
-				<dict>
-					<key>w</key>
-					<string>0</string>
-				</dict>
 				<key>Font</key>
 				<string>Helvetica</string>
 				<key>Size</key>
@@ -285,8 +324,6 @@
 				<key>RotationType</key>
 				<integer>0</integer>
 			</dict>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -303,28 +340,29 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fswiss\fcharset77 Helvetica;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs24 \cf0 YES}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
+			<key>Wrap</key>
+			<string>NO</string>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{1353.02, 638}, {28, 14}}</string>
+			<string>{{1353.022238994602, 638}, {28, 14}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
 			<string>YES</string>
+			<key>Flow</key>
+			<string>Resize</string>
 			<key>FontInfo</key>
 			<dict>
-				<key>Color</key>
-				<dict>
-					<key>w</key>
-					<string>0</string>
-				</dict>
 				<key>Font</key>
 				<string>Helvetica</string>
 				<key>Size</key>
@@ -341,8 +379,6 @@
 				<key>RotationType</key>
 				<integer>0</integer>
 			</dict>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -359,13 +395,17 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fswiss\fcharset77 Helvetica;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs24 \cf0 NO}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
+			<key>Wrap</key>
+			<string>NO</string>
 		</dict>
 		<dict>
 			<key>Class</key>
@@ -379,21 +419,30 @@
 			<integer>701</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{1348.6, 744.585}</string>
-				<string>{1401.87, 744.335}</string>
+				<string>{1348.605, 744.58500000000004}</string>
+				<string>{1401.8699999999999, 744.33500000000004}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -420,21 +469,30 @@
 			<integer>700</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{1278.17, 685}</string>
-				<string>{1278.17, 726.335}</string>
+				<string>{1278.1700000000001, 685}</string>
+				<string>{1278.1675, 726.33500000000004}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -463,21 +521,30 @@
 			<integer>699</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{1472.31, 626.75}</string>
-				<string>{1361.67, 416.331}</string>
+				<string>{1472.3074999999999, 626.75}</string>
+				<string>{1361.6700000000001, 409.16550000000001}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -504,21 +571,30 @@
 			<integer>698</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{1346.17, 645}</string>
-				<string>{1401.87, 645}</string>
+				<string>{1346.1700000000003, 645}</string>
+				<string>{1401.8699999999999, 645}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -545,21 +621,30 @@
 			<integer>697</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{1278.15, 564.165}</string>
-				<string>{1278.17, 605}</string>
+				<string>{1278.1455000000001, 564.16499999999996}</string>
+				<string>{1278.1700000000001, 605}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -584,21 +669,30 @@
 			<integer>696</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{1278.17, 442.331}</string>
-				<string>{1278.15, 483.665}</string>
+				<string>{1278.1700000000001, 442.33100000000002}</string>
+				<string>{1278.1455000000001, 483.66499999999991}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -625,21 +719,30 @@
 			<integer>694</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{1278.17, 354.331}</string>
-				<string>{1278.17, 390.331}</string>
+				<string>{1278.1700000000001, 354.83099999999996}</string>
+				<string>{1278.1700000000001, 376}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -666,21 +769,30 @@
 			<integer>693</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{1278.17, 266.331}</string>
-				<string>{1278.17, 302.331}</string>
+				<string>{1278.1700000000001, 266.33100000000002}</string>
+				<string>{1278.1700000000001, 284.88189234855605}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -697,9 +809,9 @@
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{1194.67, 302.331}, {167, 52}}</string>
+			<string>{{1194.6700000000001, 284.88189234855605}, {167, 69.44910765144391}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -726,16 +838,14 @@
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -747,12 +857,14 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Whenever a box has very deep descendants, attempt to add new words for which w(C) is closer than G(C), at the center of that box}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
@@ -767,21 +879,30 @@
 			<integer>691</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{1278.17, 185.331}</string>
-				<string>{1278.17, 214.331}</string>
+				<string>{1278.1675, 185.33100000000002}</string>
+				<string>{1278.1700000000001, 214.33099999999996}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -810,15 +931,22 @@
 			<integer>689</integer>
 			<key>Points</key>
 			<array>
-				<string>{1599.26, 369.768}</string>
-				<string>{1615.03, 409.956}</string>
+				<string>{1599.2589653416667, 369.76800000000003}</string>
+				<string>{1615.03, 409.95600000000002}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>HeadArrow</key>
 					<string>0</string>
+					<key>Legacy</key>
+					<true/>
 					<key>TailArrow</key>
 					<string>0</string>
 				</dict>
@@ -833,9 +961,9 @@
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{1450.83, 306.518}, {192.605, 63.25}}</string>
+			<string>{{1450.8299999999999, 300.31889234855606}, {192.60499999999999, 69.44910765144391}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -862,16 +990,14 @@
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -883,20 +1009,22 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;\f1\fnil\fcharset77 MinionPro-It;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Any time we evaluate w(center)(C) as not closer than w(center)(G), we can rule out w as a possible word for the box, 
-\f1\i and also for its first six descendants}</string>
+\i and also for its first six descendants}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{1401.87, 119.331}, {167, 52}}</string>
+			<string>{{1401.8699999999999, 119.331}, {167, 52}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -923,16 +1051,14 @@
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -944,17 +1070,19 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-It;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\i\fs22 \cf0 Exhaustive search theoretically possible, but not practical due to time constraints}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{1401.87, 726.335}, {90, 36}}</string>
+			<string>{{1401.8699999999999, 726.33500000000004}, {90, 36}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
@@ -971,19 +1099,21 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fswiss\fcharset77 Helvetica;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\partightenfactor0
 
 \f0\fs20 \cf0 Stop}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{1207.73, 726.335}, {140.875, 36.5}}</string>
+			<string>{{1207.73, 726.33500000000004}, {140.875, 36.5}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1010,16 +1140,14 @@
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -1031,19 +1159,21 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Add w' to the universe of words under consideration}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{1531.53, 409.956}, {167, 52}}</string>
+			<string>{{1531.53, 409.95600000000002}, {167, 52}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1070,16 +1200,14 @@
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -1091,19 +1219,21 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-It;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\i\fs22 \cf0 The centers of each of the first 6 ancestors of a box are in the box.}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{1194.67, 214.331}, {167, 52}}</string>
+			<string>{{1194.6700000000001, 214.33099999999999}, {167, 52}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1130,16 +1260,14 @@
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -1151,17 +1279,19 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Maintain a universe of words w which are being considered for this purpose}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{1210.67, 605}, {135, 80}}</string>
+			<string>{{1210.6700000000001, 605}, {135, 80}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
@@ -1178,19 +1308,21 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fswiss\fcharset77 Helvetica;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\partightenfactor0
 
 \f0\fs20 \cf0 Is w'(c) closer to C than g(C)?}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{1401.87, 626.75}, {140.875, 36.5}}</string>
+			<string>{{1401.8699999999999, 626.75}, {140.875, 36.5}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1217,16 +1349,14 @@
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -1238,19 +1368,21 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Add w' and its inverse to S}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{1190, 483.665}, {176.291, 80}}</string>
+			<string>{{1190, 483.66500000000002}, {176.291, 80}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1277,16 +1409,14 @@
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -1298,19 +1428,21 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Consider all words w' = w_i M^k N^l w_j^\{-1\}, where i, j, k, l are integers, and choose a word w' for which w'(C) is closest to C at the center of the box.}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{1194.67, 390.331}, {167, 52}}</string>
+			<string>{{1194.6700000000001, 376}, {167, 66.331000000000017}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1337,16 +1469,14 @@
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -1358,12 +1488,14 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Iterative search process. At each step, program has a set of words S =  \{w_i\}.  Initially, S = \{G, g\}}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
@@ -1384,8 +1516,6 @@
 			</dict>
 			<key>ID</key>
 			<integer>678</integer>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>fill</key>
@@ -1407,20 +1537,22 @@
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fswiss\fcharset77 Helvetica;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs36 \cf0 Methods of handling terminal boxes\
 in the search tree}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 			<key>Wrap</key>
 			<string>NO</string>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
 			<string>{{1207.73, 105.331}, {140.875, 80}}</string>
 			<key>Class</key>
@@ -1449,16 +1581,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -1471,24 +1601,26 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>r</key>
-						<string>1</string>
+						<real>1</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Semibold;\f1\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;\red255\green0\blue0;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\b\fs22 \cf2 ?
-\f1\b0 \cf0  Find a word w in the letters M, N, G and their inverses for which w(C) is closer to C than G(C), for every point in the box}</string>
+\b0 \cf0  Find a word w in the letters M, N, G and their inverses for which w(C) is closer to C than G(C), for every point in the box}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
@@ -1505,21 +1637,30 @@ in the search tree}</string>
 			<integer>676</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
-			<real>37.037513732910156</real>
+			<real>37.037500000000009</real>
 			<key>Points</key>
 			<array>
-				<string>{225, 569.542}</string>
-				<string>{322.875, 650.177}</string>
+				<string>{225, 566.30656826320501}</string>
+				<string>{322.875, 650.17700000000002}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -1548,21 +1689,30 @@ in the search tree}</string>
 			<integer>675</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
-			<real>14.974998474121094</real>
+			<real>14.975000000000009</real>
 			<key>Points</key>
 			<array>
-				<string>{498.496, 242.25}</string>
-				<string>{450.669, 296}</string>
+				<string>{498.49549999999999, 242.25}</string>
+				<string>{450.66949999999997, 296}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -1579,7 +1729,7 @@ in the search tree}</string>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
 			<string>{{392, 296}, {117.339, 48}}</string>
 			<key>Class</key>
@@ -1608,16 +1758,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -1629,19 +1777,21 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Exploit symmetries to further restrict choices of M, N, G}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{322.875, 622.177}, {140.875, 56}}</string>
+			<string>{{322.875, 622.17700000000002}, {140.875, 56}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1668,16 +1818,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -1690,23 +1838,25 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>1</string>
+						<real>1</real>
 						<key>r</key>
-						<string>0</string>
+						<real>0.0</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Show that the box does not intersect the compact parameter space}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
@@ -1721,21 +1871,30 @@ in the search tree}</string>
 			<integer>671</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{771.875, 727.75}</string>
-				<string>{969.608, 727.75}</string>
+				<string>{771.875, 727.74964999999997}</string>
+				<string>{969.60799999999995, 727.75}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -1752,9 +1911,9 @@ in the search tree}</string>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{969.608, 684.75}, {140.875, 86}}</string>
+			<string>{{969.60799999999995, 684.75}, {140.875, 86}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1781,16 +1940,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -1803,23 +1960,25 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>1</string>
+						<real>1</real>
 						<key>r</key>
-						<string>0</string>
+						<real>0.0</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Any torsion-free discrete groups which have a primary representative within the box can be obtained by dehn filling of N}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
@@ -1834,21 +1993,30 @@ in the search tree}</string>
 			<integer>668</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{701.438, 420}</string>
-				<string>{701.438, 528}</string>
+				<string>{701.4375, 420}</string>
+				<string>{701.4375, 528}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -1875,21 +2043,30 @@ in the search tree}</string>
 			<integer>665</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{701.438, 661.79}</string>
-				<string>{701.438, 692.665}</string>
+				<string>{701.4375, 661.78999999999996}</string>
+				<string>{701.4375, 692.66499999999996}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -1906,9 +2083,9 @@ in the search tree}</string>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{631, 692.665}, {140.875, 70.1693}}</string>
+			<string>{{631, 692.66499999999996}, {140.875, 70.169300000000007}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -1935,16 +2112,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -1957,31 +2132,33 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>r</key>
-						<string>1</string>
+						<real>1</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Semibold;\f1\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;\red255\green0\blue0;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\b\fs22 \cf2 ?
-\f1\b0 \cf0  Use SnapPea or other tools to find a hyperbolic structure on N and to identify it as one of the known manifolds}</string>
+\b0 \cf0  Use SnapPea or other tools to find a hyperbolic structure on N and to identify it as one of the known manifolds}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{631, 528}, {140.875, 133.79}}</string>
+			<string>{{631, 528}, {140.875, 133.78999999999999}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -2008,16 +2185,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>fill</key>
@@ -2025,13 +2200,13 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>a</key>
-						<string>0.12</string>
+						<real>0.12</real>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>r</key>
-						<string>1</string>
+						<real>1</real>
 					</dict>
 				</dict>
 				<key>shadow</key>
@@ -2044,24 +2219,26 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>r</key>
-						<string>1</string>
+						<real>1</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Semibold;\f1\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;\red255\green0\blue0;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\b\fs22 \cf2 ?
-\f1\b0 \cf0  Construct a full internal topological MOM-n, N, using the cusp diagram implied by w=1 and the combinatorial geometrical constraints (embeddedness, ordering of bridges around a vertex) given by the box}</string>
+\b0 \cf0  Construct a full internal topological MOM-n, N, using the cusp diagram implied by w=1 and the combinatorial geometrical constraints (embeddedness, ordering of bridges around a vertex) given by the box}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
@@ -2076,21 +2253,30 @@ in the search tree}</string>
 			<integer>660</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{1051.81, 577.5}</string>
-				<string>{1051.81, 293}</string>
+				<string>{1051.8135, 577.5}</string>
+				<string>{1051.8135, 293}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -2115,21 +2301,30 @@ in the search tree}</string>
 			<integer>659</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
 				<string>{943.875, 605.5}</string>
-				<string>{981.376, 605.5}</string>
+				<string>{981.37599999999998, 605.5}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -2156,21 +2351,30 @@ in the search tree}</string>
 			<integer>658</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{873.438, 533.25}</string>
-				<string>{873.438, 577.5}</string>
+				<string>{873.4375, 533.25}</string>
+				<string>{873.4375, 577.5}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -2199,21 +2403,30 @@ in the search tree}</string>
 			<integer>657</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
 				<string>{771.875, 398}</string>
-				<string>{873.438, 433}</string>
+				<string>{873.4375, 433}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -2230,9 +2443,9 @@ in the search tree}</string>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{981.376, 577.5}, {140.875, 56}}</string>
+			<string>{{981.37599999999998, 577.5}, {140.875, 56}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -2259,16 +2472,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -2281,29 +2492,31 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>r</key>
-						<string>1</string>
+						<real>1</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Semibold;\f1\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;\red255\green0\blue0;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\b\fs22 \cf2 ?
-\f1\b0 \cf0  Show that x != 1}</string>
+\b0 \cf0  Show that x != 1}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
 			<string>{{803, 577.5}, {140.875, 56}}</string>
 			<key>Class</key>
@@ -2332,16 +2545,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -2353,17 +2564,19 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 If, in addition, x != 1, then x must be elliptic.}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
 			<string>{{803, 433}, {140.875, 100.25}}</string>
 			<key>Class</key>
@@ -2392,16 +2605,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -2414,24 +2625,26 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>r</key>
-						<string>1</string>
+						<real>1</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Semibold;\f1\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;\red255\green0\blue0;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\b\fs22 \cf2 ?
-\f1\b0 \cf0  Find words x and t, and integers p != 1, i and j such that w' = t x^p M^i N^j t^-1 -- e.g., w' is conjugate to the product of a power of another word with a translation}</string>
+\b0 \cf0  Find words x and t, and integers p != 1, i and j such that w' = t x^p M^i N^j t^-1 -- e.g., w' is conjugate to the product of a power of another word with a translation}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
@@ -2448,21 +2661,30 @@ in the search tree}</string>
 			<integer>653</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{701.438, 345.125}</string>
-				<string>{701.438, 376}</string>
+				<string>{701.4375, 345.125}</string>
+				<string>{701.4375, 376}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -2491,21 +2713,30 @@ in the search tree}</string>
 			<integer>652</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
-			<real>13.23675537109375</real>
+			<real>13.236593581000022</real>
 			<key>Points</key>
 			<array>
 				<string>{943.875, 317.125}</string>
-				<string>{994.149, 279.564}</string>
+				<string>{994.148187162, 274.12439614700003}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -2532,6 +2763,8 @@ in the search tree}</string>
 			<integer>651</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
@@ -2541,12 +2774,19 @@ in the search tree}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -2573,21 +2813,30 @@ in the search tree}</string>
 			<integer>650</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
-			<real>12.734649658203125</real>
+			<real>12.734500000000025</real>
 			<key>Points</key>
 			<array>
 				<string>{943.875, 230.25}</string>
-				<string>{993.144, 251.923}</string>
+				<string>{993.14400000000001, 235.29487245800001}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -2614,6 +2863,8 @@ in the search tree}</string>
 			<integer>649</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
@@ -2623,12 +2874,19 @@ in the search tree}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -2653,21 +2911,30 @@ in the search tree}</string>
 			<integer>648</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{701.438, 258.25}</string>
-				<string>{701.438, 289.125}</string>
+				<string>{701.4375, 258.25}</string>
+				<string>{701.4375, 289.125}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -2694,21 +2961,30 @@ in the search tree}</string>
 			<integer>647</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{701.438, 171.375}</string>
-				<string>{701.438, 202.25}</string>
+				<string>{701.4375, 171.375}</string>
+				<string>{701.4375, 202.25}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -2723,7 +2999,7 @@ in the search tree}</string>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
 			<string>{{631, 376}, {140.875, 44}}</string>
 			<key>Class</key>
@@ -2752,16 +3028,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -2773,17 +3047,19 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 w = M^k N^j, and write w' = w M^-k N^-j.}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
 			<string>{{803, 289.125}, {140.875, 56}}</string>
 			<key>Class</key>
@@ -2812,16 +3088,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -2834,29 +3108,31 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>r</key>
-						<string>1</string>
+						<real>1</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Semibold;\f1\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;\red255\green0\blue0;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\b\fs22 \cf2 ?
-\f1\b0 \cf0  Show that w is not in the lattice generated by M, N, for every point in the box}</string>
+\b0 \cf0  Show that w is not in the lattice generated by M, N, for every point in the box}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
 			<string>{{631, 289.125}, {140.875, 56}}</string>
 			<key>Class</key>
@@ -2885,16 +3161,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -2906,19 +3180,21 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 w(C) = C.  If w is not in the lattice generated by M, N, then M, N don't generate subgroup fixing C}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{993.144, 237}, {117.339, 56}}</string>
+			<string>{{993.14400000000001, 214.33100000000002}, {117.339, 78.669000000000011}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -2945,16 +3221,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -2967,28 +3241,30 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>1</string>
+						<real>1</real>
 						<key>r</key>
-						<string>0</string>
+						<real>0.0</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 The box cannot contain a primary representative of a torsion-free discrete group}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
 			<string>{{803, 202.25}, {140.875, 56}}</string>
 			<key>Class</key>
@@ -3017,16 +3293,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -3039,29 +3313,31 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>r</key>
-						<string>1</string>
+						<real>1</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Semibold;\f1\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;\red255\green0\blue0;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\b\fs22 \cf2 ?
-\f1\b0 \cf0  Show that w(C) != C for every point in the box }</string>
+\b0 \cf0  Show that w(C) != C for every point in the box }</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
 			<string>{{631, 202.25}, {140.875, 56}}</string>
 			<key>Class</key>
@@ -3090,16 +3366,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -3111,17 +3385,19 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 If, in adddition, w(C) != C, then G doesn't demonstrate maximal cusp area.}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
 			<string>{{631, 91.375}, {140.875, 80}}</string>
 			<key>Class</key>
@@ -3150,16 +3426,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -3172,24 +3446,26 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>r</key>
-						<string>1</string>
+						<real>1</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Semibold;\f1\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;\red255\green0\blue0;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\b\fs22 \cf2 ?
-\f1\b0 \cf0  Find a word w in the letters M, N, G and their inverses for which w(C) is closer to C than G(C), for every point in the box}</string>
+\b0 \cf0  Find a word w in the letters M, N, G and their inverses for which w(C) is closer to C than G(C), for every point in the box}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
@@ -3204,21 +3480,30 @@ in the search tree}</string>
 			<integer>634</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
 				<string>{435.774, 210.625}</string>
-				<string>{464.826, 210.625}</string>
+				<string>{464.82600000000002, 210.625}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -3245,21 +3530,30 @@ in the search tree}</string>
 			<integer>633</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{289.383, 210.625}</string>
-				<string>{318.435, 210.625}</string>
+				<string>{289.38300000000004, 210.625}</string>
+				<string>{318.43500000000006, 210.625}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -3288,21 +3582,30 @@ in the search tree}</string>
 			<integer>597</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{142.992, 210.625}</string>
-				<string>{172.044, 210.625}</string>
+				<string>{142.99189999999996, 210.625}</string>
+				<string>{172.04399999999998, 210.625}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -3319,9 +3622,9 @@ in the search tree}</string>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{464.826, 179}, {67.339, 63.25}}</string>
+			<string>{{464.82600000000002, 179}, {67.338999999999999, 63.25}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3348,16 +3651,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -3369,19 +3670,21 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Discrete group generated by M, N, G}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{172.044, 182.625}, {117.339, 56}}</string>
+			<string>{{172.04400000000001, 182.625}, {117.339, 56}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3408,16 +3711,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -3429,17 +3730,19 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Isometries M, N which are minimum-distance generators for subgroup fixing C}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
 			<string>{{318.435, 179}, {117.339, 63.25}}</string>
 			<key>Class</key>
@@ -3468,16 +3771,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -3489,19 +3790,21 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Isometry G which demonstrates maximal cusp area of C}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{25.6529, 186.625}, {117.339, 48}}</string>
+			<string>{{25.652899999999999, 186.625}, {117.339, 48}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3528,16 +3831,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -3549,19 +3850,21 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Hyperbolic cusped manifold M with cusp C}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{444, 32.9154}, {117.339, 70.1693}}</string>
+			<string>{{444, 32.915399999999998}, {117.339, 70.169300000000007}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3588,16 +3891,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -3609,12 +3910,14 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-It;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\i\fs22 \cf0 We will expand the list of "known manifolds" as needed in the process of the search.}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
@@ -3631,21 +3934,30 @@ in the search tree}</string>
 			<integer>619</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{200, 578.177}</string>
-				<string>{223.456, 727.427}</string>
+				<string>{199.99967405956059, 578.17700000000013}</string>
+				<string>{223.45600000000002, 727.42700000000002}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -3674,21 +3986,30 @@ in the search tree}</string>
 			<integer>618</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
-			<real>-1</real>
+			<real>37.037500000000009</real>
 			<key>Points</key>
 			<array>
-				<string>{225, 559.927}</string>
-				<string>{322.875, 559.927}</string>
+				<string>{225, 553.08850000000007}</string>
+				<string>{322.875, 567.05200000000013}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -3717,21 +4038,30 @@ in the search tree}</string>
 			<integer>617</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
-			<real>37.037513732910156</real>
+			<real>37.037500000000009</real>
 			<key>Points</key>
 			<array>
-				<string>{225, 551.863}</string>
-				<string>{322.875, 469.677}</string>
+				<string>{225, 542.00235908013519}</string>
+				<string>{322.875, 469.67700000000002}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -3760,21 +4090,30 @@ in the search tree}</string>
 			<integer>615</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{170.5, 508.677}</string>
-				<string>{170.5, 541.677}</string>
+				<string>{170.5, 508.67700000000002}</string>
+				<string>{170.5, 528}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -3803,21 +4142,30 @@ in the search tree}</string>
 			<integer>614</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{170.5, 426.427}</string>
-				<string>{170.5, 460.677}</string>
+				<string>{170.5, 431.58662611383977}</string>
+				<string>{170.5, 452.67700000000002}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -3844,21 +4192,30 @@ in the search tree}</string>
 			<integer>613</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
+			<key>OrthogonalBarPoint</key>
+			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
 			<real>-1</real>
 			<key>Points</key>
 			<array>
-				<string>{225, 398.427}</string>
-				<string>{255.331, 398.427}</string>
+				<string>{225, 396.50197611383976}</string>
+				<string>{255.33100000000002, 396.50197611383976}</string>
 			</array>
 			<key>Style</key>
 			<dict>
+				<key>shadow</key>
+				<dict>
+					<key>Draws</key>
+					<string>NO</string>
+				</dict>
 				<key>stroke</key>
 				<dict>
 					<key>CornerRadius</key>
 					<real>5</real>
 					<key>HeadArrow</key>
 					<string>Arrow</string>
+					<key>Legacy</key>
+					<true/>
 					<key>LineType</key>
 					<integer>2</integer>
 					<key>TailArrow</key>
@@ -3875,9 +4232,9 @@ in the search tree}</string>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{223.456, 699.427}, {140.875, 56}}</string>
+			<string>{{223.45599999999999, 699.42700000000002}, {140.875, 56}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3904,16 +4261,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -3925,19 +4280,21 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Bisect the box, and repeat the process for both of the sub-boxes.}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{322.875, 441.677}, {140.875, 56}}</string>
+			<string>{{322.875, 441.67700000000002}, {140.875, 56}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -3964,16 +4321,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -3986,30 +4341,32 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>1</string>
+						<real>1</real>
 						<key>r</key>
-						<string>0</string>
+						<real>0.0</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Show that the box cannot contain a primary representative of a torsion-free discrete group}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{322.875, 516.927}, {140.875, 86}}</string>
+			<string>{{322.875, 516.92700000000013}, {140.875, 100.25}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -4036,16 +4393,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -4058,30 +4413,32 @@ in the search tree}</string>
 					<key>Color</key>
 					<dict>
 						<key>b</key>
-						<string>0</string>
+						<real>0.0</real>
 						<key>g</key>
-						<string>1</string>
+						<real>1</real>
 						<key>r</key>
-						<string>0</string>
+						<real>0.0</real>
 					</dict>
 				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Show that any torsion-free discrete groups which have a primary representative within the box can be obtained by dehn filling of one of the known manifolds}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{116, 541.677}, {109, 36.5}}</string>
+			<string>{{116, 528}, {109, 50.177000000000021}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -4108,16 +4465,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -4129,19 +4484,21 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Recursive proof.  For every box, either:}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{116, 460.677}, {109, 48}}</string>
+			<string>{{116, 452.67700000000002}, {109, 56}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -4168,16 +4525,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -4189,19 +4544,21 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Single box with 6 real dimensions covers parameter space}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{255.331, 374.427}, {109, 48}}</string>
+			<string>{{255.33100000000002, 361.41732611383975}, {109, 70.169300000000021}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -4228,16 +4585,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -4249,19 +4604,21 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Parameter space is compact for any finite maximum cusp area a}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
 			<key>AbsoluteRotation</key>
-			<string>YES</string>
+			<true/>
 			<key>Bounds</key>
-			<string>{{116, 370.427}, {109, 56}}</string>
+			<string>{{116, 361.41732611383975}, {109, 70.169300000000007}}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>FitText</key>
@@ -4288,16 +4645,14 @@ in the search tree}</string>
 				<string>{1, 0}</string>
 				<string>{-1, 0}</string>
 				<string>{-0.5, -0.233518}</string>
-				<string>{-0.491442, 0.260063}</string>
-				<string>{0.507118, -0.224086}</string>
-				<string>{0.507118, 0.267179}</string>
+				<string>{-0.49144199999999999, 0.26006299999999999}</string>
+				<string>{0.50711799999999996, -0.22408600000000001}</string>
+				<string>{0.50711799999999996, 0.267179}</string>
 				<string>{-0.27431, -0.474028}</string>
-				<string>{0.27978, -0.478478}</string>
-				<string>{0.293938, 0.543044}</string>
-				<string>{-0.286232, 0.553804}</string>
+				<string>{0.27977999999999997, -0.47847800000000001}</string>
+				<string>{0.29393799999999998, 0.54304399999999997}</string>
+				<string>{-0.28623199999999999, 0.55380399999999996}</string>
 			</array>
-			<key>Shape</key>
-			<string>Rectangle</string>
 			<key>Style</key>
 			<dict>
 				<key>shadow</key>
@@ -4309,12 +4664,14 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fnil\fcharset77 MinionPro-Regular;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs22 \cf0 Groups of isometries generated by M, N, G (not necessarily discrete)}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 		</dict>
 		<dict>
@@ -4334,9 +4691,7 @@ in the search tree}</string>
 				<real>12</real>
 			</dict>
 			<key>ID</key>
-			<integer>2</integer>
-			<key>Shape</key>
-			<string>Rectangle</string>
+			<integer>709</integer>
 			<key>Style</key>
 			<dict>
 				<key>fill</key>
@@ -4358,15 +4713,17 @@ in the search tree}</string>
 			<key>Text</key>
 			<dict>
 				<key>Text</key>
-				<string>{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fswiss\fcharset77 Helvetica;}
+				<string>{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf230
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
 {\colortbl;\red255\green255\blue255;}
-\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\qc\pardirnatural
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\qc\partightenfactor0
 
 \f0\fs36 \cf0 Goal: classify all hyperbolic cusped 3-manifolds\
 with small maximal cusp area\
 as obtainable by dehn filling\
 of a small number of known manifolds}</string>
+				<key>VerticalPad</key>
+				<real>0.0</real>
 			</dict>
 			<key>Wrap</key>
 			<string>NO</string>
@@ -4382,8 +4739,6 @@ of a small number of known manifolds}</string>
 	<integer>3</integer>
 	<key>ImageCounter</key>
 	<integer>1</integer>
-	<key>IsPalette</key>
-	<string>NO</string>
 	<key>KeepToScale</key>
 	<false/>
 	<key>Layers</key>
@@ -4401,85 +4756,25 @@ of a small number of known manifolds}</string>
 	</array>
 	<key>LayoutInfo</key>
 	<dict>
-		<key>LayoutTarget</key>
-		<integer>3</integer>
+		<key>Animate</key>
+		<string>NO</string>
+		<key>circoMinDist</key>
+		<real>18</real>
+		<key>layoutEngine</key>
+		<string>dot</string>
+		<key>neatoLineLength</key>
+		<real>0.20000000298023224</real>
 	</dict>
 	<key>LinksVisible</key>
 	<string>NO</string>
 	<key>MagnetsVisible</key>
 	<string>NO</string>
-	<key>MasterSheet</key>
-	<string>Master 1</string>
 	<key>MasterSheets</key>
-	<array>
-		<dict>
-			<key>ActiveLayerIndex</key>
-			<integer>0</integer>
-			<key>AutoAdjust</key>
-			<true/>
-			<key>CanvasColor</key>
-			<dict>
-				<key>w</key>
-				<string>1</string>
-			</dict>
-			<key>CanvasOrigin</key>
-			<string>{0, 0}</string>
-			<key>CanvasScale</key>
-			<real>1</real>
-			<key>ColumnAlign</key>
-			<integer>1</integer>
-			<key>ColumnSpacing</key>
-			<real>36</real>
-			<key>DisplayScale</key>
-			<string>1 cm = 1 cm</string>
-			<key>GraphicsList</key>
-			<array/>
-			<key>GridInfo</key>
-			<dict/>
-			<key>HPages</key>
-			<integer>1</integer>
-			<key>IsPalette</key>
-			<string>NO</string>
-			<key>KeepToScale</key>
-			<false/>
-			<key>Layers</key>
-			<array>
-				<dict>
-					<key>Lock</key>
-					<string>NO</string>
-					<key>Name</key>
-					<string>Layer 1</string>
-					<key>Print</key>
-					<string>YES</string>
-					<key>View</key>
-					<string>YES</string>
-				</dict>
-			</array>
-			<key>LayoutInfo</key>
-			<dict>
-				<key>LayoutTarget</key>
-				<integer>3</integer>
-			</dict>
-			<key>Orientation</key>
-			<integer>2</integer>
-			<key>OutlineStyle</key>
-			<string>Basic</string>
-			<key>RowAlign</key>
-			<integer>1</integer>
-			<key>RowSpacing</key>
-			<real>36</real>
-			<key>SheetTitle</key>
-			<string>Master 1</string>
-			<key>UniqueID</key>
-			<integer>1</integer>
-			<key>VPages</key>
-			<integer>1</integer>
-		</dict>
-	</array>
+	<array/>
 	<key>ModificationDate</key>
-	<string>2008-10-07 12:19:31 +0000</string>
+	<string>2015-10-30 19:18:49 +0000</string>
 	<key>Modifier</key>
-	<string>Nathaniel Thurston</string>
+	<string>Andrew Yarmola</string>
 	<key>NotesVisible</key>
 	<string>NO</string>
 	<key>Orientation</key>
@@ -4495,24 +4790,41 @@ of a small number of known manifolds}</string>
 		<key>NSBottomMargin</key>
 		<array>
 			<string>float</string>
-			<string>0</string>
+			<string>12</string>
+		</array>
+		<key>NSHorizonalPagination</key>
+		<array>
+			<string>coded</string>
+			<string>BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU051bWJlcgCEhAdOU1ZhbHVlAISECE5TT2JqZWN0AIWEASqEhAFxlwCG</string>
 		</array>
 		<key>NSLeftMargin</key>
 		<array>
 			<string>float</string>
-			<string>0</string>
+			<string>18</string>
+		</array>
+		<key>NSPaperSize</key>
+		<array>
+			<string>size</string>
+			<string>{612, 792}</string>
+		</array>
+		<key>NSPrintReverseOrientation</key>
+		<array>
+			<string>coded</string>
+			<string>BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU051bWJlcgCEhAdOU1ZhbHVlAISECE5TT2JqZWN0AIWEASqEhAFxlwCG</string>
 		</array>
 		<key>NSRightMargin</key>
 		<array>
 			<string>float</string>
-			<string>0</string>
+			<string>18</string>
 		</array>
 		<key>NSTopMargin</key>
 		<array>
 			<string>float</string>
-			<string>0</string>
+			<string>12</string>
 		</array>
 	</dict>
+	<key>PrintOnePage</key>
+	<false/>
 	<key>ReadOnly</key>
 	<string>NO</string>
 	<key>RowAlign</key>
@@ -4530,29 +4842,35 @@ of a small number of known manifolds}</string>
 	<key>UseEntirePage</key>
 	<true/>
 	<key>VPages</key>
-	<integer>1</integer>
+	<integer>2</integer>
 	<key>WindowInfo</key>
 	<dict>
 		<key>CurrentSheet</key>
-		<string>0</string>
-		<key>DrawerOpen</key>
-		<false/>
-		<key>DrawerTab</key>
-		<string>Outline</string>
-		<key>DrawerWidth</key>
-		<real>209</real>
-		<key>FitInWindow</key>
-		<false/>
+		<integer>0</integer>
+		<key>Expanded_Canvases</key>
+		<array/>
 		<key>Frame</key>
-		<string>{{53, 121}, {1794, 1018}}</string>
-		<key>ShowRuler</key>
-		<false/>
-		<key>ShowStatusBar</key>
+		<string>{{0, 4}, {1280, 796}}</string>
+		<key>ShowInfo</key>
 		<true/>
+		<key>Sidebar</key>
+		<false/>
+		<key>SidebarWidth</key>
+		<integer>0</integer>
+		<key>TopSlabHeight</key>
+		<real>250</real>
 		<key>VisibleRegion</key>
-		<string>{{-31, -42}, {1779, 904}}</string>
+		<string>{{3.5, 23}, {983, 686}}</string>
 		<key>Zoom</key>
-		<string>1</string>
+		<real>1</real>
+		<key>ZoomValues</key>
+		<array>
+			<array>
+				<string>Canvas 1</string>
+				<real>1</real>
+				<real>1</real>
+			</array>
+		</array>
 	</dict>
 </dict>
 </plist>
