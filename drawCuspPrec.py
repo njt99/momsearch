@@ -145,7 +145,7 @@ while d < depth :
             new_word = h_char + word
             new_gamma = h*gamma
 
-            if sym.N(new_height,prec) >= sym.N(2*cusp_height,prec) :
+            if sym.re(sym.N(new_height,prec)) >= sym.re(sym.N(2*cusp_height,prec)) :
                 sys.stderr.write('Possible giant horoball with word {0} of height {1} with center {2}\nElement:\n'.format(new_word,new_height,new_center))
                 sys.stderr.write(pformat(new_gamma,width=2)+'\n')
             else :
@@ -225,7 +225,7 @@ for d in horoballs :
     for word in depth_level :
         ball = depth_level[word]
         height = ball['height']
-        if sym.N(height,prec) >= sym.N(height_cutoff,prec) :
+        if sym.re(sym.N(height,prec)) >= sym.re(sym.N(height_cutoff,prec)) :
             draw_ball(ball,canvas,origin,factor)
             ball_count += 1
 
