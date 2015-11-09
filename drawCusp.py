@@ -24,6 +24,15 @@ def imag(x) :
 def norm(x) :
     return real(x*x.conjugate())    
 
+def vert_hyp_dist(y2,y1) :
+    return abs(real(log(y2/y1)))
+
+# Rotate 180 around geodesic with radius r = |c2-c1| with an end point at c2 and top point over c1
+# The c1 horoball rotates to a horoball at infinity of height r^2/h1
+def dist_btw_balls(c1=0,h1=1,c2=1,h2=1) :
+    r_sqrd= norm(c2-c1)
+    return real(log(r_sqrd/(h1*h2)))
+
 def get_a(M):
     return M[0][0]
 
@@ -194,83 +203,89 @@ class cusp(Tk) :
         self.area_label.grid(row=1, column=0, sticky=N+W)
         self.area_value_label.grid(row=1, column=1, sticky=N+S+E+W)
 
+        self.cusp_height_label = Label(self.display,text='Cusp Height: ', justify='left', wraplength=400, bg='gray')
+        self.cusp_height_value = StringVar()
+        self.cusp_height_value_label = Label(self.display, textvariable=self.cusp_height_value, justify='left', wraplength=400, bg='gray')
+        self.cusp_height_label.grid(row=2, column=0, sticky=N+W)
+        self.cusp_height_value_label.grid(row=2, column=1, sticky=N+S+E+W)
+
         self.lat_label = Label(self.display,text='Lattice: ', justify='left', wraplength=400, bg='gray')
         self.lat_value = StringVar()
         self.lat_value_label = Label(self.display, textvariable=self.lat_value, justify='left', wraplength=400, bg='gray')
-        self.lat_label.grid(row=2, column=0, sticky=N+W)
-        self.lat_value_label.grid(row=2, column=1, sticky=N+S+E+W)
+        self.lat_label.grid(row=3, column=0, sticky=N+W)
+        self.lat_value_label.grid(row=3, column=1, sticky=N+S+E+W)
 
         self.lox_label = Label(self.display,text='Loxodromic Square Root: ', justify='left', wraplength=400, bg='gray')
         self.lox_value = StringVar()
         self.lox_value_label = Label(self.display, textvariable=self.lox_value, justify='left', wraplength=400, bg='gray')
-        self.lox_label.grid(row=3, column=0, sticky=N+W)
-        self.lox_value_label.grid(row=3, column=1, sticky=N+S+E+W)
+        self.lox_label.grid(row=4, column=0, sticky=N+W)
+        self.lox_value_label.grid(row=4, column=1, sticky=N+S+E+W)
 
         self.para_label = Label(self.display,text='Parabolic: ', justify='left', wraplength=400, bg='gray')
         self.para_value = StringVar()
         self.para_value_label = Label(self.display, textvariable=self.para_value, justify='left', wraplength=400, bg='gray')
-        self.para_label.grid(row=4, column=0, sticky=N+W)
-        self.para_value_label.grid(row=4, column=1, sticky=N+S+E+W)
+        self.para_label.grid(row=5, column=0, sticky=N+W)
+        self.para_value_label.grid(row=5, column=1, sticky=N+S+E+W)
 
         self.G_label = Label(self.display,text='G[z] = p + 1/(z s^2)', justify='left', wraplength=400, bg='gray')
         self.G_value = StringVar()
         self.G_value_label = Label(self.display, textvariable=self.G_value, justify='left', wraplength=400, bg='gray')
-        self.G_label.grid(row=5, column=0, sticky=N+W)
-        self.G_value_label.grid(row=5, column=1, sticky=N+S+E+W)
+        self.G_label.grid(row=6, column=0, sticky=N+W)
+        self.G_value_label.grid(row=6, column=1, sticky=N+S+E+W)
 
         self.b1_word_label = Label(self.display,text='Red horobal word: ', justify='left', wraplength=400, bg='gray')
         self.b1_word_value = StringVar()
         self.b1_word_value_label = Label(self.display, textvariable=self.b1_word_value, justify='left', wraplength=400, bg='gray')
-        self.b1_word_label.grid(row=6, column=0, sticky=N+W)
-        self.b1_word_value_label.grid(row=6, column=1, sticky=N+S+E+W)
+        self.b1_word_label.grid(row=7, column=0, sticky=N+W)
+        self.b1_word_value_label.grid(row=7, column=1, sticky=N+S+E+W)
 
         self.b1_center_label = Label(self.display,text='Red horoball center: ', justify='left', wraplength=400, bg='gray')
         self.b1_center_value = StringVar()
         self.b1_center_value_label = Label(self.display, textvariable=self.b1_center_value, justify='left', wraplength=400, bg='gray')
-        self.b1_center_label.grid(row=7, column=0, sticky=N+W)
-        self.b1_center_value_label.grid(row=7, column=1, sticky=N+S+E+W)
+        self.b1_center_label.grid(row=8, column=0, sticky=N+W)
+        self.b1_center_value_label.grid(row=8, column=1, sticky=N+S+E+W)
 
         self.b1_d_inf_label = Label(self.display,text='Red/Inf hyperbolic distance', justify='left', wraplength=400, bg='gray')
         self.b1_d_inf_value = StringVar()
         self.b1_d_inf_value_label = Label(self.display, textvariable=self.b1_d_inf_value, justify='left', wraplength=400, bg='gray')
-        self.b1_d_inf_label.grid(row=8, column=0, sticky=N+W)
-        self.b1_d_inf_value_label.grid(row=8, column=1, sticky=N+S+E+W)
+        self.b1_d_inf_label.grid(row=9, column=0, sticky=N+W)
+        self.b1_d_inf_value_label.grid(row=9, column=1, sticky=N+S+E+W)
 
         self.b1_rad_label = Label(self.display,text='Blue horoball radius', justify='left', wraplength=400, bg='gray')
         self.b1_rad_value = StringVar()
         self.b1_rad_value_label = Label(self.display, textvariable=self.b1_rad_value, justify='left', wraplength=400, bg='gray')
-        self.b1_rad_label.grid(row=9, column=0, sticky=N+W)
-        self.b1_rad_value_label.grid(row=9, column=1, sticky=N+S+E+W)
+        self.b1_rad_label.grid(row=10, column=0, sticky=N+W)
+        self.b1_rad_value_label.grid(row=10, column=1, sticky=N+S+E+W)
 
         self.b2_word_label = Label(self.display,text='Blue horobal word: ', justify='left', wraplength=400, bg='gray')
         self.b2_word_value = StringVar()
         self.b2_word_value_label = Label(self.display, textvariable=self.b2_word_value, justify='left', wraplength=400, bg='gray')
-        self.b2_word_label.grid(row=10, column=0, sticky=N+W)
-        self.b2_word_value_label.grid(row=10, column=1, sticky=N+S+E+W)
+        self.b2_word_label.grid(row=11, column=0, sticky=N+W)
+        self.b2_word_value_label.grid(row=11, column=1, sticky=N+S+E+W)
 
         self.b2_center_label = Label(self.display,text='Blue horoball center: ', justify='left', wraplength=400, bg='gray')
         self.b2_center_value = StringVar()
         self.b2_center_value_label = Label(self.display, textvariable=self.b2_center_value, justify='left', wraplength=400, bg='gray')
-        self.b2_center_label.grid(row=11, column=0, sticky=N+W)
-        self.b2_center_value_label.grid(row=11, column=1, sticky=N+S+E+W)
+        self.b2_center_label.grid(row=12, column=0, sticky=N+W)
+        self.b2_center_value_label.grid(row=12, column=1, sticky=N+S+E+W)
 
         self.b2_rad_label = Label(self.display,text='Blue horoball radius', justify='left', wraplength=400, bg='gray')
         self.b2_rad_value = StringVar()
         self.b2_rad_value_label = Label(self.display, textvariable=self.b2_rad_value, justify='left', wraplength=400, bg='gray')
-        self.b2_rad_label.grid(row=12, column=0, sticky=N+W)
-        self.b2_rad_value_label.grid(row=12, column=1, sticky=N+S+E+W)
+        self.b2_rad_label.grid(row=13, column=0, sticky=N+W)
+        self.b2_rad_value_label.grid(row=13, column=1, sticky=N+S+E+W)
 
         self.b2_d_inf_label = Label(self.display,text='Blue/Inf hyperbolic distance', justify='left', wraplength=400, bg='gray')
         self.b2_d_inf_value = StringVar()
         self.b2_d_inf_value_label = Label(self.display, textvariable=self.b2_d_inf_value, justify='left', wraplength=400, bg='gray')
-        self.b2_d_inf_label.grid(row=13, column=0, sticky=N+W)
-        self.b2_d_inf_value_label.grid(row=13, column=1, sticky=N+S+E+W)
+        self.b2_d_inf_label.grid(row=14, column=0, sticky=N+W)
+        self.b2_d_inf_value_label.grid(row=14, column=1, sticky=N+S+E+W)
 
         self.dist_label = Label(self.display,text='Red/Blue hyperbolic distance: ', justify='left', wraplength=400, bg='gray')
         self.dist_value = StringVar()
         self.dist_value_label = Label(self.display, textvariable=self.dist_value, justify='left', wraplength=400, bg='gray')
-        self.dist_label.grid(row=14, column=0, sticky=N+W)
-        self.dist_value_label.grid(row=14, column=1, sticky=N+S+E+W)
+        self.dist_label.grid(row=15, column=0, sticky=N+W)
+        self.dist_value_label.grid(row=15, column=1, sticky=N+S+E+W)
 
     def initialize(self) :
         if len(sys.argv) < 3 :
@@ -295,10 +310,34 @@ class cusp(Tk) :
     def setup_values(self) :
         self.box_value.set(self.box)
         self.area_value.set('{0}'.format(get_min_area(self.params)))
+        self.cusp_height_value.set('{0}'.format(self.cusp_height))
         self.lat_value.set('{0}'.format(self.params['lattice']))
         self.lox_value.set('{0}'.format(self.params['lox_sqrt']))
         self.para_value.set('{0}'.format(self.params['parabolic']))
         self.G_value.set(pformat(self.elements['G'],width=1))
+
+    def display_ball_info(self, ball, color='red') :
+        if color == 'red' :
+            self.b1_word_value.set(ball['word'])    
+            self.b1_rad_value.set('{0}'.format(ball['height']/2.))
+            self.b1_center_value.set('{0}'.format(ball['center']))
+            self.b1_d_inf_value.set('{0}'.format(vert_hyp_dist(self.cusp_height,ball['height'])))
+        else :
+            self.b2_word_value.set(ball['word'])    
+            self.b2_rad_value.set('{0}'.format(ball['height']/2.))
+            self.b2_center_value.set('{0}'.format(ball['center']))
+            self.b2_d_inf_value.set('{0}'.format(vert_hyp_dist(self.cusp_height,ball['height'])))
+
+    def clear_ball_info(self) :
+        self.b1_word_value.set('')    
+        self.b1_rad_value.set('')
+        self.b1_center_value.set('')
+        self.b1_d_inf_value.set('')
+        self.b2_word_value.set('')    
+        self.b2_rad_value.set('')
+        self.b2_center_value.set('')
+        self.b2_d_inf_value.set('')
+        self.dist_value.set('')
 
     # Given a height cut off, we have a maximum radius of horoball centers worth considering
     # for images that under G,g will map into the lattice domain.
@@ -482,12 +521,9 @@ class cusp(Tk) :
         except :
             return        
 
-    def display_parameters(self) :
-        return None 
-
-
-    def display_distance(self, first_ball, second_ball) :
-        return None
+    def display_distance(self, x, y) :
+        dist = dist_btw_balls(c1=x['center'], h1=x['height'], c2=y['center'], h2=y['height'])
+        self.dist_value.set('{0}'.format(dist))
 
     def select(self, object_id, color='red') :
         self.canvas.itemconfigure(object_id, fill=color)
@@ -499,6 +535,7 @@ class cusp(Tk) :
         if len(self.selected_objects) > 1 or object_id not in self.object_dict :
             for selected_id in list(self.selected_objects) :
                 self.deselect(selected_id)
+            self.clear_ball_info()
             return
 
         if len(self.selected_objects) > 0 :
@@ -506,14 +543,17 @@ class cusp(Tk) :
             # deselect if we hit the same ball
             if prev_id == object_id :
                 self.deselect(object_id)
+                self.clear_ball_info()
                 return
             self.select(object_id,color='blue')
-            if prev_id in self.object_dict and object_id in self.object_dict :
+            if prev_id in self.object_dict :
                 first_ball = self.object_dict[prev_id]
                 second_ball = self.object_dict[object_id]
+                self.display_ball_info(second_ball, color='blue')
                 self.display_distance(first_ball, second_ball)
         else :
             self.select(object_id)
+            self.display_ball_info(self.object_dict[object_id])
 
     def remove_from_canvas(self, canvas_id) :
         self.canvas.delete(canvas_id)
