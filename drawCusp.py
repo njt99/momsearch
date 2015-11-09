@@ -77,21 +77,20 @@ def get_params(box) :
     for direction in box :
         p = pos % 6
         size[p] *= 0.5
-        center[p] += (2*int(direction) - 1) * size[p]
+        center[p] += float((2*int(direction) - 1)) * size[p]
         pos += 1
     
     params = {}
-    params['lattice'] = scale[3]*center[3] + scale[0]*center[0]*1j
-    params['lox_sqrt'] = scale[4]*center[4] + scale[1]*center[1]*1j
-    params['parabolic'] = scale[5]*center[5] + scale[2]*center[2]*1j
+    params['lattice'] = scale[3]*center[3] + scale[0]*center[0]*1.j
+    params['lox_sqrt'] = scale[4]*center[4] + scale[1]*center[1]*1.j
+    params['parabolic'] = scale[5]*center[5] + scale[2]*center[2]*1.j
    
     params['center'] = center
     params['size'] = size
 
-    params['lattice_jet'] = { 'f' : scale[3]*center[3] + scale[0]*center[0]*1j, 'df0' : scale[3]*size[3] + scale[0]*size[0]*1j, 'df1' : 0., 'df2' : 0. }
-    params['lox_sqrt_jet'] = { 'f' :  scale[4]*center[4] + scale[1]*center[1]*1j, 'df0' : 0., 'df1' : scale[4]*size[4] + scale[1]*size[1]*1j, 'df2' : 0. }
-    params['parabolic_jet'] = { 'f' :  scale[5]*center[5] + scale[2]*center[2]*1j, 'df0' : 0., 'df1' : 0., 'df2' : scale[5]*size[5] + scale[2]*size[2]*1j }
-    params['error'] = 0.
+    params['lattice_jet'] = { 'f' : scale[3]*center[3] + scale[0]*center[0]*1.j, 'df0' : scale[3]*size[3] + scale[0]*size[0]*1.j, 'df1' : 0., 'df2' : 0., 'error' : 0. }
+    params['lox_sqrt_jet'] = { 'f' :  scale[4]*center[4] + scale[1]*center[1]*1.j, 'df0' : 0., 'df1' : scale[4]*size[4] + scale[1]*size[1]*1.j, 'df2' : 0., 'error' : 0. }
+    params['parabolic_jet'] = { 'f' :  scale[5]*center[5] + scale[2]*center[2]*1.j, 'df0' : 0., 'df1' : 0., 'df2' : scale[5]*size[5] + scale[2]*size[2]*1.j, 'error' : 0. }
 
     return params
 
@@ -107,9 +106,9 @@ def min_parameters(params) :
             m[i] = scale[i]*(center[i]-size[i])
 
     min_params = {}
-    min_params['lattice'] = m[3] + m[0]*1j
-    min_params['lox_sqrt'] = m[4] + m[1]*1j
-    min_params['parabolic'] = m[5] + m[2]*1j
+    min_params['lattice'] = m[3] + m[0]*1.j
+    min_params['lox_sqrt'] = m[4] + m[1]*1.j
+    min_params['parabolic'] = m[5] + m[2]*1.j
 
     return min_params
 
@@ -126,27 +125,27 @@ def jet_min_abs(jet) :
 def min_jet_parameter(params,key) :
     return jet_min_abs(params[key]) 
 
-def get_area(params) :
+def get_min_area(params) :
     abs_lox_sqrt = min_jet_parameter(params,'lox_sqrt_jet')
     min_lattice = min_parameter(params,'lattice')
-    return abs_lox_sqrt * abs_lox_sqrt * min_lattice
+    return abs_lox_sqrt * abs_lox_sqrt * imag(min_lattice)
 
 def get_G(params) :
     l = params['lattice']
     s = params['lox_sqrt']
     p = params['parabolic']
-    return [[p*s*1j, 1j/s], [s*1j, 0.]]
+    return [[p*s*1.j, 1.j/s], [s*1.j, 0.]]
 
 def get_g(params) :
     l = params['lattice']
     s = params['lox_sqrt']
     p = params['parabolic']
-    return [[0., -1j/s], [-s*1j, p*s*1j]]
+    return [[0., -1.j/s], [-s*1.j, p*s*1.j]]
 
 # Give parabolic element with M,N power counts
 def get_T(params, M_pow, N_pow) :
     p = params['lattice']
-    return [[1, p*M_pow + N_pow],[0,1]]
+    return [[1., p*float(M_pow) + float(N_pow)],[0.,1.]]
 
 def get_first(word) :
     if len(word) > 0 :
@@ -166,6 +165,113 @@ class cusp(Tk) :
         self.parent = parent
         self.initialize()
 
+    def setup_interface(self) :
+        self.init_frame_width = 1300.
+        self.init_frame_height = 800.
+        self.init_canvas_width = 640.
+        self.init_canvas_height = 800.
+        self.point_rad = 5.
+
+        self.canvas = Canvas(self, width=self.init_canvas_width, height=self.init_canvas_height)
+        self.canvas.pack(side='left', fill='both', expand=False)
+        self.display = Frame(self, width=self.init_frame_width-self.init_canvas_width, height=self.init_frame_height, bg='gray')
+        self.display.pack(side='left', fill='both', expand=True)
+        self.canvas.bind("<ButtonRelease-1>", self.click_up)
+
+        self.selected_objects = set([])
+
+        self.display.columnconfigure(1, weight=1)
+
+        self.box_label = Label(self.display,text='Box: ', justify='left', wraplength=400, bg='gray')
+        self.box_value = StringVar()
+        self.box_value_label = Label(self.display, textvariable=self.box_value, justify='left', wraplength=400, bg='gray')
+        self.box_label.grid(row=0, column=0, sticky=N+W)
+        self.box_value_label.grid(row=0, column=1, sticky=N+S+E+W)
+
+        self.area_label = Label(self.display,text='Min Area: ', justify='left', wraplength=400, bg='gray')
+        self.area_value = StringVar()
+        self.area_value_label = Label(self.display, textvariable=self.area_value, justify='left', wraplength=400, bg='gray')
+        self.area_label.grid(row=1, column=0, sticky=N+W)
+        self.area_value_label.grid(row=1, column=1, sticky=N+S+E+W)
+
+        self.lat_label = Label(self.display,text='Lattice: ', justify='left', wraplength=400, bg='gray')
+        self.lat_value = StringVar()
+        self.lat_value_label = Label(self.display, textvariable=self.lat_value, justify='left', wraplength=400, bg='gray')
+        self.lat_label.grid(row=2, column=0, sticky=N+W)
+        self.lat_value_label.grid(row=2, column=1, sticky=N+S+E+W)
+
+        self.lox_label = Label(self.display,text='Loxodromic Square Root: ', justify='left', wraplength=400, bg='gray')
+        self.lox_value = StringVar()
+        self.lox_value_label = Label(self.display, textvariable=self.lox_value, justify='left', wraplength=400, bg='gray')
+        self.lox_label.grid(row=3, column=0, sticky=N+W)
+        self.lox_value_label.grid(row=3, column=1, sticky=N+S+E+W)
+
+        self.para_label = Label(self.display,text='Parabolic: ', justify='left', wraplength=400, bg='gray')
+        self.para_value = StringVar()
+        self.para_value_label = Label(self.display, textvariable=self.para_value, justify='left', wraplength=400, bg='gray')
+        self.para_label.grid(row=4, column=0, sticky=N+W)
+        self.para_value_label.grid(row=4, column=1, sticky=N+S+E+W)
+
+        self.G_label = Label(self.display,text='G[z] = p + 1/(z s^2)', justify='left', wraplength=400, bg='gray')
+        self.G_value = StringVar()
+        self.G_value_label = Label(self.display, textvariable=self.G_value, justify='left', wraplength=400, bg='gray')
+        self.G_label.grid(row=5, column=0, sticky=N+W)
+        self.G_value_label.grid(row=5, column=1, sticky=N+S+E+W)
+
+        self.b1_word_label = Label(self.display,text='Red horobal word: ', justify='left', wraplength=400, bg='gray')
+        self.b1_word_value = StringVar()
+        self.b1_word_value_label = Label(self.display, textvariable=self.b1_word_value, justify='left', wraplength=400, bg='gray')
+        self.b1_word_label.grid(row=6, column=0, sticky=N+W)
+        self.b1_word_value_label.grid(row=6, column=1, sticky=N+S+E+W)
+
+        self.b1_center_label = Label(self.display,text='Red horoball center: ', justify='left', wraplength=400, bg='gray')
+        self.b1_center_value = StringVar()
+        self.b1_center_value_label = Label(self.display, textvariable=self.b1_center_value, justify='left', wraplength=400, bg='gray')
+        self.b1_center_label.grid(row=7, column=0, sticky=N+W)
+        self.b1_center_value_label.grid(row=7, column=1, sticky=N+S+E+W)
+
+        self.b1_d_inf_label = Label(self.display,text='Red/Inf hyperbolic distance', justify='left', wraplength=400, bg='gray')
+        self.b1_d_inf_value = StringVar()
+        self.b1_d_inf_value_label = Label(self.display, textvariable=self.b1_d_inf_value, justify='left', wraplength=400, bg='gray')
+        self.b1_d_inf_label.grid(row=8, column=0, sticky=N+W)
+        self.b1_d_inf_value_label.grid(row=8, column=1, sticky=N+S+E+W)
+
+        self.b1_rad_label = Label(self.display,text='Blue horoball radius', justify='left', wraplength=400, bg='gray')
+        self.b1_rad_value = StringVar()
+        self.b1_rad_value_label = Label(self.display, textvariable=self.b1_rad_value, justify='left', wraplength=400, bg='gray')
+        self.b1_rad_label.grid(row=9, column=0, sticky=N+W)
+        self.b1_rad_value_label.grid(row=9, column=1, sticky=N+S+E+W)
+
+        self.b2_word_label = Label(self.display,text='Blue horobal word: ', justify='left', wraplength=400, bg='gray')
+        self.b2_word_value = StringVar()
+        self.b2_word_value_label = Label(self.display, textvariable=self.b2_word_value, justify='left', wraplength=400, bg='gray')
+        self.b2_word_label.grid(row=10, column=0, sticky=N+W)
+        self.b2_word_value_label.grid(row=10, column=1, sticky=N+S+E+W)
+
+        self.b2_center_label = Label(self.display,text='Blue horoball center: ', justify='left', wraplength=400, bg='gray')
+        self.b2_center_value = StringVar()
+        self.b2_center_value_label = Label(self.display, textvariable=self.b2_center_value, justify='left', wraplength=400, bg='gray')
+        self.b2_center_label.grid(row=11, column=0, sticky=N+W)
+        self.b2_center_value_label.grid(row=11, column=1, sticky=N+S+E+W)
+
+        self.b2_rad_label = Label(self.display,text='Blue horoball radius', justify='left', wraplength=400, bg='gray')
+        self.b2_rad_value = StringVar()
+        self.b2_rad_value_label = Label(self.display, textvariable=self.b2_rad_value, justify='left', wraplength=400, bg='gray')
+        self.b2_rad_label.grid(row=12, column=0, sticky=N+W)
+        self.b2_rad_value_label.grid(row=12, column=1, sticky=N+S+E+W)
+
+        self.b2_d_inf_label = Label(self.display,text='Blue/Inf hyperbolic distance', justify='left', wraplength=400, bg='gray')
+        self.b2_d_inf_value = StringVar()
+        self.b2_d_inf_value_label = Label(self.display, textvariable=self.b2_d_inf_value, justify='left', wraplength=400, bg='gray')
+        self.b2_d_inf_label.grid(row=13, column=0, sticky=N+W)
+        self.b2_d_inf_value_label.grid(row=13, column=1, sticky=N+S+E+W)
+
+        self.dist_label = Label(self.display,text='Red/Blue hyperbolic distance: ', justify='left', wraplength=400, bg='gray')
+        self.dist_value = StringVar()
+        self.dist_value_label = Label(self.display, textvariable=self.dist_value, justify='left', wraplength=400, bg='gray')
+        self.dist_label.grid(row=14, column=0, sticky=N+W)
+        self.dist_value_label.grid(row=14, column=1, sticky=N+S+E+W)
+
     def initialize(self) :
         if len(sys.argv) < 3 :
             print 'Usage: drawCusp box_code depth <height_cutoff>'
@@ -181,17 +287,18 @@ class cusp(Tk) :
         self.print_elements()
         self.init_horoballs()
         
-        self.canvas_width = 640
-        self.canvas_height = 800
-        self.point_rad = 5
-        lattice = self.params['lattice']
-        self.factor = 600/(abs(lattice)+1)
+        self.setup_interface()
+        self.setup_values()
 
-        print 'Factor {0}'.format(self.factor)
-        print 'Lattice {0}'.format(lattice)
+        self.draw_cusp()
 
-        self.canvas = Canvas(self, width=self.canvas_width, height=self.canvas_height)
-        self.canvas.pack()
+    def setup_values(self) :
+        self.box_value.set(self.box)
+        self.area_value.set('{0}'.format(get_min_area(self.params)))
+        self.lat_value.set('{0}'.format(self.params['lattice']))
+        self.lox_value.set('{0}'.format(self.params['lox_sqrt']))
+        self.para_value.set('{0}'.format(self.params['parabolic']))
+        self.G_value.set(pformat(self.elements['G'],width=1))
 
     # Given a height cut off, we have a maximum radius of horoball centers worth considering
     # for images that under G,g will map into the lattice domain.
@@ -203,14 +310,14 @@ class cusp(Tk) :
         g = get_g(self.params)
         M = get_T(self.params,1,0)
         N = get_T(self.params,0,1)
-        self.elements = { 'g' : g, 'G' : G, 'GG' : dot(G,G), 'MN' : dot(M,N), 'M' : M, 'N' : N, 'Ng' : dot(N,g), 'Mg' : dot(M,g), 'NMg' : dot(M,dot(N,g)) }
+        self.elements = { 'g' : g, 'G' : G, 'NM' : dot(M,N), 'M' : M, 'N' : N, 'GG' : dot(G,G) }
         self.cusp_height = max_horo_height(G)
  
     def print_elements(self) :
         # Print box paramenters and group elements
         print 'Parameters:'
         pprint(self.params,width=1)
-        print 'Elemnts:'
+        print 'Elements:'
         pprint(self.elements,width=2)
 
     def init_horoballs(self) :
@@ -229,8 +336,6 @@ class cusp(Tk) :
                     valid = ['g']
                 elif first == 'G' :
                     valid = ['G']
-                elif first == '' :
-                    valid = ['g', 'Ng', 'Mg', 'NMg', 'G']
                 else :
                     valid = ['g', 'G']        
          
@@ -246,26 +351,32 @@ class cusp(Tk) :
                     N_len = real(h_center) - M_len * real(lattice)
 
                     # Adjustments we make sure to land inside the fundamental domain 
-                    M_pow = -floor(M_len) if M_len != 1. else 0 
-                    N_pow = -floor(N_len) if N_len != 1. else 0
+                    if abs(M_len) > pow(2.,-10) :
+                        M_pow = -floor(M_len) if abs(M_len - 1.) > pow(2.,-10) else 0 
+                    else :
+                        M_pow = 0
+                    if abs(N_len) > pow(2.,-10) :
+                        N_pow = -floor(N_len) if abs(N_len - 1.) > pow(2.,-10) else 0 
+                    else :
+                        N_pow = 0
 
                     # Keep track of the word and it's representative
                     h_word = h_char + word
-                    new_height = horo_image_height_inf(h_gamma, height)
+                    new_height = horo_image_height_inf(h_gamma, self.cusp_height)
                     if new_height > 2*self.cusp_height :
                         sys.stderr.write('Possible giant horoball with word {0} of height {1} with center {2}\nElement:\n'.format(h_word,new_height,h_center))
                         sys.stderr.write(pformat(new_gamma,width=2)+'\n')
                     else :
-                        M_word = 'M'*M_pow if M_pow > 0 else 'm'*M_pow 
+                        M_word = 'M'*M_pow if M_pow > 0 else 'm'*(-M_pow) 
                         new_word = M_word + h_word
-                        N_word = 'N'*N_pow if N_pow > 0 else 'n'*N_pow 
+                        N_word = 'N'*N_pow if N_pow > 0 else 'n'*(-N_pow) 
                         new_word = N_word + new_word
                         T = get_T(self.params, M_pow, N_pow)
                         new_gamma = dot(T, h_gamma)
                         new_center = mobius(T, h_center)
 
                         self.horoballs[d+1][new_word] = { 'center' : new_center, 'height' : new_height, 'gamma' : new_gamma, 'word' : new_word, 'canvas_id' : 0 }
-
+ 
                         # Add translates that will be good for next depth
                         x = real(new_center)
                         y = imag(new_center)
@@ -276,18 +387,19 @@ class cusp(Tk) :
                         vert_range = (int(ceil(real(vert_range[0]))), int(floor(real(vert_range[1]))))
                         for n in range(*horiz_range) :
                             for m in range(*vert_range) :
-                                if m != 0 and n != 0 :
+                                if m != 0 or n != 0 :
                                     shift_M_pow = M_pow + m
                                     shift_N_pow = N_pow + n
-                                    T = get_T(self.params, M_pow + m, N_pow + n)
+                                    T = get_T(self.params, shift_M_pow, shift_N_pow)
                                     shift_center = mobius(T, h_center)
                                     # Make sure the horoball images in next depth are not too small
                                     if abs(shift_center) < r :
                                         shift_gamma = dot(T, h_gamma)
-                                        M_word = 'M'*shift_M_pow if shift_M_pow > 0 else 'm'*shift_M_pow 
+                                        M_word = 'M'*shift_M_pow if shift_M_pow > 0 else 'm'*(-shift_M_pow) 
                                         shift_word = M_word + h_word
-                                        N_word = 'N'*shift_N_pow if shift_N_pow > 0 else 'n'*shift_N_pow 
+                                        N_word = 'N'*shift_N_pow if shift_N_pow > 0 else 'n'*(-shift_N_pow) 
                                         shift_word = N_word + shift_word
+
                                         self.horoballs[d+1][shift_word] = { 'center' : shift_center,
                                                                             'height' : new_height,
                                                                             'gamma' : shift_gamma,
@@ -295,7 +407,7 @@ class cusp(Tk) :
                                                                             'canvas_id' : 0 }
 
             d += 1
-        pprint(self.horoballs,width=2)
+        #pprint(self.horoballs,width=2)
 
     # A simple generation algorthim. Generates lot of small horoballs
     def init_horoballs_orig(self) :
@@ -318,7 +430,7 @@ class cusp(Tk) :
                 elif first == 'G' :
                     valid = ['G']
                 elif first == '' :
-                    valid = ['M', 'N', 'GG', 'MN']
+                    valid = ['M', 'N', 'GG', 'NM']
                 else :
                     valid = ['g', 'G']        
          
@@ -344,9 +456,9 @@ class cusp(Tk) :
                         sys.stderr.write('Possible giant horoball with word {0} of height {1} with center {2}\nElement:\n'.format(new_word,new_height,new_center))
                         sys.stderr.write(pformat(new_gamma,width=2)+'\n')
                     else :
-                        M_word = 'M'*M_pow if M_pow > 0 else 'm'*M_pow 
+                        M_word = 'M'*M_pow if M_pow > 0 else 'm'*(-M_pow) 
                         new_word = M_word + new_word
-                        N_word = 'N'*N_pow if N_pow > 0 else 'n'*N_pow 
+                        N_word = 'N'*N_pow if N_pow > 0 else 'n'*(-N_pow) 
                         new_word = N_word + new_word
                         T = get_T(self.params, M_pow, N_pow)
                         new_gamma = dot(T, new_gamma)
@@ -363,6 +475,46 @@ class cusp(Tk) :
         elif delta < 0 : 
             return 1
 
+    def deselect(self, object_id) :
+        self.canvas.itemconfigure(object_id, fill='')
+        try :
+            self.selected_objects.remove(object_id)
+        except :
+            return        
+
+    def display_parameters(self) :
+        return None 
+
+
+    def display_distance(self, first_ball, second_ball) :
+        return None
+
+    def select(self, object_id, color='red') :
+        self.canvas.itemconfigure(object_id, fill=color)
+        self.selected_objects.add(object_id)
+      
+    def click_up(self,event) :
+        object_tuple = self.canvas.find_closest(event.x,event.y)
+        object_id = object_tuple[0]
+        if len(self.selected_objects) > 1 or object_id not in self.object_dict :
+            for selected_id in list(self.selected_objects) :
+                self.deselect(selected_id)
+            return
+
+        if len(self.selected_objects) > 0 :
+            prev_id = next(iter(self.selected_objects))
+            # deselect if we hit the same ball
+            if prev_id == object_id :
+                self.deselect(object_id)
+                return
+            self.select(object_id,color='blue')
+            if prev_id in self.object_dict and object_id in self.object_dict :
+                first_ball = self.object_dict[prev_id]
+                second_ball = self.object_dict[object_id]
+                self.display_distance(first_ball, second_ball)
+        else :
+            self.select(object_id)
+
     def remove_from_canvas(self, canvas_id) :
         self.canvas.delete(canvas_id)
         del self.object_dict[canvas_id]
@@ -378,34 +530,36 @@ class cusp(Tk) :
 
         object_id = self.canvas.create_oval(x-r,y-r,x+r,y+r)
         ball['canvas_id'] = object_id
+        ball['selected'] = False
         self.object_dict[object_id] = ball
 
     def draw_cusp(self) :
         lattice = self.params['lattice']
+        self.factor = self.init_canvas_width/(abs(lattice)+1)
         # Pick an origin. TODO: Make this more robust
         self.origin = [0.,0.]
-        self.origin[0] = self.canvas_width/4 if real(lattice) > -0.2 else self.canvas_width/2.5
-        self.origin[1] = self.factor*(imag(lattice)+0.5)
+        self.origin[0] = self.init_canvas_width/4.5 if real(lattice) > -0.2 else self.init_canvas_width/2.5
+        self.origin[1] = self.factor*(imag(lattice)+0.7)
         print 'Origin {0}'.format(self.origin)
 
         # Draw the lattice domain lines and points
         lattice_points = [(1.,0.), (real(lattice) + 1, imag(lattice)),(real(lattice), imag(lattice)), (0.,0.)]
-        v_coord = copy(self.origin)
-        prev_coord = copy(self.origin) 
+        v_coord = list(self.origin)
+        prev_coord = list(self.origin) 
         for v in lattice_points :
-            v_coord[0] = self.origin[0]+factor*v[0]
-            v_coord[1] = self.origin[1]-factor*v[1]
-            self.canvas.create_oval(v_coord[0]-point_rad,v_coord[1]-point_rad, v_coord[0]+point_rad, v_coord[1]+point_rad,fill='black')
+            v_coord[0] = self.origin[0]+self.factor*v[0]
+            v_coord[1] = self.origin[1]-self.factor*v[1]
+            self.canvas.create_oval(v_coord[0]-self.point_rad,v_coord[1]-self.point_rad, v_coord[0]+self.point_rad, v_coord[1]+self.point_rad,fill='black')
             self.canvas.create_line(prev_coord[0],prev_coord[1],v_coord[0],v_coord[1])
-            prev_coord = copy(v_coord)
+            prev_coord = list(v_coord)
 
         ball_count = 0
         for d in self.horoballs :
-            depth_level = horoballs[d]
+            depth_level = self.horoballs[d]
             for word in depth_level :
                 ball = depth_level[word]
                 height = ball['height']
-                if height > height_cutoff :
+                if height > self.height_cutoff :
                     self.draw_ball(ball)
                     ball_count += 1
         print 'Ball count: {0}'.format(ball_count)

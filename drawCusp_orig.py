@@ -146,9 +146,9 @@ while d < depth :
                 sys.stderr.write('Possible giant horoball with word {0} of height {1} with center {2}\nElement:\n'.format(new_word,new_height,new_center))
                 sys.stderr.write(pformat(new_gamma,width=2)+'\n')
             else :
-                M_word = 'M'*M_pow if M_pow > 0 else 'm'*M_pow 
+                M_word = 'M'*M_pow if M_pow > 0 else 'm'*(-M_pow) 
                 new_word = M_word + new_word
-                N_word = 'N'*N_pow if N_pow > 0 else 'n'*N_pow 
+                N_word = 'N'*N_pow if N_pow > 0 else 'n'*(-N_pow) 
                 new_word = N_word + new_word
                 T = get_T(params, M_pow, N_pow)
                 new_gamma = dot(T, new_gamma)
