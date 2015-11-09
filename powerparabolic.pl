@@ -107,29 +107,33 @@ N:	for ($n = 1; $n+$n <= $numG; ++$n) {
 					$sub .= substr($gs, $base+$k, 1);
 				}
 				print "HERE word=$word n=$n base=$base sub=$sub\n";
-				local $subIDAllowed = ($n > 1) ? 1 : 0;
+				local $subIDAllowed = ($n > 1) ? 1 : 0; # True if n > 1, False otherwise
 				local $subLine = '';
 				if ($subIDAllowed) {
 					print "sub=$sub\n";
-					local @subLines = &getPossiblePowers($sub);
+					local @subLines = &getPossiblePowers($sub); # Might return many lines via recursion
 					print "SUB($sub)=", $#subLines, "\n";
 					foreach (@subLines)  {
 						my @f = split(/ /);
+                        # PossiblePower word subIDAllowed matchRequired matchX matchY sub^power ~ discPos n base subLine 
+                        # if !matchRequred || (matchX == 0 and matchY == 0)
 						if (!$f[3] || ($f[4] == 0 && $f[5] == 0)) {
 							$subLine = "{$_}";
-							$subIDAllowed = 0;
+							$subIDAllowed = 0; # sub identity is not allowed
 						}
 					}
 				}
-				local $matchRequired = ($discPos == 0) ? 0 : 1;
+				local $matchRequired = ($discPos == 0) ? 0 : 1; # True if there was a discrepancy, False otherwise 
+                # TODO: This block currently does nothing. What was it for?
 				if ($subIDAllowed && $matchRequired) {
 					local $discBasePos = $base + ($discPos % $n);
-					local $diffX = $x[$discBasePos] - $x[$discPos];
-					local $diffY = $y[$discBasePos] - $y[$discPox];
+					local $diffX = $x[$discBasePos] - $x[$discPos]; # m-power at base - m-power at bad position
+					local $diffY = $y[$discBasePos] - $y[$discPox]; # n-power at base - n-power at bad position
 					if ($diffX % $power != 0 || $diffy % $power != 0) {
 #						$matchRequired = 0;
 					}
 				}
+                # If matchRequired we want word ~ M^matchX N^matchY 
 				local $matchX = $x[$base]-$x[0];
 				local $matchY = $y[$base]-$y[0];
 				print "THERE word=$word n=$n base=$base sub=$sub\n";
@@ -144,5 +148,6 @@ N:	for ($n = 1; $n+$n <= $numG; ++$n) {
 		}
 	}
 	print "returning($word)=", $#result, "\n";
+	print @result, "\n";
 	@result;
 }
