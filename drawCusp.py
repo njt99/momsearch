@@ -422,8 +422,8 @@ class cusp(Tk) :
                         r = self.horo_center_cutoff
                         horiz_range = quad_sol(1., 2.*x, norm(new_center) - r**2)
                         vert_range = quad_sol(norm(lattice), 2*(x*real(lattice) + y*imag(lattice)), norm(new_center) - r**2)
-                        horiz_range = (int(ceil(real(horiz_range[0]))), int(floor(real(horiz_range[1]))))
-                        vert_range = (int(ceil(real(vert_range[0]))), int(floor(real(vert_range[1]))))
+                        horiz_range = (int(floor(real(horiz_range[0]))), int(ceil(real(horiz_range[1]))))
+                        vert_range = (int(floor(real(vert_range[0]))), int(ceil(real(vert_range[1]))))
                         for n in range(*horiz_range) :
                             for m in range(*vert_range) :
                                 if m != 0 or n != 0 :

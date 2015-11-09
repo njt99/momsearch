@@ -270,6 +270,7 @@ int TestCollection::evaluateBox(int index, NamedBox& box)
 			Params<AComplex1Jet> cover(box.cover());
 			int result = evaluate(indexString[index-7], cover, false);
 			if (result) {
+                // TODO: Understand this tail enumeration that adds words based on given word
 				enumerate(indexString[index-7].c_str());
 			}
 			return result;
