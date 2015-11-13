@@ -23,7 +23,7 @@ refine = './refine'
 srcDir = args[0]
 destDir = args[1]
 backingDir = args[2]
-childLimit = 2
+childLimit = 8
 childCount = 0
 
 maxSize = '3000000'
@@ -31,10 +31,11 @@ maxDepth = '42'
 truncateDepth = '6'
 inventDepth = '42'
 ballSearchDepth = '9'
-maxArea = '5.2'
+maxArea = '5.5'
 fillHoles = ' --fillHoles'
-mom = '/dev/null'
-parameterized = '/dev/null'
+mom = '/home/ayarmola/momsearch/momWords'
+parameterized = '/home/ayarmola/momsearch/parameterizedWords'
+powers = '/home/ayarmola/momsearch/powers_combined'
 
 # A few useful functions
 def command_output(command):
@@ -75,7 +76,8 @@ seenWords = set()
 for opt, val in opts:
     if opt in ('-w', '--words'):
         wordsFile = val
-        add_words(seenWords, wordsFile)
+        
+add_words(seenWords, wordsFile)
 
 # Check for incomplete trees
 subprocess.call('{0} -r {1} \'{2}\''.format(treecheck, destDir, ''), shell=True)
@@ -96,8 +98,10 @@ print "Launching Refine"
 
 # Launch the refine runs
 pidToHole = {};
+refineRunCount = 0
+waitForHoles = False
 while True:
-    if childCount >= childLimit:
+    if childCount >= childLimit or (childCount > 0 and len(holes) == 0) or waitForHoles:
         donePid, status = os.wait()
         exitStatus = os.WEXITSTATUS(status)
         doneHole = pidToHole[donePid]
@@ -107,6 +111,7 @@ while True:
 
         # If there was an error refining
         if exitStatus != 0:
+            print 'Error refining hole {}\n'.format(done)
             done.remove(doneHole)
             continue 
 
@@ -135,21 +140,26 @@ while True:
 
         childCount -= 1
 
-    if len(holes) == 0:
+    if len(holes) == 0 and refineRunCount == 0:
         bestHole = 'root'
     else :    
         bestHole = '1'*200
     for hole in holes:
         if hole not in done and len(hole) < len(bestHole):
             bestHole = hole    
-    
-    if len(bestHole) > 95: break
 
-    done.add(bestHole)
-    childCount += 1   
- 
+    if len(bestHole) > 95:
+        if childCount > 0 :
+            waitForHoles = True
+            continue
+        else :
+            break
+    else :
+        waitForHoles = False
+
     pid = os.fork()
     if pid == 0:
+        print 'Run Count {0}\n'.format(refineRunCount)
         if bestHole == 'root':
             pidBallSearchDepth = '-1'
         else: 
@@ -168,6 +178,7 @@ while True:
                     ' --words ' + wordsFile + \
                     ' --ballSearchDepth ' + pidBallSearchDepth + \
                     ' --maxArea ' + maxArea + \
+                    ' --powers ' + powers + \
                     ' --mom ' + mom + \
                     fillHoles + \
                     ' --parameterized ' + parameterized + \
@@ -181,9 +192,12 @@ while True:
         if first[:1] == 'H': # HOLE
             command = command.replace(srcDir, backingDir)
 
-        print 'Running {0}\n'.format(command)
+        print 'Running with run count {1}: {0}\n'.format(command, refineRunCount)
         returnCode = subprocess.call(command, shell=True)
         if returnCode == 0: sys.exit(0) 
         else: sys.exit(1)
     else:
+        childCount += 1   
+        refineRunCount += 1
+        done.add(bestHole)
         pidToHole[pid] = bestHole
