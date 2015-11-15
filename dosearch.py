@@ -1,41 +1,8 @@
 #!/usr/bin/python
 
 import os, subprocess, sys, getopt, glob, time
-
-try:
-    opts, args = getopt.getopt(sys.argv[1:],'w:',['words='])
-except getopt.GetoptError as err:
-    print str(err)
-    print('Usage: dosearch [-w,--words <wordsfile>] srcDir destDir backingDir')
-    sys.exit(2)
-
-if len(args) != 3:
-    print('Usage: dosearch [-w,--words <wordsfile>] srcDir destDir backingDir')
-    sys.exit(2)
-
-# Executables
-treecat = './treecat'
-treeholes = './treecat --holes'
-treecheck = './treecat --mark -s'
-refine = './refine'
-
-# Set up the rest of the arguments
-srcDir = args[0]
-destDir = args[1]
-backingDir = args[2]
-childLimit = 8
-childCount = 0
-
-maxSize = '3000000'
-maxDepth = '42'
-truncateDepth = '6'
-inventDepth = '42'
-ballSearchDepth = '9'
-maxArea = '5.5'
-fillHoles = ' --fillHoles'
-mom = '/home/ayarmola/momsearch/momWords'
-parameterized = '/home/ayarmola/momsearch/parameterizedWords'
-powers = '/home/ayarmola/momsearch/powers_combined'
+from time import sleep
+from multiprocessing import Process
 
 # A few useful functions
 def command_output(command):
@@ -70,103 +37,165 @@ def add_words(words, fp):
         print('Error loading words file {0}\n'.format(fp))
         sys.exit(1)
 
-# Get the seen words
-wordsFile = 'allWords_{0:.0f}'.format(time.time())
-seenWords = set()
-for opt, val in opts:
-    if opt in ('-w', '--words'):
-        wordsFile = val
-        
-add_words(seenWords, wordsFile)
+def run_refine(command, destDir) :
+    pid = os.getpid()
+    pid_file = destDir + '/' + str(pid) + '.pid'
+    open(pid_file,'a').close()
+    returnCode = subprocess.call(command, shell=True)
+    if returnCode == 0:
+        with open(pid_file,'a') as fp :
+            fp.write('\ncompleted')
+        sys.exit(0)
+    else:
+        with open(pid_file,'a') as fp :
+            fp.write('\nfailed')
+        sys.exit(1)
 
-# Check for incomplete trees
-subprocess.call('{0} -r {1} \'{2}\''.format(treecheck, destDir, ''), shell=True)
+if __name__ == '__main__' :
 
-# Get holes. Note, treecat will check that all files are complete trees
-holes = set();
-add_holes(holes, treeholes, destDir, '')
+    try:
+        opts, args = getopt.getopt(sys.argv[1:],'w:',['words='])
+    except getopt.GetoptError as err:
+        print str(err)
+        print('Usage: dosearch [-w,--words <wordsfile>] srcDir destDir backingDir')
+        sys.exit(2)
 
-# Get done words
-done = set()
-try:
-    done = set([os.path.basename(boxfile).replace('.out','') for boxfile in glob.glob(destDir + '/*.out')])
-except:
-    print('Error reading {0}\n'.format(destDir)) 
-    sys.exit(1)
+    if len(args) != 3:
+        print('Usage: dosearch [-w,--words <wordsfile>] srcDir destDir backingDir')
+        sys.exit(2)
 
-print "Launching Refine"
+    # Executables
+    treecat = './treecat'
+    treeholes = './treecat --holes'
+    treecheck = './treecat --mark -s'
+    refine = './refine'
 
-# Launch the refine runs
-pidToHole = {};
-refineRunCount = 0
-waitForHoles = False
-while True:
-    if childCount >= childLimit or (childCount > 0 and len(holes) == 0) or waitForHoles:
-        donePid, status = os.wait()
-        exitStatus = os.WEXITSTATUS(status)
-        doneHole = pidToHole[donePid]
+    # Set up the rest of the arguments
+    srcDir = args[0]
+    destDir = args[1]
+    backingDir = args[2]
+    childLimit = 4
+    childCount = 0
 
-        # We should check the output either way to make sure it is clean 
-        subprocess.call('{0} {1} \'{2}\''.format(treecheck, destDir, doneHole), shell=True)
+    maxSize = '3000000'
+    maxDepth = '42'
+    truncateDepth = '6'
+    inventDepth = '42'
+    ballSearchDepth = '9'
+    maxArea = '5.5'
+    fillHoles = ' --fillHoles'
+    mom = '/home/ayarmola/momsearch/momWords'
+    parameterized = '/home/ayarmola/momsearch/parameterizedWords'
+    powers = '/home/ayarmola/momsearch/powers_combined'
 
-        # If there was an error refining
-        if exitStatus != 0:
-            print 'Error refining hole {}\n'.format(done)
-            done.remove(doneHole)
-            continue 
+    # Get the seen words
+    wordsFile = 'allWords_{0:.0f}'.format(time.time())
+    seenWords = set()
+    for opt, val in opts:
+        if opt in ('-w', '--words'):
+            wordsFile = val
+            
+    add_words(seenWords, wordsFile)
 
-        print 'Completed {0} {1}\n'.format(doneHole,donePid)
-        add_holes(holes, treeholes, destDir, doneHole)
+    # Check for incomplete trees
+    subprocess.call('{0} -r {1} \'{2}\''.format(treecheck, destDir, ''), shell=True)
 
-        numPatched = command_output('grep -c Patched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
-        numUnpatched = command_output('grep -c Unpatched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
-        numHoles = command_output('grep -c HOLE {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
-        
-        print 'Holes: {0} patched, {1} unpatched, {2} holes\n'.format(numPatched, numUnpatched, numHoles)
+    # Get holes. Note, treecat will check that all files are complete trees
+    holes = set();
+    add_holes(holes, treeholes, destDir, '')
 
-        print 'Holes: {0}\n'.format(holes)
+    # Get done words
+    done = set()
+    try:
+        done = set([os.path.basename(boxfile).replace('.out','') for boxfile in glob.glob(destDir + '/*.out')])
+    except:
+        print('Error reading {0}\n'.format(destDir)) 
+        sys.exit(1)
 
-        boxWords = set()
-        add_words(boxWords, '{0}/{1}.out'.format(destDir, doneHole))        
-        newWords = boxWords - seenWords
-        seenWords |= newWords
+    print "Launching Refine"
 
-        if len(newWords) > 0: 
-            f = open(wordsFile, 'a')
-            for word in newWords:
-                print 'Adding word {0}'.format(word)
-                f.write(word + '\n')
-            f.close()
+    # Launch the refine runs
+    activePidToHole = {};
+    refineRunCount = 0
+    waitForHoles = False
+    while True:
+        if childCount >= childLimit or (childCount > 0 and len(holes) == 0) or waitForHoles:
+            iterDict = dict(activePidToHole)
+            for donePid, doneHole in iterDict.iteritems() :
+                pid_file = destDir + '/' + str(donePid) + '.pid'
+                status = command_output('tail -1 {0}'.format(pid_file))
 
-        childCount -= 1
+                if status == 'completed' :
+                    # We should check the output either way to make sure it is clean 
+                    subprocess.call('{0} {1} \'{2}\''.format(treecheck, destDir, doneHole), shell=True)
 
-    if len(holes) == 0 and refineRunCount == 0:
-        bestHole = 'root'
-    else :    
-        bestHole = '1'*200
-    for hole in holes:
-        if hole not in done and len(hole) < len(bestHole):
-            bestHole = hole    
+                    print 'Completed {0} {1}\n'.format(doneHole,donePid)
+                    add_holes(holes, treeholes, destDir, doneHole)
 
-    if len(bestHole) > 95:
-        if childCount > 0 :
-            waitForHoles = True
-            continue
+                    numPatched = command_output('grep -c Patched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
+                    numUnpatched = command_output('grep -c Unpatched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
+                    numHoles = command_output('grep -c HOLE {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
+                    
+                    print 'Holes: {0} patched, {1} unpatched, {2} holes\n'.format(numPatched, numUnpatched, numHoles)
+
+                    boxWords = set()
+                    add_words(boxWords, '{0}/{1}.out'.format(destDir, doneHole))        
+                    newWords = boxWords - seenWords
+                    seenWords |= newWords
+
+                    if len(newWords) > 0: 
+                        f = open(wordsFile, 'a')
+                        for word in newWords:
+                            print 'Adding word {0}'.format(word)
+                            f.write(word + '\n')
+                        f.close()
+
+                    childCount -= 1
+                    del activePidToHole[donePid]
+                    continue
+
+                elif status == 'failed' :
+                    # We should check the output either way to make sure it is clean 
+                    subprocess.call('{0} {1} \'{2}\''.format(treecheck, destDir, doneHole), shell=True)
+                    # If there was an error refining
+                    print 'Error refining hole {}\n'.format(done)
+                    done.remove(doneHole)
+                    del activePidToHole[donePid]
+                    continue
+                else :
+                    sleep(60) # We don't need to to run the main loop to death since we aren't using os.wait
+
+        sleep(2) # We don't need to to run the main loop to death since we aren't using os.wait
+        openHoles = holes - done
+        if len(openHoles) == 0 and refineRunCount == 0:
+            bestHole = 'root'
+        else :    
+            bestHole = '1'*200
+        for hole in openHoles:
+            if len(hole) < len(bestHole):
+                bestHole = hole    
+
+        if len(bestHole) > 95:
+            if childCount > 0 :
+                waitForHoles = True
+                sleep(60) # We don't need to to run the main loop to death since we aren't using os.wait
+                continue
+            else :
+                # We only break if we don't have any more refine processes running
+                break
         else :
-            break
-    else :
-        waitForHoles = False
+            waitForHoles = False
 
-    pid = os.fork()
-    if pid == 0:
-        print 'Run Count {0}\n'.format(refineRunCount)
+        print 'Best hole: {0}\n'.format(bestHole)
+        print 'Open Holes: {0}\n'.format(openHoles)
+
+        out = destDir + '/' + bestHole + '.out'
+        err = destDir + '/' + bestHole + '.err'
+
         if bestHole == 'root':
             pidBallSearchDepth = '-1'
         else: 
             pidBallSearchDepth = ballSearchDepth
-
-        out = destDir + '/' + bestHole + '.out'
-        err = destDir + '/' + bestHole + '.err'
 
         command = treecat + ' ' +  srcDir + ' ' + bestHole + \
                     ' | ' + refine + \
@@ -184,8 +213,6 @@ while True:
                     ' --parameterized ' + parameterized + \
                     ' > ' + out  + ' 2> ' + err
 
-
-
         first_command = '{0} {1} {2} | head -1'.format(treecat, srcDir, bestHole)
         first = command_output(first_command).rstrip()
 
@@ -193,11 +220,11 @@ while True:
             command = command.replace(srcDir, backingDir)
 
         print 'Running with run count {1}: {0}\n'.format(command, refineRunCount)
-        returnCode = subprocess.call(command, shell=True)
-        if returnCode == 0: sys.exit(0) 
-        else: sys.exit(1)
-    else:
+        refine_run = Process(target=run_refine, args=(command, destDir,))
+        refine_run.start()
+        pid = refine_run.pid
+
         childCount += 1   
         refineRunCount += 1
         done.add(bestHole)
-        pidToHole[pid] = bestHole
+        activePidToHole[pid] = bestHole
