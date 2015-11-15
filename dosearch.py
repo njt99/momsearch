@@ -82,7 +82,7 @@ if __name__ == '__main__' :
     truncateDepth = '6'
     inventDepth = '42'
     ballSearchDepth = '9'
-    maxArea = '5.5'
+    maxArea = '5.2'
     fillHoles = ' --fillHoles'
     mom = '/home/ayarmola/momsearch/momWords'
     parameterized = '/home/ayarmola/momsearch/parameterizedWords'
@@ -160,6 +160,7 @@ if __name__ == '__main__' :
                     # If there was an error refining
                     print 'Error refining hole {}\n'.format(done)
                     done.remove(doneHole)
+                    childCount -= 1
                     del activePidToHole[donePid]
                     continue
                 else :
