@@ -40,7 +40,9 @@ def add_words(words, fp):
 def run_refine(command, destDir) :
     pid = os.getpid()
     pid_file = destDir + '/' + str(pid) + '.pid'
-    open(pid_file,'a').close()
+    with open(pid_file,'a') as fp : 
+        fp.write(command + '\n')
+        fp.close()
     returnCode = subprocess.call(command, shell=True)
     if returnCode == 0:
         with open(pid_file,'a') as fp :
@@ -75,7 +77,6 @@ if __name__ == '__main__' :
     destDir = args[1]
     backingDir = args[2]
     childLimit = 4
-    childCount = 0
 
     maxSize = '3000000'
     maxDepth = '42'
@@ -117,15 +118,36 @@ if __name__ == '__main__' :
     # Launch the refine runs
     activePidToHole = {};
     refineRunCount = 0
+    childCount = 0
     waitForHoles = False
     while True:
-        if childCount >= childLimit or (childCount > 0 and len(holes) == 0) or waitForHoles:
+        sleep(2) # We don't need to to run the main loop to death since we aren't using os.wait
+        openHoles = holes - done
+        if len(openHoles) == 0 and refineRunCount == 0:
+            bestHole = 'root'
+        else : 
+            bestHole = '1'*200
+        for hole in openHoles:
+            if len(hole) < len(bestHole):
+                bestHole = hole    
+
+        if len(bestHole) > 95:
+            if childCount > 0 :
+                waitForHoles = True
+            else :
+                # We only break if we don't have any more refine processes running
+                break
+        else :
+            waitForHoles = False
+
+        # We now check for completed refine processes.
+        if childCount >= childLimit or (childCount > 0 and len(openHoles) == 0) or waitForHoles:
             iterDict = dict(activePidToHole)
             for donePid, doneHole in iterDict.iteritems() :
                 pid_file = destDir + '/' + str(donePid) + '.pid'
                 status = command_output('tail -1 {0}'.format(pid_file))
 
-                if status == 'completed' :
+                if 'completed' in status :
                     # We should check the output either way to make sure it is clean 
                     subprocess.call('{0} {1} \'{2}\''.format(treecheck, destDir, doneHole), shell=True)
 
@@ -154,7 +176,7 @@ if __name__ == '__main__' :
                     del activePidToHole[donePid]
                     continue
 
-                elif status == 'failed' :
+                elif 'failed' in status :
                     # We should check the output either way to make sure it is clean 
                     subprocess.call('{0} {1} \'{2}\''.format(treecheck, destDir, doneHole), shell=True)
                     # If there was an error refining
@@ -164,31 +186,12 @@ if __name__ == '__main__' :
                     del activePidToHole[donePid]
                     continue
                 else :
-                    sleep(60) # We don't need to to run the main loop to death since we aren't using os.wait
+                    continue
+            sleep(60) # We don't need to to run the main loop to death since we aren't using os.wait
+            continue        
 
-        sleep(2) # We don't need to to run the main loop to death since we aren't using os.wait
-        openHoles = holes - done
-        if len(openHoles) == 0 and refineRunCount == 0:
-            bestHole = 'root'
-        else :    
-            bestHole = '1'*200
-        for hole in openHoles:
-            if len(hole) < len(bestHole):
-                bestHole = hole    
-
-        if len(bestHole) > 95:
-            if childCount > 0 :
-                waitForHoles = True
-                sleep(60) # We don't need to to run the main loop to death since we aren't using os.wait
-                continue
-            else :
-                # We only break if we don't have any more refine processes running
-                break
-        else :
-            waitForHoles = False
-
+        # If we make it here. We are running refine
         print 'Best hole: {0}\n'.format(bestHole)
-        print 'Open Holes: {0}\n'.format(openHoles)
 
         out = destDir + '/' + bestHole + '.out'
         err = destDir + '/' + bestHole + '.err'
