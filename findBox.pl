@@ -6,7 +6,7 @@ while (<>) {
 	if (/(.*) = (.*) \+ (.*) I.*norm=(.*)/) {
 		$real{$1} = $2;
 		$imag{$1} = $3;
-		$frac = 4*$4 - POSIX::floor(4*$4);
+		$frac = 8*$4 - POSIX::floor(8*$4);
 		$special = 'SPECIAL' if $frac < 0.000001 && $frac > -.000001;
 		&printBox if ($1 eq 'parabolic');
 	}
@@ -41,12 +41,12 @@ sub printBox {
 		$real{'sqrtLoxodromic'} = -$real{'sqrtLoxodromic'};
 	}
 	my @coord;
-	$coord[0] = $imag{'lattice'}        / (4 * 2**(-0.0/6.0));
-	$coord[1] = $imag{'sqrtLoxodromic'} / (4 * 2**(-1.0/6.0));
-	$coord[2] = $imag{'parabolic'}      / (4 * 2**(-2.0/6.0));
-	$coord[3] = $real{'lattice'}        / (4 * 2**(-3.0/6.0));
-	$coord[4] = $real{'sqrtLoxodromic'} / (4 * 2**(-4.0/6.0));
-	$coord[5] = $real{'parabolic'}      / (4 * 2**(-5.0/6.0));
+	$coord[0] = $imag{'lattice'}        / (8 * 2**(-0.0/6.0));
+	$coord[1] = $imag{'sqrtLoxodromic'} / (8 * 2**(-1.0/6.0));
+	$coord[2] = $imag{'parabolic'}      / (8 * 2**(-2.0/6.0));
+	$coord[3] = $real{'lattice'}        / (8 * 2**(-3.0/6.0));
+	$coord[4] = $real{'sqrtLoxodromic'} / (8 * 2**(-4.0/6.0));
+	$coord[5] = $real{'parabolic'}      / (8 * 2**(-5.0/6.0));
 	my $box;
 	for ($i = 0; $i < 120; ++$i) {
 		$n = $i % 6;
