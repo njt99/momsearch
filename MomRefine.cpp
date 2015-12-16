@@ -25,10 +25,10 @@ using namespace std;
 struct Options {
 	Options() :
         boxName(""), // Binary representation of box
-        wordsFile("./allWords"), // Previously generated words
-		powersFile("./wordpowers.out"), // Output from power parabolic.pl
-		momFile("./momWords"), // TODO: Find what generates
-		parameterizedFile("./parameterizedWords"), // TODO: Find what generates
+        wordsFile("./current_refine_run"), // Previously generated words
+		powersFile("null"), // Output from power parabolic.pl
+		momFile("null"), // TODO: Find what generates
+		parameterizedFile("null"), // TODO: Find what generates
 		maxDepth(18), // Maximum depth for a file
         truncateDepth(6), 
         inventDepth(12),
