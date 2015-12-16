@@ -76,7 +76,7 @@ if __name__ == '__main__' :
     srcDir = args[0]
     destDir = args[1]
     backingDir = args[2]
-    childLimit = 4
+    childLimit = 8
 
     maxSize = '3000000'
     maxDepth = '42'
@@ -85,8 +85,8 @@ if __name__ == '__main__' :
     ballSearchDepth = '9'
     maxArea = '5.2'
     fillHoles = ' --fillHoles'
-    mom = '/home/ayarmola/momsearch/momWords'
-    parameterized = '/home/ayarmola/momsearch/parameterizedWords'
+    mom = '/dev/null' #/home/ayarmola/momsearch/momWords'
+    parameterized = '/dev/null' #/home/ayarmola/momsearch/parameterizedWords'
     powers = '/home/ayarmola/momsearch/powers_combined'
 
     # Get the seen words
@@ -174,16 +174,19 @@ if __name__ == '__main__' :
 
                     childCount -= 1
                     del activePidToHole[donePid]
+                    os.remove(pid_file)
                     continue
 
                 elif 'failed' in status :
                     # We should check the output either way to make sure it is clean 
                     subprocess.call('{0} {1} \'{2}\''.format(treecheck, destDir, doneHole), shell=True)
                     # If there was an error refining
-                    print 'Error refining hole {}\n'.format(done)
+                    print 'Error with pid {0}\n'.format(donePid)
+                    print 'Error refining hole {0}\n'.format(doneHole)
                     done.remove(doneHole)
                     childCount -= 1
                     del activePidToHole[donePid]
+                    os.remove(pid_file)
                     continue
                 else :
                     continue
@@ -203,6 +206,7 @@ if __name__ == '__main__' :
 
         command = treecat + ' ' +  srcDir + ' ' + bestHole + \
                     ' | ' + refine + \
+                    fillHoles + \
                     ' --box ' + bestHole + \
                     ' --maxDepth ' + maxDepth + \
                     ' --truncateDepth ' + truncateDepth + \
@@ -213,7 +217,6 @@ if __name__ == '__main__' :
                     ' --maxArea ' + maxArea + \
                     ' --powers ' + powers + \
                     ' --mom ' + mom + \
-                    fillHoles + \
                     ' --parameterized ' + parameterized + \
                     ' > ' + out  + ' 2> ' + err
 
