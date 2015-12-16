@@ -33,19 +33,13 @@ for d in extra_path :
     if d not in sys.path :
         sys.path.append(d)
 
-if 'os' not in sys.modules :
-    import os
-if 'glob' not in sys.modules :
-    import glob
-if 'pprint' not in sys.modules : 
-    from pprint import *
-if 'cmath' not in sys.modules : 
-    from cmath import *
-if 'numpy' not in sys.modules : 
-    from numpy import floor, ceil, dot
- 
-scale = map(lambda x : 8 * pow(2, x/6.), range(0,-6,-1))
-COMP_ERR = pow(2.,-10)
+import os
+import glob
+from sage.all import * 
+
+scale_factor = 8 
+scale = map(lambda x : scale_factor * pow(2, x/6.), range(0,-6,-1))
+COMP_ERR = pow(2.,-30)
 
 def g_depth(word) :
     g_count = 0
@@ -55,10 +49,10 @@ def g_depth(word) :
     return g_count
 
 def real(x) :
-    return x.real
+    return x.real()
 
 def imag(x) :
-    return x.imag
+    return x.imag()
 
 def norm(x) :
     return real(x*x.conjugate())    
@@ -236,21 +230,50 @@ def get_first(word) :
 
 def quad_sol(a,b,c) :
     d = b * b - 4. * a * c
-    sq_d = sqrt(d)
+    sq_d = d.sqrt()
     return ((-b - sq_d)/(2*a), (-b + sq_d)/(2*a))
 
-def get_nearest_translate(c, p, m, n=1.) :
+def floor(x) :
+    int_x = int(x)
+    if int_x > x :
+        return int_x - 1
+    else :
+        return int_x
+
+def get_domain_translate(p, m, n = 1.) :
+    assert imag(m) > -COMP_ERR
     assert imag(n) == 0.
+    assert real(n) > COMP_ERR
+    # We check that we have minimal translation for m
+    assert abs(abs(m) - min([abs(m), abs(m-n), abs(n+m)])) < COMP_ERR 
+    # We assume that imag(m) >= 0, imag(n) == 0, real(n) > 0
+    m_len = imag(p) / imag(m)
+    m_pow = -floor(m_len + COMP_ERR)
+    n_len = (real(p) - m_len * real(m)) / real(n)
+    n_pow = -floor(n_len + COMP_ERR)
+    shift = m_pow * m + n_pow * n
+    domain_p = p + shift
+    return {'translate' : domain_p, 'shift' : shift, 'm_pow' :  m_pow, 'n_pow' :  n_pow}
+
+def get_least_translate(p, m, n = 1.) :
+    # We make assertions about m,n in get_domain_translate
+    domain_translate = get_domain_translate(p, m, n)
+    near_by = [domain_translate]
+    for t in [(-1.,0.),(0.,-1.),(-1.,-1.)] :
+        near_by_translate = dict(domain_translate)
+        near_by_translate['translate'] += m * t[0] + n * t[1]
+        near_by_translate['shift'] += m * t[0] + n * t[1]
+        near_by_translate['m_pow'] = t[0]
+        near_by_translate['n_pow'] = t[1]
+        near_by.append(near_by_translate)
+    return min(near_by, key = lambda x : abs(x['translate'])) 
+
+def get_nearest_translate(c, p, m, n=1.) :
+    # We make assertions about m,n in get_domain_translate
     diff = p - c
-    # The pojection of diff to the real axis along lattice
-    # We assume tha n is real (along real axis)
-    m_len = imag(diff) / imag(m)
-    m_pow = round(m_len)
-    n_len = (real(diff) - m_pow * real(m)) / real(n)
-    n_pow = round(n_len)
-    shift = - m_pow * m - n_pow * n
-    translate = shift + p
-    return {'translate' : translate, 'shift' : shift, 'm_pow' :  m_pow, 'n_pow' :  n_pow}
+    nearest_translate = get_least_translate(diff, m, n)
+    nearest_translate['translate'] += c
+    return nearest_translate 
 
 def translate_to_center(center_ball, horoballs, triang) :
     center = center_ball['center']
@@ -268,23 +291,13 @@ def translate_to_center(center_ball, horoballs, triang) :
     return {'horoballs' : shifted_horoballs, 'triangulation' :  shifted_triang}
 
 def move_horoballs_to_domain(balls, trans) :
+    # We make assertions about m,n in get_domain_translate
     m = trans[0]
     n = trans[1]
-    # We assume that imag(m) >= 0, imag(n) == 0, real(n) > 0
-    assert imag(m) > -COMP_ERR
-    assert imag(n) == 0.
-    assert real(n) > 0.
     new_balls = []
     for ball in balls :
         new_ball = dict(ball)
-        # This is actually the nearest center, we need to move it to the domain
-        domain_center = get_nearest_translate(0., ball['center'], m, n)['translate']
-        real_proj = real(domain_center - m * (imag(domain_center) / imag(m)))
-        if real_proj < 0. :
-            domain_center += n 
-        if imag(domain_center) < 0. :
-            domain_center += m
-        new_ball['center'] = domain_center
+        new_ball['center'] = get_domain_translate(ball['center'], m, n)['translate']
         new_balls.append(new_ball)
     return new_balls
 
@@ -318,7 +331,7 @@ def edge_angle(edge) :
     eps = edge['endpoints']
     direction = eps[1] - eps[0]
     unit = direction / abs(direction)
-    return imag(log(-unit))
+    return imag((-unit).log()) # We are using SnappyHP numbers here, so we call native methods
 
 def get_edge_vect(edge) :
     eps = edge['endpoints']
@@ -341,18 +354,172 @@ def inv_edge(edge) :
     new_edge['indices'] = (inds[0], inds[2], inds[1])
     return new_edge
 
+# Apply 1/z to the list. Note, the order must be reversed
+def inv_edge_list(edges) :
+    inv_edges = [inv_edge(edge) for edge in edges]
+    inv_edges = inv_edges[::-1]
+    return inv_edges
+
+def find_shift_index(of_list, in_list, key) :
+    len_of = len(of_list)
+    len_in = len(in_list)
+    found = []
+    found_count = 0
+    if len_of != len_in :
+        return {'found' : found, 'count' : found_count}
+    for i in range(len_in) :
+        for j in range(len_of) :
+            if of_list[j][key] != in_list[(i+j)%len_in][key] :
+                break
+            if j + 1 == len_of :
+                found.append(i)
+                found_count += 1
+                break
+    return {'found' : found, 'count' : found_count}
+
+def append_census_params_to_file(params, file_name) :
+    with open(file_name,'a') as fp :
+        fp.write("M name={}\n".format(params['manifold']))
+        fp.write("M vol={}\n".format(params['manifold_volume']))
+        fp.write("M cusp_area={}\n".format(params['cusp_area']))
+        fp.write("M flips={}\n".format(params['flips']))
+        fp.write("M is_special={}\n".format(params['is_special']))
+        fp.write("M lattice_might_be_norm_one={}\n".format(params['lattice_might_be_norm_one']))
+        fp.write("M box={}\n".format(params['box_code']))
+        fp.write("lattice = {0} + {1} I norm={2}\n".format(real(params['lattice']),imag(params['lattice']),abs(params['lattice'])))
+        fp.write("lox_sqrt = {0} + {1} I norm={2}\n".format(real(params['lox_sqrt']),imag(params['lox_sqrt']),abs(params['lox_sqrt'])))
+        fp.write("parabolic = {0} + {1} I norm={2}\n".format(real(params['parabolic']),imag(params['parabolic']),abs(params['parabolic'])))
+    fp.close()
+
 # This is out first SnapPy command
 if 'snappy' not in sys.modules : 
     from snappy import *
 
-def get_params_from_manifold(mfld) :
+def validate_params(params) :
+    # We require that the loxodromic square root have norm >= 1. Since
+    # the height of the maximal cusp neightborhood is 1/|sq_lox|, we need
+    # 1/|sq_lox| <= 1 because a cusp with minimal horo-boundary translation
+    # length 1 is always embedded (Jorgensen's ineq, see Meyerhoff's
+    # "A LOWER BOUND FOR THE VOLUME OF HYPERBOLIC 3-MANIFOLDS" for standard proof)
+    lox_sqrt = params['lox_sqrt']
+    try :
+        assert norm(lox_sqrt) >= 1.0
+    except :
+        print 'The maximal cusp is too small?!'
+        print params
+        return        
+
+    # We require that -0.5 <= Re(lattice) <= 0.5
+    lattice = params['lattice']
+    while abs(real(lattice)) > 0.5 :
+        if real(lattice) > 0 :
+            lattice -= 1.0
+        else :
+            lattice += 1.0 
+
+    # We must have the lattice length >= 1
+    try :
+        assert norm(lattice) >= 1.0
+    except :
+        print 'The lattice is too small?!'
+        print params
+        return        
+
+    # We require that the parabolic element have
+    parabolic = params['parabolic']
+    # parabolic imag part <= 0.5 * (lattice imag part) 
+    while abs(imag(parabolic)) > 0.5 * abs(imag(lattice)) :
+        if imag(parabolic) > 0. :
+            if imag(lattice) > 0. :
+                parabolic -= lattice
+            else :
+                parabolic += lattice
+        else :
+            if imag(lattice) > 0. :
+                parabolic += lattice
+            else :
+                parabolic -= lattice
+    # parabolic real part <= 0.5
+    while abs(real(parabolic)) > 0.5 :
+        if real(parabolic) > 0. :
+            parabolic -= 1.0
+        else :
+            parabolic += 1.0
+
+    # It remains fix positivity/sign coniditons    
+    # We record the parameter flips we have done in case we ever need to reference
+    parameter_flips = []
+    # parabolic real part >= 0 TODO in TestCollection this is > 0 
+    if real(parabolic) < 0. :
+        parabolic = -parabolic
+        lattice = -lattice
+        parameter_flips.append('RP')
+    # parabolic imag part >= 0 TODO in TestCollection this is > 0
+    if imag(parabolic) < 0. :
+        parabolic = parabolic.conjugate()
+        lattice = lattice.conjugate()
+        lox_sqrt = lox_sqrt.conjugate()
+        parameter_flips.append('IP')
+    # lattice imag part >= 0 TODO in TestCollection this is > 0 
+    if imag(lattice) < 0. :
+        lattice = -lattice    
+        parameter_flips.append('IL')
+    # lox_sqrt imag part >= 0 TODO in TestCollection this is > 0 
+    if imag(lox_sqrt) < 0. :
+        lox_sqrt = -lox_sqrt
+        parameter_flips.append('IS')
+    # We keep the SPECIAL convention tag used by NJT
+    params['is_special'] = False
+    for param in [lattice, lox_sqrt, parabolic] :
+        n = abs(param)
+        s = scale_factor * n
+        comp = abs(s - floor(s))
+        if comp < COMP_ERR :
+            params['is_special'] = True
+            break
+    # We should now have the bounds
+    # 0. |lox_sqrt| >= 1 (horoball size)
+    # 1. Im(lox_sqrt) >= 0 (only lox_sqrt^2 matters)
+    # 2. -1/2 <= Re(lattice) <= 1/2 (reduction modulo N)
+    # 3. Im(lattice) >= 0 (complex conjugate symmetry)
+    # 4. 0 <= Im(parabolic) <= Im(lattice)/2 (reduction modulo M, flipping sign of lattice)
+    # 5. 0 <= Re(parabolic) <= 1/2 (reduction modulo N, flipping sign of lattice)
+    params['lattice'] = lattice
+    params['lox_sqrt'] = lox_sqrt
+    params['parabolic'] = parabolic
+    params['flips'] =  parameter_flips
+
+def get_box_code(validated_params, depth=120) :
+    lattice = validated_params['lattice']
+    lox_sqrt = validated_params['lox_sqrt']
+    parabolic = validated_params['parabolic']
+    coord = [0.]*6
+    coord[0] = imag(lattice) / scale[0] 
+    coord[1] = imag(lox_sqrt) / scale[1] 
+    coord[2] = imag(parabolic) / scale[2] 
+    coord[3] = real(lattice) / scale[3] 
+    coord[4] = real(lox_sqrt) / scale[4] 
+    coord[5] = real(parabolic) / scale[5] 
+    code_list = []
+    for i in range(0, depth) :
+        n = i % 6
+        if coord[n] > 0. :
+            code_list.append('1')
+            coord[n] = 2. * coord[n] - 1.
+        else :
+            code_list.append('0')
+            coord[n] = 2. * coord[n] + 1.
+    box_code = ''.join(code_list)
+    return box_code
+
+def get_params_from_manifold(mfld, census_out_file  = None) :
     mfld_hp = mfld.high_precision()
     cusp = mfld_hp.cusp_neighborhood()
 
     # We must set the displacement to get a maximal picture
     cusp.set_displacement(cusp.max_reach())
-    hbls = cusp.horoballs(1)
-    triang = cusp.triangulation()
+    hbls = cusp.horoballs(1., high_precision=True)
+    triang = cusp.triangulation(high_precision=True)
     trans = cusp.translations()
 
     # We pick a 'zero' ball for our diagram
@@ -384,53 +551,70 @@ def get_params_from_manifold(mfld) :
             break
 
     # We have found a G ball, now we must find the loxodromic rotation
-    first_edge = zero_star[0]
-    second_edge = zero_star[1]
-    inv_first_edge = inv_edge(first_edge)
-    inv_second_edge = inv_edge(second_edge)
+    inv_zero_star = inv_edge_list(zero_star)
 
-    # We match by the edge indices for a pair. Note that 1/z is an
-    # isometry in H^3 and will switch the cyclic order of edges.
-    # We take the first two edges around zero and find their image
-    # by indices and then compute the angle
-    lox = 0.
-    inv_first_idx = inv_first_edge['indices']
-    inv_second_idx = inv_second_edge['indices']
-    G_first_match = {}
-    G_second_match = {}
-    match_count = 0 # Want to make sure this is a robust method
+    found_dict = find_shift_index(inv_zero_star, G_star, 'indices')
+    found_count = found_dict['count']
+    found = found_dict['found']
 
-    for i in range(len(G_star)) :
-        prev = G_star[i-1]
-        curr = G_star[i]
-        if prev['indices'] == inv_second_idx and curr['indices'] == inv_first_idx :
-            match_count += 1
-            G_first_match = curr
-            G_second_match = prev
+    if found_count == 0 :
+        raise Exception('Could not find an edge match! Something is definitely broken for manifold {0}'.format(mfld.name()))
+    # If we found too many matches, this is too much symmetry. Something is wrong
+    # with our algorithm or data
+    if found_count > 2 :
+        raise Exception('Too many edge matches! Something is broken for manifold {0}'.format(mfld.name()))
+    if found_count == 2 :
+        # We check that the two found vectors are antipodal. This happens in
+        # highly symmetric cases.
+        e1 = get_edge_vect(G_star[found[0]]) 
+        e2 = get_edge_vect(G_star[found[1]])
+        if abs(e2+e1) > COMP_ERR :
+            raise Exception('Two found edges are not symmetric for manifold {0}'.format(mfld.name()))
 
-    if match_count == 0 :
-        raise Exception('Could not find an edge match! Something is definitely broken.')
-    if match_count > 1 :
-        raise Exception('Too may edge matches! Something is definitely broken.')
+    # We match the inverse zero star to the G_star cyclically
+    zero_star_edge = zero_star[-1] # Since we searched via the inv of zero star
+    G_star_edge = G_star[max(found)] # Use any of the at most two found matches
 
-    # If we are here, everything should be great
-    lox = 1./(get_edge_vect(first_edge)*get_edge_vect(G_first_match))
+    lox = (get_edge_vect(zero_star_edge)*get_edge_vect(G_star_edge))**(-1)
 
     # Rescale for out parameter normalizaion. We assume that the complex
     # parameter is shorter than the real parameter (TODO: Does SnapPy always assume the opposite?)
     m = trans[0]
     n = trans[1]
     parabolic = G_ball['center']
-    lox_sqrt = sqrt(lox)
+    lox_sqrt = lox.sqrt()
 
     params = {}
-    if abs(m) < abs(n) :
+    params['lattice_might_be_norm_one'] = False
+    if abs(n) - abs(m) > COMP_ERR :
         params['lattice'] = (n / m).conjugate()
-        params['lox_sqrt'] = (m * sqrt(lox)).conjugate()
+        params['lox_sqrt'] = (m * lox_sqrt).conjugate()
         params['parabolic'] = (G_ball['center'] / m).conjugate()
-    else :
+    elif abs(m) - abs(n) > COMP_ERR :
         params['lattice'] = m / n
-        params['lox_sqrt'] = n * sqrt(lox)
+        params['lox_sqrt'] = n * lox_sqrt
         params['parabolic'] = G_ball['center'] / n
+    else :
+        print 'Warning: translation lengths for {} are really close'.format(mfld.name())
+        params['lattice_might_be_norm_one'] = True
+        if abs(n) - abs(m) > 0. :
+            params['lattice'] = (n / m).conjugate()
+            params['lox_sqrt'] = (m * lox_sqrt).conjugate()
+            params['parabolic'] = (G_ball['center'] / m).conjugate()
+        else :
+            params['lattice'] = m / n
+            params['lox_sqrt'] = n * lox_sqrt
+            params['parabolic'] = G_ball['center'] / n
+
+    params['manifold'] = mfld.name()
+    params['manifold_volume'] = mfld.volume()
+    params['cusp_area'] = cusp.volume()+cusp.volume()
+    params['box_code'] = ''
+
+    validate_params(params)
+
+    if census_out_file :
+        params['box_code'] = get_box_code(params)
+        append_census_params_to_file(params, census_out_file)
 
     return params
