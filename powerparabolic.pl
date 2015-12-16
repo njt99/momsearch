@@ -42,9 +42,9 @@ sub getPossiblePowers
 
 	$x[0] += $m;
 	$y[0] += $n;
-    print "gs is $gs\n";
-    print "x vector @x\n";
-    print "y vector @y\n";
+#    print "gs is $gs\n";
+#    print "x vector @x\n";
+#    print "y vector @y\n";
 
 	local ($numG, $n, $j, $base, $k, $numDiscrepancies, $discPos, $offset, $power, $sub, $subID) = ();
 	local %found = ();
@@ -57,11 +57,11 @@ N:	for ($n = 1; $n+$n <= $numG; ++$n) {
 
 		# first, check to make sure g has the correct sign
 		for ($j = 1; $j*$n < $numG; ++$j) {
-            print "j is $j and n is $n\n";
-            print substr($gs, 0, $n);
-            print "\n";
-            print substr($gs, $n*$j, $n);
-            print "\n";
+#            print "j is $j and n is $n\n";
+#            print substr($gs, 0, $n);
+#            print "\n";
+#            print substr($gs, $n*$j, $n);
+#            print "\n";
 			next N if substr($gs, 0, $n) ne substr($gs, $n*$j, $n);
 		}
 
@@ -74,18 +74,18 @@ N:	for ($n = 1; $n+$n <= $numG; ++$n) {
 			for ($j = 0; $j < $numG; $j += $n) {
 				for ($k = 0; $k < $n; ++$k) {
 					next if $j == 0 && $k == 0;
-                    print "Base is $base\n";
-                    print "j is $j\n";
-                    print "k is $k\n";
-                    print "x[k+j] is $x[$k + $j]\n";
-                    print "x[k+base] is $x[$k + $base]\n";
-                    print "y[k+j] is $y[$k + $j]\n";
-                    print "y[k+base] is $y[$k + $base]\n";
+#                    print "Base is $base\n";
+#                    print "j is $j\n";
+#                    print "k is $k\n";
+#                    print "x[k+j] is $x[$k + $j]\n";
+#                    print "x[k+base] is $x[$k + $base]\n";
+#                    print "y[k+j] is $y[$k + $j]\n";
+#                    print "y[k+base] is $y[$k + $base]\n";
 					if ($x[$k + $j] != $x[$k + $base] || $y[$k + $j] != $y[$k + $base]) {
 						++$numDiscrepancies;
 						$discPos = $j + $k;
-                        print "Number of discrepencies $numDiscrepancies\n";
-                        print "New discrepency position $discPos\n";
+#                        print "Number of discrepencies $numDiscrepancies\n";
+#                        print "New discrepency position $discPos\n";
 					}
 				}
 			}
@@ -106,13 +106,13 @@ N:	for ($n = 1; $n+$n <= $numG; ++$n) {
 					}
 					$sub .= substr($gs, $base+$k, 1);
 				}
-				print "HERE word=$word n=$n base=$base sub=$sub\n";
+#				print "HERE word=$word n=$n base=$base sub=$sub\n";
 				local $subIDAllowed = ($n > 1) ? 1 : 0; # True if n > 1, False otherwise
 				local $subLine = '';
 				if ($subIDAllowed) {
-					print "sub=$sub\n";
+#					print "sub=$sub\n";
 					local @subLines = &getPossiblePowers($sub); # Might return many lines via recursion
-					print "SUB($sub)=", $#subLines, "\n";
+#					print "SUB($sub)=", $#subLines, "\n";
 					foreach (@subLines)  {
 						my @f = split(/ /);
                         # PossiblePower word subIDAllowed matchRequired matchX matchY sub^power ~ discPos n base subLine 
@@ -136,7 +136,7 @@ N:	for ($n = 1; $n+$n <= $numG; ++$n) {
                 # If matchRequired we want word ~ M^matchX N^matchY 
 				local $matchX = $x[$base]-$x[0];
 				local $matchY = $y[$base]-$y[0];
-				print "THERE word=$word n=$n base=$base sub=$sub\n";
+#				print "THERE word=$word n=$n base=$base sub=$sub\n";
 					
 				$line = join(" ", 'PossiblePower', $word, $subIDAllowed, $matchRequired, $matchX, $matchY, "$sub^$power ~ $discPos n=$n base=$base", $subLine);
 				if ($subIDAllowed == 0 && $matchRequired == 0) {
@@ -147,7 +147,7 @@ N:	for ($n = 1; $n+$n <= $numG; ++$n) {
 			}
 		}
 	}
-	print "returning($word)=", $#result, "\n";
-	print @result, "\n";
+#	print "returning($word)=", $#result, "\n";
+#	print @result, "\n";
 	@result;
 }
