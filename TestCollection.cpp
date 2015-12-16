@@ -246,14 +246,18 @@ int TestCollection::evaluateBox(int index, NamedBox& box)
 	switch(index) {
 		case 0: {
 			Complex maxSl = maximum.loxodromicSqrt;
+            // TODO: Why is this not < 1? We want out parameters space to be compact
 			return maxSl.real()*maxSl.real() + maxSl.imag()*maxSl.imag() <= 1;
 		}
+        // TODO: These should all be < 0 as we want our parameter space to be compact
 		case 1: return maximum.loxodromicSqrt.imag() <= 0
 		 || maximum.lattice.imag() <= 0
 		 || maximum.parabolic.imag() <= 0
 		 || maximum.parabolic.real() <= 0;
 		case 2: return abs(minimum.lattice.real()) > 0.5;
 		case 3: return norm(maximum.lattice) < 1;
+        // Note: we can exclude the box if and only if the parabolic imag part is
+        // bigger than half the lattice imag part over the WHOLE box
 		case 4: return minimum.parabolic.imag() > 0.5*maximum.lattice.imag();
 		case 5: return minimum.parabolic.real() > 0.5;
 		case 6: {
