@@ -4,13 +4,19 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <stdlib.h>
+#include <dirent.h>
+#include <vector>
+#include <string>
 
 // Takes a tree from an sstream and writes to disk
 
 bool g_recursive = false;
 bool g_verbose = false;
 bool g_mark_incomplete = false;
+bool g_start_is_root = false;
 char* g_treeLocation;
+
+std::vector<std::string> unopened_out_files;
 
 FILE* openBox(char* boxcode, char* fileName)
 {
@@ -24,6 +30,14 @@ FILE* openBox(char* boxcode, char* fileName)
 	struct stat sb;
 	if (0 == stat(fileName, &sb)) {
 		if (g_verbose) fprintf(stderr, "opening %s\n", fileName);
+        if (g_start_is_root && g_mark_incomplete && g_recursive) {
+            for (std::vector<std::string>::iterator it = unopened_out_files.begin() ; it != unopened_out_files.end(); ++it) {
+                if (it->compare(fileName) == 0) {
+                    unopened_out_files.erase(it);
+                    break;
+                }
+            }
+        }
 		fp = fopen(fileName, "r");
 		return fp;
 	}
@@ -39,6 +53,17 @@ FILE* openBox(char* boxcode, char* fileName)
 	return 0;
 }
 
+bool ends_with(const char *str, const char *suffix)
+{
+    if (!str || !suffix)
+        return false;
+    size_t lenstr = strlen(str);
+    size_t lensuffix = strlen(suffix);
+    if (lensuffix > lenstr)
+        return false;
+    return strncmp(str + lenstr - lensuffix, suffix, lensuffix) == 0;
+}
+
 bool  putStream(FILE* dest, FILE* source) {
     size_t size;
     char buf[BUFSIZ];
@@ -51,11 +76,15 @@ bool  putStream(FILE* dest, FILE* source) {
         return true;
 }
 
-bool markIncomplete(char const* fileName) {
-    char fileNameI[10000];
-    strcpy(fileNameI,fileName);
-    strcat(fileNameI, ".incomplete");
-    return (rename(fileName, fileNameI) == 0);
+bool mark(char const* fileName, const char* ending_mark) {
+    char fileNameMarked[10000];
+    strcpy(fileNameMarked,fileName);
+    if (ending_mark != NULL) {
+        strcat(fileNameMarked, ending_mark);
+    } else {
+        strcat(fileNameMarked, ".incomplete");
+    }
+    return (rename(fileName, fileNameMarked) == 0);
 }
 
 bool processTree(FILE* fp, FILE* out, bool printTree, bool printHoles, char* boxcode)
@@ -79,7 +108,7 @@ bool processTree(FILE* fp, FILE* out, bool printTree, bool printHoles, char* box
                         // The tree is incomplete, so we rename the boxfile to mark as incomplete
                         // TODO: Not sure if treecat should have the power to rename files
                         if (g_mark_incomplete)
-                            if (!markIncomplete(fileName)) fprintf(stderr, "failed to mark %s as incomplete\n", fileName);
+                            if (!mark(fileName,".incomplete")) fprintf(stderr, "failed to mark %s as incomplete\n", fileName);
                     } else {
                         // If the HOLE subtree is complete, print it to the output stream
                         rewind(outH);
@@ -188,16 +217,32 @@ int main(int argc, char** argv)
 	strncpy(fullboxcode, argv[2], 10000);
 	strncpy(fileboxcode, argv[2], 10000);
 	g_treeLocation = argv[1];
-    
+  
+    char fileName[10000];
+	int fileBoxLength = strlen(fullboxcode);
+
+    if ((fileBoxLength == 0) || (strncmp(fullboxcode, "root", fileBoxLength) == 0)) {
+        g_start_is_root = true;
+    }
+ 
+    if (g_start_is_root && g_mark_incomplete && g_recursive) {
+        DIR * dirp = opendir(g_treeLocation);
+        struct dirent * dp;
+        while ((dp = readdir(dirp)) != NULL) {
+            if (ends_with(dp->d_name,"out")) {
+	           sprintf(fileName, "%s/%s", g_treeLocation, dp->d_name);
+               unopened_out_files.push_back(std::string(fileName));
+            }
+        }
+    }   
+ 
     // See if a file with the tree for a prefix of the box exists
 	FILE* fp = 0;
-	int fileBoxLength;
-    char fileName[10000];
-	for (fileBoxLength = strlen(fullboxcode); fileBoxLength >= 0; --fileBoxLength) {
+	while (fileBoxLength >= 0) {
 		fileboxcode[fileBoxLength] = '\0';
 		fp = openBox(fileboxcode, fileName);
-		if (fp)
-			break;
+		if (fp) { break; }
+        --fileBoxLength;
 	}
 
     if (!fp) exit(1);
@@ -230,13 +275,21 @@ int main(int argc, char** argv)
 
 	bool success = processTree(fp, out, printTree, printHoles, fullboxcode);
     fclose(fp);
- 
-   if (!success) {
+
+    if (g_start_is_root && g_mark_incomplete && g_recursive) { 
+        for (std::vector<std::string>::iterator it = unopened_out_files.begin() ; it != unopened_out_files.end(); ++it) {
+            fprintf(stderr, "unopened/foreign out file = %s\n", it->c_str());
+            // TODO: Not sure if treecat should have the power to rename files
+            if (!mark(it->c_str(),".foreign")) fprintf(stderr, "failed to mark %s as foreign\n", it->c_str());
+        }
+    }
+    if (!success) {
         fclose(out);
         // The tree is incomplete, so we rename the boxfile to mark as incomplete
         // TODO: Not sure if treecat should have the power to rename files
-        if (g_mark_incomplete)    
-            if (!markIncomplete(fileName)) fprintf(stderr, "failed to mark %s as incomplete\n", fileName);
+        if (g_mark_incomplete) {
+            if (!mark(fileName,".incomplete")) fprintf(stderr, "failed to mark %s as incomplete\n", fileName);
+        }
         exit(1);
     } else {
         rewind(out);
