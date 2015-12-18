@@ -1,3 +1,4 @@
+# For each qr word lists and counts all boxes wehre it is a qr
 %canonCount = ();
 %canonBoxes = ();
 while (<>) {
