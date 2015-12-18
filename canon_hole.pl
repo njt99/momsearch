@@ -1,3 +1,5 @@
+# Given a line out of refine HOLE err file output with qr's, this will
+# outputs the HOLE, box and canonical versions of the qr's
 sub versions
 {
         my ($w) = @_;
