@@ -512,15 +512,26 @@ def get_box_code(validated_params, depth=120) :
     box_code = ''.join(code_list)
     return box_code
 
-def get_params_from_manifold(mfld, census_out_file  = None) :
+def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0) :
     mfld_hp = mfld.high_precision()
-    cusp = mfld_hp.cusp_neighborhood()
+    cusp_nbd = mfld_hp.cusp_neighborhood()
 
-    # We must set the displacement to get a maximal picture
-    cusp.set_displacement(cusp.max_reach())
-    hbls = cusp.horoballs(1., high_precision=True)
-    triang = cusp.triangulation(high_precision=True)
-    trans = cusp.translations()
+    # We must set the displacement to get a maximal picture for the specified cusp
+    # We first set all other cusps to be super small. This seems to be necessary as
+    # set_displacement will fail if other cusps are in the way. We also want the horoballs
+    # form other cusps to not be tall
+    for idx in range(cusp_nbd.num_cusps()) :
+        cusp_nbd.set_displacement(-128.0,idx) # 128 is random here
+    # We make sure that out cusp is its own stopper
+    assert cusp_nbd.stopper(cusp_idx) == cusp_idx
+    # We set the displacement
+    cusp_nbd.set_displacement(cusp_nbd.reach(cusp_idx),cusp_idx)
+    # Validate that the displacement was set successfully
+    assert cusp_nbd.get_displacement(cusp_idx) == cusp_nbd.reach(cusp_idx)
+
+    hbls = cusp_nbd.horoballs(1., high_precision=True)
+    triang = cusp_nbd.triangulation(high_precision=True)
+    trans = cusp_nbd.translations(cusp_idx)
 
     # We pick a 'zero' ball for our diagram
     zero_ball = hbls[0]
@@ -558,7 +569,7 @@ def get_params_from_manifold(mfld, census_out_file  = None) :
     found = found_dict['found']
 
     if found_count == 0 :
-        raise Exception('Could not find an edge match! Something is definitely broken for manifold {0}'.format(mfld.name()))
+        raise Exception('Could not find an edge match! Something is definitely broken for manifold {0} and cusp {1}'.format(mfld.name(),cusp_idx))
     # If we found too many matches, this is too much symmetry. Something is wrong
     # with our algorithm or data
     if found_count > 2 :
@@ -569,7 +580,7 @@ def get_params_from_manifold(mfld, census_out_file  = None) :
         e1 = get_edge_vect(G_star[found[0]]) 
         e2 = get_edge_vect(G_star[found[1]])
         if abs(e2+e1) > COMP_ERR :
-            raise Exception('Two found edges are not symmetric for manifold {0}'.format(mfld.name()))
+            raise Exception('Two found edges are not symmetric for manifold {0} and cusp {1}'.format(mfld.name(),cusp_idx))
 
     # We match the inverse zero star to the G_star cyclically
     zero_star_edge = zero_star[-1] # Since we searched via the inv of zero star
@@ -595,7 +606,7 @@ def get_params_from_manifold(mfld, census_out_file  = None) :
         params['lox_sqrt'] = n * lox_sqrt
         params['parabolic'] = G_ball['center'] / n
     else :
-        print 'Warning: translation lengths for {} are really close'.format(mfld.name())
+        print 'Warning: translation lengths for {0} are really close for cusp {1}'.format(mfld.name(),cusp_idx)
         params['lattice_might_be_norm_one'] = True
         if abs(n) - abs(m) > 0. :
             params['lattice'] = (n / m).conjugate()
@@ -606,9 +617,9 @@ def get_params_from_manifold(mfld, census_out_file  = None) :
             params['lox_sqrt'] = n * lox_sqrt
             params['parabolic'] = G_ball['center'] / n
 
-    params['manifold'] = mfld.name()
+    params['manifold'] = '{0}_{1}'.format(mfld.name(),cusp_idx)
     params['manifold_volume'] = mfld.volume()
-    params['cusp_area'] = cusp.volume()+cusp.volume()
+    params['cusp_area'] = 2. * cusp_nbd.volume(cusp_idx)
     params['box_code'] = ''
 
     validate_params(params)
