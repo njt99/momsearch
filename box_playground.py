@@ -37,9 +37,13 @@ import os
 import glob
 from sage.all import * 
 
+RR = RealField(200)
+CC = ComplexField(200)
+II = CC(1j)
 scale_factor = 8 
-scale = map(lambda x : scale_factor * pow(2, x/6.), range(0,-6,-1))
-COMP_ERR = pow(2.,-30)
+scale = map(lambda x : scale_factor * pow(2, x/RR(6)), range(0,-6,-1))
+COMP_ERR = pow(2,-RR(100))
+BIG_COMP_ERR = pow(2,-RR(10))
 
 def g_depth(word) :
     g_count = 0
@@ -82,64 +86,62 @@ def mobius(M,z) :
     return (get_a(M)*z + get_b(M)) / (get_c(M)*z + get_d(M))  
 
 def max_horo_height(M):
-    # assert linalg.det(M) == 1.
+    # assert abs(linalg.det(M) - 1) < COMP_ERR
     c = get_c(M)
-    if c != 0. :
-        return  1./abs(c)
-    else :
-        return 0
+    if c != 0 :
+        return  RR(1)/abs(c)
 
 # Center of image of inifnity horoball under M
 def horo_center_inf(M) :
     c = get_c(M)
-    assert c != 0.
+    assert c != 0
     return get_a(M)/c
 
 # Height of image of infinity horoball under M
 def horo_image_height_inf(M,h):
     c = get_c(M)
-    assert c != 0.
+    assert c != 0
     d = get_d(M)
-    return 1. / real(h * c * c.conjugate())
+    return RR(1) / real(h * c * c.conjugate())
 
 def horo_image_height(M,z,h):
-    # assert linalg.det(M) == 1.
+    # assert abs(linalg.det(M) - 1) < COMP_ERR
     c = get_c(M)
     d = get_d(M)
-    if c*z + d != 0. :
+    if c*z + d != 0 :
         return h / norm(c*z + d)
     else : # We really should be here. This is height of infinity horoball
-        return 1. / real(h * c * c.conjugate())
+        return RR(1) / real(h * c * c.conjugate())
 
 def get_params(box) :
     pos = 0
-    size = [1.]*6
-    center = [0.]*6
+    size = [1]*6
+    center = [0]*6
 
     for direction in box :
         p = pos % 6
-        size[p] *= 0.5
+        size[p] *= RR(0.5)
         center[p] += float((2*int(direction) - 1)) * size[p]
         pos += 1
     
     params = {}
-    params['lattice'] = scale[3]*center[3] + scale[0]*center[0]*1.j
-    params['lox_sqrt'] = scale[4]*center[4] + scale[1]*center[1]*1.j
-    params['parabolic'] = scale[5]*center[5] + scale[2]*center[2]*1.j
+    params['lattice'] = scale[3]*center[3] + scale[0]*center[0]*II
+    params['lox_sqrt'] = scale[4]*center[4] + scale[1]*center[1]*II
+    params['parabolic'] = scale[5]*center[5] + scale[2]*center[2]*II
    
     params['center'] = center
     params['size'] = size
 
-    params['lattice_jet'] = { 'f' : scale[3]*center[3] + scale[0]*center[0]*1.j, 'df0' : scale[3]*size[3] + scale[0]*size[0]*1.j, 'df1' : 0., 'df2' : 0., 'error' : 0. }
-    params['lox_sqrt_jet'] = { 'f' :  scale[4]*center[4] + scale[1]*center[1]*1.j, 'df0' : 0., 'df1' : scale[4]*size[4] + scale[1]*size[1]*1.j, 'df2' : 0., 'error' : 0. }
-    params['parabolic_jet'] = { 'f' :  scale[5]*center[5] + scale[2]*center[2]*1.j, 'df0' : 0., 'df1' : 0., 'df2' : scale[5]*size[5] + scale[2]*size[2]*1.j, 'error' : 0. }
+    params['lattice_jet'] = { 'f' : scale[3]*center[3] + scale[0]*center[0]*II, 'df0' : scale[3]*size[3] + scale[0]*size[0]*II, 'df1' : 0, 'df2' : 0, 'error' : 0 }
+    params['lox_sqrt_jet'] = { 'f' :  scale[4]*center[4] + scale[1]*center[1]*II, 'df0' : 0, 'df1' : scale[4]*size[4] + scale[1]*size[1]*II, 'df2' : 0, 'error' : 0 }
+    params['parabolic_jet'] = { 'f' :  scale[5]*center[5] + scale[2]*center[2]*II, 'df0' : 0, 'df1' : 0, 'df2' : scale[5]*size[5] + scale[2]*size[2]*II, 'error' : 0 }
 
     return params
 
 def min_parameters(params) :
     center = params['center']
     size = params['size']
-    m = [0.]*6
+    m = [0]*6
     # Get values as close to zero in box as we can
     for i in range(5) :
         if center[i] < 0 :
@@ -148,16 +150,16 @@ def min_parameters(params) :
             m[i] = scale[i]*(center[i]-size[i])
 
     min_params = {}
-    min_params['lattice'] = m[3] + m[0]*1.j
-    min_params['lox_sqrt'] = m[4] + m[1]*1.j
-    min_params['parabolic'] = m[5] + m[2]*1.j
+    min_params['lattice'] = m[3] + m[0]*II
+    min_params['lox_sqrt'] = m[4] + m[1]*II
+    min_params['parabolic'] = m[5] + m[2]*II
 
     return min_params
 
 def max_parameters(params) :
     center = params['center']
     size = params['size']
-    m = [0.]*6
+    m = [0]*6
     # Get values as close to zero in box as we can
     for i in range(5) :
         if center[i] < 0 :
@@ -166,9 +168,9 @@ def max_parameters(params) :
             m[i] = scale[i]*(center[i]+size[i])
 
     max_params = {}
-    max_params['lattice'] = m[3] + m[0]*1.j
-    max_params['lox_sqrt'] = m[4] + m[1]*1.j
-    max_params['parabolic'] = m[5] + m[2]*1.j
+    max_params['lattice'] = m[3] + m[0]*II
+    max_params['lox_sqrt'] = m[4] + m[1]*II
+    max_params['parabolic'] = m[5] + m[2]*II
 
     return max_params
 
@@ -183,14 +185,14 @@ def jet_size(jet) :
 
 def jet_min_abs(jet) :
     v = abs(jet['f']) - jet_size(jet) - jet['error']
-    return max(v,0.)
+    return max(v,0)
 
 def min_jet_parameter(params,key) :
     return jet_min_abs(params[key]) 
 
 def jet_max_abs(jet) :
     v = abs(jet['f']) + jet_size(jet) + jet['error']
-    return max(v,0.)
+    return max(v,0)
 
 def max_jet_parameter(params,key) :
     return jet_max_abs(params[key]) 
@@ -209,18 +211,18 @@ def get_G(params) :
     l = params['lattice']
     s = params['lox_sqrt']
     p = params['parabolic']
-    return [[p*s*1.j, 1.j/s], [s*1.j, 0.]]
+    return [[p*s*II, II/s], [s*II, 0]]
 
 def get_g(params) :
     l = params['lattice']
     s = params['lox_sqrt']
     p = params['parabolic']
-    return [[0., -1.j/s], [-s*1.j, p*s*1.j]]
+    return [[0, -II/s], [-s*II, p*s*II]]
 
 # Give parabolic element with M,N power counts
 def get_T(params, M_pow, N_pow) :
     p = params['lattice']
-    return [[1., p*float(M_pow) + float(N_pow)],[0.,1.]]
+    return [[1, p*float(M_pow) + float(N_pow)],[0,1]]
 
 def get_first(word) :
     if len(word) > 0 :
@@ -229,7 +231,7 @@ def get_first(word) :
         return ''
 
 def quad_sol(a,b,c) :
-    d = b * b - 4. * a * c
+    d = b * b - 4 * a * c
     sq_d = d.sqrt()
     return ((-b - sq_d)/(2*a), (-b + sq_d)/(2*a))
 
@@ -240,10 +242,10 @@ def floor(x) :
     else :
         return int_x
 
-def get_domain_translate(p, m, n = 1.) :
-    assert imag(m) > -COMP_ERR
-    assert imag(n) == 0.
-    assert real(n) > COMP_ERR
+def get_domain_translate(p, m, n = 1) :
+    assert imag(m) > 0
+    assert abs(imag(n)) < COMP_ERR
+    assert real(n) > 0
     # We check that we have minimal translation for m
     assert abs(abs(m) - min([abs(m), abs(m-n), abs(n+m)])) < COMP_ERR 
     # We assume that imag(m) >= 0, imag(n) == 0, real(n) > 0
@@ -255,11 +257,11 @@ def get_domain_translate(p, m, n = 1.) :
     domain_p = p + shift
     return {'translate' : domain_p, 'shift' : shift, 'm_pow' :  m_pow, 'n_pow' :  n_pow}
 
-def get_least_translate(p, m, n = 1.) :
+def get_least_translate(p, m, n = 1) :
     # We make assertions about m,n in get_domain_translate
     domain_translate = get_domain_translate(p, m, n)
     near_by = [domain_translate]
-    for t in [(-1.,0.),(0.,-1.),(-1.,-1.)] :
+    for t in [(-1,0),(0,-1),(-1,-1)] :
         near_by_translate = dict(domain_translate)
         near_by_translate['translate'] += m * t[0] + n * t[1]
         near_by_translate['shift'] += m * t[0] + n * t[1]
@@ -268,7 +270,7 @@ def get_least_translate(p, m, n = 1.) :
         near_by.append(near_by_translate)
     return min(near_by, key = lambda x : abs(x['translate'])) 
 
-def get_nearest_translate(c, p, m, n=1.) :
+def get_nearest_translate(c, p, m, n=1) :
     # We make assertions about m,n in get_domain_translate
     diff = p - c
     nearest_translate = get_least_translate(diff, m, n)
@@ -347,7 +349,7 @@ def cyclically_order_edges(edges) :
 def inv_edge(edge) :
     eps = edge['endpoints']
     direction = eps[1] - eps[0]
-    inv_dir = 1. / direction
+    inv_dir = RR(1) / direction
     new_edge = dict(edge)
     new_edge['endpoints'] = (eps[0], eps[0] + inv_dir)
     inds = edge['indices']
@@ -385,6 +387,7 @@ def append_census_params_to_file(params, file_name) :
         fp.write("M flips={}\n".format(params['flips']))
         fp.write("M is_special={}\n".format(params['is_special']))
         fp.write("M lattice_might_be_norm_one={}\n".format(params['lattice_might_be_norm_one']))
+        fp.write("M possibly_on_box_edge={}\n".format(params['possibly_on_box_edge']))
         fp.write("M box={}\n".format(params['box_code']))
         fp.write("lattice = {0} + {1} I norm={2}\n".format(real(params['lattice']),imag(params['lattice']),abs(params['lattice'])))
         fp.write("lox_sqrt = {0} + {1} I norm={2}\n".format(real(params['lox_sqrt']),imag(params['lox_sqrt']),abs(params['lox_sqrt'])))
@@ -403,69 +406,69 @@ def validate_params(params) :
     # "A LOWER BOUND FOR THE VOLUME OF HYPERBOLIC 3-MANIFOLDS" for standard proof)
     lox_sqrt = params['lox_sqrt']
     try :
-        assert norm(lox_sqrt) >= 1.0
+        assert not norm(lox_sqrt) < RR(1)
     except :
-        print 'The maximal cusp is too small?!'
+        print 'The maximal cusp is too small for manifold {}?!'.format(params['manifold'])
         print params
         return        
 
     # We require that -0.5 <= Re(lattice) <= 0.5
     lattice = params['lattice']
-    while abs(real(lattice)) > 0.5 :
+    while 2 * abs(real(lattice)) > 1 :
         if real(lattice) > 0 :
-            lattice -= 1.0
+            lattice -= 1
         else :
-            lattice += 1.0 
+            lattice += 1
 
     # We must have the lattice length >= 1
     try :
-        assert norm(lattice) >= 1.0
+        assert not norm(lattice) < RR(1)
     except :
-        print 'The lattice is too small?!'
+        print 'The lattice is too small for manifold {}?!'.format(params['manifold'])
         print params
         return        
 
     # We require that the parabolic element have
     parabolic = params['parabolic']
     # parabolic imag part <= 0.5 * (lattice imag part) 
-    while abs(imag(parabolic)) > 0.5 * abs(imag(lattice)) :
-        if imag(parabolic) > 0. :
-            if imag(lattice) > 0. :
+    while 2 * abs(imag(parabolic)) > abs(imag(lattice)) :
+        if imag(parabolic) > 0 :
+            if imag(lattice) > 0 :
                 parabolic -= lattice
             else :
                 parabolic += lattice
         else :
-            if imag(lattice) > 0. :
+            if imag(lattice) > 0 :
                 parabolic += lattice
             else :
                 parabolic -= lattice
     # parabolic real part <= 0.5
-    while abs(real(parabolic)) > 0.5 :
-        if real(parabolic) > 0. :
-            parabolic -= 1.0
+    while 2 * abs(real(parabolic)) > 1 :
+        if real(parabolic) > 0 :
+            parabolic -= 1
         else :
-            parabolic += 1.0
+            parabolic += 1
 
     # It remains fix positivity/sign coniditons    
     # We record the parameter flips we have done in case we ever need to reference
     parameter_flips = []
     # parabolic real part >= 0 TODO in TestCollection this is > 0 
-    if real(parabolic) < 0. :
+    if real(parabolic) < 0 :
         parabolic = -parabolic
         lattice = -lattice
         parameter_flips.append('RP')
     # parabolic imag part >= 0 TODO in TestCollection this is > 0
-    if imag(parabolic) < 0. :
+    if imag(parabolic) < 0 :
         parabolic = parabolic.conjugate()
         lattice = lattice.conjugate()
         lox_sqrt = lox_sqrt.conjugate()
         parameter_flips.append('IP')
     # lattice imag part >= 0 TODO in TestCollection this is > 0 
-    if imag(lattice) < 0. :
+    if imag(lattice) < 0 :
         lattice = -lattice    
         parameter_flips.append('IL')
     # lox_sqrt imag part >= 0 TODO in TestCollection this is > 0 
-    if imag(lox_sqrt) < 0. :
+    if imag(lox_sqrt) < 0 :
         lox_sqrt = -lox_sqrt
         parameter_flips.append('IS')
     # We keep the SPECIAL convention tag used by NJT
@@ -493,7 +496,7 @@ def get_box_code(validated_params, depth=120) :
     lattice = validated_params['lattice']
     lox_sqrt = validated_params['lox_sqrt']
     parabolic = validated_params['parabolic']
-    coord = [0.]*6
+    coord = [0]*6
     coord[0] = imag(lattice) / scale[0] 
     coord[1] = imag(lox_sqrt) / scale[1] 
     coord[2] = imag(parabolic) / scale[2] 
@@ -501,14 +504,21 @@ def get_box_code(validated_params, depth=120) :
     coord[4] = real(lox_sqrt) / scale[4] 
     coord[5] = real(parabolic) / scale[5] 
     code_list = []
+    validated_params['possibly_on_box_edge'] = False
     for i in range(0, depth) :
         n = i % 6
-        if coord[n] > 0. :
+        if coord[n] > 0 :
             code_list.append('1')
-            coord[n] = 2. * coord[n] - 1.
-        else :
+            coord[n] = 2 * coord[n] - 1
+        elif coord[n] < 0 :
             code_list.append('0')
-            coord[n] = 2. * coord[n] + 1.
+            coord[n] = 2 * coord[n] + 1
+        else :
+            assert abs(coord[n] - 0) < COMP_ERR
+            print 'Warning: Box code encountered edge condition for manifold {}. Default to left child.'.format(validated_params['manifold'])
+            validated_params['possibly_on_box_edge'] = True
+            code_list.append('0')
+            coord[n] = 2 * coord[n] + 1
     box_code = ''.join(code_list)
     return box_code
 
@@ -516,22 +526,25 @@ def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0) :
     mfld_hp = mfld.high_precision()
     cusp_nbd = mfld_hp.cusp_neighborhood()
 
+    print '{0}_{1}'.format(mfld.name(),cusp_idx)
+
     # We must set the displacement to get a maximal picture for the specified cusp
     # We first set all other cusps to be super small. This seems to be necessary as
     # set_displacement will fail if other cusps are in the way. We also want the horoballs
     # form other cusps to not be tall
     for idx in range(cusp_nbd.num_cusps()) :
-        cusp_nbd.set_displacement(-128.0,idx) # 128 is random here
+        cusp_nbd.set_displacement(-4.0, which_cusp = idx) # 4 is random here
     # We make sure that out cusp is its own stopper
     assert cusp_nbd.stopper(cusp_idx) == cusp_idx
     # We set the displacement
-    cusp_nbd.set_displacement(cusp_nbd.reach(cusp_idx),cusp_idx)
+    reach = cusp_nbd.reach(which_cusp = cusp_idx)
+    cusp_nbd.set_displacement(reach, which_cusp = cusp_idx)
     # Validate that the displacement was set successfully
-    assert cusp_nbd.get_displacement(cusp_idx) == cusp_nbd.reach(cusp_idx)
+    assert abs(cusp_nbd.get_displacement(which_cusp = cusp_idx) - reach) < COMP_ERR
 
-    hbls = cusp_nbd.horoballs(1., high_precision=True)
-    triang = cusp_nbd.triangulation(high_precision=True)
-    trans = cusp_nbd.translations(cusp_idx)
+    hbls = cusp_nbd.horoballs(cutoff = 1., which_cusp = cusp_idx, high_precision = True)
+    triang = cusp_nbd.triangulation(which_cusp = cusp_idx, high_precision=True)
+    trans = cusp_nbd.translations(which_cusp = cusp_idx)
 
     # We pick a 'zero' ball for our diagram
     zero_ball = hbls[0]
@@ -597,18 +610,18 @@ def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0) :
 
     params = {}
     params['lattice_might_be_norm_one'] = False
-    if abs(n) - abs(m) > COMP_ERR :
+    if abs(n) - abs(m) > 0 :
         params['lattice'] = (n / m).conjugate()
         params['lox_sqrt'] = (m * lox_sqrt).conjugate()
         params['parabolic'] = (G_ball['center'] / m).conjugate()
-    elif abs(m) - abs(n) > COMP_ERR :
+    elif abs(m) - abs(n) > 0 :
         params['lattice'] = m / n
         params['lox_sqrt'] = n * lox_sqrt
         params['parabolic'] = G_ball['center'] / n
     else :
         print 'Warning: translation lengths for {0} are really close for cusp {1}'.format(mfld.name(),cusp_idx)
         params['lattice_might_be_norm_one'] = True
-        if abs(n) - abs(m) > 0. :
+        if abs(n) > abs(m) :
             params['lattice'] = (n / m).conjugate()
             params['lox_sqrt'] = (m * lox_sqrt).conjugate()
             params['parabolic'] = (G_ball['center'] / m).conjugate()
@@ -619,7 +632,7 @@ def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0) :
 
     params['manifold'] = '{0}_{1}'.format(mfld.name(),cusp_idx)
     params['manifold_volume'] = mfld.volume()
-    params['cusp_area'] = 2. * cusp_nbd.volume(cusp_idx)
+    params['cusp_area'] = 2 * cusp_nbd.volume(which_cusp = cusp_idx)
     params['box_code'] = ''
 
     validate_params(params)
@@ -629,3 +642,23 @@ def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0) :
         append_census_params_to_file(params, census_out_file)
 
     return params
+
+def record_census_params_to_file(out_file, census_slice = slice(0,10000)) :
+    for mfld in OrientableCuspedCensus[census_slice] :
+        cusp_nbd = mfld.cusp_neighborhood()
+        for c_idx in range(cusp_nbd.num_cusps()) :
+            # We must set the displacement to get a maximal picture for the specified cusp
+            # We first set all other cusps to be super small. This seems to be necessary as
+            # set_displacement will fail if other cusps are in the way. We also want the horoballs
+            # form other cusps to not be tall
+            for idx in range(cusp_nbd.num_cusps()) :
+                cusp_nbd.set_displacement(-4.0, which_cusp = idx) # 4 is random here
+            # We make sure that out cusp is its own stopper
+            assert cusp_nbd.stopper(c_idx) == c_idx
+            # We set the displacement
+            reach = cusp_nbd.reach(which_cusp = c_idx)
+            cusp_nbd.set_displacement(reach, which_cusp = c_idx)
+            # Validate that the displacement was set successfully
+            assert abs(cusp_nbd.get_displacement(which_cusp = c_idx) - reach) < BIG_COMP_ERR
+            if 2 * cusp_nbd.volume(which_cusp = c_idx) - 6 > 0 : continue
+            get_params_from_manifold(mfld, census_out_file = out_file, cusp_idx = c_idx)
