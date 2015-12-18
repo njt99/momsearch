@@ -206,6 +206,12 @@ int main(int argc, char** argv)
 
 	if (argc != 3) {
 		fprintf(stderr, "Usage: treecat [--holes] [--mark] [-s] [-v] [-r] treeLocation boxcode\n");
+		fprintf(stderr, "holes : do not print the tree but print the holes\n");
+		fprintf(stderr, "mark : rename incomplete (sub)tree file(s) containing given boxcode (sub if -r)\n");
+		fprintf(stderr, "s : silent, don't print trees or holes\n");
+		fprintf(stderr, "v : verbose\n");
+		fprintf(stderr, "r : recur over all subtree files to prince full subtree of boxcode\n");
+		fprintf(stderr, "WARNING: If all --mark -r are set and boxcode is root or '', then mark any foreign tree files\n");
 		exit(1);
 	}
     
@@ -224,7 +230,8 @@ int main(int argc, char** argv)
     if ((fileBoxLength == 0) || (strncmp(fullboxcode, "root", fileBoxLength) == 0)) {
         g_start_is_root = true;
     }
- 
+
+    // TODO: Taging of foreign files may be dangerous 
     if (g_start_is_root && g_mark_incomplete && g_recursive) {
         DIR * dirp = opendir(g_treeLocation);
         struct dirent * dp;
@@ -257,7 +264,7 @@ int main(int argc, char** argv)
 	while (*boxcode && fgets(buf, sizeof(buf), fp)) {
 		if (buf[0] != 'X') { // If not a splitting, print the test failed by the truncated box
 			*boxcode = '\0';
-			fprintf(stderr, "terminal box = %s\n", boxcode_const);
+			fprintf(stderr, "terminal box = %s%s\n", fileboxcode, boxcode_const);
 			if (printTree) fputs(buf, stdout);
             free(boxcode_const);
             fclose(fp);
