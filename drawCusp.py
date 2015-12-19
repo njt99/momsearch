@@ -154,7 +154,7 @@ def get_g(params) :
 # Give parabolic element with M,N power counts
 def get_T(params, M_pow, N_pow) :
     p = params['lattice']
-    return [[1., p*float(M_pow) + float(N_pow)],[0.,1.]]
+    return [[1., p*float(N_pow) + float(M_pow)],[0.,1.]]
 
 def get_first(word) :
     if len(word) > 0 :
@@ -386,18 +386,18 @@ class cusp(Tk) :
 
                     # The pojection of h_center to the real axis along lattice
                     # Recall that we assume -0.5 < real(lattice) < 0.5 and imag(lattice) > 0
-                    M_len = imag(h_center) / imag(lattice)
-                    N_len = real(h_center) - M_len * real(lattice)
+                    N_len = imag(h_center) / imag(lattice)
+                    M_len = real(h_center) - N_len * real(lattice)
 
                     # Adjustments we make sure to land inside the fundamental domain 
-                    if abs(M_len) > pow(2.,-10) :
-                        M_pow = -floor(M_len) if abs(M_len - 1.) > pow(2.,-10) else 0 
-                    else :
-                        M_pow = 0
                     if abs(N_len) > pow(2.,-10) :
                         N_pow = -floor(N_len) if abs(N_len - 1.) > pow(2.,-10) else 0 
                     else :
                         N_pow = 0
+                    if abs(M_len) > pow(2.,-10) :
+                        M_pow = -floor(M_len) if abs(M_len - 1.) > pow(2.,-10) else 0 
+                    else :
+                        M_pow = 0
 
                     # Keep track of the word and it's representative
                     h_word = h_char + word
@@ -424,8 +424,8 @@ class cusp(Tk) :
                         vert_range = quad_sol(norm(lattice), 2*(x*real(lattice) + y*imag(lattice)), norm(new_center) - r**2)
                         horiz_range = (int(floor(real(horiz_range[0]))), int(ceil(real(horiz_range[1]))))
                         vert_range = (int(floor(real(vert_range[0]))), int(ceil(real(vert_range[1]))))
-                        for n in range(*horiz_range) :
-                            for m in range(*vert_range) :
+                        for n in range(*vert_range) :
+                            for m in range(*horiz_range) :
                                 if m != 0 or n != 0 :
                                     shift_M_pow = M_pow + m
                                     shift_N_pow = N_pow + n
@@ -447,64 +447,6 @@ class cusp(Tk) :
 
             d += 1
         #pprint(self.horoballs,width=2)
-
-    # A simple generation algorthim. Generates lot of small horoballs
-    def init_horoballs_orig(self) :
-        I = [[1.,0.],[0.,1.]]
-        self.horoballs = { 0 : { '' : { 'center' : 0, 'height' : cusp_height, 'gamma' : I, 'word' : ''}}}
-
-        # Generate new horoballs
-        d = 0
-        lattice = self.params['lattice']
-        while d < depth :
-            self.horoballs[d+1] = {}
-            for word,ball in self.horoballs[d].iteritems() :
-                gamma = ball['gamma']
-                center = ball['center']
-                height = ball['height']
-
-                first = get_first(word)
-                if first == 'g' : 
-                    valid = ['g']
-                elif first == 'G' :
-                    valid = ['G']
-                elif first == '' :
-                    valid = ['M', 'N', 'GG', 'NM']
-                else :
-                    valid = ['g', 'G']        
-         
-                # Apply G and g if possible
-                for h_char in valid :
-                    h = elements[h_char] 
-                    new_height = horo_image_height(h, center, height)
-                    h_center = mobius(h, center)
-
-                    # The pojection of h_center to the real axis along lattice
-                    # Recall that we assume -0.5 < real(lattice) < 0.5 and imag(lattice) > 0
-                    M_len = imag(h_center) / imag(lattice)
-                    N_len = real(h_center) - M_len * real(lattice)
-
-                    # Adjustments we make sure to land inside the fundamental domain 
-                    M_pow = -floor(M_len) if M_len != 1. else 0 
-                    N_pow = -floor(N_len) if N_len != 1. else 0
-
-                    # Keep track of the word and it's representative
-                    new_word = h_char + word
-                    new_gamma = dot(h,gamma)
-                    if new_height > 2*cusp_height :
-                        sys.stderr.write('Possible giant horoball with word {0} of height {1} with center {2}\nElement:\n'.format(new_word,new_height,new_center))
-                        sys.stderr.write(pformat(new_gamma,width=2)+'\n')
-                    else :
-                        M_word = 'M'*M_pow if M_pow > 0 else 'm'*(-M_pow) 
-                        new_word = M_word + new_word
-                        N_word = 'N'*N_pow if N_pow > 0 else 'n'*(-N_pow) 
-                        new_word = N_word + new_word
-                        T = get_T(self.params, M_pow, N_pow)
-                        new_gamma = dot(T, new_gamma)
-                        new_center = mobius(T, h_center)
-
-                        self.horoballs[d+1][new_word] = { 'center' : new_center, 'height' : new_height, 'gamma' : new_gamma, 'word' : new_word, 'canvas_id' : 0 }
-            d += 1
 
     # TODO Allow depth increase and decrease in interface
     def modify_depth(self, new_depth) :
