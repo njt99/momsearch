@@ -70,44 +70,44 @@ def dist_btw_balls(c1=0,h1=1,c2=1,h2=1) :
     r_sqrd= norm(c2-c1)
     return real(log(r_sqrd/(h1*h2)))
 
-def get_a(M):
-    return M[0][0]
+def get_a(A):
+    return A[0][0]
 
-def get_b(M):
-    return M[0][1]
+def get_b(A):
+    return A[0][1]
 
-def get_c(M):
-    return M[1][0]
+def get_c(A):
+    return A[1][0]
 
-def get_d(M):
-    return M[1][1]
+def get_d(A):
+    return A[1][1]
 
-def mobius(M,z) :
-    return (get_a(M)*z + get_b(M)) / (get_c(M)*z + get_d(M))  
+def mobius(A,z) :
+    return (get_a(A)*z + get_b(A)) / (get_c(A)*z + get_d(A))  
 
-def max_horo_height(M):
-    # assert abs(linalg.det(M) - 1) < COMP_ERR
-    c = get_c(M)
+def max_horo_height(A):
+    # assert abs(linalg.det(A) - 1) < COAP_ERR
+    c = get_c(A)
     if c != 0 :
         return  RR(1)/abs(c)
 
-# Center of image of inifnity horoball under M
-def horo_center_inf(M) :
-    c = get_c(M)
+# Center of image of inifnity horoball under A
+def horo_center_inf(A) :
+    c = get_c(A)
     assert c != 0
-    return get_a(M)/c
+    return get_a(A)/c
 
-# Height of image of infinity horoball under M
-def horo_image_height_inf(M,h):
-    c = get_c(M)
+# Height of image of infinity horoball under A
+def horo_image_height_inf(A,h):
+    c = get_c(A)
     assert c != 0
-    d = get_d(M)
+    d = get_d(A)
     return RR(1) / real(h * c * c.conjugate())
 
-def horo_image_height(M,z,h):
-    # assert abs(linalg.det(M) - 1) < COMP_ERR
-    c = get_c(M)
-    d = get_d(M)
+def horo_image_height(A,z,h):
+    # assert abs(linalg.det(A) - 1) < COAP_ERR
+    c = get_c(A)
+    d = get_d(A)
     if c*z + d != 0 :
         return h / norm(c*z + d)
     else : # We really should be here. This is height of infinity horoball
@@ -121,7 +121,7 @@ def get_params(box) :
     for direction in box :
         p = pos % 6
         size[p] *= RR(0.5)
-        center[p] += float((2*int(direction) - 1)) * size[p]
+        center[p] += RR((2*int(direction) - 1)) * size[p]
         pos += 1
     
     params = {}
@@ -222,7 +222,22 @@ def get_g(params) :
 # Give parabolic element with M,N power counts
 def get_T(params, M_pow, N_pow) :
     p = params['lattice']
-    return [[1, p*float(M_pow) + float(N_pow)],[0,1]]
+    return [[1, p * N_pow + M_pow],[0,1]]
+
+def get_w(params, word) :
+    G = Matrix(get_G(params))
+    g = Matrix(get_g(params))
+    M = Matrix(get_T(params, 1, 0))
+    N = Matrix(get_T(params, 0, 1))
+    m = Matrix(get_T(params, -1, 0))
+    n = Matrix(get_T(params, 0, -1))
+    gen_dict = { 'G': G, 'g': g, 'M': M, 'm': m, 'N': N, 'n': n }
+    w = Matrix([[1,0],[0,1]])
+    # We compose in reverse simply to stay aware of
+    # the order in which the isometries are applied
+    for x in reversed(word) :
+        w = gen_dict[x] * w 
+    return w
 
 def get_first(word) :
     if len(word) > 0 :
@@ -507,18 +522,26 @@ def get_box_code(validated_params, depth=120) :
     validated_params['possibly_on_box_edge'] = False
     for i in range(0, depth) :
         n = i % 6
-        if coord[n] > 0 :
+        if 2 * coord[n] > COMP_ERR :
             code_list.append('1')
             coord[n] = 2 * coord[n] - 1
-        elif coord[n] < 0 :
+        elif 2 * coord[n] < -COMP_ERR :
             code_list.append('0')
             coord[n] = 2 * coord[n] + 1
         else :
             assert abs(coord[n] - 0) < COMP_ERR
-            print 'Warning: Box code encountered edge condition for manifold {}. Default to left child.'.format(validated_params['manifold'])
+            print 'Warning: Edge condition for manifold {0} with coord {1}. Will try to assert without error buffer.'.format(validated_params['manifold'], coord[n])
             validated_params['possibly_on_box_edge'] = True
-            code_list.append('0')
-            coord[n] = 2 * coord[n] + 1
+            if coord[n] > 0 :
+                code_list.append('1')
+                coord[n] = 2 * coord[n] - 1
+            elif coord[n] < 0 :
+                code_list.append('0')
+                coord[n] = 2 * coord[n] + 1
+            else :
+                print 'Warning: Edge condition persists for manifold {0} with coord {1}. Default to right child.'.format(validated_params['manifold'], coord[n])
+                code_list.append('1')
+                coord[n] = 2 * coord[n] - 1
     box_code = ''.join(code_list)
     return box_code
 
@@ -610,11 +633,11 @@ def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0) :
 
     params = {}
     params['lattice_might_be_norm_one'] = False
-    if abs(n) - abs(m) > 0 :
+    if abs(n) - abs(m) > COMP_ERR :
         params['lattice'] = (n / m).conjugate()
         params['lox_sqrt'] = (m * lox_sqrt).conjugate()
         params['parabolic'] = (G_ball['center'] / m).conjugate()
-    elif abs(m) - abs(n) > 0 :
+    elif abs(m) - abs(n) > COMP_ERR :
         params['lattice'] = m / n
         params['lox_sqrt'] = n * lox_sqrt
         params['parabolic'] = G_ball['center'] / n
