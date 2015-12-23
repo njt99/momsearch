@@ -126,6 +126,26 @@ GL2ACJ TestCollection::evaluate1(string word, Params<AComplex1Jet>& params)
 			}
 		}
 	}
+    Complex a = w.a.center();
+    Complex b = w.b.center();
+    Complex c = w.c.center();
+    Complex d = w.d.center();
+    fprintf(stderr, "Word: %s\n", word.c_str());
+    fprintf(stderr, "At the center is has coords\n");
+    fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
+    fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
+    fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
+    fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
+    a = G.a.center();
+    b = G.b.center();
+    c = G.c.center();
+    d = G.d.center();
+    fprintf(stderr, "Word: G\n");
+    fprintf(stderr, "At the center is has coords\n");
+    fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
+    fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
+    fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
+    fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
 	return w;
 }
 
@@ -133,13 +153,27 @@ bool TestCollection::validIdentity(string word, Box& box)
 {
 	Params<AComplex1Jet> params = box.cover();
 	for (string::size_type pos = 0; pos < word.size(); ++pos) {
+        // Checks to see is SOME  cyclic permutation of a word is identity somewhere in the box
 		string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
 		GL2ACJ w(evaluate1(pword, params));
 		if ((minabs(w.a-1) > 0 && minabs(w.a+1) > 0)
 		 || minabs(w.b) > 0
 		 || minabs(w.c) > 0
-		 || (minabs(w.d-1) > 0 && minabs(w.d+1) > 0))
+		 || (minabs(w.d-1) > 0 && minabs(w.d+1) > 0)) {
 			return false;
+        } else {
+            Complex a = w.a.center();
+            Complex b = w.b.center();
+            Complex c = w.c.center();
+            Complex d = w.d.center();
+            fprintf(stderr, "This word is identity somewhere in the box\n");
+            fprintf(stderr, "Word: %s\n", word.c_str());
+            fprintf(stderr, "At the center is has coords\n");
+            fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
+            fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
+            fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
+            fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
+        }
 	}
 	return true;
 }
