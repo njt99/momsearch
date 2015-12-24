@@ -34,14 +34,14 @@ def run_refine(command, dest_dir) :
 if __name__ == '__main__' :
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:],'w:',['words='])
+        opts, args = getopt.getopt(sys.argv[1:],'w:c:O',['words=','overwrite','child_limit='])
     except getopt.GetoptError as err:
         print str(err)
-        print('Usage: dosearch [-w,--words <wordsfile>] src_dir dest_dir backing_dir')
+        print('Usage: dosearch [-w,--words <wordsfile>] [-O, --overwrite] src_dir dest_dir backing_dir')
         sys.exit(2)
 
     if len(args) != 3:
-        print('Usage: dosearch [-w,--words <wordsfile>] src_dir dest_dir backing_dir')
+        print('Usage: dosearch [-w,--words <wordsfile>] [-O, --overwrite] src_dir dest_dir backing_dir')
         sys.exit(2)
 
     # Executables
@@ -54,7 +54,6 @@ if __name__ == '__main__' :
     src_dir = args[0]
     dest_dir = args[1]
     backing_dir = args[2]
-    child_limit = 4
 
     maxSize = '300000000'
     maxDepth = '96'
@@ -68,22 +67,36 @@ if __name__ == '__main__' :
     powers = '/home/ayarmola/momsearch/powers_combined'
 
     wordsFile = '/dev/null'
+    child_limit = 4
+    overwrite = False
     for opt, val in opts:
         if opt in ('-w', '--words'):
             wordsFile = val
+        if opt in ('-c', '--child_limit'):
+            child_limit = int(val)
+        if opt in ('-O', '--overwrite'):
+            overwrite = True
 
     # Check for and mark incomplete or foreign trees
-#    subprocess.call('{0} -r {1} \'{2}\''.format(treecheck, src_dir, ''), shell=True)
+    subprocess.call('{0} -r {1} \'{2}\''.format(treecheck, dest_dir, ''), shell=True)
 
     if len(os.listdir(dest_dir)) > 0 :
-        raw_input('WARNING: Distination is not empty! Press any key to overwrite file') 
+        print('WARNING: Distination is not empty!') 
 
     # Get all out file boxes
     try:
         src_boxes = set([os.path.basename(boxfile).replace('.out','') for boxfile in glob.glob(src_dir + '/*.out')])
     except:
-        print('Error reading {0}\n'.format(dest_dir)) 
+        print('Error reading {0}\n'.format(src_dir))
         sys.exit(1)
+
+    if not overwrite :
+        try:
+            dest_boxes = set([os.path.basename(boxfile).replace('.out','') for boxfile in glob.glob(dest_dir + '/*.out')])
+            src_boxes -= dest_boxes
+        except:
+            print('Error reading {0}\n'.format(dest_dir))
+            sys.exit(1)
 
     print "Launching Refine"
 
