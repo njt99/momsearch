@@ -10,6 +10,16 @@
 #include "Box.h"
 #include <math.h>
 
+// ULP functions
+// TODO: CHECK FOR OVERLOW AND UNDERFLOW
+double inc_d(double x) {
+   return nextafter(x,x+1); 
+}
+
+double dec_d(double x) {
+   return nextafter(x,x-1); 
+}
+
 double scale[6];
 static bool scaleInitialized = false; 
 Box::Box() {
@@ -68,13 +78,31 @@ Params<Complex> Box::offset(const double* offset) const
 // Note: sizeDigits is always positive
 Params<Complex> Box::nearest() const
 {
-	int TODO_ULP;
+	int TODO_ULP; // TODO Verify ULP and add OVERFLOW and UNDERFLOW
 	double m[6];
+    double temp;
 	for (int i = 0; i < 6; ++i) {
-		if (centerDigits[i] < 0)
-			m[i] = scale[i]*(centerDigits[i]+sizeDigits[i]);
-		else
-			m[i] = scale[i]*(centerDigits[i]-sizeDigits[i]);
+		if (centerDigits[i] < 0) {
+            temp = inc_d(centerDigits[i]+sizeDigits[i]);
+            if (temp > 0 ) { // Check if we have overlapped 0
+                m[i] = 0;
+            } else { // We know scale is positive
+		    	m[i] = inc_d(scale[i]*temp);
+                if (m[i] > 0) { // If temp was 0
+                    m[i] = 0;
+                }
+            }  
+        } else {
+            temp = dec_d(centerDigits[i]-sizeDigits[i]);
+            if (temp < 0 ) { // Check if we have overlapped 0
+                m[i] = 0;
+            } else { // We know scale is positive
+		    	m[i] = dec_d(scale[i]*temp);
+                if (m[i] < 0) { // If temp was 0
+                    m[i] = 0;
+                }
+            }  
+        }
 	}
 	
 	Params<Complex> result;
@@ -90,10 +118,11 @@ Params<Complex> Box::furthest() const
 	int TODO_ULP;
 	double m[6];
 	for (int i = 0; i < 6; ++i) {
-		if (centerDigits[i] < 0)
-			m[i] = scale[i]*(centerDigits[i]-sizeDigits[i]);
-		else
-			m[i] = scale[i]*(centerDigits[i]+sizeDigits[i]);
+		if (centerDigits[i] < 0) {
+		    m[i] = dec_d(scale[i]*dec_d(centerDigits[i]-sizeDigits[i]));
+        } else {
+		    m[i] = inc_d(scale[i]*inc_d(centerDigits[i]+sizeDigits[i]));
+        }
 	}
 	
 	Params<Complex> result;
@@ -109,7 +138,7 @@ Params<Complex> Box::minimum() const
 	int TODO_ULP;
 	double m[6];
 	for (int i = 0; i < 6; ++i) {
-        m[i] = scale[i]*(centerDigits[i]-sizeDigits[i]);
+        m[i] = dec_d(scale[i]*dec_d(centerDigits[i]-sizeDigits[i]));
 	}
 	
 	Params<Complex> result;
@@ -125,7 +154,7 @@ Params<Complex> Box::maximum() const
 	int TODO_ULP;
 	double m[6];
 	for (int i = 0; i < 6; ++i) {
-        m[i] = scale[i]*(centerDigits[i]+sizeDigits[i]);
+        m[i] = inc_d(scale[i]*inc_d(centerDigits[i]+sizeDigits[i]));
 	}
 	
 	Params<Complex> result;
