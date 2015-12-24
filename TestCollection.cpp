@@ -240,28 +240,31 @@ int TestCollection::evaluateCenter(int index, Box& box)
 int TestCollection::evaluateBox(int index, NamedBox& box)
 {
 	int TODO_ULP;
-	Params<Complex> minimum = box.minimum();
+	Params<Complex> nearest = box.nearest();
+	Params<Complex> furthest = box.furthest();
 	Params<Complex> maximum = box.maximum();
 	enumerate("");
 	switch(index) {
 		case 0: {
-			Complex maxSl = maximum.loxodromicSqrt;
+			Complex maxSl = furthest.loxodromicSqrt;
 			return maxSl.real()*maxSl.real() + maxSl.imag()*maxSl.imag() < 1.0;
 		}
+        // TODO: HUGE ERROR!!!! We max always output the largest in ABSOLUTE VALUE. If a parameter is ever NEGATIVE, this needs to be min
 		case 1: return maximum.loxodromicSqrt.imag() < 0.0
-		 || maximum.lattice.imag() < 0.0
+         || maximum.lattice.imag() < 0.0
 		 || maximum.parabolic.imag() < 0.0
 		 || maximum.parabolic.real() < 0.0;
-		case 2: return abs(minimum.lattice.real()) > 0.5;
-		case 3: return norm(maximum.lattice) < 1;
+		case 2: return abs(nearest.lattice.real()) > 0.5;
+		case 3: return norm(furthest.lattice) < 1;
         // Note: we can exclude the box if and only if the parabolic imag part is
         // bigger than half the lattice imag part over the WHOLE box
-		case 4: return minimum.parabolic.imag() > 0.5*maximum.lattice.imag();
-		case 5: return minimum.parabolic.real() > 0.5;
+        // We assume that case 1 has been tested
+		case 4: return nearest.parabolic.imag() > 0.5*furthest.lattice.imag();
+		case 5: return nearest.parabolic.real() > 0.5;
 		case 6: {
 			Params<AComplex1Jet> cover(box.cover());
 			double absLS = minabs(cover.loxodromicSqrt);
-			double area = absLS * absLS * minimum.lattice.imag();
+			double area = absLS * absLS * nearest.lattice.imag();
 			if (area > g_maximumArea) {
 				return true;
 			} else {

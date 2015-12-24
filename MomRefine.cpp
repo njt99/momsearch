@@ -263,10 +263,10 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth) {
 			// fprintf(stderr, "HOLE %s (%s)\n", box.name.c_str(), box.qr.desc().c_str());
 	        Params<Complex> params = box.center();
-	        Params<Complex> minimum = box.minimum();
+	        Params<Complex> nearest = box.nearest();
 			Params<AComplex1Jet> cover(box.cover());
 			double absLS = minabs(cover.loxodromicSqrt);
-			double area = absLS * absLS * minimum.lattice.imag();
+			double area = absLS * absLS * nearest.lattice.imag();
 			fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f size: %.4e (%s)\n", box.name.c_str(), area, params.lattice.real(), params.lattice.imag(), params.loxodromicSqrt.real(), params.loxodromicSqrt.imag(), params.parabolic.real(),params.parabolic.imag(), box.size(), box.qr.desc().c_str());
 			return false;
 		}

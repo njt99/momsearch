@@ -65,7 +65,8 @@ Params<Complex> Box::offset(const double* offset) const
 	return result;
 }
 
-Params<Complex> Box::minimum() const
+// Note: sizeDigits is always positive
+Params<Complex> Box::nearest() const
 {
 	int TODO_ULP;
 	double m[6];
@@ -83,7 +84,8 @@ Params<Complex> Box::minimum() const
 	return result;
 }
 
-Params<Complex> Box::maximum() const
+// Note: sizeDigits is always positive
+Params<Complex> Box::furthest() const
 {
 	int TODO_ULP;
 	double m[6];
@@ -92,6 +94,38 @@ Params<Complex> Box::maximum() const
 			m[i] = scale[i]*(centerDigits[i]-sizeDigits[i]);
 		else
 			m[i] = scale[i]*(centerDigits[i]+sizeDigits[i]);
+	}
+	
+	Params<Complex> result;
+	result.lattice = Complex(m[3], m[0]);
+	result.loxodromicSqrt = Complex(m[4], m[1]);
+	result.parabolic = Complex(m[5], m[2]);
+	return result;
+}
+
+// Note: sizeDigits is always positive
+Params<Complex> Box::minimum() const
+{
+	int TODO_ULP;
+	double m[6];
+	for (int i = 0; i < 6; ++i) {
+        m[i] = scale[i]*(centerDigits[i]-sizeDigits[i]);
+	}
+	
+	Params<Complex> result;
+	result.lattice = Complex(m[3], m[0]);
+	result.loxodromicSqrt = Complex(m[4], m[1]);
+	result.parabolic = Complex(m[5], m[2]);
+	return result;
+}
+
+// Note: sizeDigits is always positive
+Params<Complex> Box::maximum() const
+{
+	int TODO_ULP;
+	double m[6];
+	for (int i = 0; i < 6; ++i) {
+        m[i] = scale[i]*(centerDigits[i]+sizeDigits[i]);
 	}
 	
 	Params<Complex> result;
@@ -127,11 +161,12 @@ Params<AComplex1Jet> Box::cover() const
 
 void Box::volumeRange(double& low, double& high) const
 {
-	Params<Complex> min = minimum();
-	Params<Complex> max = maximum();
+	Params<Complex> min = nearest();
+	Params<Complex> max = furthest();
 	
 	Complex minSl = min.loxodromicSqrt;
 	Complex maxSl = max.loxodromicSqrt;
+    // Note: we assume that lattice.imag() is positive in the box
 	low = (minSl.real()*minSl.real() + minSl.imag()*minSl.imag()) * min.lattice.imag();
 	high = (maxSl.real()*maxSl.real() + maxSl.imag()*maxSl.imag()) * max.lattice.imag();
 }
