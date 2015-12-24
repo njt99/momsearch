@@ -126,26 +126,26 @@ GL2ACJ TestCollection::evaluate1(string word, Params<AComplex1Jet>& params)
 			}
 		}
 	}
-    Complex a = w.a.center();
-    Complex b = w.b.center();
-    Complex c = w.c.center();
-    Complex d = w.d.center();
-    fprintf(stderr, "Word: %s\n", word.c_str());
-    fprintf(stderr, "At the center is has coords\n");
-    fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
-    fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
-    fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
-    fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
-    a = G.a.center();
-    b = G.b.center();
-    c = G.c.center();
-    d = G.d.center();
-    fprintf(stderr, "Word: G\n");
-    fprintf(stderr, "At the center is has coords\n");
-    fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
-    fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
-    fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
-    fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
+//    Complex a = w.a.center();
+//    Complex b = w.b.center();
+//    Complex c = w.c.center();
+//    Complex d = w.d.center();
+//    fprintf(stderr, "Word: %s\n", word.c_str());
+//    fprintf(stderr, "At the center is has coords\n");
+//    fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
+//    fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
+//    fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
+//    fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
+//    a = G.a.center();
+//    b = G.b.center();
+//    c = G.c.center();
+//    d = G.d.center();
+//    fprintf(stderr, "Word: G\n");
+//    fprintf(stderr, "At the center is has coords\n");
+//    fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
+//    fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
+//    fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
+//    fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
 	return w;
 }
 
@@ -162,17 +162,17 @@ bool TestCollection::validIdentity(string word, Box& box)
 		 || (minabs(w.d-1) > 0 && minabs(w.d+1) > 0)) {
 			return false;
         } else {
-            Complex a = w.a.center();
-            Complex b = w.b.center();
-            Complex c = w.c.center();
-            Complex d = w.d.center();
-            fprintf(stderr, "This word is identity somewhere in the box\n");
-            fprintf(stderr, "Word: %s\n", word.c_str());
-            fprintf(stderr, "At the center is has coords\n");
-            fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
-            fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
-            fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
-            fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
+//            Complex a = w.a.center();
+//            Complex b = w.b.center();
+//            Complex c = w.c.center();
+//            Complex d = w.d.center();
+//            fprintf(stderr, "This word is identity somewhere in the box\n");
+//            fprintf(stderr, "Word: %s\n", word.c_str());
+//            fprintf(stderr, "At the center is has coords\n");
+//            fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
+//            fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
+//            fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
+//            fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
         }
 	}
 	return true;
