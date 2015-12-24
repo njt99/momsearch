@@ -143,7 +143,7 @@ def min_parameters(params) :
     size = params['size']
     m = [0]*6
     # Get values as close to zero in box as we can
-    for i in range(5) :
+    for i in range(6) :
         if center[i] < 0 :
             m[i] = scale[i]*(center[i]+size[i])
         else :
@@ -161,13 +161,14 @@ def max_parameters(params) :
     size = params['size']
     m = [0]*6
     # Get values as close to zero in box as we can
-    for i in range(5) :
+    for i in range(6) :
         if center[i] < 0 :
             m[i] = scale[i]*(center[i]-size[i])
         else :
             m[i] = scale[i]*(center[i]+size[i])
 
     max_params = {}
+    print m
     max_params['lattice'] = m[3] + m[0]*II
     max_params['lox_sqrt'] = m[4] + m[1]*II
     max_params['parabolic'] = m[5] + m[2]*II
