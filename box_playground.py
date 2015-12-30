@@ -546,9 +546,13 @@ def get_box_code(validated_params, depth=120) :
     box_code = ''.join(code_list)
     return box_code
 
-def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0) :
-    mfld_hp = mfld.high_precision()
-    cusp_nbd = mfld_hp.cusp_neighborhood()
+def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0, high_precision = True) :
+    if high_precision :
+        mfld_loc = mfld.high_precision()
+    else :
+        mfld_loc = mfld
+
+    cusp_nbd = mfld_loc.cusp_neighborhood()
 
     print '{0}_{1}'.format(mfld.name(),cusp_idx)
 
