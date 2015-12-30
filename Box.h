@@ -17,7 +17,7 @@ struct Box {
 	Params<Complex> center() const;
 	Params<Complex> offset(const double* offset) const;
 	Params<AComplex1Jet> cover() const;
-	Params<Complex> nearest() const; // closest to 0
+	Params<Complex> nearest() const; // returns closest to 0 or 0 if box overlaps
 	Params<Complex> minimum() const; // minimizes all values
 	Params<Complex> furthest() const; // furthest from 0
 	Params<Complex> maximum() const; // maximizes all values
