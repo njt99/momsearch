@@ -1,0 +1,3 @@
+#/bin/bash
+
+./drawCusp.py $1 3 0.05 242 142 564

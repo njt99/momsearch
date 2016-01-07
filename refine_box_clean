@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir census_tests
+
+echo '1' | ./refine --fillHoles --box $1 --maxDepth 96 --truncateDepth 7 --inventDepth 6 --maxSize 300000000 --words words --ballSearchDepth -1 --maxArea 5.2 --powers powers_combined --mom /dev/null --parameterized /dev/null > census_tests/box.out 2> census_tests/box.err
