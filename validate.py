@@ -34,14 +34,14 @@ def run_refine(command, dest_dir) :
 if __name__ == '__main__' :
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:],'w:c:O',['words=','overwrite','child_limit='])
+        opts, args = getopt.getopt(sys.argv[1:],'w:c:O',['words=','child_limit=','overwrite'])
     except getopt.GetoptError as err:
         print str(err)
-        print('Usage: dosearch [-w,--words <wordsfile>] [-O, --overwrite] src_dir dest_dir backing_dir')
+        print('Usage: validate [-w,--words <wordsfile>] [-c,--child_limit <limit>] [-O, --overwrite] src_dir dest_dir backing_dir')
         sys.exit(2)
 
     if len(args) != 3:
-        print('Usage: dosearch [-w,--words <wordsfile>] [-O, --overwrite] src_dir dest_dir backing_dir')
+        print('Usage: validate [-w,--words <wordsfile>] [-c,--child_limit <limit>] [-O, --overwrite] src_dir dest_dir backing_dir')
         sys.exit(2)
 
     # Executables
@@ -136,7 +136,7 @@ if __name__ == '__main__' :
                     num_failed = command_output('grep -c FAILED {0}/{1}.err; exit 0'.format(dest_dir, done_box)).rstrip()
 
                     if result == 0 :
-                        if  num_failed == '0' :
+                        if  int(num_failed) == 0 :
                             print 'Completed {0} {1}\n'.format(done_box,done_pid)
                         else :
                             print 'Check FAILED {0} times for box {1}\n'.format(num_failed, done_box)
