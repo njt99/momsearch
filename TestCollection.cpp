@@ -252,16 +252,16 @@ int TestCollection::evaluateCenter(int index, Box& box)
 	switch(index) {
 		case 0:	{
 			Complex sl = params.loxodromicSqrt;
-			return sl.real()*sl.real() + sl.imag()*sl.imag() <= 1;
+			return sl.real()*sl.real() + sl.imag()*sl.imag() < 1.0;
 		}
-		case 1: return params.loxodromicSqrt.imag() <= 0
-		 || params.lattice.imag() <= 0
-		 || params.parabolic.imag() <= 0
-		 || params.parabolic.real() <= 0;
+		case 1: return params.loxodromicSqrt.imag() < 0.0
+		 || params.lattice.imag() < 0.0
+		 || params.parabolic.imag() < 0.0
+		 || params.parabolic.real() < 0.0;
 		case 2: return abs(params.lattice.real()) > 0.5;
 		case 3: return norm(params.lattice) < 1;
-		case 4: return params.parabolic.imag() >= 0.5*params.lattice.imag();
-		case 5: return params.parabolic.real() >= 0.5;
+		case 4: return params.parabolic.imag() > 0.5*params.lattice.imag();
+		case 5: return params.parabolic.real() > 0.5;
 		case 6: {
 			g_latticeArea = norm(params.loxodromicSqrt)*params.lattice.imag();
 			return g_latticeArea >= g_maximumArea;

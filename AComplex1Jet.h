@@ -11,6 +11,9 @@
 // such that |f(z) - f - (df0,df1,df2)(z)| < error.
 // In practice, f == f(0) and f'(0) == (df0,df1,df2)
 
+
+// TODO: Verify all basic function we call are within one ulp!!! Like abs vs hypot!!!
+
 class AComplex1Jet
 {
   public:
