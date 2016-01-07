@@ -5,6 +5,7 @@ from Tkinter import *
 from pprint import *
 from cmath import *
 from numpy import floor, ceil, dot
+from tkFileDialog import *
  
 scale = map(lambda x : 8 * pow(2, x/6.), range(0,-6,-1))
 
@@ -287,6 +288,9 @@ class cusp(Tk) :
         self.dist_label.grid(row=15, column=0, sticky=N+W)
         self.dist_value_label.grid(row=15, column=1, sticky=N+S+E+W)
 
+        self.print_button = Button(self.display, text='Print', command=self.print_callback)
+        self.print_button.grid(row=16, column=0, sticky=N+W)  
+
     def initialize(self) :
         if len(sys.argv) < 3 :
             print 'Usage: drawCusp box_code depth <height_cutoff>'
@@ -470,7 +474,12 @@ class cusp(Tk) :
     def select(self, object_id, color='red') :
         self.canvas.itemconfigure(object_id, fill=color)
         self.selected_objects.add(object_id)
-      
+
+    def print_callback(self) :
+        file_path = asksaveasfilename() 
+        if file_path :
+            self.canvas.postscript(file=file_path, colormode='color')
+ 
     def click_up(self,event) :
         object_tuple = self.canvas.find_closest(event.x,event.y)
         object_id = object_tuple[0]
