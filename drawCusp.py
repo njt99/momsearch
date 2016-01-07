@@ -293,12 +293,20 @@ class cusp(Tk) :
 
     def initialize(self) :
         if len(sys.argv) < 3 :
-            print 'Usage: drawCusp box_code depth <height_cutoff>'
+            print 'Usage: drawCusp box_code depth <fraction_height_cutoff> <scale_factor> <originx> <originy>'
             sys.exit(2)
 
         self.box = sys.argv[1]
+
         self.depth = int(sys.argv[2])
-        self.height_cutoff = float(sys.argv[3]) if len(sys.argv) > 3 else 0.001
+        self.fraction_cutoff = float(sys.argv[3]) if len(sys.argv) > 3 else 0.001
+        self.factor = float(sys.argv[4]) if len(sys.argv) > 4 else None
+        self.origin = None
+        origin_x = float(sys.argv[5]) if len(sys.argv) > 5 else None
+        origin_y = float(sys.argv[6]) if len(sys.argv) > 6 else None
+        if origin_y :
+            self.origin = [origin_x, origin_y] 
+
         self.params = get_params(self.box)
         self.object_dict = {}
         self.build_elements()
@@ -355,6 +363,7 @@ class cusp(Tk) :
         N = get_T(self.params,0,1)
         self.elements = { 'g' : g, 'G' : G, 'NM' : dot(M,N), 'M' : M, 'N' : N, 'GG' : dot(G,G) }
         self.cusp_height = max_horo_height(G)
+        self.height_cutoff = self.cusp_height*self.fraction_cutoff
  
     def print_elements(self) :
         # Print box paramenters and group elements
@@ -526,11 +535,15 @@ class cusp(Tk) :
 
     def draw_cusp(self) :
         lattice = self.params['lattice']
-        self.factor = self.init_canvas_width/(abs(lattice)+1)
+        if not self.factor :
+            self.factor = self.init_canvas_width/(abs(lattice)+1)
         # Pick an origin. TODO: Make this more robust
-        self.origin = [0.,0.]
-        self.origin[0] = self.init_canvas_width/4.5 if real(lattice) > -0.2 else self.init_canvas_width/2.5
-        self.origin[1] = self.factor*(imag(lattice)+0.7)
+        if not self.origin :
+            self.origin = [0.,0.]
+            self.origin[0] = self.init_canvas_width/4.5 if real(lattice) > -0.2 else self.init_canvas_width/2.5
+            self.origin[1] = self.factor*(imag(lattice)+0.7)
+
+        print 'Factor {0}'.format(self.factor)
         print 'Origin {0}'.format(self.origin)
 
         # Draw the lattice domain lines and points
