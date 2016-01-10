@@ -24,13 +24,25 @@ def add_holes(holes, treeholes, directory, boxfile):
     newHoles = set(byte_string.rstrip().split('\n'))
     holes |= newHoles
 
+def add_holes_from_file(holes,fp) :
+    try:
+        for line in open(fp):
+            hole = line.rstrip()
+            if hole[0] == '1' or\
+               hole[0] == '0' :
+                holes.add(hole)
+    except:
+        print('Error loading holes file {0}\n'.format(fp))
+        sys.exit(1)
+
+
 def add_words(words, fp):
     try:
         for line in open(fp):
             word = line.rstrip()
             if word[0].isdigit() or\
                word[0] == 'X'    or\
-               word[0] == 'H': continue
+               word[0] == 'H' : continue
             else:
                 words.add(word)
     except:
@@ -56,14 +68,14 @@ def run_refine(command, destDir) :
 if __name__ == '__main__' :
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:],'w:',['words='])
+        opts, args = getopt.getopt(sys.argv[1:],'w:c:d:h:',['words=','child_limit=','depth_limit=','holes='])
     except getopt.GetoptError as err:
         print str(err)
-        print('Usage: dosearch [-w,--words <wordsfile>] srcDir destDir backingDir')
+        print('Usage: dosearch [-w,--words <wordsfile>] [-c,--child_limit <limit>] [-d,--depth_limit <limit>] [-h,-holes <holesfile>] srcDir destDir')
         sys.exit(2)
 
-    if len(args) != 3:
-        print('Usage: dosearch [-w,--words <wordsfile>] srcDir destDir backingDir')
+    if len(args) != 2:
+        print('Usage: dosearch [-w,--words <wordsfile>] [-c,--child_limit <limit>] [-d,--depth_limit <limit>] [-h,-holes <holesfile>] srcDir destDir')
         sys.exit(2)
 
     # Executables
@@ -75,8 +87,8 @@ if __name__ == '__main__' :
     # Set up the rest of the arguments
     srcDir = args[0]
     destDir = args[1]
-    backingDir = args[2]
     childLimit = 8
+    depth_limit = 96
 
     maxSize = '3000000'
     maxDepth = '42'
@@ -91,10 +103,17 @@ if __name__ == '__main__' :
 
     # Get the seen words
     wordsFile = 'allWords_{0:.0f}'.format(time.time())
+    holes_file = None
     seenWords = set()
     for opt, val in opts:
         if opt in ('-w', '--words'):
             wordsFile = val
+        if opt in ('-c', '--child_limit'):
+            childLimit = int(val)
+        if opt in ('-d', '--depth_limit'):
+            depth_limit = int(val)
+        if opt in ('-h', '--holes'):
+            holes_file = val
             
     add_words(seenWords, wordsFile)
 
@@ -103,7 +122,10 @@ if __name__ == '__main__' :
 
     # Get holes. Note, treecat will check that all files are complete trees
     holes = set();
-    add_holes(holes, treeholes, destDir, '')
+    if holes_file :
+        add_holes_from_file(holes, holes_file)
+    else :
+        add_holes(holes, treeholes, destDir, '')
 
     # Get done words
     done = set()
@@ -131,7 +153,7 @@ if __name__ == '__main__' :
             if len(hole) < len(bestHole):
                 bestHole = hole    
 
-        if len(bestHole) > 95:
+        if len(bestHole) > depth_limit:
             if childCount > 0 :
                 waitForHoles = True
             else :
@@ -204,8 +226,8 @@ if __name__ == '__main__' :
         else: 
             pidBallSearchDepth = ballSearchDepth
 
-        command = treecat + ' ' +  srcDir + ' ' + bestHole + \
-                    ' | ' + refine + \
+        treecat_command = '{0} {1} {2}'.format(treecat, srcDir, bestHole)
+        refine_command = refine + \
                     fillHoles + \
                     ' --box ' + bestHole + \
                     ' --maxDepth ' + maxDepth + \
@@ -220,12 +242,13 @@ if __name__ == '__main__' :
                     ' --parameterized ' + parameterized + \
                     ' > ' + out  + ' 2> ' + err
 
-        first_command = '{0} {1} {2} | head -1'.format(treecat, srcDir, bestHole)
+        first_command = treecat_command + ' | head -1'
         first = command_output(first_command).rstrip()
 
         if first[:1] == 'H': # HOLE
-            command = command.replace(srcDir, backingDir)
+            treecat_command = 'echo 1'
 
+        command = treecat_command + ' | ' + refine_command
         print 'Running with run count {1}: {0}\n'.format(command, refineRunCount)
         refine_run = Process(target=run_refine, args=(command, destDir,))
         refine_run.start()
