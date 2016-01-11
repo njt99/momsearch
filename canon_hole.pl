@@ -18,6 +18,7 @@ while (<>) {
 		$box = $2;
 		@words = split(/,/, $4);
 		%canonWords = ();
+		%canonVersion = ();
 		foreach $word (@words) {
 			if (!defined $canonVersion{$word}) {
 				my @v = &versions($word);

@@ -151,7 +151,7 @@ string CanonicalName::reduce(string s)
 				//fprintf(stderr, "replacing in %s: %s -> %s\n", s.c_str(), it->s.c_str(), it->rep.c_str());
 				s.replace(pos, it->s.length(), it->rep);
 				if (visited.find(s) != visited.end() || s.length() > 50) {
-					fprintf(stderr, "loop detected in %s\n", s.c_str());
+					fprintf(stderr, "loop detected in canonical name reduce %s\n", s.c_str());
 					return s;
 				}
 				visited.insert(s);
