@@ -60,10 +60,11 @@ set<string> g_parameterizedVarieties;
 static int g_boxesVisited = 0;
 
 struct PartialTree {
-	PartialTree() :lChild(0), rChild(0), testIndex(-1) {}
+	PartialTree() :lChild(NULL), rChild(NULL), testIndex(-1), box(NULL) {}
 	PartialTree *lChild;
 	PartialTree *rChild;
 	int testIndex;
+    NamedBox *box;
 };
 
 // Consume tree from stdin. The tree must be
@@ -82,13 +83,13 @@ PartialTree readTree()
 	if (buf[0] == 'X') {
 		t.lChild = new PartialTree(readTree());
 		t.rChild = new PartialTree(readTree());
-	} else if (!strcmp(buf, "HOLE")) {
+	} else if (strstr(buf, "HOLE") != NULL) {
 		t.testIndex = -2;
 	} else {
 		if (isdigit(buf[0])) {
 			t.testIndex = atoi(buf);
 		} else {
-            // Add word as quasi-relator to test collection
+            // Add word as eliminator to test collection
 			t.testIndex = g_tests.add(buf);
 		}
 	}
@@ -187,6 +188,7 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 {
 	//fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
 	place.push_back(box);
+    t.box = &box; 
 	int oldTestIndex = t.testIndex;
 	if (t.testIndex >= 0) {
         int result = g_tests.evaluateBox(t.testIndex, box);
@@ -312,7 +314,7 @@ void printTree(PartialTree& t)
 		printTree(*t.lChild);
 		printTree(*t.rChild);
 	} else {
-		printf("HOLE\n");
+		printf("HOLE (%s)\n", t.box->qr.desc().c_str());
 	}
 }
 
