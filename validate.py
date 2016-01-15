@@ -57,7 +57,7 @@ if __name__ == '__main__' :
 
     maxSize = '300000000'
     maxDepth = '96'
-    truncateDepth = '6'
+    truncateDepth = '96'
     inventDepth = '0'
     ballSearchDepth = '-1'
     maxArea = '5.2'
