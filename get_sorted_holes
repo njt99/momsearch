@@ -1,6 +1,10 @@
 #!/bin/bash
-grep -r HOLE output/*.err > holes_err
-~/momsearch/treecat --holes -r output '' > holes
+
+err_dir='/Volumes/Tosha/validate_run/source'
+bin_dir='/Users/yarmola/Mathematics/Research/MOM2015/momsearch'
+
+find "$err_dir" -type f -name "*err" -exec grep 'HOLE' {} + > holes_err
+"$bin_dir/treecat" --holes -r "$err_dir" '' > holes
 grep "()\$" holes_err > holes_no_quasi
 grep "(..*)\$" holes_err > holes_quasi
 cut -d ":" -f 2- holes_no_quasi > holes_no_quasi_no_filenames
@@ -17,5 +21,5 @@ done < holes
 while read line; do grep "HOLE $line " holes_no_quasi_no_filenames; done < holes > true_holes_no_quasi
 while read line; do grep "HOLE $line " holes_quasi_no_filenames; done < holes > true_holes_quasi
 sort -t" " -k6n,6 true_holes_no_quasi > true_holes_no_quasi_sorted
-perl ~/momsearch/canon_hole.pl < true_holes_quasi > true_holes_quasi_canon
-perl ~/momsearch/canon_hole_count.pl < true_holes_quasi_canon > sorted_words_canon
+perl "$bin_dir/canon_hole.pl" < true_holes_quasi > true_holes_quasi_canon
+perl "$bin_dir/canon_hole_count.pl" -s < true_holes_quasi_canon > sorted_words_canon

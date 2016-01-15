@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 # perl script to search for possible impossible identities.
 
 while ($word = <>) {

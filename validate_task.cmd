@@ -10,5 +10,16 @@
 #SBATCH --mail-type=end
 #SBATCH --mail-user=yarmola@princeton.edu
 
-cd /home/ayarmola/momsearch
-python validate.py -w /scratch/network/ayarmola/run2015/words -c 16 /scratch/network/ayarmola/run2015/source /scratch/network/ayarmola/run2015/output /scratch/network/ayarmola/run2015/backing > /home/ayarmola/run2015.log 2>&1
+
+bin_dir='/Users/yarmola/Mathematics/Research/MOM2015/momsearch'
+words_dir=$bin_dir
+
+validate="$bin_dir/validate.py"
+words="$words_dir/words"
+powers="$words_dir/powers_combined"
+
+data_dir="$bin_dir/validate_test"
+
+cd $bin_dir
+
+python "$validate" -w "$words" -p "$powers" -c 32 "$data_dir/source" "$data_dir/output" > "$data_dir/validate.log" 2>&1

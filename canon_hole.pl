@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 # Given a line out of refine HOLE err file output with qr's, this will
 # outputs the HOLE, box and canonical versions of the qr's
 sub versions
@@ -13,9 +14,11 @@ sub versions
         }
         sort @v;
 }
+
 while (<>) {
-	if (/(.*)HOLE ([01]*) (.+) \((.*)\)/) {
-		$box = $2;
+	if (/(.*)(HOLE) ([01]*) .*\((.*)\)/ || /(.*)(M) (\S+) .*\((.*)\)/) {
+        $type = $2;
+		$id = $3;
 		@words = split(/,/, $4);
 		%canonWords = ();
 		%canonVersion = ();
@@ -27,8 +30,6 @@ while (<>) {
 			$canonWords{$canonVersion{$word}} = 1;
 		}
 		@canonWords = sort keys %canonWords;
-		print "HOLE $box (" . join(",", @canonWords) . ")\n";
-	} else {
-		print;
+		print "$type $id (" . join(",", @canonWords) . ")\n";
 	}
 }

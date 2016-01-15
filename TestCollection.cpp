@@ -283,7 +283,6 @@ int TestCollection::evaluateBox(int index, NamedBox& box)
 			Complex maxSl = furthest.loxodromicSqrt;
 			return maxSl.real()*maxSl.real() + maxSl.imag()*maxSl.imag() < 1.0;
 		}
-        // TODO: HUGE ERROR!!!! We max always output the largest in ABSOLUTE VALUE. If a parameter is ever NEGATIVE, this needs to be min
 		case 1: return maximum.loxodromicSqrt.imag() < 0.0
          || maximum.lattice.imag() < 0.0
 		 || maximum.parabolic.imag() < 0.0

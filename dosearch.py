@@ -68,14 +68,14 @@ def run_refine(command, destDir) :
 if __name__ == '__main__' :
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:],'w:c:d:h:',['words=','child_limit=','depth_limit=','holes='])
+        opts, args = getopt.getopt(sys.argv[1:],'w:p:c:d:h:',['words=','powers=','child_limit=','depth_limit=','holes='])
     except getopt.GetoptError as err:
         print str(err)
-        print('Usage: dosearch [-w,--words <wordsfile>] [-c,--child_limit <limit>] [-d,--depth_limit <limit>] [-h,-holes <holesfile>] srcDir destDir')
+        print('Usage: dosearch [-w,--words <wordsfile>] [-p,--powers <powersFile>] [-c,--child_limit <limit>] [-d,--depth_limit <limit>] [-h,-holes <holesfile>] srcDir destDir')
         sys.exit(2)
 
     if len(args) != 2:
-        print('Usage: dosearch [-w,--words <wordsfile>] [-c,--child_limit <limit>] [-d,--depth_limit <limit>] [-h,-holes <holesfile>] srcDir destDir')
+        print('Usage: dosearch [-w,--words <wordsfile>] [-p,--powers <powersFile>] [-c,--child_limit <limit>] [-d,--depth_limit <limit>] [-h,-holes <holesfile>] srcDir destDir')
         sys.exit(2)
 
     # Executables
@@ -88,7 +88,7 @@ if __name__ == '__main__' :
     srcDir = args[0]
     destDir = args[1]
     childLimit = 8
-    depth_limit = 96
+    depth_limit = 67
 
     maxSize = '3000000'
     maxDepth = '42'
@@ -100,14 +100,16 @@ if __name__ == '__main__' :
     mom = '/dev/null' #/home/ayarmola/momsearch/momWords'
     parameterized = '/dev/null' #/home/ayarmola/momsearch/parameterizedWords'
     powers = '/home/ayarmola/momsearch/powers_combined'
+    wordsFile = '/home/ayarmola/momsearch/words'.format(time.time())
 
-    # Get the seen words
-    wordsFile = 'allWords_{0:.0f}'.format(time.time())
+    # Get config
     holes_file = None
     seenWords = set()
     for opt, val in opts:
         if opt in ('-w', '--words'):
             wordsFile = val
+        if opt in ('-p', '--powers'):
+            powers = val
         if opt in ('-c', '--child_limit'):
             childLimit = int(val)
         if opt in ('-d', '--depth_limit'):

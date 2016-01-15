@@ -34,14 +34,14 @@ def run_refine(command, dest_dir) :
 if __name__ == '__main__' :
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:],'w:c:O',['words=','child_limit=','overwrite'])
+        opts, args = getopt.getopt(sys.argv[1:],'w:p:c:O',['words=','powers=','child_limit=','overwrite'])
     except getopt.GetoptError as err:
         print str(err)
-        print('Usage: validate [-w,--words <wordsfile>] [-c,--child_limit <limit>] [-O, --overwrite] src_dir dest_dir backing_dir')
+        print('Usage: validate [-w,--words <wordsfile>] [-p,--powers <powersFile>] [-c,--child_limit <limit>] [-O, --overwrite] src_dir dest_dir')
         sys.exit(2)
 
-    if len(args) != 3:
-        print('Usage: validate [-w,--words <wordsfile>] [-c,--child_limit <limit>] [-O, --overwrite] src_dir dest_dir backing_dir')
+    if len(args) != 2:
+        print('Usage: validate [-w,--words <wordsfile>] [-p,--powers <powersFile>] [-c,--child_limit <limit>] [-O, --overwrite] src_dir dest_dir')
         sys.exit(2)
 
     # Executables
@@ -53,11 +53,11 @@ if __name__ == '__main__' :
     # Set up the rest of the arguments
     src_dir = args[0]
     dest_dir = args[1]
-    backing_dir = args[2]
+    child_limit = 8
 
     maxSize = '300000000'
     maxDepth = '96'
-    truncateDepth = '7'
+    truncateDepth = '6'
     inventDepth = '0'
     ballSearchDepth = '-1'
     maxArea = '5.2'
@@ -65,18 +65,19 @@ if __name__ == '__main__' :
     mom = '/dev/null' #/home/ayarmola/momsearch/momWords'
     parameterized = '/dev/null' #/home/ayarmola/momsearch/parameterizedWords'
     powers = '/home/ayarmola/momsearch/powers_combined'
+    wordsFile = '/home/ayarmola/momsearch/words'.format(time.time())
 
-    wordsFile = '/dev/null'
-    child_limit = 4
+    # Get config
     overwrite = False
     for opt, val in opts:
         if opt in ('-w', '--words'):
             wordsFile = val
+        if opt in ('-p', '--powers'):
+            powers = val
         if opt in ('-c', '--child_limit'):
             child_limit = int(val)
         if opt in ('-O', '--overwrite'):
             overwrite = True
-
     # Check for and mark incomplete or foreign trees
     subprocess.call('{0} -r {1} \'{2}\''.format(treecheck, dest_dir, ''), shell=True)
 
@@ -171,8 +172,8 @@ if __name__ == '__main__' :
         out = dest_dir + '/' + best_box + '.out'
         err = dest_dir + '/' + best_box + '.err'
 
-        command = treecat + ' ' +  src_dir + ' ' + best_box + \
-                    ' | ' + refine + \
+        treecat_command = '{0} {1} {2}'.format(treecat, src_dir, best_box)
+        refine_command = refine + \
                     fillHoles + \
                     ' --box ' + best_box + \
                     ' --maxDepth ' + maxDepth + \
@@ -187,12 +188,13 @@ if __name__ == '__main__' :
                     ' --parameterized ' + parameterized + \
                     ' > ' + out  + ' 2> ' + err
 
-        first_command = '{0} {1} {2} | head -1'.format(treecat, src_dir, best_box)
+        first_command = treecat_command + ' | head -1'
         first = command_output(first_command).rstrip()
 
         if first[:1] == 'H': # HOLE
-            command = command.replace(src_dir, backing_dir)
+            treecat_command = 'echo 1'
 
+        command = treecat_command + ' | ' + refine_command
         print 'Running with run count {1}: {0}\n'.format(command, refine_run_count)
         refine_run = Process(target=run_refine, args=(command, dest_dir,))
         refine_run.start()

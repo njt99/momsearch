@@ -1,5 +1,19 @@
 #!/bin/bash
 
-mkdir census_tests
+data_dir="refine_census"
+name="box"
 
-echo '1' | ./refine --fillHoles --box $1 --maxDepth 96 --truncateDepth 7 --inventDepth 6 --maxSize 300000000 --words words --ballSearchDepth -1 --maxArea 5.2 --powers powers_combined --mom /dev/null --parameterized /dev/null > census_tests/box.out 2> census_tests/box.err
+if [ ! -d "$data_dir" ]; then
+    mkdir "$data_dir"
+fi
+
+if [[ $# > 0 ]]; then
+    box="$1"
+fi
+
+if [[ $# > 1 ]]; then
+    name="$1"
+    box="$2"
+fi
+
+echo '1' | ./refine --fillHoles --box "$box" --maxDepth 96 --truncateDepth 6 --inventDepth 6 --maxSize 30000000 --words words --ballSearchDepth -1 --maxArea 5.2 --powers powers_combined --mom /dev/null --parameterized /dev/null > "$data_dir/$name.out" 2> "$data_dir/$name.err"

@@ -2,7 +2,6 @@
 while ($word = <>) {
 	chomp $word;
 	$gs = '';
-	$gs = '';
 	$len = 0;
 	for ($i = 0; $i < length $word; ++$i) {
 		$ch = substr $word, $i, 1;
