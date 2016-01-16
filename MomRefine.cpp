@@ -60,11 +60,11 @@ set<string> g_parameterizedVarieties;
 static int g_boxesVisited = 0;
 
 struct PartialTree {
-	PartialTree() :lChild(NULL), rChild(NULL), testIndex(-1), box(NULL) {}
+	PartialTree() :lChild(NULL), rChild(NULL), testIndex(-1), qr_desc() {}
 	PartialTree *lChild;
 	PartialTree *rChild;
 	int testIndex;
-    NamedBox *box;
+    string qr_desc;
 };
 
 // Consume tree from stdin. The tree must be
@@ -188,7 +188,6 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 {
 	//fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
 	place.push_back(box);
-    t.box = &box; 
 	int oldTestIndex = t.testIndex;
 	if (t.testIndex >= 0) {
         int result = g_tests.evaluateBox(t.testIndex, box);
@@ -263,13 +262,13 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	
 	if (!t.lChild) {
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth) {
-			// fprintf(stderr, "HOLE %s (%s)\n", box.name.c_str(), box.qr.desc().c_str());
 	        Params<Complex> params = box.center();
 	        Params<Complex> nearest = box.nearest();
 			Params<AComplex1Jet> cover(box.cover());
 			double absLS = minabs(cover.loxodromicSqrt);
 			double area = absLS * absLS * nearest.lattice.imag();
 			fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f size: %.4e (%s)\n", box.name.c_str(), area, params.lattice.real(), params.lattice.imag(), params.loxodromicSqrt.real(), params.loxodromicSqrt.imag(), params.parabolic.real(),params.parabolic.imag(), box.size(), box.qr.desc().c_str());
+            t.qr_desc = box.qr.desc();
 			return false;
 		}
 		t.lChild = new PartialTree();
@@ -314,7 +313,7 @@ void printTree(PartialTree& t)
 		printTree(*t.lChild);
 		printTree(*t.rChild);
 	} else {
-		printf("HOLE (%s)\n", t.box->qr.desc().c_str());
+		printf("HOLE (%s)\n", t.qr_desc.c_str());
 	}
 }
 
