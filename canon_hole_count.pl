@@ -13,8 +13,10 @@ sub g_power
 %ids_to_shortest_words = ();
 
 $shortest_only = 'F';
-if ($ARGV[0] eq '-s') {
-    $shortest_only = 'T';
+$unique = 'F';
+for $opt (@ARGV) {
+    $shortest_only = 'T' if ($opt eq '-s');
+    $unique = 'T' if ($opt eq '-u');
 }
 
 while (<STDIN>) {
@@ -46,16 +48,29 @@ while (<STDIN>) {
     }
 }
 
+%ids_already_printed = ();
 foreach $word (sort {$word_count{$b} <=> $word_count{$a}} (keys(%word_count))) {
     my @ids = sort @{$words_to_ids{$word}};
     my $g_power = &g_power($word);
-    print "$word has power $g_power and passes through $word_count{$word} ids:\n";
+    my $id_count = 0;
+    my $printout = "";
     foreach $id (@ids) {
         my @id_words = @{$ids_to_sorted_words{$id}};
         my ($idx) = grep { $id_words[$_] eq $word } 0 .. $#id_words;
         if ($g_power == &g_power($id_words[0])) {
             $idx = "shortest:$idx";
         }
-        print "    $word $g_power $idx $id\n";
+        if (!defined $ids_already_printed{$id}) {
+            $id_count += 1;
+            $ids_already_printed{$id} = 1;
+            $printout .= "    $word $g_power $idx $id\n";
+        }
+        elsif ($unique eq 'F') {
+            $id_cout +=1;
+            $printout .= "    $word $g_power $idx $id less_popular\n";
+        }
+    }
+    if ($id_count > 0) {
+        print "$word has power $g_power and passes through $id_count ids:\n$printout";
     }
 }
