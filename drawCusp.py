@@ -237,7 +237,7 @@ class cusp(Tk) :
 
         self.b1_word_label = Label(self.display,text='Red horobal word: ', justify='left', wraplength=400, bg='gray')
         self.b1_word_value = StringVar()
-        self.b1_word_value_label = Label(self.display, textvariable=self.b1_word_value, justify='left', wraplength=400, bg='gray')
+        self.b1_word_value_label = Entry(self.display, textvariable=self.b1_word_value, justify='left', highlightthickness=0, readonlybackground='gray', state='readonly', relief=FLAT)
         self.b1_word_label.grid(row=7, column=0, sticky=N+W)
         self.b1_word_value_label.grid(row=7, column=1, sticky=N+S+E+W)
 
@@ -261,7 +261,7 @@ class cusp(Tk) :
 
         self.b2_word_label = Label(self.display,text='Blue horobal word: ', justify='left', wraplength=400, bg='gray')
         self.b2_word_value = StringVar()
-        self.b2_word_value_label = Label(self.display, textvariable=self.b2_word_value, justify='left', wraplength=400, bg='gray')
+        self.b2_word_value_label = Entry(self.display, textvariable=self.b2_word_value, justify='left', highlightthickness=0, readonlybackground='gray', state='readonly', relief=FLAT)
         self.b2_word_label.grid(row=11, column=0, sticky=N+W)
         self.b2_word_value_label.grid(row=11, column=1, sticky=N+S+E+W)
 
