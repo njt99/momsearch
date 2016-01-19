@@ -168,7 +168,6 @@ def max_parameters(params) :
             m[i] = scale[i]*(center[i]+size[i])
 
     max_params = {}
-    print m
     max_params['lattice'] = m[3] + m[0]*II
     max_params['lox_sqrt'] = m[4] + m[1]*II
     max_params['parabolic'] = m[5] + m[2]*II
