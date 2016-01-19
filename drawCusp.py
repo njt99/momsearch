@@ -8,6 +8,7 @@ from numpy import floor, ceil, dot
 from tkFileDialog import *
  
 scale = map(lambda x : 8 * pow(2, x/6.), range(0,-6,-1))
+eps = 0.000001
 
 def g_depth(word) :
     g_count = 0
@@ -419,6 +420,8 @@ class cusp(Tk) :
                         sys.stderr.write('Possible giant horoball with word {0} of height {1} with center {2}\nElement:\n'.format(h_word,new_height,h_center))
                         sys.stderr.write(pformat(new_gamma,width=2)+'\n')
                     else :
+                        if new_height < self.height_cutoff + eps :
+                            continue
                         M_word = 'M'*M_pow if M_pow > 0 else 'm'*(-M_pow) 
                         new_word = M_word + h_word
                         N_word = 'N'*N_pow if N_pow > 0 else 'n'*(-N_pow) 
