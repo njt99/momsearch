@@ -259,6 +259,7 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	}
 	
 	t.testIndex = -1;
+    t.qr_desc = box.qr.desc().c_str();
 	
 	if (!t.lChild) {
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth) {
@@ -268,7 +269,6 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 			double absLS = minabs(cover.loxodromicSqrt);
 			double area = absLS * absLS * nearest.lattice.imag();
 			fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f size: %.4e (%s)\n", box.name.c_str(), area, params.lattice.real(), params.lattice.imag(), params.loxodromicSqrt.real(), params.loxodromicSqrt.imag(), params.parabolic.real(),params.parabolic.imag(), box.size(), box.qr.desc().c_str());
-            t.qr_desc = box.qr.desc();
 			return false;
 		}
 		t.lChild = new PartialTree();
