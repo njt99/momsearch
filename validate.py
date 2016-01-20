@@ -56,7 +56,7 @@ if __name__ == '__main__' :
     child_limit = 8
 
     maxSize = '300000000'
-    maxDepth = '96'
+    maxDepth = '42'
     truncateDepth = '96'
     inventDepth = '0'
     ballSearchDepth = '-1'
@@ -82,7 +82,7 @@ if __name__ == '__main__' :
     subprocess.call('{0} -r {1} \'{2}\''.format(treecheck, dest_dir, ''), shell=True)
 
     if len(os.listdir(dest_dir)) > 0 :
-        print('WARNING: Distination is not empty!') 
+        print('WARNING: Destination is not empty!') 
 
     # Get all out file boxes
     try:
@@ -114,7 +114,7 @@ if __name__ == '__main__' :
             if len(box) < len(best_box):
                 best_box = box    
 
-        if len(best_box) > 95:
+        if len(best_box) > 65:
             if child_count > 0 :
                 wait_for_refine = True
             else :
