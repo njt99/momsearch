@@ -16,10 +16,11 @@ sub versions
 }
 
 while (<>) {
-	if (/(.*)(HOLE) ([01]*) .*\((.*)\)/ || /(.*)(M) (\S+) .*\((.*)\)/) {
+	if (/(.*)(HOLE) ([01]*) (.*)\((.*)\)/ || /(.*)(M) (\S+) (.*)\((.*)\)/) {
         $type = $2;
 		$id = $3;
-		@words = split(/,/, $4);
+        $info = $4;
+		@words = split(/,/, $5);
 		%canonWords = ();
 		%canonVersion = ();
 		foreach $word (@words) {
@@ -30,6 +31,6 @@ while (<>) {
 			$canonWords{$canonVersion{$word}} = 1;
 		}
 		@canonWords = sort keys %canonWords;
-		print "$type $id (" . join(",", @canonWords) . ")\n";
+		print "$type $id $info(" . join(",", @canonWords) . ")\n";
 	}
 }

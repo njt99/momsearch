@@ -1,12 +1,5 @@
 #!/usr/bin/perl
 # For each qr word lists and counts all ids wehre it is a qr
-sub g_power
-{
-    my ($gs) = @_;
-    $gs =~ s/[nNmM]+//g;
-    length $gs 
-}
-
 %word_count = ();
 %words_to_ids = ();
 %ids_to_sorted_words = ();
@@ -20,18 +13,33 @@ for $opt (@ARGV) {
     $unique = 'T' if ($opt eq '-u');
 }
 
+sub g_power
+{
+    my ($gs) = @_;
+    $gs =~ s/[nNmM]+//g;
+    length $gs 
+}
+
+sub area
+{
+   $ids_to_info{$_[0]}{'area'} 
+}
+
 while (<STDIN>) {
 	if (/(.*)(HOLE) ([01]*) (.*)\((.*)\)/ || /(.*)(M) (\S+) (.*)\((.*)\)/) {
         my $type = $2;
 		my $id = $3;
+        my @info = split(/ /, $4);
+        $ids_to_info{$id}{'type'} = $type;
         if ($type eq 'M') {
-            my @info = split(/ /, $4);
-            my $vol = $info[0]; 
-            my $area = $info[1];
-            $ids_to_info{$id}{'type'} = $type;
+            my ($vol) = $info[0] =~ /vol=(\S+)/; 
+            my ($area) = $info[1] =~ /area=(\S+)/;
             $ids_to_info{$id}{'vol'} = $vol;
             $ids_to_info{$id}{'area'} = $area;
-        } 
+        } else {
+            my $area = $info[3];
+            $ids_to_info{$id}{'area'} = $area;
+        }
 		my @id_words = split(/,/, $5);
         my @words = sort {&g_power($a) <=> &g_power($b)} @id_words;
         my $min_power = &g_power($words[0]);
@@ -57,7 +65,7 @@ while (<STDIN>) {
 
 %ids_already_printed = ();
 foreach $word (sort {$word_count{$b} <=> $word_count{$a}} (keys(%word_count))) {
-    my @ids = sort @{$words_to_ids{$word}};
+    my @ids = sort {&area($a) <=> &area($b) || $a cmp $b} @{$words_to_ids{$word}};
     my $g_power = &g_power($word);
     my $id_count = 0;
     my $printout = "";
@@ -72,17 +80,17 @@ foreach $word (sort {$word_count{$b} <=> $word_count{$a}} (keys(%word_count))) {
             $id_count += 1;
             $ids_already_printed{$id} = 1;
             if ($type eq 'M') {
-                $printout .= "    $word $g_power $idx $id $ids_to_info{$id}{'area'} $ids_to_info{$id}{'vol'}\n";
+                $printout .= "    $word $g_power $idx $id area=${\area($id)} vol=$ids_to_info{$id}{'vol'}\n";
             } else {
-                $printout .= "    $word $g_power $idx $id\n";
+                $printout .= "    $word $g_power $idx min_area=${\area($id)} $id\n";
             }
         }
         elsif ($unique eq 'F') {
             $id_count +=1;
             if ($type eq 'M') {
-                $printout .= "    $word $g_power $idx $id less_popular $ids_to_info{$id}{'area'} $ids_to_info{$id}{'vol'}\n";
+                $printout .= "    $word $g_power $idx $id repeat area=${\area($id)} vol=$ids_to_info{$id}{'vol'}\n";
             } else {
-                $printout .= "    $word $g_power $idx $id less_popular\n";
+                $printout .= "    $word $g_power $idx repeat min_area=${\area($id)} $id\n";
             }
         }
     }
