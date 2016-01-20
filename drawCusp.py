@@ -8,6 +8,7 @@ from numpy import floor, ceil, dot
 from tkFileDialog import *
  
 scale = map(lambda x : 8 * pow(2, x/6.), range(0,-6,-1))
+eps = 0.000001
 
 def g_depth(word) :
     g_count = 0
@@ -236,7 +237,7 @@ class cusp(Tk) :
 
         self.b1_word_label = Label(self.display,text='Red horobal word: ', justify='left', wraplength=400, bg='gray')
         self.b1_word_value = StringVar()
-        self.b1_word_value_label = Label(self.display, textvariable=self.b1_word_value, justify='left', wraplength=400, bg='gray')
+        self.b1_word_value_label = Entry(self.display, textvariable=self.b1_word_value, justify='left', highlightthickness=0, readonlybackground='gray', state='readonly', relief=FLAT)
         self.b1_word_label.grid(row=7, column=0, sticky=N+W)
         self.b1_word_value_label.grid(row=7, column=1, sticky=N+S+E+W)
 
@@ -260,7 +261,7 @@ class cusp(Tk) :
 
         self.b2_word_label = Label(self.display,text='Blue horobal word: ', justify='left', wraplength=400, bg='gray')
         self.b2_word_value = StringVar()
-        self.b2_word_value_label = Label(self.display, textvariable=self.b2_word_value, justify='left', wraplength=400, bg='gray')
+        self.b2_word_value_label = Entry(self.display, textvariable=self.b2_word_value, justify='left', highlightthickness=0, readonlybackground='gray', state='readonly', relief=FLAT)
         self.b2_word_label.grid(row=11, column=0, sticky=N+W)
         self.b2_word_value_label.grid(row=11, column=1, sticky=N+S+E+W)
 
@@ -419,6 +420,8 @@ class cusp(Tk) :
                         sys.stderr.write('Possible giant horoball with word {0} of height {1} with center {2}\nElement:\n'.format(h_word,new_height,h_center))
                         sys.stderr.write(pformat(new_gamma,width=2)+'\n')
                     else :
+                        if new_height < self.height_cutoff + eps :
+                            continue
                         M_word = 'M'*M_pow if M_pow > 0 else 'm'*(-M_pow) 
                         new_word = M_word + h_word
                         N_word = 'N'*N_pow if N_pow > 0 else 'n'*(-N_pow) 

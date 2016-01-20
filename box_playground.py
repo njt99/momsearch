@@ -168,7 +168,6 @@ def max_parameters(params) :
             m[i] = scale[i]*(center[i]+size[i])
 
     max_params = {}
-    print m
     max_params['lattice'] = m[3] + m[0]*II
     max_params['lox_sqrt'] = m[4] + m[1]*II
     max_params['parabolic'] = m[5] + m[2]*II
@@ -673,20 +672,24 @@ def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0, high_pr
 
 def record_census_params_to_file(out_file, census_slice = slice(0,10000)) :
     for mfld in OrientableCuspedCensus[census_slice] :
-        cusp_nbd = mfld.cusp_neighborhood()
-        for c_idx in range(cusp_nbd.num_cusps()) :
-            # We must set the displacement to get a maximal picture for the specified cusp
-            # We first set all other cusps to be super small. This seems to be necessary as
-            # set_displacement will fail if other cusps are in the way. We also want the horoballs
-            # form other cusps to not be tall
-            for idx in range(cusp_nbd.num_cusps()) :
-                cusp_nbd.set_displacement(-4.0, which_cusp = idx) # 4 is random here
-            # We make sure that out cusp is its own stopper
-            assert cusp_nbd.stopper(c_idx) == c_idx
-            # We set the displacement
-            reach = cusp_nbd.reach(which_cusp = c_idx)
-            cusp_nbd.set_displacement(reach, which_cusp = c_idx)
-            # Validate that the displacement was set successfully
-            assert abs(cusp_nbd.get_displacement(which_cusp = c_idx) - reach) < BIG_COMP_ERR
-            if 2 * cusp_nbd.volume(which_cusp = c_idx) - 6 > 0 : continue
-            get_params_from_manifold(mfld, census_out_file = out_file, cusp_idx = c_idx)
+        name = mfld.name()
+        try :
+            cusp_nbd = mfld.cusp_neighborhood()
+            for c_idx in range(cusp_nbd.num_cusps()) :
+                # We must set the displacement to get a maximal picture for the specified cusp
+                # We first set all other cusps to be super small. This seems to be necessary as
+                # set_displacement will fail if other cusps are in the way. We also want the horoballs
+                # form other cusps to not be tall
+                for idx in range(cusp_nbd.num_cusps()) :
+                    cusp_nbd.set_displacement(-4.0, which_cusp = idx) # 4 is random here
+                # We make sure that out cusp is its own stopper
+                assert cusp_nbd.stopper(c_idx) == c_idx
+                # We set the displacement
+                reach = cusp_nbd.reach(which_cusp = c_idx)
+                cusp_nbd.set_displacement(reach, which_cusp = c_idx)
+                # Validate that the displacement was set successfully
+                assert abs(cusp_nbd.get_displacement(which_cusp = c_idx) - reach) < BIG_COMP_ERR
+                if 2 * cusp_nbd.volume(which_cusp = c_idx) - 6 > 0 : continue
+                get_params_from_manifold(mfld, census_out_file = out_file, cusp_idx = c_idx)
+        except :
+            print 'Error: SnapPy crashed for manifold {}'.format(name) 
