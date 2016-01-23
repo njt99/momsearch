@@ -11,7 +11,8 @@
 #SBATCH --mail-user=yarmola@princeton.edu
 
 
-bin_dir="/home/ayarmola/momsearch"
+#bin_dir="/home/ayarmola/momsearch"
+bin_dir="/Users/yarmola/Mathematics/Research/MOM2015/momsearch"
 words_dir=$bin_dir
 
 search="$bin_dir/dosearch.py"
@@ -19,8 +20,9 @@ words="$words_dir/words"
 powers="$words_dir/powers_combined"
 holes="$bin_dir/open_holes"
 
-data_dir="/scratch/network/ayarmola/run2015"
+#data_dir="/scratch/network/ayarmola/run2015"
+data_dir="$bin_dir/refine_census"
 
 cd $bin_dir
 
-python "$search" -w "$words" -p "$powers" -c 12 -d 65 -h "$holes" "$data_dir/source" "$data_dir/output" > "$data_dir/holes.log" 2>&1
+python "$search" -w "$words" -p "$powers" -c 12 -d 80 -h "$holes" "$data_dir/source" "$data_dir/output" > "$data_dir/holes.log" 2>&1
