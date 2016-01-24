@@ -169,8 +169,9 @@ string relatorName(int testIndex)
 bool isEliminated(int testIndex, int n, NamedBox& box) {
 	if (n == 6) {
 		string w = box.qr.getName(relatorName(testIndex));
-		if (!g_tests.validIdentity(w, box))
+		if (!g_tests.validIdentity(w, box)) {
 			return true;
+        }
 		if (g_momVarieties.find(w) != g_momVarieties.end()) {
 			fprintf(stderr, "mom variety %s(%s)\n", w.c_str(), box.name.c_str());
 			return true;
@@ -236,6 +237,11 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 				} else if (result == 6) {
 					string w = box.qr.getName(relatorName(i));
 					hackIndex[w] = i;
+                    // TODO: Remoe this validIdenity check. This is just for sanity!
+		            if (!g_tests.validIdentity(w, box)) {
+						t.testIndex = i;
+                        return true;
+                    }
 					if (g_momVarieties.find(w) != g_momVarieties.end()) {
 						t.testIndex = i;
 						fprintf(stderr, "mom variety %s(%s)\n", w.c_str(), box.name.c_str());
