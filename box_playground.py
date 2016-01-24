@@ -617,6 +617,8 @@ def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0, high_pr
     if found_count == 2 :
         # We check that the two found vectors are antipodal. This happens in
         # highly symmetric cases.
+        # TODO: Some of these cases produce -z+b isometries for some word, so have to be throw out
+        print 'Warning: two possible loxodromic values ( x = -y ) for manifold {0} and cusp {1}. Might get elliptic of order 2 in group.'.format(mfld.name(),cusp_idx))
         e1 = get_edge_vect(G_star[found[0]]) 
         e2 = get_edge_vect(G_star[found[1]])
         if abs(e2+e1) > COMP_ERR :
@@ -624,7 +626,7 @@ def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0, high_pr
 
     # We match the inverse zero star to the G_star cyclically
     zero_star_edge = zero_star[-1] # Since we searched via the inv of zero star
-    G_star_edge = G_star[max(found)] # Use any of the at most two found matches
+    G_star_edge = G_star[found[0]] # Use any of the at most two found matches
 
     lox = (get_edge_vect(zero_star_edge)*get_edge_vect(G_star_edge))**(-1)
 
