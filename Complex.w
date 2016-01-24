@@ -22,7 +22,7 @@ $\reps{|x|} = \{y : \abs{y-x.z} \le x.e\}$.
 struct AComplex {
   XComplex z;
   double e;
-  AComplex(double r, double i, double err) :z(r,i), e(err) {}
+  AComplex(double r=0, double i=0, double err=0) :z(r,i), e(err) {}
 };
 
 @ \proposition{-X}

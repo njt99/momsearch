@@ -140,6 +140,22 @@ const        ACJ    operator / (double x, const ACJ& y)
 const        ACJ    sqrt       (const ACJ& x)
 {@<Definition of |sqrt(x)| for |ACJ x|@>@;}
 
+@ @(SL2C.h@>=
+#ifndef _SL2C_h_
+#define _SL2C_h_
+#include "Complex.h"
+@<Definition of |SL2C|@>@;
+const SL2C operator * (const SL2C& x, const SL2C& y);
+const SL2C inverse    (const SL2C& x);
+#endif
+
+@ @(SL2C.C@>=
+#include "SL2C.h"
+const SL2C operator * (const SL2C& x, const SL2C& y)
+{@<Definition of |x*y| for |SL2C x,y|@>@;}
+const SL2C inverse    (const SL2C& x)
+{@<Definition of |inverse(x)| for |SL2C x|@>@;}
+
 @ @(SL2ACJ.h@>=
 #ifndef _SL2ACJ_h_
 #define _SL2ACJ_h_

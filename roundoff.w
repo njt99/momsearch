@@ -46,24 +46,14 @@ It is unfortunate that there is no standard way to use the IEEE functions
 for floating-point control.  We have to use a different
 method for each kind of machine.
 @<Declaration of floating-point functions@>=
-#ifdef __GNUG__
 inline double fabs(double x) { return x < 0 ? -x : x; }
-extern "C" {
-#endif /* C++ */
-  void initialize_roundoff();
-  int roundoff_ok();
-#ifndef __sparc__
-  extern double infinity();
-#endif /* sparc */
-#ifdef __GNUG__
-}
-#endif /* C++ */
-
-@ @<Definition of floating-point functions@>=
+void initialize_roundoff();
+int roundoff_ok();
 #ifndef __sparc__
 inline double infinity() { return 1.0/0.0; }
-#endif
+#endif /* sparc */
 
+@ @<Definition of floating-point functions@>=
 #ifdef sgi
 #include <sys/fpu.h>
 
