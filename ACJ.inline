@@ -1,0 +1,132 @@
+/*51:*/
+#line 110 "glue.w"
+
+inline const ACJ operator-(const ACJ&x)
+{/*27:*/
+#line 42 "ACJ.w"
+
+return ACJ(-x.f,-x.f0,-x.f1,-x.f2,x.e);
+
+/*:27*/
+#line 112 "glue.w"
+}
+inline const ACJ operator+(const ACJ&x,const ACJ&y)
+{/*28:*/
+#line 49 "ACJ.w"
+
+AComplex r_f= x.f+y.f;
+AComplex r_f0= x.f0+y.f0;
+AComplex r_f1= x.f1+y.f1;
+AComplex r_f2= x.f2+y.f2;
+double r_error= (1+3*EPS)*(
+(x.e+y.e)
++((r_f.e+r_f0.e)+(r_f1.e+r_f2.e))
+);
+return ACJ(r_f.z,r_f0.z,r_f1.z,r_f2.z,r_error);
+
+/*:28*/
+#line 114 "glue.w"
+}
+inline const ACJ operator-(const ACJ&x,const ACJ&y)
+{/*29:*/
+#line 64 "ACJ.w"
+
+AComplex r_f= x.f-y.f;
+AComplex r_f0= x.f0-y.f0;
+AComplex r_f1= x.f1-y.f1;
+AComplex r_f2= x.f2-y.f2;
+double r_error= (1+3*EPS)*(
+(x.e+y.e)
++((r_f.e+r_f0.e)+(r_f1.e+r_f2.e))
+);
+return ACJ(r_f.z,r_f0.z,r_f1.z,r_f2.z,r_error);
+
+/*:29*/
+#line 116 "glue.w"
+}
+inline const ACJ operator+(const ACJ&x,double y)
+{/*30:*/
+#line 79 "ACJ.w"
+
+AComplex r_f= x.f+y;
+return ACJ(r_f.z,x.f0,x.f1,x.f2,
+(1+EPS)*(x.e+r_f.e));
+
+/*:30*/
+#line 118 "glue.w"
+}
+inline const ACJ operator-(const ACJ&x,double y)
+{/*31:*/
+#line 88 "ACJ.w"
+
+AComplex r_f= x.f-y;
+return ACJ(r_f.z,x.f0,x.f1,x.f2,
+(1+EPS)*(x.e+r_f.e));
+
+/*:31*/
+#line 120 "glue.w"
+}
+inline const ACJ operator*(const ACJ&x,double y)
+{/*33:*/
+#line 115 "ACJ.w"
+
+AComplex r_f= x.f*y;
+AComplex r_f0= x.f0*y;
+AComplex r_f1= x.f1*y;
+AComplex r_f2= x.f2*y;
+double r_error= (1+3*EPS)*(
+(x.e*fabs(y))
++((r_f.e+r_f0.e)+(r_f1.e+r_f2.e))
+);
+return ACJ(r_f.z,r_f0.z,r_f1.z,r_f2.z,r_error);
+
+/*:33*/
+#line 122 "glue.w"
+}
+inline const ACJ operator/(const ACJ&x,double y)
+{/*36:*/
+#line 170 "ACJ.w"
+
+AComplex r_f= x.f/y;
+AComplex r_f0= x.f0/y;
+AComplex r_f1= x.f1/y;
+AComplex r_f2= x.f2/y;
+double r_error= (1+3*EPS)*(
+(x.e/fabs(y))
++((r_f.e+r_f0.e)+(r_f1.e+r_f2.e))
+);
+return ACJ(r_f.z,r_f0.z,r_f1.z,r_f2.z,r_error);
+
+/*:36*/
+#line 124 "glue.w"
+}
+inline const double absUB(const ACJ&x)
+{/*38:*/
+#line 209 "ACJ.w"
+
+return(1+2*EPS)*(absUB(x.f)+(size(x)+x.e));
+
+/*:38*/
+#line 126 "glue.w"
+}
+inline const double absLB(const ACJ&x)
+{/*39:*/
+#line 216 "ACJ.w"
+
+double v= (1-EPS)*(absLB(x.f)-(1+EPS)*(size(x)+x.e));
+return(v> 0)?v:0;
+
+/*:39*/
+#line 128 "glue.w"
+}
+inline const double size(const ACJ&x)
+{/*40:*/
+#line 224 "ACJ.w"
+
+return x.size;
+#line 1 "SL2ACJ.w"
+/*:40*/
+#line 130 "glue.w"
+}
+
+/*:51*/

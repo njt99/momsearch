@@ -13,7 +13,7 @@
 #include <string>
 
 std::vector<std::string> findWords(
-	Params<Complex> center,
+	Params<XComplex> center,
 	std::vector< std::string > seedWords,
 	int numWords,
 	int maxLength,

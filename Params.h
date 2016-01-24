@@ -8,8 +8,9 @@
  */
 #ifndef __Params_h
 #define __Params_h
-#include "GL2C.h"
-#include "GL2ACJ.h"
+#include <math.h>
+#include "SL2C.h"
+#include "SL2ACJ.h"
 
 template<class N> struct Params {
 	N lattice;
@@ -17,8 +18,15 @@ template<class N> struct Params {
 	N parabolic;
 };
 
-GL2C constructG(const Params<Complex>& params);
-GL2C constructT(const Params<Complex>& params, int x, int y);
-GL2ACJ constructG(const Params<AComplex1Jet>& params);
-GL2ACJ constructT(const Params<AComplex1Jet>& params, int x, int y);
+SL2C constructG(const Params<XComplex>& params);
+SL2C constructT(const Params<XComplex>& params, int x, int y);
+SL2ACJ constructG(const Params<ACJ>& params);
+SL2ACJ constructT(const Params<ACJ>& params, int x, int y);
+
+// ULP functions
+// TODO: CHECK FOR OVERLOW AND UNDERFLOW
+// TODO: Perhaps we should utilize the same bounds for doubles
+//       as are stated in the Annals paper instead of using nextafter
+inline double inc_d(double x) { return nextafter(x,x+1); }
+inline double dec_d(double x) {return nextafter(x,x-1); }
 #endif // __Params_h

@@ -9,7 +9,7 @@
 
 #include "BallSearch.h"
 #include "CanonicalName.h"
-#include "GL2C.h"
+#include "SL2C.h"
 #include "Params.h"
 #include <list>
 #include <map>
@@ -21,11 +21,11 @@ namespace BallSearchImpl {
 	struct Word {
 		string name;
 		string nameClass;
-		GL2C matrix;
+		SL2C matrix;
 	};
 	
 	struct LatticePoint {
-		Params<Complex>* params;
+		Params<XComplex>* params;
 		int x;
 		int y;
 		double distance;
@@ -53,7 +53,7 @@ namespace BallSearchImpl {
 	Word operator * (const Word& lhs, const Word& rhs);
 	
 	struct WordPair {
-		WordPair(Word* first, Word* second, Params<Complex>* params);
+		WordPair(Word* first, Word* second, Params<XComplex>* params);
 		void setCurrentIndex(int i);
 		
 		Word* firstWord;
@@ -73,7 +73,7 @@ namespace BallSearchImpl {
 	};
 	
 	struct BallSearch {
-		BallSearch(Params<Complex> params_) :params(params_), G(constructG(params)), g(~G), m_foundBigBall(false) {}
+		BallSearch(Params<XComplex> params_) :params(params_), G(constructG(params)), g(inverse(G)), m_foundBigBall(false) {}
 		~BallSearch() {}
 		void pushWord(Word word);
 		void pushWord(string word);
@@ -82,10 +82,10 @@ namespace BallSearchImpl {
 		void findNames(Word& word);
 		void addRelator(string word);
 		
-		Params<Complex> params;
+		Params<XComplex> params;
 		CanonicalName canonicalName;
-		GL2C G;
-		GL2C g;
+		SL2C G;
+		SL2C g;
 		list<Word> words;
 		priority_queue<WordPair, vector<WordPair>, SmallerBallSize> pairs;
 		bool m_foundBigBall;
@@ -116,7 +116,7 @@ namespace BallSearchImpl {
 			else
 				inv.name[pos] -= 'A' - 'a';
 		}
-		inv.matrix = ~word.matrix;
+		inv.matrix = inverse(word.matrix);
 		return inv;
 	}
 	
@@ -141,13 +141,13 @@ namespace BallSearchImpl {
 		return result;
 	}
 
-	WordPair::WordPair(Word* first, Word* second, Params<Complex>* params)
+	WordPair::WordPair(Word* first, Word* second, Params<XComplex>* params)
 		:firstWord(first), secondWord(second), distanceIndex(0)
 	{
-		Complex centerDiff = first->matrix.a / first->matrix.c
-		 - second->matrix.a / second->matrix.c;
-		int y0 = int(floor(centerDiff.imag() / params->lattice.imag()));
-		int x0 = int(floor(centerDiff.real() - y0*params->lattice.real()));
+		XComplex centerDiff = (first->matrix.a / first->matrix.c
+		 - second->matrix.a / second->matrix.c).z;
+		int y0 = int(floor(centerDiff.im / params->lattice.im));
+		int x0 = int(floor(centerDiff.re - y0*params->lattice.re));
 		for (int x = -2-x0; x <= 3-x0; ++x) {
 			for (int y = -1-y0; y <= 2-y0; ++y) {
 				if (x == 0 && y == 0 && firstWord->name[0] == secondWord->name[0])
@@ -156,8 +156,8 @@ namespace BallSearchImpl {
 				l.params = params;
 				l.x = -x;
 				l.y = -y;
-				Complex t = centerDiff + double(x) + double(y)*params->lattice;
-				l.distance = norm(t);
+				XComplex t = (centerDiff + double(x) + double(y)*params->lattice).z;
+				l.distance = pow(absUB(t),2);
 				if (abs(l.x) < 4 && abs(l.y) < 4) // TODO: VERIFY THIS IS NOT AN ERROR
 					distances.push_back(l);
 			}
@@ -173,7 +173,7 @@ namespace BallSearchImpl {
 			currentBallSize = 0;
 		} else {
 			currentCombination = (inverse(*firstWord) * distances[i]) * (*secondWord);
-			currentBallSize = 0.5 / norm( currentCombination.matrix.c);
+			currentBallSize = 0.5 / pow(absLB(currentCombination.matrix.c),2);
 		}
 //		printf("WordPair(%s,%s):setCurrentIndex(%d) : %d,%d %f %s size=%f\n",
 //			firstWord->name.c_str(), secondWord->name.c_str(),
@@ -254,7 +254,7 @@ namespace BallSearchImpl {
 				if (result.nameClass == it->nameClass)
 					break;
 			if (result.nameClass != "" && it == words.end()) {
-				double sizeRatio = norm(result.matrix.c) / norm(words.front().matrix.c);
+				double sizeRatio = absLB(result.matrix.c) / absUB(words.front().matrix.c);
 				//fprintf(stderr, "%s: sizeRatio = %f gPower = %d\n", result.name.c_str(), sizeRatio, gPower(result));
 				if (sizeRatio < 1) {
 					m_foundBigBall = true;
@@ -280,7 +280,7 @@ namespace BallSearchImpl {
 	}
 }
 
-vector<string> findWords(Params<Complex> center, vector<string> seedWords, int numWords, int maxLength,
+vector<string> findWords(Params<XComplex> center, vector<string> seedWords, int numWords, int maxLength,
 	vector<string> relators)
 {
 	BallSearchImpl::BallSearch search(center);

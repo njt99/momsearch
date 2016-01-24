@@ -1,9 +1,9 @@
 COLOROBJS= color.o AComplex1Jet.o GL2ACJ.o GL2C.o Box.o ImpossibleRelations.o TestCollection.o TestSearch.o Params.o
 EVALOBJS= Evaluate.o AComplex1Jet.o GL2ACJ.o GL2C.o Box.o Params.o
-REFINEOBJS= MomRefine.o BallSearch.o TestCollection.o Box.o ImpossibleRelations.o AComplex1Jet.o Params.o GL2C.o GL2ACJ.o CanonicalName.o QuasiRelators.o
+REFINEOBJS= MomRefine.o BallSearch.o TestCollection.o Box.o ImpossibleRelations.o ACJ.o Params.o SL2C.o SL2ACJ.o Complex.o roundoff.o CanonicalName.o QuasiRelators.o
 TREECATOBJS= treecat.o
 CPLUSPLUS= c++
-CC= c++
+CC= g++
 
 #COPTS=-g -Wall
 COPTS=-O4
@@ -12,7 +12,7 @@ COPTS=-O4
 	$(CPLUSPLUS) $(COPTS) $(CCFLAGS) -c ${@:o=cpp}
 
 .C.o:
-	$(CPLUSPLUS) $(COPTS) $(CCFLAGS) -c ${@:o=C}
+	$(CC) $(COPTS) $(CCFLAGS) -c ${@:o=C}
 
 color: $(COLOROBJS)
 	$(CPLUSPLUS) $(COPTS) $(COLOROBJS) $(LIBS) -lm -o color

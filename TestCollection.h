@@ -29,11 +29,11 @@ private:
 	std::map<std::string, int> stringIndex;
 	std::vector<std::string> indexString;
 	
-	GL2ACJ evaluate1(std::string word, Params<AComplex1Jet>& params);
-	bool evaluate(std::string word, Params<Complex>& params);
-	int evaluate(std::string word, Params<AComplex1Jet>& params, bool notIdentity=false);
-	void enumerate(const char* w);
-	void enumerateTails(std::string s, int pCount, int lCount);
+	SL2ACJ evaluate1(std::string word, Params<ACJ>& params);
+	bool evaluate(std::string word, Params<XComplex>& params);
+	int evaluate(std::string word, Params<ACJ>& params, bool notIdentity=false);
+//	void enumerate(const char* w);
+//	void enumerateTails(std::string s, int pCount, int lCount);
 	ImpossibleRelations *impossible;
 };
 

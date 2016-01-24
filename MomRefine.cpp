@@ -265,17 +265,17 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	if (!t.lChild) {
         bool inside_nbd = g_tests.box_inside_nbd(box);
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth || inside_nbd) {
-	        Params<Complex> params = box.center();
-	        Params<Complex> nearest = box.nearest();
-			Params<AComplex1Jet> cover(box.cover());
-			double absLS = minabs(cover.loxodromicSqrt);
-			double area = absLS * absLS * nearest.lattice.imag();
+	        Params<XComplex> params = box.center();
+	        Params<XComplex> nearest = box.nearest();
+			Params<ACJ> cover(box.cover());
+			double absLS = absLB(cover.loxodromicSqrt);
+			double area = dec_d(dec_d(absLS * absLS) * nearest.lattice.im);
             if (inside_nbd) {
                 t.nbd_var_box = true;
-			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f size: %.4e VAR (%s)\n", box.name.c_str(), area, params.lattice.real(), params.lattice.imag(), params.loxodromicSqrt.real(), params.loxodromicSqrt.imag(), params.parabolic.real(),params.parabolic.imag(), box.size(), box.qr.desc().c_str());
+			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f VAR (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromicSqrt.re, params.loxodromicSqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
 			    return true; // We mark this as complete. TODO check this doesn't break anything
             } else {
-			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f size: %.4e (%s)\n", box.name.c_str(), area, params.lattice.real(), params.lattice.imag(), params.loxodromicSqrt.real(), params.loxodromicSqrt.imag(), params.parabolic.real(),params.parabolic.imag(), box.size(), box.qr.desc().c_str());
+			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromicSqrt.re, params.loxodromicSqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
 			    return false;
             }
 		}

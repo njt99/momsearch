@@ -34,11 +34,11 @@ int TestCollection::size()
 	return 7 + indexString.size();
 }
 
-bool TestCollection::evaluate(string word, Params<Complex>& params)
+bool TestCollection::evaluate(string word, Params<XComplex>& params)
 {
-	GL2C w(1,0,0,1);
-	GL2C G(constructG(params));
-	GL2C g(~G);
+	SL2C w(1,0,0,1);
+	SL2C G(constructG(params));
+	SL2C g(inverse(G));
 	
 	string::size_type pos;
 	int x = 0;
@@ -62,15 +62,16 @@ bool TestCollection::evaluate(string word, Params<Complex>& params)
 			}
 		}
 	}
-	return abs(w.c/g.c) < 1;
+    // Rounding errors are irrelevant here, only used to guide search.
+	return absLB((w.c/g.c).z) < 1;
 }
 
-GL2ACJ TestCollection::evaluate1(string word, Params<AComplex1Jet>& params)
+SL2ACJ TestCollection::evaluate1(string word, Params<ACJ>& params)
 {
-	AComplex1Jet one(1), zero(0);
-	GL2ACJ w(one, zero, zero, one);
-	GL2ACJ G(constructG(params));
-	GL2ACJ g(~G);
+	ACJ one(1), zero(0);
+	SL2ACJ w(one, zero, zero, one);
+	SL2ACJ G(constructG(params));
+	SL2ACJ g(inverse(G));
 	
 	string::size_type pos;
 	int x = 0;
@@ -94,26 +95,26 @@ GL2ACJ TestCollection::evaluate1(string word, Params<AComplex1Jet>& params)
 			}
 		}
 	}
-//    Complex a = w.a.center();
-//    Complex b = w.b.center();
-//    Complex c = w.c.center();
-//    Complex d = w.d.center();
+//    XComplex a = w.a.center();
+//    XComplex b = w.b.center();
+//    XComplex c = w.c.center();
+//    XComplex d = w.d.center();
 //    fprintf(stderr, "Word: %s\n", word.c_str());
 //    fprintf(stderr, "At the center is has coords\n");
-//    fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
-//    fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
-//    fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
-//    fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
+//    fprintf(stderr, "a: %f + I %f\n", a.re, a.im);
+//    fprintf(stderr, "b: %f + I %f\n", b.re, b.im);
+//    fprintf(stderr, "c: %f + I %f\n", c.re, c.im);
+//    fprintf(stderr, "d: %f + I %f\n", d.re, d.im);
 //    a = G.a.center();
 //    b = G.b.center();
 //    c = G.c.center();
 //    d = G.d.center();
 //    fprintf(stderr, "Word: G\n");
 //    fprintf(stderr, "At the center is has coords\n");
-//    fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
-//    fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
-//    fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
-//    fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
+//    fprintf(stderr, "a: %f + I %f\n", a.re, a.im);
+//    fprintf(stderr, "b: %f + I %f\n", b.re, b.im);
+//    fprintf(stderr, "c: %f + I %f\n", c.re, c.im);
+//    fprintf(stderr, "d: %f + I %f\n", d.re, d.im);
 	return w;
 }
 
@@ -137,7 +138,7 @@ bool g_power_sort(string a, string b) { return g_power(a) < g_power(b); }
 
 bool TestCollection::box_inside_nbd(NamedBox& box)
 {
-	Params<AComplex1Jet> params = box.cover();
+	Params<ACJ> params = box.cover();
     vector<string> qrs(box.qr.wordClasses());
     if (qrs.empty()) { return false; }
     sort(qrs.begin(), qrs.end(), g_power_sort);
@@ -146,8 +147,8 @@ bool TestCollection::box_inside_nbd(NamedBox& box)
         if (g_power(*it) > min_power) {
             return true;
         } else {
-		    GL2ACJ w(evaluate1(*it, params));
-            if (!(maxabs(w.c) < 1 && maxabs(w.b) < 1)) { return false; } 
+		    SL2ACJ w(evaluate1(*it, params));
+            if (!(absUB(w.c) < 1 && absUB(w.b) < 1)) { return false; } 
         }
     }
     return true; 
@@ -156,64 +157,61 @@ bool TestCollection::box_inside_nbd(NamedBox& box)
 bool TestCollection::validIdentity(string word, Box& box)
 {
     // Checks to see is ALL  cyclic permutations of a word is identity somewhere in the box
-	Params<AComplex1Jet> params = box.cover();
+	Params<ACJ> params = box.cover();
 	for (string::size_type pos = 0; pos < word.size(); ++pos) {
 		string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
-		GL2ACJ w(evaluate1(pword, params));
-		if ((minabs(w.a-1) > 0 && minabs(w.a+1) > 0)
-		 || minabs(w.b) > 0
-		 || minabs(w.c) > 0
-		 || (minabs(w.d-1) > 0 && minabs(w.d+1) > 0)) {
+		SL2ACJ w(evaluate1(pword, params));
+		if (notIdentity(w)) {
 			return false;
-        } else {
-//            Complex a = w.a.center();
-//            Complex b = w.b.center();
-//            Complex c = w.c.center();
-//            Complex d = w.d.center();
+//        } else {
+//            XComplex a = w.a.center();
+//            XComplex b = w.b.center();
+//            XComplex c = w.c.center();
+//            XComplex d = w.d.center();
 //            fprintf(stderr, "This word is identity somewhere in the box\n");
 //            fprintf(stderr, "Word: %s\n", word.c_str());
 //            fprintf(stderr, "At the center is has coords\n");
-//            fprintf(stderr, "a: %f + I %f\n", a.real(), a.imag());
-//            fprintf(stderr, "b: %f + I %f\n", b.real(), b.imag());
-//            fprintf(stderr, "c: %f + I %f\n", c.real(), c.imag());
-//            fprintf(stderr, "d: %f + I %f\n", d.real(), d.imag());
+//            fprintf(stderr, "a: %f + I %f\n", a.re, a.im);
+//            fprintf(stderr, "b: %f + I %f\n", b.re, b.im);
+//            fprintf(stderr, "c: %f + I %f\n", c.re, c.im);
+//            fprintf(stderr, "d: %f + I %f\n", d.re, d.im);
         }
 	}
 	return true;
 }
 
-int TestCollection::evaluate(string word, Params<AComplex1Jet>& params, bool isNotParabolic)
+int TestCollection::evaluate(string word, Params<ACJ>& params, bool isNotParabolic)
 {
-	GL2ACJ w(evaluate1(word, params));
-	GL2ACJ G(constructG(params));
-	GL2ACJ g(~G);
+	SL2ACJ w(evaluate1(word, params));
+	SL2ACJ G(constructG(params));
+	SL2ACJ g(inverse(G));
 	if (isNotParabolic) {
-		return minabs(w.c) > 0
-		|| (minabs(w.a-1) > 0 && minabs(w.a+1) > 0)
-		|| (minabs(w.d-1) > 0 && minabs(w.d+1) > 0);
+		return absLB(w.c) > 0
+		|| (absLB(w.a-1) > 0 && absLB(w.a+1) > 0)
+		|| (absLB(w.d-1) > 0 && absLB(w.d+1) > 0);
 	}
-	AComplex1Jet r(w.c / g.c);
-	if (maxabs(r) < 1) {
-		if (minabs(w.c) > 0
-		 || (minabs(w.a-1) > 0 && minabs(w.a+1) > 0)
-		 || (minabs(w.d-1) > 0 && minabs(w.d+1) > 0)) {
+	ACJ r(w.c / g.c);
+	if (absUB(r) < 1) {
+		if (absLB(w.c) > 0
+		 || (absLB(w.a-1) > 0 && absLB(w.a+1) > 0)
+		 || (absLB(w.d-1) > 0 && absLB(w.d+1) > 0)) {
 			return 1;
 		} else {
 			list<string> mandatory;
 			bool isImpossible = impossible->isAlwaysImpossible(word, mandatory);
 			if (isImpossible)
 				return 3;
-				
-			Complex t = w.b.center() / w.a.center();
-			int y = int(floor(t.imag() / params.lattice.center().imag()));
+			// TODO: ULP and verify this argument
+			XComplex t = (w.b.f / w.a.f).z;
+			int y = int(floor(t.im / params.lattice.f.im));
 			int numFound = 0;
 			int xLattice, yLattice;
 			for (int yi = -1; yi <= 2; ++yi) {
-				Complex tY = t - double(y+yi) * params.lattice.center();
-				int x = int(floor(tY.real()));
+				XComplex tY = (t - (params.lattice.f * XComplex(y+yi)).z).z;
+				int x = int(floor(tY.re));
 				for (int xi = -1; xi <= 2; ++xi) {
-					AComplex1Jet tL = w.b - w.a*((y+yi) * params.lattice + (x+xi));
-					if (minabs(tL) == 0) {
+					ACJ tL = w.b - w.a*(ACJ(y+yi) * params.lattice + ACJ(x+xi));
+					if (absLB(tL) == 0) {
 						++numFound;
 						if (numFound > 1)
 							break;
@@ -252,23 +250,23 @@ int TestCollection::evaluate(string word, Params<AComplex1Jet>& params, bool isN
 double g_latticeArea;
 int TestCollection::evaluateCenter(int index, Box& box)
 {
-	Params<Complex> params = box.center();
+	Params<XComplex> params = box.center();
 	switch(index) {
 		case 0:	{
-			Complex sl = params.loxodromicSqrt;
-			return sl.real()*sl.real() + sl.imag()*sl.imag() < 1.0;
+			XComplex sl = params.loxodromicSqrt;
+			return sl.re*sl.re + sl.im*sl.im < 1.0;
 		}
-		case 1: return params.loxodromicSqrt.imag() < 0.0
-		 || params.lattice.imag() < 0.0
-		 || params.parabolic.imag() < 0.0
-		 || params.parabolic.real() < 0.0;
-		case 2: return abs(params.lattice.real()) > 0.5;
-		case 3: return norm(params.lattice) < 1;
-		case 4: return params.parabolic.imag() > 0.5*params.lattice.imag();
-		case 5: return params.parabolic.real() > 0.5;
+		case 1: return params.loxodromicSqrt.im < 0.0
+		 || params.lattice.im < 0.0
+		 || params.parabolic.im < 0.0
+		 || params.parabolic.re < 0.0;
+		case 2: return fabs(params.lattice.re) > 0.5;
+		case 3: return absUB(params.lattice) < 1;
+		case 4: return params.parabolic.im > 0.5*params.lattice.im;
+		case 5: return params.parabolic.re > 0.5;
 		case 6: {
-			g_latticeArea = norm(params.loxodromicSqrt)*params.lattice.imag();
-			return g_latticeArea >= g_maximumArea;
+			g_latticeArea = pow(absLB(params.loxodromicSqrt),2)*params.lattice.im;
+			return g_latticeArea > g_maximumArea;
 		}
 		default:
 			return evaluate(indexString[index-7], params);
@@ -277,31 +275,31 @@ int TestCollection::evaluateCenter(int index, Box& box)
 
 int TestCollection::evaluateBox(int index, NamedBox& box)
 {
-	int TODO_ULP;
-	Params<Complex> nearest = box.nearest();
-	Params<Complex> furthest = box.furthest();
-	Params<Complex> maximum = box.maximum();
-	enumerate("");
+	Params<XComplex> nearest = box.nearest();
+	Params<XComplex> furthest = box.furthest();
+	Params<XComplex> maximum = box.maximum();
+//	enumerate("");
 	switch(index) {
 		case 0: {
-			Complex maxSl = furthest.loxodromicSqrt;
-			return maxSl.real()*maxSl.real() + maxSl.imag()*maxSl.imag() < 1.0;
+			XComplex maxSl = furthest.loxodromicSqrt;
+			return maxSl.re*maxSl.re + maxSl.im*maxSl.im < 1.0;
 		}
-		case 1: return maximum.loxodromicSqrt.imag() < 0.0
-         || maximum.lattice.imag() < 0.0
-		 || maximum.parabolic.imag() < 0.0
-		 || maximum.parabolic.real() < 0.0;
-		case 2: return abs(nearest.lattice.real()) > 0.5;
-		case 3: return norm(furthest.lattice) < 1;
+		case 1: return maximum.loxodromicSqrt.im < 0.0
+         || maximum.lattice.im < 0.0
+		 || maximum.parabolic.im < 0.0
+		 || maximum.parabolic.re < 0.0;
+		case 2: return fabs(nearest.lattice.re) > 0.5;
+		case 3: return absUB(furthest.lattice) < 1;
         // Note: we can exclude the box if and only if the parabolic imag part is
         // bigger than half the lattice imag part over the WHOLE box
-        // We assume that case 1 has been tested
-		case 4: return nearest.parabolic.imag() > 0.5*furthest.lattice.imag();
-		case 5: return nearest.parabolic.real() > 0.5;
+        // We assume that case 1 has been tested. Multiplication by 0.5 is EXACT (if no underflow or overflow)
+        // TODO: ULP
+		case 4: return nearest.parabolic.im > 0.5*furthest.lattice.im;
+		case 5: return nearest.parabolic.re > 0.5;
 		case 6: {
-			Params<AComplex1Jet> cover(box.cover());
-			double absLS = minabs(cover.loxodromicSqrt);
-			double area = absLS * absLS * nearest.lattice.imag();
+			Params<ACJ> cover(box.cover());
+			double absLS = absLB(cover.loxodromicSqrt);
+			double area = dec_d(dec_d(absLS * absLS) * nearest.lattice.im);
 			if (area > g_maximumArea) {
 				return true;
 			} else {
@@ -309,12 +307,12 @@ int TestCollection::evaluateBox(int index, NamedBox& box)
 			}
 		}
 		default: {
-			Params<AComplex1Jet> cover(box.cover());
+			Params<ACJ> cover(box.cover());
 			int result = evaluate(indexString[index-7], cover, false);
-			if (result) {
-                // TODO: Understand this tail enumeration that adds words based on given word
-				enumerate(indexString[index-7].c_str());
-			}
+//			if (result) {
+//                // TODO: Understand this tail enumeration that adds words based on given word
+//				enumerate(indexString[index-7].c_str());
+//			}
 			return result;
 		}
 	}
@@ -347,69 +345,6 @@ int TestCollection::add(string word)
 		return it->second+7;
 }
 
-int g_maxWordLength = 2;
-void TestCollection::enumerate(const char* w)
-{
-	static vector<int> maxP;
-	if (!*w && !maxP.empty())
-		return;
-	int pCount=0, lCount=0;
-	while (*w) {
-		if (*w == 'g' || *w == 'G')
-			++lCount;
-		else
-			++pCount;
-		++w;
-	}
-	if (lCount == 0) lCount = 1;
-	if (lCount >= maxP.size()) {
-		maxP.resize(lCount+1, -1);
-	}
-	if (pCount <= maxP[lCount]) {
-		return;
-	}
-	
-	if (lCount + pCount > g_maxWordLength)
-		g_maxWordLength = lCount + pCount;
-	
-	maxP[lCount] = pCount;
-	
-	if (pCount > 2)
-		pCount = 2;
-	if (lCount > 2)
-		lCount = 2;
-//	printf("ENUMERATING %d,%d\n", pCount, lCount);
-//	enumerateTails("", pCount, lCount);
-}
-
-void TestCollection::enumerateTails(string s, int pCount, int lCount)
-{
-	if (pCount < -1 || lCount < -1 || (pCount == -1 && lCount == -1))
-		return;
-	const char* p = "Gg";
-	if (s.size() > 0) {
-		char last = s[s.size()-1];
-		switch(last) {
-			case 'G': p = "GMmNn"; break;
-			case 'g': p = "gMmNn"; break;
-			case 'M': p = "GgMNn"; break;
-			case 'm': p = "GgmNn"; break;
-			case 'N': p = "GgN"; break;
-			case 'n': p = "Ggn"; break;
-		}
-	}
-	for (; *p; ++p) {
-		string n = s;
-		n.append(1, *p);
-		if (*p == 'g' || *p == 'G') {
-			add(n);
-			enumerateTails(n, pCount, lCount-1);
-		} else {
-			enumerateTails(n, pCount-1, lCount);
-		}
-	}
-}
-
 void TestCollection::load(const char* fileName)
 {
 	FILE *fp = fopen(fileName, "r");
@@ -427,34 +362,97 @@ void TestCollection::loadImpossibleRelations(const char* fileName)
 	impossible = ImpossibleRelations::create(fileName);
 }
 
-string checkPower(string word, int x, int y)
-{
-	char buf[200];
-	char *bp = buf;
-	if (abs(x) > 10 || abs(y) > 10)
-		return "";
-	while (x > 0) { *bp++ = 'm'; --x; }
-	while (x < 0) { *bp++ = 'M'; ++x; }
-	while (y > 0) { *bp++ = 'n'; --y; }
-	while (y < 0) { *bp++ = 'N'; ++y; }
-	strcpy(bp, word.c_str());
-	int l = strlen(buf);
-	for (int n = 2; n+n <= l; ++n) {
-		int k;
-		for ( k = 1; k*n < l; ++k) ;
-		if (k*n == l) {
-			for (--k; k > 0; --k) {
-				if (strncmp(buf, buf+k*n, n))
-					break;
-			}
-			if (k == 0) {
-//				fprintf(stderr, "id %s x%d\n", buf, n);
-				g_testCollectionFullWord = buf;
-				buf[n] = '\0';
-				return buf;
-			}
-		}
-	}
-//	fprintf(stderr, "fullWord = %s\n", buf);
-	return "";
-}
+//int g_maxWordLength = 2;
+//void TestCollection::enumerate(const char* w)
+//{
+//	static vector<int> maxP;
+//	if (!*w && !maxP.empty())
+//		return;
+//	int pCount=0, lCount=0;
+//	while (*w) {
+//		if (*w == 'g' || *w == 'G')
+//			++lCount;
+//		else
+//			++pCount;
+//		++w;
+//	}
+//	if (lCount == 0) lCount = 1;
+//	if (lCount >= maxP.size()) {
+//		maxP.resize(lCount+1, -1);
+//	}
+//	if (pCount <= maxP[lCount]) {
+//		return;
+//	}
+//	
+//	if (lCount + pCount > g_maxWordLength)
+//		g_maxWordLength = lCount + pCount;
+//	
+//	maxP[lCount] = pCount;
+//	
+//	if (pCount > 2)
+//		pCount = 2;
+//	if (lCount > 2)
+//		lCount = 2;
+////	printf("ENUMERATING %d,%d\n", pCount, lCount);
+////	enumerateTails("", pCount, lCount);
+//}
+//
+//void TestCollection::enumerateTails(string s, int pCount, int lCount)
+//{
+//	if (pCount < -1 || lCount < -1 || (pCount == -1 && lCount == -1))
+//		return;
+//	const char* p = "Gg";
+//	if (s.size() > 0) {
+//		char last = s[s.size()-1];
+//		switch(last) {
+//			case 'G': p = "GMmNn"; break;
+//			case 'g': p = "gMmNn"; break;
+//			case 'M': p = "GgMNn"; break;
+//			case 'm': p = "GgmNn"; break;
+//			case 'N': p = "GgN"; break;
+//			case 'n': p = "Ggn"; break;
+//		}
+//	}
+//	for (; *p; ++p) {
+//		string n = s;
+//		n.append(1, *p);
+//		if (*p == 'g' || *p == 'G') {
+//			add(n);
+//			enumerateTails(n, pCount, lCount-1);
+//		} else {
+//			enumerateTails(n, pCount-1, lCount);
+//		}
+//	}
+//}
+//
+//string checkPower(string word, int x, int y)
+//{
+//	char buf[200];
+//	char *bp = buf;
+//	if (abs(x) > 10 || abs(y) > 10)
+//		return "";
+//	while (x > 0) { *bp++ = 'm'; --x; }
+//	while (x < 0) { *bp++ = 'M'; ++x; }
+//	while (y > 0) { *bp++ = 'n'; --y; }
+//	while (y < 0) { *bp++ = 'N'; ++y; }
+//	strcpy(bp, word.c_str());
+//	int l = strlen(buf);
+//	for (int n = 2; n+n <= l; ++n) {
+//		int k;
+//		for ( k = 1; k*n < l; ++k) ;
+//		if (k*n == l) {
+//			for (--k; k > 0; --k) {
+//				if (strncmp(buf, buf+k*n, n))
+//					break;
+//			}
+//			if (k == 0) {
+////				fprintf(stderr, "id %s x%d\n", buf, n);
+//				g_testCollectionFullWord = buf;
+//				buf[n] = '\0';
+//				return buf;
+//			}
+//		}
+//	}
+////	fprintf(stderr, "fullWord = %s\n", buf);
+//	return "";
+//}
