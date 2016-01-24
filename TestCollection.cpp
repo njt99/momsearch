@@ -34,38 +34,6 @@ int TestCollection::size()
 	return 7 + indexString.size();
 }
 
-string checkPower(string word, int x, int y)
-{
-	char buf[200];
-	char *bp = buf;
-	if (abs(x) > 10 || abs(y) > 10)
-		return "";
-	while (x > 0) { *bp++ = 'm'; --x; }
-	while (x < 0) { *bp++ = 'M'; ++x; }
-	while (y > 0) { *bp++ = 'n'; --y; }
-	while (y < 0) { *bp++ = 'N'; ++y; }
-	strcpy(bp, word.c_str());
-	int l = strlen(buf);
-	for (int n = 2; n+n <= l; ++n) {
-		int k;
-		for ( k = 1; k*n < l; ++k) ;
-		if (k*n == l) {
-			for (--k; k > 0; --k) {
-				if (strncmp(buf, buf+k*n, n))
-					break;
-			}
-			if (k == 0) {
-//				fprintf(stderr, "id %s x%d\n", buf, n);
-				g_testCollectionFullWord = buf;
-				buf[n] = '\0';
-				return buf;
-			}
-		}
-	}
-//	fprintf(stderr, "fullWord = %s\n", buf);
-	return "";
-}
-
 bool TestCollection::evaluate(string word, Params<Complex>& params)
 {
 	GL2C w(1,0,0,1);
@@ -149,11 +117,47 @@ GL2ACJ TestCollection::evaluate1(string word, Params<AComplex1Jet>& params)
 	return w;
 }
 
-bool TestCollection::validIdentity(string word, Box& box)
+int g_power(string w) {
+    int count = 0;
+    for (string::size_type p = 0; p < w.size(); ++p) {
+        if (w[p] == 'g' || w[p] == 'G') ++count;
+    }
+    return count;
+} 
+
+bool g_power_sort(string a, string b) { return g_power(a) < g_power(b); }
+
+/* Tests is the box is within the variety neighborhood for 
+   its shortest g power quasi-relators. This test is used to 
+   stop subdivision of a HOLE. The relevant Lemma:
+
+{\bf Lemma (Variety Buffer-Zone Lemma):} {\it Let $W(p) =  (a\ \ b\ \ c\ \ d)$ be the matrix in ${\bf PSL}(2,{\bf C})$ determined by the variety word $W = W(m,n,g)$ at the point $p \in {\cal P}$, let $V_W$ be the variety determined by $W = I$ in ${\cal P}$, and let $N_W$ be the neighborhood of $V_W$  determined by the conditions that the absolute value of the $c$ co-ordinate of $W(p)$ is less than $1$ and (if the absolute value of the $c$ co-ordinate of $W(p)$ is zero) the absolute value of the $b$ coordinate is less than $1$.  Then no point in $N_W - V_W$ corresponds to a discrete, torsion-free hyperbolic 3-manifold.}
+
+*/
+
+bool TestCollection::box_inside_nbd(NamedBox& box)
 {
 	Params<AComplex1Jet> params = box.cover();
+    vector<string> qrs(box.qr.wordClasses());
+    if (qrs.empty()) { return false; }
+    sort(qrs.begin(), qrs.end(), g_power_sort);
+    int min_power = g_power(qrs.front());
+	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
+        if (g_power(*it) > min_power) {
+            return true;
+        } else {
+		    GL2ACJ w(evaluate1(*it, params));
+            if (!(maxabs(w.c) < 1 && maxabs(w.b) < 1)) { return false; } 
+        }
+    }
+    return true; 
+}
+
+bool TestCollection::validIdentity(string word, Box& box)
+{
+    // Checks to see is ALL  cyclic permutations of a word is identity somewhere in the box
+	Params<AComplex1Jet> params = box.cover();
 	for (string::size_type pos = 0; pos < word.size(); ++pos) {
-        // Checks to see is SOME  cyclic permutation of a word is identity somewhere in the box
 		string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
 		GL2ACJ w(evaluate1(pword, params));
 		if ((minabs(w.a-1) > 0 && minabs(w.a+1) > 0)
@@ -421,4 +425,36 @@ void TestCollection::load(const char* fileName)
 void TestCollection::loadImpossibleRelations(const char* fileName)
 {
 	impossible = ImpossibleRelations::create(fileName);
+}
+
+string checkPower(string word, int x, int y)
+{
+	char buf[200];
+	char *bp = buf;
+	if (abs(x) > 10 || abs(y) > 10)
+		return "";
+	while (x > 0) { *bp++ = 'm'; --x; }
+	while (x < 0) { *bp++ = 'M'; ++x; }
+	while (y > 0) { *bp++ = 'n'; --y; }
+	while (y < 0) { *bp++ = 'N'; ++y; }
+	strcpy(bp, word.c_str());
+	int l = strlen(buf);
+	for (int n = 2; n+n <= l; ++n) {
+		int k;
+		for ( k = 1; k*n < l; ++k) ;
+		if (k*n == l) {
+			for (--k; k > 0; --k) {
+				if (strncmp(buf, buf+k*n, n))
+					break;
+			}
+			if (k == 0) {
+//				fprintf(stderr, "id %s x%d\n", buf, n);
+				g_testCollectionFullWord = buf;
+				buf[n] = '\0';
+				return buf;
+			}
+		}
+	}
+//	fprintf(stderr, "fullWord = %s\n", buf);
+	return "";
 }

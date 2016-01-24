@@ -60,10 +60,11 @@ set<string> g_parameterizedVarieties;
 static int g_boxesVisited = 0;
 
 struct PartialTree {
-	PartialTree() :lChild(NULL), rChild(NULL), testIndex(-1), qr_desc() {}
+	PartialTree() :lChild(NULL), rChild(NULL), testIndex(-1), nbd_var_box(false), qr_desc() {}
 	PartialTree *lChild;
 	PartialTree *rChild;
 	int testIndex;
+    bool nbd_var_box;
     string qr_desc;
 };
 
@@ -262,14 +263,21 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
     t.qr_desc = box.qr.desc().c_str();
 	
 	if (!t.lChild) {
-		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth) {
+        bool inside_nbd = g_tests.box_inside_nbd(box);
+		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth || inside_nbd) {
 	        Params<Complex> params = box.center();
 	        Params<Complex> nearest = box.nearest();
 			Params<AComplex1Jet> cover(box.cover());
 			double absLS = minabs(cover.loxodromicSqrt);
 			double area = absLS * absLS * nearest.lattice.imag();
-			fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f size: %.4e (%s)\n", box.name.c_str(), area, params.lattice.real(), params.lattice.imag(), params.loxodromicSqrt.real(), params.loxodromicSqrt.imag(), params.parabolic.real(),params.parabolic.imag(), box.size(), box.qr.desc().c_str());
-			return false;
+            if (inside_nbd) {
+                t.nbd_var_box = true;
+			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f size: %.4e VAR (%s)\n", box.name.c_str(), area, params.lattice.real(), params.lattice.imag(), params.loxodromicSqrt.real(), params.loxodromicSqrt.imag(), params.parabolic.real(),params.parabolic.imag(), box.size(), box.qr.desc().c_str());
+			    return true; // We mark this as complete. TODO check this doesn't break anything
+            } else {
+			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f size: %.4e (%s)\n", box.name.c_str(), area, params.lattice.real(), params.lattice.imag(), params.loxodromicSqrt.real(), params.loxodromicSqrt.imag(), params.parabolic.real(),params.parabolic.imag(), box.size(), box.qr.desc().c_str());
+			    return false;
+            }
 		}
 		t.lChild = new PartialTree();
 		t.rChild = new PartialTree();
@@ -313,7 +321,11 @@ void printTree(PartialTree& t)
 		printTree(*t.lChild);
 		printTree(*t.rChild);
 	} else {
-		printf("HOLE (%s)\n", t.qr_desc.c_str());
+        if (t.nbd_var_box) { 
+		    printf("HOLE VAR (%s)\n", t.qr_desc.c_str());
+        } else {
+		    printf("HOLE (%s)\n", t.qr_desc.c_str());
+        }
 	}
 }
 

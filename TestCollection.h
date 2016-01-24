@@ -19,6 +19,7 @@ struct TestCollection {
 	int size();
 	int evaluateCenter(int index, Box& box);
 	int evaluateBox(int index, NamedBox& box);
+	bool box_inside_nbd(NamedBox& box);
 	bool validIdentity(std::string word, Box& box);
 	const char* getName(int index);
 	int add(std::string word);

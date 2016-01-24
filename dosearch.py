@@ -181,8 +181,9 @@ if __name__ == '__main__' :
                     numPatched = command_output('grep -c Patched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
                     numUnpatched = command_output('grep -c Unpatched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
                     numHoles = command_output('grep -c HOLE {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
+                    numVarHoles = command_output('grep -c VAR {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
                     
-                    print 'Holes: {0} patched, {1} unpatched, {2} holes\n'.format(numPatched, numUnpatched, numHoles)
+                    print 'Holes: {0} patched, {1} unpatched, {2} holes\n'.format(numPatched, numUnpatched, numHoles-numVarHoles)
 
                     boxWords = set()
                     add_words(boxWords, '{0}/{1}.out'.format(destDir, doneHole))        
