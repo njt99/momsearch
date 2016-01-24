@@ -1,10 +1,10 @@
 /*52:*/
-#line 132 "glue.w"
+#line 132 "./glue.w"
 
 #include "ACJ.h"
 const ACJ operator*(const ACJ&x,const ACJ&y)
 {/*32:*/
-#line 97 "ACJ.w"
+#line 97 "./ACJ.w"
 
 double xdist= size(x);
 double ydist= size(y);
@@ -20,11 +20,11 @@ double r_error= (1+3*EPS)*(A+(B+C));
 return ACJ(r_f.z,r_f0.z,r_f1.z,r_f2.z,r_error);
 
 /*:32*/
-#line 135 "glue.w"
+#line 135 "./glue.w"
 }
 const ACJ operator/(const ACJ&x,const ACJ&y)
 {/*34:*/
-#line 130 "ACJ.w"
+#line 130 "./ACJ.w"
 
 double xdist= size(x);
 double ydist= size(y);
@@ -43,11 +43,11 @@ double r_error= (1+3*EPS)*(((1+3*EPS)*A-(1-3*EPS)*B)+C);
 return ACJ(r_f.z,r_f0.z,r_f1.z,r_f2.z,r_error);
 
 /*:34*/
-#line 137 "glue.w"
+#line 137 "./glue.w"
 }
 const ACJ operator/(double x,const ACJ&y)
 {/*35:*/
-#line 151 "ACJ.w"
+#line 151 "./ACJ.w"
 
 double ydist= size(y);
 double ax= fabs(x),ay= absLB(y.f);
@@ -64,11 +64,11 @@ double r_error= (1+3*EPS)*(((1+2*EPS)*(ax/D)-(1-3*EPS)*B)+C);
 return ACJ(r_f.z,r_f0.z,r_f1.z,r_f2.z,r_error);
 
 /*:35*/
-#line 139 "glue.w"
+#line 139 "./glue.w"
 }
 const ACJ sqrt(const ACJ&x)
 {/*37:*/
-#line 185 "ACJ.w"
+#line 185 "./ACJ.w"
 
 double xdist= size(x);
 double ax= absUB(x.f);
@@ -90,7 +90,7 @@ return ACJ(r_f.z,r_f0.z,r_f1.z,r_f2.z,r_error);
 }
 
 /*:37*/
-#line 141 "glue.w"
+#line 141 "./glue.w"
 }
 
 /*:52*/

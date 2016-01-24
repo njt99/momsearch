@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include "TestCollection.h"
 #include "ImpossibleRelations.h"
+#include <algorithm>
 using namespace std;
 // using namespace __gnu_cxx;
 
