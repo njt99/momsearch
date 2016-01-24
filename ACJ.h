@@ -1,5 +1,5 @@
 /*50:*/
-#line 85 "glue.w"
+#line 85 "./glue.w"
 
 #ifndef _ACJ_h_
 #define _ACJ_h_
@@ -8,7 +8,7 @@
 #include <stdio.h> 
 #include "roundoff.h"
 /*26:*/
-#line 21 "ACJ.w"
+#line 21 "./ACJ.w"
 
 struct ACJ{
 ACJ(const XComplex&ff= 0,const XComplex&ff0= 0,
@@ -27,7 +27,7 @@ double size;
 };
 
 /*:26*/
-#line 92 "glue.w"
+#line 92 "./glue.w"
 
 inline const ACJ operator-(const ACJ&x);
 inline const ACJ operator+(const ACJ&x,const ACJ&y);

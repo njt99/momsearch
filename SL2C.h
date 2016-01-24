@@ -1,11 +1,11 @@
 /*53:*/
-#line 143 "glue.w"
+#line 143 "./glue.w"
 
 #ifndef _SL2C_h_
 #define _SL2C_h_
 #include "Complex.h"
 /*23:*/
-#line 10 "SL2C.w"
+#line 10 "./SL2C.w"
 
 struct SL2C{
 SL2C():a(1),b(0),c(0),d(1){}
@@ -15,7 +15,7 @@ XComplex a,b,c,d;
 };
 
 /*:23*/
-#line 147 "glue.w"
+#line 147 "./glue.w"
 
 const SL2C operator*(const SL2C&x,const SL2C&y);
 const SL2C inverse(const SL2C&x);

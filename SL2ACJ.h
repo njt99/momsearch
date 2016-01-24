@@ -1,11 +1,11 @@
 /*55:*/
-#line 159 "glue.w"
+#line 159 "./glue.w"
 
 #ifndef _SL2ACJ_h_
 #define _SL2ACJ_h_
 #include "ACJ.h"
 /*41:*/
-#line 10 "SL2ACJ.w"
+#line 10 "./SL2ACJ.w"
 
 struct SL2ACJ{
 SL2ACJ():a(1),b(0),c(0),d(1){}
@@ -15,7 +15,7 @@ ACJ a,b,c,d;
 };
 
 /*:41*/
-#line 163 "glue.w"
+#line 163 "./glue.w"
 
 const SL2ACJ operator*(const SL2ACJ&x,const SL2ACJ&y);
 const SL2ACJ inverse(const SL2ACJ&x);

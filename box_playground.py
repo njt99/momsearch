@@ -618,7 +618,7 @@ def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0, high_pr
         # We check that the two found vectors are antipodal. This happens in
         # highly symmetric cases.
         # TODO: Some of these cases produce -z+b isometries for some word, so have to be throw out
-        print 'Warning: two possible loxodromic values ( x = -y ) for manifold {0} and cusp {1}. Might get elliptic of order 2 in group.'.format(mfld.name(),cusp_idx))
+        print 'Warning: two possible loxodromic values ( x = -y ) for manifold {0} and cusp {1}. Might get elliptic of order 2 in group.'.format(mfld.name(),cusp_idx)
         e1 = get_edge_vect(G_star[found[0]]) 
         e2 = get_edge_vect(G_star[found[1]])
         if abs(e2+e1) > COMP_ERR :
