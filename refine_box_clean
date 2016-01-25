@@ -2,7 +2,7 @@
 
 data_dir="refine_census"
 name="box"
-area="5.2"
+area="6.0"
 
 if [ ! -d "$data_dir" ]; then
     mkdir "$data_dir"
@@ -23,4 +23,4 @@ if [[ $# > 2 ]]; then
     box="$3"
 fi
 
-echo '1' | ./refine --fillHoles --box "$box" --maxDepth 96 --truncateDepth 10 --inventDepth 10 --maxSize 30000000 --words words --ballSearchDepth -1 --maxArea "$area" --powers powers_combined --mom /dev/null --parameterized /dev/null > "$data_dir/$name.out" 2> "$data_dir/$name.err"
+echo '1' | ./refine --fillHoles --box "$box" --maxDepth 96 --truncateDepth 96 --inventDepth 10 --maxSize 30000000 --words words --ballSearchDepth -1 --maxArea "$area" --powers powers_combined --mom /dev/null --parameterized /dev/null > "$data_dir/$name.out" 2> "$data_dir/$name.err"

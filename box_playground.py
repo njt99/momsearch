@@ -403,7 +403,8 @@ def append_census_params_to_file(params, file_name) :
         fp.write("M is_special={}\n".format(params['is_special']))
         fp.write("M lattice_might_be_norm_one={}\n".format(params['lattice_might_be_norm_one']))
         fp.write("M possibly_on_box_edge={}\n".format(params['possibly_on_box_edge']))
-        fp.write("M box={}\n".format(params['box_code']))
+        for box_code in params['box_codes'] :
+            fp.write("M box={}\n".format(box_code))
         fp.write("lattice = {0} + {1} I norm={2}\n".format(real(params['lattice']),imag(params['lattice']),abs(params['lattice'])))
         fp.write("lox_sqrt = {0} + {1} I norm={2}\n".format(real(params['lox_sqrt']),imag(params['lox_sqrt']),abs(params['lox_sqrt'])))
         fp.write("parabolic = {0} + {1} I norm={2}\n".format(real(params['parabolic']),imag(params['parabolic']),abs(params['parabolic'])))
@@ -413,7 +414,9 @@ def append_census_params_to_file(params, file_name) :
 if 'snappy' not in sys.modules : 
     from snappy import *
 
-def validate_params(params) :
+def param_space_versions(mfld_params) :
+    p_space_list = []
+    params = deepcopy(mfld_params)
     # We require that the loxodromic square root have norm >= 1. Since
     # the height of the maximal cusp neightborhood is 1/|sq_lox|, we need
     # 1/|sq_lox| <= 1 because a cusp with minimal horo-boundary translation
@@ -425,7 +428,7 @@ def validate_params(params) :
     except :
         print 'The maximal cusp is too small for manifold {}?!'.format(params['manifold'])
         print params
-        return        
+        return p_space_list   
 
     # We require that -0.5 <= Re(lattice) <= 0.5
     lattice = params['lattice']
@@ -441,7 +444,7 @@ def validate_params(params) :
     except :
         print 'The lattice is too small for manifold {}?!'.format(params['manifold'])
         print params
-        return        
+        return p_space_list   
 
     # We require that the parabolic element have
     parabolic = params['parabolic']
@@ -502,12 +505,35 @@ def validate_params(params) :
     # 3. Im(lattice) >= 0 (complex conjugate symmetry)
     # 4. 0 <= Im(parabolic) <= Im(lattice)/2 (reduction modulo M, flipping sign of lattice)
     # 5. 0 <= Re(parabolic) <= 1/2 (reduction modulo N, flipping sign of lattice)
+    # 6. abs(lattice) >= 1 (switching M,N)
     params['lattice'] = lattice
     params['lox_sqrt'] = lox_sqrt
     params['parabolic'] = parabolic
     params['flips'] =  parameter_flips
+    p_space_list.append(params)
+    # There are some edge condition that allow for the same parameters but with shifts
+    # The conditions are:
+    # 0. We can have both Re(lattice) = +/- 0.5. (Note, we will NEVER see Im(lattice) == 0 for discreteness reasons)
+    # 1. If Im(lox_sqrt) == 0, then we can have both +/- lox_sqrt
+    # 2. If abs(lattice) == 1, this should have been taken care of in the get_all_params_from_manifold call 
+    # (Note, we will NEVER see Im(lattice) == 0 for discreteness reasons)
+    for idx in range(0,len(p_space_list)) :
+        params = p_space_list[idx]
+        lattice = params['lattice']
+        if abs(abs(real(lattice)) - 0.5) < COMP_ERR :
+            new_params = deepcopy(params)
+            new_params['lattice'] = lattice - 1 if real(lattice) > 0 else lattice + 1;
+            p_space_list.append(new_params)
+    for idx in range(0,len(p_space_list)) :
+        params = p_space_list[idx]
+        lox_sqrt = params['lox_sqrt']
+        if abs(imag(lox_sqrt)) < COMP_ERR :
+            new_params = deepcopy(params)
+            new_params['lox_sqrt'] = -lox_sqrt;
+            p_space_list.append(new_params)
+    return p_space_list
 
-def get_box_code(validated_params, depth=120) :
+def get_box_codes(validated_params, depth=120) :
     lattice = validated_params['lattice']
     lox_sqrt = validated_params['lox_sqrt']
     parabolic = validated_params['parabolic']
@@ -518,34 +544,39 @@ def get_box_code(validated_params, depth=120) :
     coord[3] = real(lattice) / scale[3] 
     coord[4] = real(lox_sqrt) / scale[4] 
     coord[5] = real(parabolic) / scale[5] 
-    code_list = []
+    codes_list = [{ 'code' : [], 'coord' : coord }]
     validated_params['possibly_on_box_edge'] = False
     for i in range(0, depth) :
-        n = i % 6
-        if 2 * coord[n] > COMP_ERR :
-            code_list.append('1')
-            coord[n] = 2 * coord[n] - 1
-        elif 2 * coord[n] < -COMP_ERR :
-            code_list.append('0')
-            coord[n] = 2 * coord[n] + 1
-        else :
-            assert abs(coord[n] - 0) < COMP_ERR
-            print 'Warning: Edge condition for manifold {0} with coord {1}. Will try to assert without error buffer.'.format(validated_params['manifold'], coord[n])
-            validated_params['possibly_on_box_edge'] = True
-            if coord[n] > 0 :
-                code_list.append('1')
+        for idx in range(0,len(codes_list)) :
+            code = codes_list[idx]['code'] # Object that will be modified
+            coord = codes_list[idx]['coord'] # Object that will be modified
+            n = i % 6
+            if 2 * coord[n] > COMP_ERR :
+                code.append('1')
                 coord[n] = 2 * coord[n] - 1
-            elif coord[n] < 0 :
-                code_list.append('0')
+            elif 2 * coord[n] < -COMP_ERR :
+                code.append('0')
                 coord[n] = 2 * coord[n] + 1
             else :
-                print 'Warning: Edge condition persists for manifold {0} with coord {1}. Default to right child.'.format(validated_params['manifold'], coord[n])
-                code_list.append('1')
+                assert abs(coord[n]) < COMP_ERR
+                print 'Warning: Edge condition for manifold {0} with coord {1}. Will generate both children.'.format(validated_params['manifold'], coord[n])
+                validated_params['possibly_on_box_edge'] = True
+                new_code_dict = deepcopy(codes_list[idx])
+                new_code = new_code_dict['code']
+                new_coord = new_code_dict['coord']
+                # Old will go to the right
+                code.append('1')
                 coord[n] = 2 * coord[n] - 1
-    box_code = ''.join(code_list)
-    return box_code
+                # New will go to the left
+                new_code.append('0')
+                new_coord[n] = 2 * coord[n] + 1
+                codes_list.append(new_code_dict)
+    box_codes = []
+    for code_dict in codes_list :
+        box_codes.append(''.join(code_dict['code']))
+    return box_codes
 
-def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0, high_precision = True) :
+def get_all_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0, high_precision = True) :
     if high_precision :
         mfld_loc = mfld.high_precision()
     else :
@@ -593,84 +624,99 @@ def get_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0, high_pr
     # have one G ball to choose from, but othertimes there will be more.
     # The edge index of a ball is the index of the edge going to infinity
     zero_ball_edge_idx = zero_star[0]['indices'][0]
+    G_balls = [];
     for i in range(1,len(hbls)) :
         G_ball = hbls[i]
         G_star = get_ball_edges(G_ball, triang, trans, reorient_edges=True)
         G_star = cyclically_order_edges(G_star)
         G_ball_edge_idx = G_star[0]['indices'][0]
         if G_ball_edge_idx == zero_ball_edge_idx :
-            break
+            G_ball_dict = { 'G_ball' : G_ball, 'G_star' : G_star };
+            G_balls.append(G_ball_dict)            
+   
+    params_list = []; 
+    for G_ball_dict in G_balls :
+        G_ball = G_ball_dict['G_ball']
+        G_star = G_ball_dict['G_star'] 
+        # We have found a G ball, now we must find the loxodromic rotation
+        inv_zero_star = inv_edge_list(zero_star)
 
-    # We have found a G ball, now we must find the loxodromic rotation
-    inv_zero_star = inv_edge_list(zero_star)
+        found_dict = find_shift_index(inv_zero_star, G_star, 'indices')
+        found_count = found_dict['count']
+        found = found_dict['found']
 
-    found_dict = find_shift_index(inv_zero_star, G_star, 'indices')
-    found_count = found_dict['count']
-    found = found_dict['found']
+        if found_count == 0 :
+            raise Exception('Could not find an edge match! Something is definitely broken for manifold {0} and cusp {1}'.format(mfld.name(),cusp_idx))
+        # If we found too many matches, this is too much symmetry. Something is wrong
+        # with our algorithm or data
+        if found_count > 2 :
+            raise Exception('Too many edge matches! Something is broken for manifold {0}'.format(mfld.name()))
+        if found_count == 2 :
+            # We check that the two found vectors are antipodal. This happens in
+            # highly symmetric cases.
+            # TODO: Some of these cases produce -z+b isometries for some word, so have to be throw out
+            print 'Warning: two possible loxodromic values ( x = -y ) for manifold {0} and cusp {1}. Might get elliptic of order 2 in group.'.format(mfld.name(),cusp_idx)
+            e1 = get_edge_vect(G_star[found[0]]) 
+            e2 = get_edge_vect(G_star[found[1]])
+            if abs(e2+e1) > COMP_ERR :
+                raise Exception('Two found edges are not symmetric for manifold {0} and cusp {1}'.format(mfld.name(),cusp_idx))
 
-    if found_count == 0 :
-        raise Exception('Could not find an edge match! Something is definitely broken for manifold {0} and cusp {1}'.format(mfld.name(),cusp_idx))
-    # If we found too many matches, this is too much symmetry. Something is wrong
-    # with our algorithm or data
-    if found_count > 2 :
-        raise Exception('Too many edge matches! Something is broken for manifold {0}'.format(mfld.name()))
-    if found_count == 2 :
-        # We check that the two found vectors are antipodal. This happens in
-        # highly symmetric cases.
-        # TODO: Some of these cases produce -z+b isometries for some word, so have to be throw out
-        print 'Warning: two possible loxodromic values ( x = -y ) for manifold {0} and cusp {1}. Might get elliptic of order 2 in group.'.format(mfld.name(),cusp_idx)
-        e1 = get_edge_vect(G_star[found[0]]) 
-        e2 = get_edge_vect(G_star[found[1]])
-        if abs(e2+e1) > COMP_ERR :
-            raise Exception('Two found edges are not symmetric for manifold {0} and cusp {1}'.format(mfld.name(),cusp_idx))
+        for found_idx in range(0,found_count) :
+            # We match the inverse zero star to the G_star cyclically
+            zero_star_edge = zero_star[-1] # Since we searched via the inv of zero star
+            G_star_edge = G_star[found[found_idx]] # Use any of the at most two found matches
 
-    # We match the inverse zero star to the G_star cyclically
-    zero_star_edge = zero_star[-1] # Since we searched via the inv of zero star
-    G_star_edge = G_star[found[0]] # Use any of the at most two found matches
+            lox = (get_edge_vect(zero_star_edge)*get_edge_vect(G_star_edge))**(-1)
 
-    lox = (get_edge_vect(zero_star_edge)*get_edge_vect(G_star_edge))**(-1)
+            # Rescale for out parameter normalizaion. We assume that the complex
+            # parameter is shorter than the real parameter (TODO: Does SnapPy always assume the opposite?)
+            m = trans[0]
+            n = trans[1]
+            parabolic = G_ball['center']
+            lox_sqrt = lox.sqrt()
 
-    # Rescale for out parameter normalizaion. We assume that the complex
-    # parameter is shorter than the real parameter (TODO: Does SnapPy always assume the opposite?)
-    m = trans[0]
-    n = trans[1]
-    parabolic = G_ball['center']
-    lox_sqrt = lox.sqrt()
+            params = {}
+            params['manifold_volume'] = mfld.volume()
+            params['cusp_area'] = 2 * cusp_nbd.volume(which_cusp = cusp_idx)
+            params['lattice_might_be_norm_one'] = False
+            params['box_codes'] = [];
+            if abs(n) - abs(m) > COMP_ERR :
+                params['lattice'] = (n / m).conjugate()
+                params['lox_sqrt'] = (m * lox_sqrt).conjugate()
+                params['parabolic'] = (G_ball['center'] / m).conjugate()
+            elif abs(m) - abs(n) > COMP_ERR :
+                params['lattice'] = m / n
+                params['lox_sqrt'] = n * lox_sqrt
+                params['parabolic'] = G_ball['center'] / n
+            else :
+                print 'Warning: translation lengths for {0} are really close for cusp {1}'.format(mfld.name(),cusp_idx)
+                params['lattice_might_be_norm_one'] = True
+                params_switch = deepcopy(params)
+                # Here m will be placed on the real axis :
+                params['lattice'] = (n / m).conjugate()
+                params['lox_sqrt'] = (m * lox_sqrt).conjugate()
+                params['parabolic'] = (G_ball['center'] / m).conjugate()
+                # Here n will be placed on the real axis
+                params_switch['lattice'] = m / n
+                params_switch['lox_sqrt'] = n * lox_sqrt
+                params_switch['parabolic'] = G_ball['center'] / n
+                # Append the switched parameters to list, the original will be appeneded later
+                params_list.append(params_switch)
+            params_list.append(params)
 
-    params = {}
-    params['lattice_might_be_norm_one'] = False
-    if abs(n) - abs(m) > COMP_ERR :
-        params['lattice'] = (n / m).conjugate()
-        params['lox_sqrt'] = (m * lox_sqrt).conjugate()
-        params['parabolic'] = (G_ball['center'] / m).conjugate()
-    elif abs(m) - abs(n) > COMP_ERR :
-        params['lattice'] = m / n
-        params['lox_sqrt'] = n * lox_sqrt
-        params['parabolic'] = G_ball['center'] / n
-    else :
-        print 'Warning: translation lengths for {0} are really close for cusp {1}'.format(mfld.name(),cusp_idx)
-        params['lattice_might_be_norm_one'] = True
-        if abs(n) > abs(m) :
-            params['lattice'] = (n / m).conjugate()
-            params['lox_sqrt'] = (m * lox_sqrt).conjugate()
-            params['parabolic'] = (G_ball['center'] / m).conjugate()
-        else :
-            params['lattice'] = m / n
-            params['lox_sqrt'] = n * lox_sqrt
-            params['parabolic'] = G_ball['center'] / n
+    param_space_list = [];
+    for params in params_list :
+        param_space_list.extend(param_space_versions(params))
 
-    params['manifold'] = '{0}_{1}'.format(mfld.name(),cusp_idx)
-    params['manifold_volume'] = mfld.volume()
-    params['cusp_area'] = 2 * cusp_nbd.volume(which_cusp = cusp_idx)
-    params['box_code'] = ''
+    for params_idx in range(0,len(param_space_list)) :
+        params = param_space_list[params_idx]
+        params['manifold'] = '{0}_{1}_{2}'.format(mfld.name(),cusp_idx,params_idx)
 
-    validate_params(params)
+        if census_out_file :
+            params['box_codes'] = get_box_codes(params)
+            append_census_params_to_file(params, census_out_file)
 
-    if census_out_file :
-        params['box_code'] = get_box_code(params)
-        append_census_params_to_file(params, census_out_file)
-
-    return params
+    return param_space_list
 
 def record_census_params_to_file(out_file, census_slice = slice(0,10000)) :
     for mfld in OrientableCuspedCensus[census_slice] :
@@ -691,7 +737,7 @@ def record_census_params_to_file(out_file, census_slice = slice(0,10000)) :
                 cusp_nbd.set_displacement(reach, which_cusp = c_idx)
                 # Validate that the displacement was set successfully
                 assert abs(cusp_nbd.get_displacement(which_cusp = c_idx) - reach) < BIG_COMP_ERR
-                if 2 * cusp_nbd.volume(which_cusp = c_idx) - 6 > 0 : continue
-                get_params_from_manifold(mfld, census_out_file = out_file, cusp_idx = c_idx)
+                if 2 * cusp_nbd.volume(which_cusp = c_idx) - 6 > BIG_COMP_ERR : continue
+                get_all_params_from_manifold(mfld, census_out_file = out_file, cusp_idx = c_idx)
         except :
             print 'Error: SnapPy crashed for manifold {}'.format(name) 
