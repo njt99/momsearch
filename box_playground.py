@@ -426,7 +426,7 @@ def param_space_versions(mfld_params) :
     try :
         assert not norm(lox_sqrt) < RR(1)
     except :
-        print 'The maximal cusp is too small for manifold {}?!'.format(params['manifold'])
+        print 'Error: the maximal cusp is too small for manifold {}?!'.format(params['manifold'])
         print params
         return p_space_list   
 
@@ -442,7 +442,7 @@ def param_space_versions(mfld_params) :
     try :
         assert not norm(lattice) < RR(1)
     except :
-        print 'The lattice is too small for manifold {}?!'.format(params['manifold'])
+        print 'Error: the lattice is too small for manifold {}?!'.format(params['manifold'])
         print params
         return p_space_list   
 
