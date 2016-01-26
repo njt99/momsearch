@@ -87,7 +87,7 @@ bool mark(char const* fileName, const char* ending_mark) {
     return (rename(fileName, fileNameMarked) == 0);
 }
 
-bool processTree(FILE* fp, FILE* out, bool printTree, bool printHoles, char* boxcode)
+bool processTree(FILE* fp, FILE* out, bool printTree, int printHoles, char* boxcode)
 {
 	int boxdepth = strlen(boxcode);
 	char buf[10000];
@@ -96,36 +96,39 @@ bool processTree(FILE* fp, FILE* out, bool printTree, bool printHoles, char* box
 	while (fgets(buf, sizeof(buf), fp)) {
 		bool filledHole = false;
         // Open HOLE file if exists. If no printing is set, we don't need to traverse HOLEs
-		if (g_recursive && buf[0] == 'H' && depth > 0) {
+		if (buf[0] == 'H' && depth > 0) {
             bool nbd_var_box = (strchr(buf,'V') != NULL); 
-			FILE* fpH = openBox(boxcode, fileName);
-			if (fpH) {
-                FILE* outH = tmpfile();
-                if (outH) {
-                    bool success = processTree(fpH, outH, printTree, printHoles, boxcode);
-                    fclose(fpH);
-                    if (!success) {
-                        fclose(outH);
-                        // The tree is incomplete, so we rename the boxfile to mark as incomplete
-                        // TODO: Not sure if treecat should have the power to rename files
-                        if (g_mark_incomplete)
-                            if (!mark(fileName,".incomplete")) fprintf(stderr, "failed to mark %s as incomplete\n", fileName);
-                    } else {
-                        // If the HOLE subtree is complete, print it to the output stream
-                        rewind(outH);
-                        bool success = putStream(out,outH);
-                        fclose(outH);
+		    if (g_recursive) {
+                FILE* fpH = openBox(boxcode, fileName);
+                if (fpH) {
+                    FILE* outH = tmpfile();
+                    if (outH) {
+                        bool success = processTree(fpH, outH, printTree, printHoles, boxcode);
+                        fclose(fpH);
                         if (!success) {
-                            fprintf(stderr, "failed to print HOLE %s subtree\n", boxcode);
-                            break;
+                            fclose(outH);
+                            // The tree is incomplete, so we rename the boxfile to mark as incomplete
+                            // TODO: Not sure if treecat should have the power to rename files
+                            if (g_mark_incomplete)
+                                if (!mark(fileName,".incomplete")) fprintf(stderr, "failed to mark %s as incomplete\n", fileName);
                         } else {
-                            filledHole = true;
+                            // If the HOLE subtree is complete, print it to the output stream
+                            rewind(outH);
+                            bool success = putStream(out,outH);
+                            fclose(outH);
+                            if (!success) {
+                                fprintf(stderr, "failed to print HOLE %s subtree\n", boxcode);
+                                break;
+                            } else {
+                                filledHole = true;
+                            }
                         }
                     }
                 }
-			}
-            if (printHoles && !filledHole && ! nbd_var_box) 
+            }
+            if (!filledHole && (printHoles == 2 || (printHoles==1 && ! nbd_var_box)))  {
                 fprintf(out, "%s\n", boxcode); // Print the missing boxcode to stdout
+            }
 		}
 		if (printTree && !filledHole) {
 			fputs(buf, out); // Print the buffer if we are printing out the filled tree
@@ -149,7 +152,7 @@ bool processTree(FILE* fp, FILE* out, bool printTree, bool printHoles, char* box
     
     // If we get to this point, the tree is incomplete
     // TODO: This may be unnecssary code as we rename incomplete trees
-    if (printHoles) {
+    if (printHoles > 0) {
         // Print the box we "should" be at as missing
         fprintf(out, "%s\n", boxcode); // Print the missing boxcode to stdout
     
@@ -171,10 +174,17 @@ bool processTree(FILE* fp, FILE* out, bool printTree, bool printHoles, char* box
 int main(int argc, char** argv)
 {
     bool printTree = true;
-    bool printHoles = false;
-	if (argc > 1 && strcmp(argv[1], "--holes") == 0) {
+    int printHoles = 0;
+	if (argc > 1 && strcmp(argv[1], "--open_holes") == 0) {
         printTree = false;
-        printHoles = true;
+        printHoles = 1;
+		++argv;
+		--argc;
+	}
+
+	if (argc > 1 && strcmp(argv[1], "--all_holes") == 0) {
+        printTree = false;
+        printHoles = 2;
 		++argv;
 		--argc;
 	}
@@ -187,7 +197,7 @@ int main(int argc, char** argv)
 
 	if (argc > 1 && strcmp(argv[1], "-s") == 0) {
         printTree = false;
-        printHoles = false;
+        printHoles = 0;
 		++argv;
 		--argc;
 	}
@@ -206,8 +216,8 @@ int main(int argc, char** argv)
 	}
 
 	if (argc != 3) {
-		fprintf(stderr, "Usage: treecat [--holes] [--mark] [-s] [-v] [-r] treeLocation boxcode\n");
-		fprintf(stderr, "holes : do not print the tree but print the holes\n");
+		fprintf(stderr, "Usage: treecat [--all_holes/--open_holes] [--mark] [-s] [-v] [-r] treeLocation boxcode\n");
+		fprintf(stderr, "open_holes/all_holes : do not print the tree but print the holes. non open holes are ones marked VAR\n");
 		fprintf(stderr, "mark : rename incomplete (sub)tree file(s) containing given boxcode (sub if -r)\n");
 		fprintf(stderr, "s : silent, don't print trees or holes\n");
 		fprintf(stderr, "v : verbose\n");

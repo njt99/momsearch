@@ -160,7 +160,7 @@ string relatorName(int testIndex)
 	for (int i = 0; i < -yLattice; ++i)
 		*bp++ = 'N';
 	strcpy(bp, wordName);
-	return buf;
+	return string(buf);
 }
 
 // For test type n = 6 varfies if valid identity,

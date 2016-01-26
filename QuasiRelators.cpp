@@ -20,6 +20,8 @@ void QuasiRelators::addQuasiRelator(string w)
 		return;
 	string W = inverse(w);
 	vector<string> versions;
+    // TODO: WARNING!!! This list will only contain the original word if it starts and ends with g or G!!!!
+    // Make sure all words in the words file match the regex ^[gG].*[gG]$
 	for (string::size_type p = 0; p < w.size(); ++p) {
 		string::size_type prev = (p == 0) ? w.size()-1 : p-1;
 		if (w[prev] == 'g' || w[prev] == 'G')
