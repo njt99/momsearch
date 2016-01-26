@@ -4,7 +4,7 @@ err_dir='/scratch/network/ayarmola/run2015/output'
 bin_dir='/home/ayarmola/momsearch'
 
 find "$err_dir" -type f -name "*err" -exec grep 'HOLE' {} + > holes_err
-"$bin_dir/treecat" --holes -r "$err_dir" '' > holes
+"$bin_dir/treecat" --all_holes -r "$err_dir" '' > holes
 grep "()\$" holes_err > holes_no_quasi
 grep "(..*)\$" holes_err > holes_quasi
 cut -d ":" -f 2- holes_no_quasi > holes_no_quasi_no_filenames

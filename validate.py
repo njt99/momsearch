@@ -46,7 +46,7 @@ if __name__ == '__main__' :
 
     # Executables
     treecat = './treecat'
-    treeholes = './treecat --holes'
+    treeholes = './treecat --open_holes'
     treecheck = './treecat --mark -s'
     refine = './refine'
 

@@ -80,7 +80,7 @@ if __name__ == '__main__' :
 
     # Executables
     treecat = './treecat'
-    treeholes = './treecat --holes'
+    treeholes = './treecat --open_holes'
     treecheck = './treecat --mark -s'
     refine = './refine'
 
@@ -183,7 +183,7 @@ if __name__ == '__main__' :
                     numHoles = command_output('grep -c HOLE {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
                     numVarHoles = command_output('grep -c VAR {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
                     
-                    print 'Holes: {0} patched, {1} unpatched, {2} holes\n'.format(numPatched, numUnpatched, numHoles-numVarHoles)
+                    print 'Holes: {0} patched, {1} unpatched, {2} holes\n'.format(numPatched, numUnpatched, int(numHoles)-int(numVarHoles))
 
                     boxWords = set()
                     add_words(boxWords, '{0}/{1}.out'.format(destDir, doneHole))        
