@@ -107,7 +107,7 @@ if __name__ == '__main__' :
     child_count = 0
     done_boxes = set()
     while True:
-        sleep(2) # We don't need to to run the main loop to death since we aren't using os.wait
+        sleep(1) # We don't need to to run the main loop to death since we aren't using os.wait
         open_boxes = src_boxes - done_boxes
         best_box = '1'*200
         for box in open_boxes:
@@ -163,7 +163,7 @@ if __name__ == '__main__' :
                     continue
                 else :
                     continue
-            sleep(60) # We don't need to to run the main loop to death since we aren't using os.wait
+            # sleep(1) # We don't need to to run the main loop to death since we aren't using os.wait
             continue        
 
         # If we make it here. We are running refine
