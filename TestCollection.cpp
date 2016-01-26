@@ -281,10 +281,7 @@ int TestCollection::evaluateBox(int index, NamedBox& box)
 	Params<XComplex> maximum = box.maximum();
 //	enumerate("");
 	switch(index) {
-		case 0: {
-			XComplex maxSl = furthest.loxodromicSqrt;
-			return maxSl.re*maxSl.re + maxSl.im*maxSl.im < 1.0;
-		}
+		case 0: return absUB(furthest.loxodromicSqrt) < 1.0;
 		case 1: return maximum.loxodromicSqrt.im < 0.0
          || maximum.lattice.im < 0.0
 		 || maximum.parabolic.im < 0.0
