@@ -399,6 +399,7 @@ def append_census_params_to_file(params, file_name) :
         fp.write("M name={}\n".format(params['manifold']))
         fp.write("M vol={}\n".format(params['manifold_volume']))
         fp.write("M cusp_area={}\n".format(params['cusp_area']))
+        fp.write("M num_cusps={}\n".format(params['num_cusps']))
         fp.write("M flips={}\n".format(params['flips']))
         fp.write("M is_special={}\n".format(params['is_special']))
         fp.write("M lattice_might_be_norm_one={}\n".format(params['lattice_might_be_norm_one']))
@@ -677,6 +678,7 @@ def get_all_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0, hig
 
             params = {}
             params['manifold_volume'] = mfld.volume()
+            params['num_cusps'] = mfld.num_cusps()
             params['cusp_area'] = 2 * cusp_nbd.volume(which_cusp = cusp_idx)
             params['lattice_might_be_norm_one'] = False
             params['box_codes'] = [];

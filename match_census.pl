@@ -1,23 +1,28 @@
 #!/usr/bin/perl
 
-$census_params_file = 'qr_census_manifolds_up_to_area_6';
+$census_params_file = 'qr_full_census_manifolds_up_to_area_6_nc';
 if ($#ARGV > -1) {
     $census_params_file = $ARGV[0];
 }
+
+open my $fp, $census_params_file or die "Could not open $census_params_file";
+chomp (my @census_params = <$fp>);
+close $fp;
+
 while (<STDIN>) {
-	if (/(.*) ([10]+)$/) { 
+	if (/^(.*) ([10]+)$/) {
+        my $orig = "$1 $2"; 
         my $box = $2;
-        my $grep_match = `grep ' $box' $census_params_file`; 
+        my @census_data = grep(/.* $box.*/, @census_params); 
         my @manifolds = ();
-        if (length($grep_match) > 0) {
-            my @census_data = split(/\n/, $grep_match); 
+        if ($#census_data > -1) {
             foreach (@census_data) {
                 my ($mfld) = /M (\S+) .*/;
                 push(@manifolds, $mfld);
             }
             print "$1 $2 " . join(" ", @manifolds) . "\n";		
         } else {
-            print "$_";
+            print "$orig\n";
         }
     } else {
         print "$_";
