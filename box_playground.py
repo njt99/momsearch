@@ -570,7 +570,7 @@ def get_box_codes(validated_params, depth=120) :
                 coord[n] = 2 * coord[n] - 1
                 # New will go to the left
                 new_code.append('0')
-                new_coord[n] = 2 * coord[n] + 1
+                new_coord[n] = 2 * new_coord[n] + 1
                 codes_list.append(new_code_dict)
     box_codes = []
     for code_dict in codes_list :
