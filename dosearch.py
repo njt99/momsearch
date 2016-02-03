@@ -95,7 +95,7 @@ if __name__ == '__main__' :
     truncateDepth = '6'
     inventDepth = '42'
     ballSearchDepth = '9'
-    maxArea = '5.2'
+    maxArea = '5.3'
     fillHoles = ' --fillHoles'
     mom = '/dev/null' #/home/ayarmola/momsearch/momWords'
     parameterized = '/dev/null' #/home/ayarmola/momsearch/parameterizedWords'
@@ -215,7 +215,7 @@ if __name__ == '__main__' :
                     continue
                 else :
                     continue
-            # sleep(1) # We don't need to to run the main loop to death since we aren't using os.wait
+            sleep(5) # We don't need to to run the main loop to death since we aren't using os.wait
             continue        
 
         # If we make it here. We are running refine
