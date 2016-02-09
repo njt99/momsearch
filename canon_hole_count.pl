@@ -29,7 +29,13 @@ while (<STDIN>) {
 	if (/(.*)(HOLE) ([01]*) (.*)\((.*)\)/ || /(.*)(M) (\S+) (.*)\((.*)\)/) {
         my $type = $2;
 		my $id = $3;
+        my $orig_id = $id;
         my @info = split(/ /, $4);
+        my $ver_num = 2;
+        while (defined $ids_to_info{$id}) {
+            $id = $orig_id . "_v$ver_num"; 
+            $ver_num += 1;
+        }
         $ids_to_info{$id}{'type'} = $type;
         if ($type eq 'M') {
             my ($vol) = $info[0] =~ /vol=(\S+)/; 

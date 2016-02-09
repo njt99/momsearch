@@ -1,6 +1,13 @@
 #!/usr/bin/perl
 # Given a line out of refine HOLE err file output with qr's, this will
 # outputs the HOLE, box and canonical versions of the qr's
+sub g_power
+{
+    my ($gs) = @_;
+    $gs =~ s/[nNmM]+//g;
+    length $gs 
+}
+
 sub versions
 {
         my ($w) = @_;
@@ -30,7 +37,7 @@ while (<>) {
 			}
 			$canonWords{$canonVersion{$word}} = 1;
 		}
-		@canonWords = sort keys %canonWords;
+		@canonWords = sort {&g_power($a) <=> &g_power($b)} keys %canonWords;
 		print "$type $id $info(" . join(",", @canonWords) . ")\n";
 	}
 }

@@ -43,7 +43,7 @@ II = CC(1j)
 scale_factor = 8 
 scale = map(lambda x : scale_factor * pow(2, x/RR(6)), range(0,-6,-1))
 COMP_ERR = pow(2,-RR(100))
-BIG_COMP_ERR = pow(2,-RR(10))
+BIG_COMP_ERR = pow(2,-RR(20))
 
 def g_depth(word) :
     g_count = 0
@@ -579,7 +579,8 @@ def get_box_codes(validated_params, depth=120) :
 
 def get_all_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0, high_precision = True) :
     if high_precision :
-        mfld_loc = mfld.high_precision()
+        # Note: using high_precision() for some reason did not return the same thing as this... odd
+        mfld_loc = ManifoldHP(mfld.name())
     else :
         mfld_loc = mfld
 
@@ -721,8 +722,9 @@ def get_all_params_from_manifold(mfld, census_out_file = None, cusp_idx = 0, hig
     return param_space_list
 
 def record_census_params_to_file(out_file, census_slice = slice(0,10000)) :
-    for mfld in OrientableCuspedCensus[census_slice] :
-        name = mfld.name()
+    for mfld_np in OrientableCuspedCensus[census_slice] :
+        name = mfld_np.name()
+        mfld = ManifoldHP(name)
         try :
             cusp_nbd = mfld.cusp_neighborhood()
             for c_idx in range(cusp_nbd.num_cusps()) :
