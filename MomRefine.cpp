@@ -268,8 +268,8 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	t.testIndex = -1;
     t.qr_desc = box.qr.desc().c_str();
 	
-	if (!t.lChild) {
-        bool inside_nbd = g_tests.box_inside_nbd(box);
+    bool inside_nbd = g_tests.box_inside_nbd(box);
+	if (inside_nbd || !t.lChild) {
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth || inside_nbd) {
 	        Params<XComplex> params = box.center();
 	        Params<XComplex> nearest = box.nearest();
@@ -279,6 +279,7 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
             if (inside_nbd) {
                 t.nbd_var_box = true;
 			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f VAR (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromicSqrt.re, params.loxodromicSqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
+		        truncateTree(t);
 			    return true; // We mark this as complete. TODO check this doesn't break anything
             } else {
 			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromicSqrt.re, params.loxodromicSqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
