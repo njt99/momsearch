@@ -1,10 +1,10 @@
 #!/usr/bin/perl
 
-$err_dir='/scratch/network/ayarmola/run2015/output';
-$bin_dir='/home/ayarmola/momsearch';
+$err_dir = '/scratch/network/ayarmola/run2015/output';
+$bin_dir = '/home/ayarmola/momsearch';
 
-system('find', $err_dir, '-type f', '-name *err', '-exec grep VAR {} +', '> holes_err');
-system($bin_dir . 'treecat', '--all_holes', '-r', $err_dir, '', '> holes');
+system('find' . " $err_dir " . '-type f -name \*err -exec grep VAR {} + > holes_err');
+system("$bin_dir/treecat " . '--all_holes -r' . " $err_dir " . '\'\' > holes');
 
 open(my $fp, 'holes') or die 'Could not open holes';
 chomp (my @open_holes = <$fp>);
