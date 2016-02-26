@@ -148,11 +148,75 @@ bool TestCollection::box_inside_nbd(NamedBox& box)
         if (g_power(*it) > min_power) {
             return true;
         } else {
-		    SL2ACJ w(evaluate1(*it, params));
-            if (!(absUB(w.c) < 1 && absUB(w.b) < 1)) { return false; } 
+            if (!validVariety(*it, box)) { return false; }
         }
     }
     return true; 
+}
+
+bool TestCollection::box_inside_at_least_two_nbd(NamedBox& box)
+{
+    vector<string> qrs(box.qr.wordClasses());
+    if (qrs.size() < 2) { return false; }
+    sort(qrs.begin(), qrs.end(), g_power_sort);
+    int min_power = g_power(qrs.front());
+    int found = 0;
+	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
+        if (g_power(*it) > min_power && found > 1) {
+            break;
+        } else {
+            if (!validVariety(*it, box)) { return false; }
+            found += 1;
+        }
+    }
+    return (found > 1); 
+}
+
+bool TestCollection::validIntersection(NamedBox& box) {
+    vector<string> qrs(box.qr.wordClasses());
+    if (qrs.size() < 2) { return false; }
+    sort(qrs.begin(), qrs.end(), g_power_sort);
+    int min_power = g_power(qrs.front());
+    int found = 0;
+    vector<string> var_jets;
+	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
+        if (g_power(*it) > min_power && found > 1) {
+            break;
+        } else {
+            if (!validVariety(*it, box)) { return false; }
+            var_jets.push_back(*it);
+            found += 1;
+        }
+    }
+    if (found > 1) {
+	    Params<ACJ> params = box.cover();
+        string w0 = var_jets[0];
+        string w1 = var_jets[1];
+        for (string::size_type idx_0 = 0; idx_0 < w0.size(); ++idx_0) {
+            string w0_p = w0.substr(idx_0, w0.size()-idx_0) + w0.substr(0, idx_0);
+            SL2ACJ w0_j(evaluate1(w0_p, params));
+            for (string::size_type idx_1 = 0; idx_1 < w1.size(); ++idx_1) {
+                string w1_p = w1.substr(idx_1, w1.size()-idx_1) + w1.substr(0, idx_1);
+                SL2ACJ w1_j(evaluate1(w1_p, params));
+                if (notZero(w1_j - w0_j) && notZero(w1_j + w0_j)) { return false; }
+            }
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool TestCollection::validVariety(string word, Box& box)
+{
+    // Checks to see is ALL  cyclic box is small enough for all cyclic permutations to be inside variety neighborhood
+	Params<ACJ> params = box.cover();
+	for (string::size_type pos = 0; pos < word.size(); ++pos) {
+		string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
+		SL2ACJ w(evaluate1(pword, params));
+        if (!(absUB(w.c) < 1 && absUB(w.b) < 1)) { return false; }
+	}
+	return true;
 }
 
 bool TestCollection::validIdentity(string word, Box& box)

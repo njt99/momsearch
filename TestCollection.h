@@ -20,6 +20,9 @@ struct TestCollection {
 	int evaluateCenter(int index, Box& box);
 	int evaluateBox(int index, NamedBox& box);
 	bool box_inside_nbd(NamedBox& box);
+	bool box_inside_at_least_two_nbd(NamedBox& box);
+	bool validIntersection(NamedBox& box);
+	bool validVariety(std::string word, Box& box);
 	bool validIdentity(std::string word, Box& box);
 	const char* getName(int index);
 	int add(std::string word);
