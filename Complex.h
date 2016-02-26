@@ -1,12 +1,12 @@
-/*47:*/
-#line 19 "./glue.w"
+/*50:*/
+#line 19 "glue.w"
 
 #ifndef _Complex_h_
 #define _Complex_h_
 #include <assert.h> 
 #include "roundoff.h"
 /*5:*/
-#line 11 "./Complex.w"
+#line 11 "Complex.w"
 
 struct XComplex{
 double re;
@@ -15,10 +15,10 @@ XComplex(double r= 0,double i= 0):re(r),im(i){}
 };
 
 /*:5*/
-#line 24 "./glue.w"
+#line 24 "glue.w"
 
 /*6:*/
-#line 21 "./Complex.w"
+#line 21 "Complex.w"
 
 struct AComplex{
 XComplex z;
@@ -27,7 +27,7 @@ AComplex(double r= 0,double i= 0,double err= 0):z(r,i),e(err){}
 };
 
 /*:6*/
-#line 25 "./glue.w"
+#line 25 "glue.w"
 
 inline const XComplex operator-(const XComplex&x);
 inline const AComplex operator+(const AComplex&x,const AComplex&y);
@@ -48,4 +48,4 @@ AComplex sqrt(const XComplex&x);
 #include "Complex.inline"
 #endif
 
-/*:47*/
+/*:50*/

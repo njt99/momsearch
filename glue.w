@@ -162,15 +162,24 @@ const SL2C inverse    (const SL2C& x)
 #include "ACJ.h"
 @<Definition of |SL2ACJ|@>@;
 const SL2ACJ operator * (const SL2ACJ& x, const SL2ACJ& y);
+const SL2ACJ operator + (const SL2ACJ& x, const SL2ACJ& y);
+const SL2ACJ operator - (const SL2ACJ& x, const SL2ACJ& y);
 const SL2ACJ inverse    (const SL2ACJ& x);
 const int    notIdentity(const SL2ACJ& x);
+const int    notZero(const SL2ACJ& x);
 #endif
 
 @ @(SL2ACJ.C@>=
 #include "SL2ACJ.h"
 const SL2ACJ operator * (const SL2ACJ& x, const SL2ACJ& y)
 {@<Definition of |x*y| for |SL2ACJ x,y|@>@;}
+const SL2ACJ operator + (const SL2ACJ& x, const SL2ACJ& y)
+{@<Definition of |x+y| for |SL2ACJ x,y|@>@;}
+const SL2ACJ operator - (const SL2ACJ& x, const SL2ACJ& y)
+{@<Definition of |x-y| for |SL2ACJ x,y|@>@;}
 const SL2ACJ inverse    (const SL2ACJ& x)
 {@<Definition of |inverse(x)| for |SL2ACJ x|@>@;}
 const int    notIdentity(const SL2ACJ& x)
 {@<Definition of |notIdentity(x)| for |SL2ACJ x|@>@;}
+const int    notZero(const SL2ACJ& x)
+{@<Definition of |notZero(x)| for |SL2ACJ x|@>@;}

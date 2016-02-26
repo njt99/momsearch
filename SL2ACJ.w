@@ -25,6 +25,26 @@ $\reps{|x * y|} \supset \reps{x} \reps{y}$.
     x.c*y.a+x.d*y.c, x.c*y.b+x.d*y.d
   );
 
+@ \proposition{M+J}
+If |x| and |y| are |SL2ACJ|, then
+$\reps{|x + y|} \supset \reps{x} + \reps{y}$.
+\endproposition
+@<Definition of |x+y| for |SL2ACJ x,y|@>=
+  return SL2ACJ(
+    x.a+y.a, x.b+y.b, 
+    x.c+y.c, x.d+y.d
+  );
+
+@ \proposition{M-J}
+If |x| and |y| are |SL2ACJ|, then
+$\reps{|x - y|} \supset \reps{x} - \reps{y}$.
+\endproposition
+@<Definition of |x-y| for |SL2ACJ x,y|@>=
+  return SL2ACJ(
+    x.a-y.a, x.b-y.b, 
+    x.c-y.c, x.d-y.d
+  );
+
 @ \proposition{inverse(M)}
 If |x| is |SL2ACJ|, then
 \endproposition
@@ -41,3 +61,13 @@ If |x| is |SL2ACJ|, then
       || absLB(x.c) > 0
       || (absLB(x.a-1) > 0 && absLB(x.a+1) > 0)
       || (absLB(x.d-1) > 0 && absLB(x.d+1) > 0);
+
+@ \proposition{notZero(M)}
+If |x| is |SL2ACJ|, then
+|notZero(x)| returns $1$ implies $((0,0),(0,0)) \notin \reps{x}$
+\endproposition
+@<Definition of |notZero(x)| for |SL2ACJ x|@>=
+  return absLB(x.a) > 0
+      || absLB(x.b) > 0
+      || absLB(x.c) > 0
+      || absLB(x.d) > 0;
