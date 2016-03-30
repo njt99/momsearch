@@ -471,22 +471,22 @@ def param_space_versions(mfld_params) :
     # It remains fix positivity/sign coniditons    
     # We record the parameter flips we have done in case we ever need to reference
     parameter_flips = []
-    # parabolic real part >= 0 TODO in TestCollection this is > 0 
+    # parabolic real part >= 0 
     if real(parabolic) < 0 :
         parabolic = -parabolic
         lattice = -lattice
         parameter_flips.append('RP')
-    # parabolic imag part >= 0 TODO in TestCollection this is > 0
+    # parabolic imag part >= 0
     if imag(parabolic) < 0 :
         parabolic = parabolic.conjugate()
         lattice = lattice.conjugate()
         lox_sqrt = lox_sqrt.conjugate()
         parameter_flips.append('IP')
-    # lattice imag part >= 0 TODO in TestCollection this is > 0 
+    # lattice imag part >= 0
     if imag(lattice) < 0 :
         lattice = -lattice    
         parameter_flips.append('IL')
-    # lox_sqrt imag part >= 0 TODO in TestCollection this is > 0 
+    # lox_sqrt imag part >= 0 
     if imag(lox_sqrt) < 0 :
         lox_sqrt = -lox_sqrt
         parameter_flips.append('IS')
@@ -744,4 +744,4 @@ def record_census_params_to_file(out_file, census_slice = slice(0,10000)) :
                 if 2 * cusp_nbd.volume(which_cusp = c_idx) - 6 > BIG_COMP_ERR : continue
                 get_all_params_from_manifold(mfld, census_out_file = out_file, cusp_idx = c_idx)
         except :
-            print 'Error: SnapPy crashed for manifold {}'.format(name) 
+            print 'Error: SnapPy crashed for manifold {}'.format(name)
