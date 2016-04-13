@@ -13,6 +13,7 @@ public:
 	std::vector<std::string> allWords();
 	std::vector<std::string> wordClasses();
 	std::string desc();                               // string describing this set of quasi-relators
+	std::string min_pow_desc();                               // string describing minimal power set of quasi-relators
 	bool isQuasiRelator(std::string w);         // is this word a quasi-relator?
 
 private:

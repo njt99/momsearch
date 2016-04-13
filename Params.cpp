@@ -39,3 +39,14 @@ SL2ACJ constructT(const Params<ACJ>& params, int x, int y)
 {
 	return SL2ACJ(ACJ(XComplex(1.)), params.lattice*ACJ(double(y))+double(x), ACJ(XComplex(0.)), ACJ(XComplex(1.)));
 }
+
+int g_power(std::string w) {
+    int count = 0;
+    for (std::string::size_type p = 0; p < w.size(); ++p) {
+        if (w[p] == 'g' || w[p] == 'G') ++count;
+    }
+    return count;
+} 
+
+bool g_power_sort(std::string a, std::string b) { return g_power(a) < g_power(b); }
+

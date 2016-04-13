@@ -60,10 +60,11 @@ set<string> g_parameterizedVarieties;
 static int g_boxesVisited = 0;
 
 struct PartialTree {
-	PartialTree() :lChild(NULL), rChild(NULL), testIndex(-1), nbd_var_box(false), qr_desc() {}
+	PartialTree() :lChild(NULL), rChild(NULL), testIndex(-1),testResult(-1), nbd_var_box(false), qr_desc() {}
 	PartialTree *lChild;
 	PartialTree *rChild;
 	int testIndex;
+	int testResult;
     bool nbd_var_box;
     string qr_desc;
 };
@@ -169,7 +170,9 @@ string relatorName(int testIndex)
 bool isEliminated(int testIndex, int n, NamedBox& box) {
 	if (n == 6) {
 		string w = box.qr.getName(relatorName(testIndex));
+        // We are assuming tha the input n is obtained from evaluate. In that case, we have a return of 6 only if w.c/g.c < 1 (i.e. big ball)
 		if (!g_tests.validIdentity(w, box)) {
+			fprintf(stderr, "failed quasi-relator %s(%s)\n", w.c_str(), box.name.c_str());
 			return true;
         }
 		if (g_momVarieties.find(w) != g_momVarieties.end()) {
@@ -191,10 +194,19 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	//fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
 	place.push_back(box);
 	int oldTestIndex = t.testIndex;
+    // Forcefully check bounds
+//    for (int b = 0; b < 7; ++b) {
+//        int result = g_tests.evaluateBox(b, box);
+//        if (result) {
+//            t.testIndex = b;
+//            return true;
+//        }
+//    }
 	if (t.testIndex >= 0) {
         int result = g_tests.evaluateBox(t.testIndex, box);
         if (isEliminated(t.testIndex, result, box)) {
-//            fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
+            t.testResult = result;
+//          fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
             return true;
         } else {
             fprintf(stderr, "FAILED to eliminate %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
@@ -233,6 +245,7 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 					if (result == 5)
 						fprintf(stderr, "impossible power %s(%s)\n", g_testCollectionFullWord.c_str(), box.name.c_str());
 					t.testIndex = i;
+                    t.testResult = result;
 					return true;
 				} else if (result == 6) {
 					string w = box.qr.getName(relatorName(i));
@@ -240,15 +253,19 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
                     // TODO: Remoe this validIdenity check. This is just for sanity!
 		            if (!g_tests.validIdentity(w, box)) {
 						t.testIndex = i;
+                        t.testResult = result;
+						fprintf(stderr, "failed quasi-relator variety %s(%s)\n", w.c_str(), box.name.c_str());
                         return true;
                     }
 					if (g_momVarieties.find(w) != g_momVarieties.end()) {
 						t.testIndex = i;
+                        t.testResult = result;
 						fprintf(stderr, "mom variety %s(%s)\n", w.c_str(), box.name.c_str());
 						return true;
 					}
 					if (g_parameterizedVarieties.find(w) != g_parameterizedVarieties.end()) {
 						t.testIndex = i;
+                        t.testResult = result;
 						fprintf(stderr, "parameterized variety %s(%s)\n", w.c_str(), box.name.c_str());
 						return true;
 					}
@@ -258,17 +275,23 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 		vector<string> quasiRelators = box.qr.wordClasses();
 		for (vector<string>::iterator it = quasiRelators.begin(); it != quasiRelators.end(); ++it) {
 			if (!g_tests.validIdentity(*it, box)) {
-				fprintf(stderr, "invalid identity %s(%s)\n", it->c_str(), box.name.c_str());
+				fprintf(stderr, "failed quasi-relator identity %s(%s)\n", it->c_str(), box.name.c_str());
 				t.testIndex = hackIndex[*it];
+                t.testResult = 6;
 				return true;
 			}
 		}
 	}
 	
 	t.testIndex = -1;
-    t.qr_desc = box.qr.desc().c_str();
 	
     bool inside_nbd = g_tests.box_inside_nbd(box);
+    if (inside_nbd) {
+        t.qr_desc = box.qr.min_pow_desc().c_str();
+    } else {
+        t.qr_desc = box.qr.desc().c_str();
+    }
+    // bool inside_nbd = g_tests.box_inside_at_least_two_nbd(box);
 	if (inside_nbd || !t.lChild) {
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth || inside_nbd) {
 	        Params<XComplex> params = box.center();
@@ -278,7 +301,7 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 			double area = dec_d(dec_d(absLS * absLS) * nearest.lattice.im);
             if (inside_nbd) {
                 t.nbd_var_box = true;
-			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f VAR (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromicSqrt.re, params.loxodromicSqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
+			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f VAR (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromicSqrt.re, params.loxodromicSqrt.im, params.parabolic.re,params.parabolic.im, box.qr.min_pow_desc().c_str());
 		        truncateTree(t);
 			    return true; // We mark this as complete. TODO check this doesn't break anything
             } else {
@@ -322,7 +345,25 @@ void refineTree(NamedBox box, PartialTree& t)
 void printTree(PartialTree& t)
 {
 	if (t.testIndex >= 0) {
-		printf("%s\n", g_tests.getName(t.testIndex));
+        char type = 'F';
+        switch (t.testResult) {
+            case 1:
+                type = 'K'; // Killed by large horoball
+                break;
+            case 3:
+                type = 'I'; // Always impossible relator
+                break;
+            case 4:
+                type = 'L'; // Non-lattice parabolic fixing infinity
+                break;
+            case 5:
+                type = 'E'; // Relator is a power of a word which is not identity, so Elliptic.
+                break;
+            default:
+                type = 'F'; // We consider result 6 or any other a failure since we don't have any mom varieties at this point    
+                break;
+        }
+		printf("%c(%s)\n", type, g_tests.getName(t.testIndex));
 	} else if (t.lChild && t.rChild) {
 		printf("X\n");
 		printTree(*t.lChild);
