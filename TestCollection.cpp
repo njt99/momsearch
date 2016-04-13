@@ -395,7 +395,7 @@ int TestCollection::add(string buf)
     string word;
     if (start != string::npos) {
         size_t end = buf.find(')');
-        word = buf.substr(start+1,end-start);
+        word = buf.substr(start+1,end-start-1);
     } else {
         word = buf;
     }  

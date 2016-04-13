@@ -56,12 +56,13 @@ if __name__ == '__main__' :
     child_limit = 8
 
     maxSize = '300000000'
-    maxDepth = '42'
+    maxDepth = '96'
     truncateDepth = '96'
     inventDepth = '0'
     ballSearchDepth = '-1'
-    maxArea = '5.2'
+    maxArea = '5.24'
     fillHoles = ' --fillHoles'
+    improveTree = ' --improveTree'
     mom = '/dev/null' #/home/ayarmola/momsearch/momWords'
     parameterized = '/dev/null' #/home/ayarmola/momsearch/parameterizedWords'
     powers = '/home/ayarmola/momsearch/powers_combined'
@@ -175,6 +176,7 @@ if __name__ == '__main__' :
         treecat_command = '{0} {1} {2}'.format(treecat, src_dir, best_box)
         refine_command = refine + \
                     fillHoles + \
+                    improveTree + \
                     ' --box ' + best_box + \
                     ' --maxDepth ' + maxDepth + \
                     ' --truncateDepth ' + truncateDepth + \
