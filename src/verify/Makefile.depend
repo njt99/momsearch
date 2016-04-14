@@ -1,0 +1,5 @@
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+
+ACJ.o: ACJ.h Complex.h roundoff.h Complex.inline ACJ.inline
+Complex.o: Complex.h roundoff.h Complex.inline
+SL2ACJ.o: SL2ACJ.h ACJ.h Complex.h roundoff.h Complex.inline ACJ.inline

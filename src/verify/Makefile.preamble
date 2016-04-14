@@ -1,0 +1,10 @@
+CCOPTS= -Wall -fsigned-char
+COPTS=-ggdb -Wall -fsigned-char
+COPTS=-ggdb -O2 -Wall -fsigned-char
+#COPTS=-O4 -ggdb -Wall -fsigned-char
+#COPTS=-O4 -Wall -fsigned-char -DHACK
+#COPTS=-O2 -pg -Wall -fsigned-char
+#COPTS=-g -Wall -fsigned-char
+# -g causes gdb to run into "heuristic fence-posts"
+#LIBS=-lfastm
+LIBS=-L. -lm

@@ -1,0 +1,1774 @@
+PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 
+PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 
+PossiblePower GGG 0 0 0 0 G^3 ~ 0 n=1 base=1 
+PossiblePower gggg 0 0 0 0 g^4 ~ 0 n=1 base=1 
+PossiblePower GGGG 0 0 0 0 G^4 ~ 0 n=1 base=1 
+PossiblePower ggggg 0 0 0 0 g^5 ~ 0 n=1 base=1 
+PossiblePower GGGGG 0 0 0 0 G^5 ~ 0 n=1 base=1 
+PossiblePower gggggg 0 0 0 0 g^6 ~ 0 n=1 base=1 
+PossiblePower GGGGGG 0 0 0 0 G^6 ~ 0 n=1 base=1 
+PossiblePower ggggggg 0 0 0 0 g^7 ~ 0 n=1 base=1 
+PossiblePower GGGGGGG 0 0 0 0 G^7 ~ 0 n=1 base=1 
+PossiblePower gggggggg 0 0 0 0 g^8 ~ 0 n=1 base=1 
+PossiblePower GGGGGGGG 0 0 0 0 G^8 ~ 0 n=1 base=1 
+PossiblePower ggggggggg 0 0 0 0 g^9 ~ 0 n=1 base=1 
+PossiblePower GGGGGGGGG 0 0 0 0 G^9 ~ 0 n=1 base=1 
+PossiblePower gggggggggg 0 0 0 0 g^10 ~ 0 n=1 base=1 
+PossiblePower ggggggggggg 0 0 0 0 g^11 ~ 0 n=1 base=1 
+PossiblePower gggggggggggg 0 0 0 0 g^12 ~ 0 n=1 base=1 
+PossiblePower GGGGGGGGGGGG 0 0 0 0 G^12 ~ 0 n=1 base=1 
+PossiblePower ggggggMg 0 1 0 0 g^7 ~ 6 n=1 base=1 
+PossiblePower ggggggMg 0 1 0 0 g^7 ~ 6 n=1 base=2 
+PossiblePower gggggMg 0 1 0 0 g^6 ~ 5 n=1 base=1 
+PossiblePower GGGGGmG 0 1 0 0 G^6 ~ 5 n=1 base=1 
+PossiblePower gggggMg 0 1 0 0 g^6 ~ 5 n=1 base=2 
+PossiblePower GGGGGmG 0 1 0 0 G^6 ~ 5 n=1 base=2 
+PossiblePower gggggMg 0 1 0 0 gg^3 ~ 5 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGGGGmG 0 1 0 0 GG^3 ~ 5 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gggggMg 0 1 0 0 ggMg^2 ~ 2 n=3 base=3 {PossiblePower ggMg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GGGGGmG 0 1 0 0 GGmG^2 ~ 2 n=3 base=3 {PossiblePower GGmG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower gggggMgg 0 1 0 0 g^7 ~ 5 n=1 base=1 
+PossiblePower GGGGGmGG 0 1 0 0 G^7 ~ 5 n=1 base=1 
+PossiblePower gggggMgg 0 1 0 0 g^7 ~ 5 n=1 base=2 
+PossiblePower GGGGGmGG 0 1 0 0 G^7 ~ 5 n=1 base=2 
+PossiblePower gggggMgggg 0 1 0 0 g^9 ~ 5 n=1 base=1 
+PossiblePower gggggMgggg 0 1 0 0 g^9 ~ 5 n=1 base=2 
+PossiblePower gggggMgggg 0 1 0 0 ggg^3 ~ 5 n=3 base=6 {PossiblePower ggg 0 0 0 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower gggggMggggg 0 0 -1 0 Mggggg^2 ~ 0 n=5 base=5 {PossiblePower Mggggg 0 0 1 0 g^5 ~ 0 n=1 base=1 }
+PossiblePower gggggNg 0 1 0 0 g^6 ~ 5 n=1 base=1 
+PossiblePower GGGGGnG 0 1 0 0 G^6 ~ 5 n=1 base=1 
+PossiblePower gggggNg 0 1 0 0 g^6 ~ 5 n=1 base=2 
+PossiblePower GGGGGnG 0 1 0 0 G^6 ~ 5 n=1 base=2 
+PossiblePower gggggNg 0 1 0 0 gg^3 ~ 5 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGGGGnG 0 1 0 0 GG^3 ~ 5 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gggggNg 0 1 0 0 ggNg^2 ~ 2 n=3 base=3 {PossiblePower ggNg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GGGGGnG 0 1 0 0 GGnG^2 ~ 2 n=3 base=3 {PossiblePower GGnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower ggggmgg 0 1 0 0 g^6 ~ 4 n=1 base=1 
+PossiblePower GGGGMGG 0 1 0 0 G^6 ~ 4 n=1 base=1 
+PossiblePower ggggmgg 0 1 0 0 g^6 ~ 4 n=1 base=2 
+PossiblePower GGGGMGG 0 1 0 0 G^6 ~ 4 n=1 base=2 
+PossiblePower ggggmgg 0 1 0 0 gg^3 ~ 4 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGGGMGG 0 1 0 0 GG^3 ~ 4 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggggmgg 0 1 0 0 gmgg^2 ~ 1 n=3 base=3 {PossiblePower gmgg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower GGGGMGG 0 1 0 0 GMGG^2 ~ 1 n=3 base=3 {PossiblePower GMGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower ggggmgg 0 1 1 0 mgg^3 ~ 2 n=2 base=4 {PossiblePower mgg 0 0 -1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGGGMGG 0 1 -1 0 MGG^3 ~ 2 n=2 base=4 {PossiblePower MGG 0 0 1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggggMggg 0 1 0 0 g^7 ~ 4 n=1 base=1 
+PossiblePower GGGGmGGG 0 1 0 0 G^7 ~ 4 n=1 base=1 
+PossiblePower ggggMggg 0 1 0 0 g^7 ~ 4 n=1 base=2 
+PossiblePower GGGGmGGG 0 1 0 0 G^7 ~ 4 n=1 base=2 
+PossiblePower ggggmgggg 0 0 1 0 mgggg^2 ~ 0 n=4 base=4 {PossiblePower mgggg 0 0 -1 0 g^4 ~ 0 n=1 base=1 }
+PossiblePower ggggMgggg 0 0 -1 0 Mgggg^2 ~ 0 n=4 base=4 {PossiblePower Mgggg 0 0 1 0 g^4 ~ 0 n=1 base=1 }
+PossiblePower GGGGmGGGG 0 0 1 0 mGGGG^2 ~ 0 n=4 base=4 {PossiblePower mGGGG 0 0 -1 0 G^4 ~ 0 n=1 base=1 }
+PossiblePower ggggmggggg 0 1 0 0 g^9 ~ 4 n=1 base=1 
+PossiblePower ggggMggggg 0 1 0 0 g^9 ~ 4 n=1 base=1 
+PossiblePower GGGGmGGGGG 0 1 0 0 G^9 ~ 4 n=1 base=1 
+PossiblePower ggggmggggg 0 1 0 0 g^9 ~ 4 n=1 base=2 
+PossiblePower ggggMggggg 0 1 0 0 g^9 ~ 4 n=1 base=2 
+PossiblePower GGGGmGGGGG 0 1 0 0 G^9 ~ 4 n=1 base=2 
+PossiblePower ggggmggggg 0 1 0 0 ggg^3 ~ 4 n=3 base=6 {PossiblePower ggg 0 0 0 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower ggggMggggg 0 1 0 0 ggg^3 ~ 4 n=3 base=6 {PossiblePower ggg 0 0 0 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower GGGGmGGGGG 0 1 0 0 GGG^3 ~ 4 n=3 base=6 {PossiblePower GGG 0 0 0 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower ggggmNggg 0 1 0 0 g^7 ~ 4 n=1 base=1 
+PossiblePower ggggmNggg 0 1 0 0 g^7 ~ 4 n=1 base=2 
+PossiblePower ggggmNgggg 0 0 1 -1 mNgggg^2 ~ 0 n=4 base=4 {PossiblePower mNgggg 0 0 -1 1 g^4 ~ 0 n=1 base=1 }
+PossiblePower ggggMngggg 0 0 -1 1 Mngggg^2 ~ 0 n=4 base=4 {PossiblePower Mngggg 0 0 1 -1 g^4 ~ 0 n=1 base=1 }
+PossiblePower ggggNggg 0 1 0 0 g^7 ~ 4 n=1 base=1 
+PossiblePower GGGGnGGG 0 1 0 0 G^7 ~ 4 n=1 base=1 
+PossiblePower ggggNggg 0 1 0 0 g^7 ~ 4 n=1 base=2 
+PossiblePower GGGGnGGG 0 1 0 0 G^7 ~ 4 n=1 base=2 
+PossiblePower ggggNgggg 0 0 0 -1 Ngggg^2 ~ 0 n=4 base=4 {PossiblePower Ngggg 0 0 0 1 g^4 ~ 0 n=1 base=1 }
+PossiblePower GGGGnGGGG 0 0 0 1 nGGGG^2 ~ 0 n=4 base=4 {PossiblePower nGGGG 0 0 0 -1 G^4 ~ 0 n=1 base=1 }
+PossiblePower GGGmG 0 1 0 0 G^4 ~ 3 n=1 base=1 
+PossiblePower GGGMG 0 1 0 0 G^4 ~ 3 n=1 base=1 
+PossiblePower GGGmG 0 1 0 0 G^4 ~ 3 n=1 base=2 
+PossiblePower GGGMG 0 1 0 0 G^4 ~ 3 n=1 base=2 
+PossiblePower GGGmG 0 1 0 0 GmG^2 ~ 1 n=2 base=2 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GGGMG 0 1 0 0 GMG^2 ~ 1 n=2 base=2 {PossiblePower GMG 0 0 -1 0 MG^2 ~ 0 n=1 base=1 }
+PossiblePower gggmgg 0 1 0 0 g^5 ~ 3 n=1 base=1 
+PossiblePower GGGmGG 0 1 0 0 G^5 ~ 3 n=1 base=1 
+PossiblePower GGGMGG 0 1 0 0 G^5 ~ 3 n=1 base=1 
+PossiblePower gggmgg 0 1 0 0 g^5 ~ 3 n=1 base=2 
+PossiblePower GGGmGG 0 1 0 0 G^5 ~ 3 n=1 base=2 
+PossiblePower GGGMGG 0 1 0 0 G^5 ~ 3 n=1 base=2 
+PossiblePower gggmggg 0 0 1 0 mggg^2 ~ 0 n=3 base=3 {PossiblePower mggg 0 0 -1 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower gggMggg 0 0 -1 0 Mggg^2 ~ 0 n=3 base=3 {PossiblePower Mggg 0 0 1 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower GGGmGGG 0 0 1 0 mGGG^2 ~ 0 n=3 base=3 {PossiblePower mGGG 0 0 -1 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower GGGMGGG 0 0 -1 0 MGGG^2 ~ 0 n=3 base=3 {PossiblePower MGGG 0 0 1 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower gggmgggg 0 1 0 0 g^7 ~ 3 n=1 base=1 
+PossiblePower gggMgggg 0 1 0 0 g^7 ~ 3 n=1 base=1 
+PossiblePower GGGmGGGG 0 1 0 0 G^7 ~ 3 n=1 base=1 
+PossiblePower gggmgggg 0 1 0 0 g^7 ~ 3 n=1 base=2 
+PossiblePower gggMgggg 0 1 0 0 g^7 ~ 3 n=1 base=2 
+PossiblePower GGGmGGGG 0 1 0 0 G^7 ~ 3 n=1 base=2 
+PossiblePower gggMggggMg 0 0 0 0 gggMg^2 ~ 0 n=4 base=4 {PossiblePower gggMg 0 1 0 0 gMg^2 ~ 1 n=2 base=2 {PossiblePower gMg 0 0 -1 0 Mg^2 ~ 0 n=1 base=1 }}
+PossiblePower GGGmGGGGmG 0 0 0 0 GGGmG^2 ~ 0 n=4 base=4 {PossiblePower GGGmG 0 1 0 0 GmG^2 ~ 1 n=2 base=2 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }}
+PossiblePower GGGmGmGG 0 1 1 0 mGmGG^2 ~ 1 n=3 base=3 {PossiblePower mGmGG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }
+PossiblePower gggmGmgggmG 1 0 1 0 mgggmG^2 ~ 0 n=4 base=4 
+PossiblePower GGGmGmGGGmG 1 0 1 0 mGGGmG^2 ~ 0 n=4 base=4 
+PossiblePower GGGmNG 0 1 0 0 G^4 ~ 3 n=1 base=1 
+PossiblePower GGGMnG 0 1 0 0 G^4 ~ 3 n=1 base=1 
+PossiblePower GGGmNG 0 1 0 0 G^4 ~ 3 n=1 base=2 
+PossiblePower GGGMnG 0 1 0 0 G^4 ~ 3 n=1 base=2 
+PossiblePower GGGmNG 0 1 0 0 GmNG^2 ~ 1 n=2 base=2 {PossiblePower GmNG 0 0 1 -1 mNG^2 ~ 0 n=1 base=1 }
+PossiblePower GGGMnG 0 1 0 0 GMnG^2 ~ 1 n=2 base=2 {PossiblePower GMnG 0 0 -1 1 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gggmNgg 0 1 0 0 g^5 ~ 3 n=1 base=1 
+PossiblePower gggMngg 0 1 0 0 g^5 ~ 3 n=1 base=1 
+PossiblePower GGGmnGG 0 1 0 0 G^5 ~ 3 n=1 base=1 
+PossiblePower GGGmNGG 0 1 0 0 G^5 ~ 3 n=1 base=1 
+PossiblePower GGGMnGG 0 1 0 0 G^5 ~ 3 n=1 base=1 
+PossiblePower gggmNgg 0 1 0 0 g^5 ~ 3 n=1 base=2 
+PossiblePower gggMngg 0 1 0 0 g^5 ~ 3 n=1 base=2 
+PossiblePower GGGmnGG 0 1 0 0 G^5 ~ 3 n=1 base=2 
+PossiblePower GGGmNGG 0 1 0 0 G^5 ~ 3 n=1 base=2 
+PossiblePower GGGMnGG 0 1 0 0 G^5 ~ 3 n=1 base=2 
+PossiblePower gggmNggg 0 0 1 -1 mNggg^2 ~ 0 n=3 base=3 {PossiblePower mNggg 0 0 -1 1 g^3 ~ 0 n=1 base=1 }
+PossiblePower gggMnggg 0 0 -1 1 Mnggg^2 ~ 0 n=3 base=3 {PossiblePower Mnggg 0 0 1 -1 g^3 ~ 0 n=1 base=1 }
+PossiblePower gggMNggg 0 0 -1 -1 MNggg^2 ~ 0 n=3 base=3 {PossiblePower MNggg 0 0 1 1 g^3 ~ 0 n=1 base=1 }
+PossiblePower GGGmnGGG 0 0 1 1 mnGGG^2 ~ 0 n=3 base=3 {PossiblePower mnGGG 0 0 -1 -1 G^3 ~ 0 n=1 base=1 }
+PossiblePower GGGmNGGG 0 0 1 -1 mNGGG^2 ~ 0 n=3 base=3 {PossiblePower mNGGG 0 0 -1 1 G^3 ~ 0 n=1 base=1 }
+PossiblePower GGGMnGGG 0 0 -1 1 MnGGG^2 ~ 0 n=3 base=3 {PossiblePower MnGGG 0 0 1 -1 G^3 ~ 0 n=1 base=1 }
+PossiblePower GGGnG 0 1 0 0 G^4 ~ 3 n=1 base=1 
+PossiblePower GGGNG 0 1 0 0 G^4 ~ 3 n=1 base=1 
+PossiblePower GGGnG 0 1 0 0 G^4 ~ 3 n=1 base=2 
+PossiblePower GGGNG 0 1 0 0 G^4 ~ 3 n=1 base=2 
+PossiblePower GGGnG 0 1 0 0 GnG^2 ~ 1 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GGGNG 0 1 0 0 GNG^2 ~ 1 n=2 base=2 {PossiblePower GNG 0 0 0 -1 NG^2 ~ 0 n=1 base=1 }
+PossiblePower gggngg 0 1 0 0 g^5 ~ 3 n=1 base=1 
+PossiblePower gggNgg 0 1 0 0 g^5 ~ 3 n=1 base=1 
+PossiblePower GGGnGG 0 1 0 0 G^5 ~ 3 n=1 base=1 
+PossiblePower GGGNGG 0 1 0 0 G^5 ~ 3 n=1 base=1 
+PossiblePower gggngg 0 1 0 0 g^5 ~ 3 n=1 base=2 
+PossiblePower gggNgg 0 1 0 0 g^5 ~ 3 n=1 base=2 
+PossiblePower GGGnGG 0 1 0 0 G^5 ~ 3 n=1 base=2 
+PossiblePower GGGNGG 0 1 0 0 G^5 ~ 3 n=1 base=2 
+PossiblePower gggnggg 0 0 0 1 nggg^2 ~ 0 n=3 base=3 {PossiblePower nggg 0 0 0 -1 g^3 ~ 0 n=1 base=1 }
+PossiblePower gggNggg 0 0 0 -1 Nggg^2 ~ 0 n=3 base=3 {PossiblePower Nggg 0 0 0 1 g^3 ~ 0 n=1 base=1 }
+PossiblePower GGGnGGG 0 0 0 1 nGGG^2 ~ 0 n=3 base=3 {PossiblePower nGGG 0 0 0 -1 G^3 ~ 0 n=1 base=1 }
+PossiblePower GGGNGGG 0 0 0 -1 NGGG^2 ~ 0 n=3 base=3 {PossiblePower NGGG 0 0 0 1 G^3 ~ 0 n=1 base=1 }
+PossiblePower gggNgggg 0 1 0 0 g^7 ~ 3 n=1 base=1 
+PossiblePower GGGnGGGG 0 1 0 0 G^7 ~ 3 n=1 base=1 
+PossiblePower gggNgggg 0 1 0 0 g^7 ~ 3 n=1 base=2 
+PossiblePower GGGnGGGG 0 1 0 0 G^7 ~ 3 n=1 base=2 
+PossiblePower gggNgggNggg 0 0 0 -1 Nggg^3 ~ 0 n=3 base=3 {PossiblePower Nggg 0 0 0 1 g^3 ~ 0 n=1 base=1 }
+PossiblePower GGGnGGnG 0 1 0 0 GnG^3 ~ 1 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GGGnGGnG 0 1 0 0 GnG^3 ~ 1 n=2 base=4 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GGGnGGnG 0 1 0 1 nGGnG^2 ~ 2 n=3 base=3 {PossiblePower nGGnG 0 1 0 0 nG^3 ~ 1 n=1 base=2 }
+PossiblePower GGmG 0 1 0 0 G^3 ~ 2 n=1 base=1 
+PossiblePower GGMG 0 1 0 0 G^3 ~ 2 n=1 base=1 
+PossiblePower GGmG 0 1 1 0 mG^3 ~ 1 n=1 base=2 
+PossiblePower GGMG 0 1 -1 0 MG^3 ~ 1 n=1 base=2 
+PossiblePower ggmgg 0 0 1 0 mgg^2 ~ 0 n=2 base=2 {PossiblePower mgg 0 0 -1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMgg 0 0 -1 0 Mgg^2 ~ 0 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGG 0 0 1 0 mGG^2 ~ 0 n=2 base=2 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGMGG 0 0 -1 0 MGG^2 ~ 0 n=2 base=2 {PossiblePower MGG 0 0 1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggmggg 0 1 0 0 g^5 ~ 2 n=1 base=1 
+PossiblePower ggMggg 0 1 0 0 g^5 ~ 2 n=1 base=1 
+PossiblePower GGmGGG 0 1 0 0 G^5 ~ 2 n=1 base=1 
+PossiblePower GGMGGG 0 1 0 0 G^5 ~ 2 n=1 base=1 
+PossiblePower ggMgggg 0 1 0 0 g^6 ~ 2 n=1 base=1 
+PossiblePower ggMgggg 0 1 0 0 gg^3 ~ 2 n=2 base=4 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMgggg 0 1 0 0 ggg^2 ~ 2 n=3 base=3 {PossiblePower ggg 0 0 0 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower ggMgggg 0 1 -1 0 Mgg^3 ~ 4 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggmgggmNg 0 1 0 0 ggmNg^2 ~ 2 n=3 base=3 {PossiblePower ggmNg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower ggMgggMNg 0 1 0 0 ggMNg^2 ~ 2 n=3 base=3 {PossiblePower ggMNg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GGMGGGMnG 0 1 0 0 GGMnG^2 ~ 2 n=3 base=3 {PossiblePower GGMnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower ggmgggNg 0 1 0 0 ggNg^2 ~ 2 n=3 base=3 {PossiblePower ggNg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower ggmggmgg 0 0 1 0 mgg^3 ~ 0 n=2 base=2 {PossiblePower mgg 0 0 -1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMggMgg 0 0 -1 0 Mgg^3 ~ 0 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGGmGG 0 0 1 0 mGG^3 ~ 0 n=2 base=2 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGMGGMGG 0 0 -1 0 MGG^3 ~ 0 n=2 base=2 {PossiblePower MGG 0 0 1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggmggmggmgg 0 0 1 0 mgg^4 ~ 0 n=2 base=2 {PossiblePower mgg 0 0 -1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggmggmggmggmgg 0 0 1 0 mgg^5 ~ 0 n=2 base=2 {PossiblePower mgg 0 0 -1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMggMgMg 0 1 0 0 gMgMg^2 ~ 1 n=3 base=3 {PossiblePower gMgMg 0 0 -1 0 Mg^3 ~ 0 n=1 base=1 }
+PossiblePower ggMggMgMg 0 1 -1 0 Mgg^3 ~ 5 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMggMMggMgg 0 0 -2 0 MMggMgg^2 ~ 0 n=4 base=4 {PossiblePower MMggMgg 0 0 1 0 Mgg^2 ~ 0 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }}
+PossiblePower ggmggmNgg 0 1 1 0 mgg^3 ~ 4 n=2 base=2 {PossiblePower mgg 0 0 -1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMggMNgg 0 1 -1 0 Mgg^3 ~ 4 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGGmnGG 0 1 1 0 mGG^3 ~ 4 n=2 base=2 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggmggmNgg 0 1 1 -1 mNgg^3 ~ 2 n=2 base=4 {PossiblePower mNgg 0 0 -1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMggMNgg 0 1 -1 -1 MNgg^3 ~ 2 n=2 base=4 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGGmnGG 0 1 1 1 mnGG^3 ~ 2 n=2 base=4 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMggMNggMgg 0 0 -1 -1 MNggMgg^2 ~ 0 n=4 base=4 {PossiblePower MNggMgg 0 0 0 1 Mgg^2 ~ 0 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GGMGGMnGGMGG 0 0 -1 1 MnGGMGG^2 ~ 0 n=4 base=4 {PossiblePower MnGGMGG 0 0 0 -1 MGG^2 ~ 0 n=2 base=2 {PossiblePower MGG 0 0 1 0 G^2 ~ 0 n=1 base=1 }}
+PossiblePower ggMggnggMgg 0 0 0 1 nggMgg^2 ~ 0 n=4 base=4 {PossiblePower nggMgg 0 0 -1 -1 Mgg^2 ~ 0 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GGmGmG 0 1 1 0 mG^4 ~ 1 n=1 base=2 
+PossiblePower GGmGmG 0 1 1 0 mGmG^2 ~ 1 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGmGGG 0 1 1 0 mGGG^2 ~ 2 n=3 base=3 {PossiblePower mGGG 0 0 -1 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower GGmGmGGmG 0 0 1 0 mGGmG^2 ~ 0 n=3 base=3 {PossiblePower mGGmG 0 1 0 0 mG^3 ~ 1 n=1 base=2 }
+PossiblePower ggmGmggmG 1 0 1 0 mggmG^2 ~ 0 n=3 base=3 
+PossiblePower ggMGMggMG 1 0 -1 0 MggMG^2 ~ 0 n=3 base=3 
+PossiblePower GGmgmGGmg 1 0 1 0 mGGmg^2 ~ 0 n=3 base=3 
+PossiblePower GGMgMGGMg 1 0 -1 0 MGGMg^2 ~ 0 n=3 base=3 
+PossiblePower ggMGMggMGMggMG 1 0 -1 0 MggMG^3 ~ 0 n=3 base=3 
+PossiblePower ggMGMggMGMggMG 1 0 -1 0 MggMG^3 ~ 0 n=3 base=6 
+PossiblePower GGmGmGGmGmGmG 0 1 0 0 GmGmGmG^2 ~ 1 n=4 base=4 {PossiblePower GmGmGmG 0 0 1 0 mG^4 ~ 0 n=1 base=1 }
+PossiblePower ggMgMggMNg 1 1 -1 0 MggMNg^2 ~ 2 n=3 base=3 
+PossiblePower GGmGmGGmnG 1 1 1 0 mGGmnG^2 ~ 2 n=3 base=3 
+PossiblePower GGMgMGGMng 1 1 -1 0 MGGMng^2 ~ 2 n=3 base=3 
+PossiblePower ggMgMggNg 1 1 -1 0 MggNg^2 ~ 2 n=3 base=3 
+PossiblePower GGmGmGGnG 1 1 1 0 mGGnG^2 ~ 2 n=3 base=3 
+PossiblePower GGmGmGmG 0 1 1 0 mG^5 ~ 1 n=1 base=2 
+PossiblePower ggMgMgMgg 0 1 -1 0 Mgg^3 ~ 3 n=2 base=4 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGmGmGG 0 1 1 0 mGG^3 ~ 3 n=2 base=4 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMgMgMggMgMg 0 0 -1 0 MggMgMg^2 ~ 0 n=4 base=4 {PossiblePower MggMgMg 0 1 0 0 MgMg^2 ~ 1 n=2 base=2 {PossiblePower MgMg 0 0 0 0 Mg^2 ~ 0 n=1 base=1 }}
+PossiblePower GGMgMgMGGMgMg 1 0 -1 0 MGGMgMg^2 ~ 0 n=4 base=4 
+PossiblePower ggmGmgmgmG 1 1 1 0 mgmgmG^2 ~ 1 n=3 base=3 
+PossiblePower ggMGMgMgMG 1 1 -1 0 MgMgMG^2 ~ 1 n=3 base=3 
+PossiblePower GGmgmGmGmg 1 1 1 0 mGmGmg^2 ~ 1 n=3 base=3 
+PossiblePower ggMgMgMgMgMgMgMg 0 1 -1 0 Mg^9 ~ 1 n=1 base=2 
+PossiblePower ggMgMgMgMgMgMgMg 0 1 -1 0 MgMgMg^3 ~ 1 n=3 base=3 {PossiblePower MgMgMg 0 0 0 0 Mg^3 ~ 0 n=1 base=1 }
+PossiblePower ggMgMgMgMgMgMgMg 0 1 -1 0 MgMgMg^3 ~ 1 n=3 base=6 {PossiblePower MgMgMg 0 0 0 0 Mg^3 ~ 0 n=1 base=1 }
+PossiblePower ggMgMgMgMgMgMgMgMg 0 1 -1 0 Mg^10 ~ 1 n=1 base=2 
+PossiblePower GGmGmGmGmGmGmGmGmG 0 1 1 0 mG^10 ~ 1 n=1 base=2 
+PossiblePower ggMgMgMgMgMgMgMgMg 0 1 -1 0 MgMg^5 ~ 1 n=2 base=2 {PossiblePower MgMg 0 0 0 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGmGmGmGmGmGmGmG 0 1 1 0 mGmG^5 ~ 1 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggMgMgMgMgMgMgMgMg 0 1 -1 0 MgMg^5 ~ 1 n=2 base=4 {PossiblePower MgMg 0 0 0 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGmGmGmGmGmGmGmG 0 1 1 0 mGmG^5 ~ 1 n=2 base=4 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggMgMgMgMgMgMgMgMg 0 1 -1 0 MgMgMgMgMg^2 ~ 1 n=5 base=5 {PossiblePower MgMgMgMgMg 0 0 0 0 Mg^5 ~ 0 n=1 base=1 }
+PossiblePower GGmGmGmGmGmGmGmGmG 0 1 1 0 mGmGmGmGmG^2 ~ 1 n=5 base=5 {PossiblePower mGmGmGmGmG 0 0 0 0 mG^5 ~ 0 n=1 base=1 }
+PossiblePower ggMgMgMgMgMgMgMgMgMg 0 1 -1 0 Mg^11 ~ 1 n=1 base=2 
+PossiblePower GGmGmGmGmGmGmGmGmGmGmGmGmG 0 1 1 0 mG^14 ~ 1 n=1 base=2 
+PossiblePower GGmGmGmGmGmGmGmGmGmGmGmGmG 0 1 1 0 mGmG^7 ~ 1 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGmGmGmGmGmGmGmGmGmGmGmG 0 1 1 0 mGmG^7 ~ 1 n=2 base=4 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGmGmGmGmGmGmGmGmGmGmGmG 0 1 1 0 mGmGmGmGmGmGmG^2 ~ 1 n=7 base=7 {PossiblePower mGmGmGmGmGmGmG 0 0 0 0 mG^7 ~ 0 n=1 base=1 }
+PossiblePower ggMgMgMngMg 0 1 -1 0 MgMngMg^2 ~ 1 n=3 base=3 {PossiblePower MgMngMg 0 1 0 0 Mg^3 ~ 1 n=1 base=2 }
+PossiblePower ggMgMgngMg 0 1 -1 0 MgngMg^2 ~ 1 n=3 base=3 {PossiblePower MgngMg 0 1 0 0 Mg^3 ~ 1 n=1 base=2 }
+PossiblePower ggMgMngMgg 0 1 -1 0 Mgg^3 ~ 3 n=2 base=4 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMgMNgMgg 0 1 -1 0 Mgg^3 ~ 3 n=2 base=4 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGmnGmGG 0 1 1 0 mGG^3 ~ 3 n=2 base=4 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGmNGmGG 0 1 1 0 mGG^3 ~ 3 n=2 base=4 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMGmnGMggMGmnG 1 0 -1 0 MggMGmnG^2 ~ 0 n=4 base=4 
+PossiblePower ggmGmnGmggmGnG 1 1 1 0 mggmGnG^2 ~ 3 n=4 base=4 
+PossiblePower GGMgmNgMGmGMgmNg 1 1 -1 0 MGmGMgmNg^2 ~ 1 n=4 base=4 
+PossiblePower GGmGmnGmnGmG 0 1 1 1 mnGmnGmG^2 ~ 1 n=3 base=3 {PossiblePower mnGmnGmG 0 1 0 0 mnG^3 ~ 2 n=1 base=1 }
+PossiblePower ggMgNg 0 1 -1 0 MgNg^2 ~ 1 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGnG 0 1 1 0 mGnG^2 ~ 1 n=2 base=2 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower ggMgngMgg 0 1 -1 0 Mgg^3 ~ 3 n=2 base=4 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMgNgMgg 0 1 -1 0 Mgg^3 ~ 3 n=2 base=4 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGnGmGG 0 1 1 0 mGG^3 ~ 3 n=2 base=4 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGmGNGmGG 0 1 1 0 mGG^3 ~ 3 n=2 base=4 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMGnGMggMGnG 1 0 -1 0 MggMGnG^2 ~ 0 n=4 base=4 
+PossiblePower ggMgNgNgMg 0 1 0 -1 NgNgMg^2 ~ 1 n=3 base=3 {PossiblePower NgNgMg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower GGmGnGnGmG 0 1 0 1 nGnGmG^2 ~ 1 n=3 base=3 {PossiblePower nGnGmG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower ggMMNgg 0 0 -2 -1 MMNgg^2 ~ 0 n=2 base=2 {PossiblePower MMNgg 0 0 2 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmmnGG 0 0 2 1 mmnGG^2 ~ 0 n=2 base=2 {PossiblePower mmnGG 0 0 -2 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMMNggMMNgg 0 0 -2 -1 MMNgg^3 ~ 0 n=2 base=2 {PossiblePower MMNgg 0 0 2 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMMNggMMNggMMNgg 0 0 -2 -1 MMNgg^4 ~ 0 n=2 base=2 {PossiblePower MMNgg 0 0 2 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmmnGGmmnGGmmnGG 0 0 2 1 mmnGG^4 ~ 0 n=2 base=2 {PossiblePower mmnGG 0 0 -2 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMMNggMMNggMMNggMMNgg 0 0 -2 -1 MMNgg^5 ~ 0 n=2 base=2 {PossiblePower MMNgg 0 0 2 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMMNggMMNggMMNggMMNggMMNgg 0 0 -2 -1 MMNgg^6 ~ 0 n=2 base=2 {PossiblePower MMNgg 0 0 2 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMMNggMMNggMMNggMMNggMMNggMMNgg 0 0 -2 -1 MMNgg^7 ~ 0 n=2 base=2 {PossiblePower MMNgg 0 0 2 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmmnGGmnGG 0 1 1 1 mnGG^3 ~ 2 n=2 base=4 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGmmnGGmnGG 0 1 2 1 mmnGG^3 ~ 4 n=2 base=2 {PossiblePower mmnGG 0 0 -2 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGmmnGGmngMgmnGGmmnGGmngMg 1 0 1 1 mnGGmmnGGmngMg^2 ~ 0 n=6 base=6 
+PossiblePower GGmnG 0 1 0 0 G^3 ~ 2 n=1 base=1 
+PossiblePower GGmNG 0 1 0 0 G^3 ~ 2 n=1 base=1 
+PossiblePower GGMnG 0 1 0 0 G^3 ~ 2 n=1 base=1 
+PossiblePower GGmnG 0 1 1 1 mnG^3 ~ 1 n=1 base=2 
+PossiblePower GGmNG 0 1 1 -1 mNG^3 ~ 1 n=1 base=2 
+PossiblePower GGMnG 0 1 -1 1 MnG^3 ~ 1 n=1 base=2 
+PossiblePower ggmngg 0 0 1 1 mngg^2 ~ 0 n=2 base=2 {PossiblePower mngg 0 0 -1 -1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNgg 0 0 1 -1 mNgg^2 ~ 0 n=2 base=2 {PossiblePower mNgg 0 0 -1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMngg 0 0 -1 1 Mngg^2 ~ 0 n=2 base=2 {PossiblePower Mngg 0 0 1 -1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNgg 0 0 -1 -1 MNgg^2 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGG 0 0 1 1 mnGG^2 ~ 0 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGmNGG 0 0 1 -1 mNGG^2 ~ 0 n=2 base=2 {PossiblePower mNGG 0 0 -1 1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGG 0 0 -1 1 MnGG^2 ~ 0 n=2 base=2 {PossiblePower MnGG 0 0 1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNggg 0 1 0 0 g^5 ~ 2 n=1 base=1 
+PossiblePower ggMnggg 0 1 0 0 g^5 ~ 2 n=1 base=1 
+PossiblePower ggMNggg 0 1 0 0 g^5 ~ 2 n=1 base=1 
+PossiblePower GGmnGGG 0 1 0 0 G^5 ~ 2 n=1 base=1 
+PossiblePower GGmNGGG 0 1 0 0 G^5 ~ 2 n=1 base=1 
+PossiblePower GGMnGGG 0 1 0 0 G^5 ~ 2 n=1 base=1 
+PossiblePower ggMngggMg 0 1 0 0 ggMg^2 ~ 2 n=3 base=3 {PossiblePower ggMg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower ggMNgggMg 0 1 0 0 ggMg^2 ~ 2 n=3 base=3 {PossiblePower ggMg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GGmNGGGmG 0 1 0 0 GGmG^2 ~ 2 n=3 base=3 {PossiblePower GGmG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GGMnGGGMnG 0 0 0 0 GGMnG^2 ~ 0 n=3 base=3 {PossiblePower GGMnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower ggmNggmgg 0 1 1 0 mgg^3 ~ 2 n=2 base=4 {PossiblePower mgg 0 0 -1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggMgg 0 1 -1 0 Mgg^3 ~ 2 n=2 base=4 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGGmGG 0 1 1 0 mGG^3 ~ 2 n=2 base=4 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGGMGG 0 1 -1 0 MGG^3 ~ 2 n=2 base=4 {PossiblePower MGG 0 0 1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNggmgg 0 1 1 -1 mNgg^3 ~ 4 n=2 base=2 {PossiblePower mNgg 0 0 -1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggMgg 0 1 -1 -1 MNgg^3 ~ 4 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGGmGG 0 1 1 1 mnGG^3 ~ 4 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGGMGG 0 1 -1 1 MnGG^3 ~ 4 n=2 base=2 {PossiblePower MnGG 0 0 1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggMggMNgg 0 0 -1 0 MggMNgg^2 ~ 0 n=4 base=4 {PossiblePower MggMNgg 0 0 0 -1 MNgg^2 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GGmnGGmGGmnGG 0 0 1 0 mGGmnGG^2 ~ 0 n=4 base=4 {PossiblePower mGGmnGG 0 0 0 1 mnGG^2 ~ 0 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }}
+PossiblePower ggMNggMMNgg 0 1 -1 -1 MNgg^3 ~ 4 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGGmmnGG 0 1 1 1 mnGG^3 ~ 4 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggMMNgg 0 1 -2 -1 MMNgg^3 ~ 2 n=2 base=4 {PossiblePower MMNgg 0 0 2 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGGmmnGG 0 1 2 1 mmnGG^3 ~ 2 n=2 base=4 {PossiblePower mmnGG 0 0 -2 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNggmmNggmNgg 0 0 2 -1 mmNggmNgg^2 ~ 0 n=4 base=4 {PossiblePower mmNggmNgg 0 0 -1 0 mNgg^2 ~ 0 n=2 base=2 {PossiblePower mNgg 0 0 -1 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower ggMNggMMNggMNgg 0 0 -2 -1 MMNggMNgg^2 ~ 0 n=4 base=4 {PossiblePower MMNggMNgg 0 0 1 0 MNgg^2 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower ggmNggmNgg 0 0 1 -1 mNgg^3 ~ 0 n=2 base=2 {PossiblePower mNgg 0 0 -1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMnggMngg 0 0 -1 1 Mngg^3 ~ 0 n=2 base=2 {PossiblePower Mngg 0 0 1 -1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggMNgg 0 0 -1 -1 MNgg^3 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGGmnGG 0 0 1 1 mnGG^3 ~ 0 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGGMnGG 0 0 -1 1 MnGG^3 ~ 0 n=2 base=2 {PossiblePower MnGG 0 0 1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNggmNggmNgg 0 0 1 -1 mNgg^4 ~ 0 n=2 base=2 {PossiblePower mNgg 0 0 -1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggMNggMNgg 0 0 -1 -1 MNgg^4 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGGmnGGmnGG 0 0 1 1 mnGG^4 ~ 0 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggMNggMNggMNgg 0 0 -1 -1 MNgg^5 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggMNggMNggMNggMNgg 0 0 -1 -1 MNgg^6 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGGmnGGmnGGmnGGmnGG 0 0 1 1 mnGG^6 ~ 0 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggMNggMNggMNggMNggMNgg 0 0 -1 -1 MNgg^7 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNggmNggNgg 0 1 1 -1 mNgg^4 ~ 6 n=2 base=2 {PossiblePower mNgg 0 0 -1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggMNggNgg 0 1 -1 -1 MNgg^4 ~ 6 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNggmNggNgg 0 1 1 -1 mNgg^4 ~ 6 n=2 base=4 {PossiblePower mNgg 0 0 -1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggMNggNgg 0 1 -1 -1 MNgg^4 ~ 6 n=2 base=4 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNggmNggNgg 0 1 1 -1 mNggNgg^2 ~ 2 n=4 base=4 {PossiblePower mNggNgg 0 0 -1 0 Ngg^2 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower ggMNggMNggNgg 0 1 -1 -1 MNggNgg^2 ~ 2 n=4 base=4 {PossiblePower MNggNgg 0 0 1 0 Ngg^2 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower ggmNggNgg 0 1 0 -1 Ngg^3 ~ 2 n=2 base=4 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMnggngg 0 1 0 1 ngg^3 ~ 2 n=2 base=4 {PossiblePower ngg 0 0 0 -1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggNgg 0 1 0 -1 Ngg^3 ~ 2 n=2 base=4 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGGnGG 0 1 0 1 nGG^3 ~ 2 n=2 base=4 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGmNGGNGG 0 1 0 -1 NGG^3 ~ 2 n=2 base=4 {PossiblePower NGG 0 0 0 1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGGnGG 0 1 0 1 nGG^3 ~ 2 n=2 base=4 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNggNgg 0 1 1 -1 mNgg^3 ~ 4 n=2 base=2 {PossiblePower mNgg 0 0 -1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMnggngg 0 1 -1 1 Mngg^3 ~ 4 n=2 base=2 {PossiblePower Mngg 0 0 1 -1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggNgg 0 1 -1 -1 MNgg^3 ~ 4 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGGnGG 0 1 1 1 mnGG^3 ~ 4 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGmNGGNGG 0 1 1 -1 mNGG^3 ~ 4 n=2 base=2 {PossiblePower mNGG 0 0 -1 1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGGnGG 0 1 -1 1 MnGG^3 ~ 4 n=2 base=2 {PossiblePower MnGG 0 0 1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggNggMNgg 0 0 0 -1 NggMNgg^2 ~ 0 n=4 base=4 {PossiblePower NggMNgg 0 0 -1 0 MNgg^2 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GGmnGGnGGmnGG 0 0 0 1 nGGmnGG^2 ~ 0 n=4 base=4 {PossiblePower nGGmnGG 0 0 1 0 mnGG^2 ~ 0 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }}
+PossiblePower GGMnGGnGGMnGG 0 0 0 1 nGGMnGG^2 ~ 0 n=4 base=4 {PossiblePower nGGMnGG 0 0 -1 0 MnGG^2 ~ 0 n=2 base=2 {PossiblePower MnGG 0 0 1 -1 G^2 ~ 0 n=1 base=1 }}
+PossiblePower ggMNggNggNgg 0 1 0 -1 Ngg^4 ~ 2 n=2 base=4 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNggNggNgg 0 1 0 -1 NggNgg^2 ~ 2 n=4 base=4 {PossiblePower NggNgg 0 0 0 0 Ngg^2 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GGmnGmGmGmnG 0 1 1 0 mGmGmnG^2 ~ 1 n=3 base=3 {PossiblePower mGmGmnG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }
+PossiblePower ggmNgMgmNgg 0 1 1 -1 mNgg^3 ~ 3 n=2 base=4 {PossiblePower mNgg 0 0 -1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNgmgMNgg 0 1 -1 -1 MNgg^3 ~ 3 n=2 base=4 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNgMgMNgg 0 1 -1 -1 MNgg^3 ~ 3 n=2 base=4 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGmGmnGG 0 1 1 1 mnGG^3 ~ 3 n=2 base=4 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGMGmnGG 0 1 1 1 mnGG^3 ~ 3 n=2 base=4 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNGmGMNggMNGmG 1 0 -1 -1 MNggMNGmG^2 ~ 0 n=4 base=4 
+PossiblePower GGmngMgmnGGmngMg 1 0 1 1 mnGGmngMg^2 ~ 0 n=4 base=4 
+PossiblePower ggmNgMgmNgMgmNgMg 0 1 1 -1 mNgMg^4 ~ 1 n=2 base=2 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGmGMnGmGMnGmG 0 1 -1 1 MnGmG^4 ~ 1 n=2 base=2 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNgMgmNgMgmNgMg 0 1 1 -1 mNgMg^4 ~ 1 n=2 base=4 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGmGMnGmGMnGmG 0 1 -1 1 MnGmG^4 ~ 1 n=2 base=4 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNgMgmNgMgmNgMg 0 1 1 -1 mNgMgmNgMg^2 ~ 1 n=4 base=4 {PossiblePower mNgMgmNgMg 0 0 0 0 mNgMg^2 ~ 0 n=2 base=2 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }}
+PossiblePower GGMnGmGMnGmGMnGmG 0 1 -1 1 MnGmGMnGmG^2 ~ 1 n=4 base=4 {PossiblePower MnGmGMnGmG 0 0 0 0 MnGmG^2 ~ 0 n=2 base=2 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }}
+PossiblePower ggmNgMgmNgMgmNgMgmNgMg 0 1 1 -1 mNgMg^5 ~ 1 n=2 base=2 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGmGMnGmGMnGmGMnGmG 0 1 -1 1 MnGmG^5 ~ 1 n=2 base=2 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNgMgmNgMgmNgMgmNgMg 0 1 1 -1 mNgMg^5 ~ 1 n=2 base=4 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGmGMnGmGMnGmGMnGmG 0 1 -1 1 MnGmG^5 ~ 1 n=2 base=4 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNgMgmNgMgmNgMgmNgMgmNgMg 0 1 1 -1 mNgMg^6 ~ 1 n=2 base=2 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGmGMnGmGMnGmGMnGmGMnGmG 0 1 -1 1 MnGmG^6 ~ 1 n=2 base=2 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNgMgmNgMgmNgMgmNgMgmNgMg 0 1 1 -1 mNgMg^6 ~ 1 n=2 base=4 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnGmGMnGmGMnGmGMnGmGMnGmG 0 1 -1 1 MnGmG^6 ~ 1 n=2 base=4 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggmNgMgmNgMgmNgMgmNgMgmNgMg 0 1 1 -1 mNgMgmNgMg^3 ~ 1 n=4 base=4 {PossiblePower mNgMgmNgMg 0 0 0 0 mNgMg^2 ~ 0 n=2 base=2 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }}
+PossiblePower GGMnGmGMnGmGMnGmGMnGmGMnGmG 0 1 -1 1 MnGmGMnGmG^3 ~ 1 n=4 base=4 {PossiblePower MnGmGMnGmG 0 0 0 0 MnGmG^2 ~ 0 n=2 base=2 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }}
+PossiblePower ggmNgMgmNgMgmNgMgmNgMgmNgMg 0 1 1 -1 mNgMgmNgMg^3 ~ 1 n=4 base=8 {PossiblePower mNgMgmNgMg 0 0 0 0 mNgMg^2 ~ 0 n=2 base=2 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }}
+PossiblePower GGMnGmGMnGmGMnGmGMnGmGMnGmG 0 1 -1 1 MnGmGMnGmG^3 ~ 1 n=4 base=8 {PossiblePower MnGmGMnGmG 0 0 0 0 MnGmG^2 ~ 0 n=2 base=2 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }}
+PossiblePower ggmNgMgmNgMgmNgMgmNgMgmNgMg 0 1 1 -1 mNgMgmNgMgmNgMg^2 ~ 1 n=6 base=6 {PossiblePower mNgMgmNgMgmNgMg 0 0 0 0 mNgMg^3 ~ 0 n=2 base=2 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }}
+PossiblePower GGMnGmGMnGmGMnGmGMnGmGMnGmG 0 1 -1 1 MnGmGMnGmGMnGmG^2 ~ 1 n=6 base=6 {PossiblePower MnGmGMnGmGMnGmG 0 0 0 0 MnGmG^3 ~ 0 n=2 base=2 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }}
+PossiblePower ggMNgMNggMg 1 1 -1 -1 MNggMg^2 ~ 2 n=3 base=3 
+PossiblePower GGmnGmnGGmG 1 1 1 1 mnGGmG^2 ~ 2 n=3 base=3 
+PossiblePower GGmnGmnGGmnG 0 0 1 1 mnGGmnG^2 ~ 0 n=3 base=3 {PossiblePower mnGGmnG 0 1 0 0 mnG^3 ~ 1 n=1 base=2 }
+PossiblePower ggMNgMNggNg 1 1 -1 -1 MNggNg^2 ~ 2 n=3 base=3 
+PossiblePower GGmnGmnGGnG 1 1 1 1 mnGGnG^2 ~ 2 n=3 base=3 
+PossiblePower GGMnGMnGGnG 1 1 -1 1 MnGGnG^2 ~ 2 n=3 base=3 
+PossiblePower GGmnGmnGmnG 0 1 1 1 mnG^5 ~ 1 n=1 base=2 
+PossiblePower ggMNGnGMGnGMNggMNGnGMGnG 1 0 -1 -1 MNggMNGnGMGnG^2 ~ 0 n=6 base=6 
+PossiblePower GGmngNgmgNgmnGGmngNgmgNg 1 0 1 1 mnGGmngNgmgNg^2 ~ 0 n=6 base=6 
+PossiblePower ggMNgNgMNgg 0 1 -1 -1 MNgg^3 ~ 3 n=2 base=4 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGnGmnGG 0 1 1 1 mnGG^3 ~ 3 n=2 base=4 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggMNGnGMNggMNGnG 1 0 -1 -1 MNggMNGnG^2 ~ 0 n=4 base=4 
+PossiblePower GGmngNgmnGGmngNg 1 0 1 1 mnGGmngNg^2 ~ 0 n=4 base=4 
+PossiblePower ggMNGnGMNggMNGnGMNggMNGnG 1 0 -1 -1 MNggMNGnG^3 ~ 0 n=4 base=4 
+PossiblePower ggMNGnGMNggMNGnGMNggMNGnG 1 0 -1 -1 MNggMNGnG^3 ~ 0 n=4 base=8 
+PossiblePower GGmnGnGmnGnG 0 1 1 1 mnGnG^3 ~ 1 n=2 base=2 {PossiblePower mnGnG 0 0 -1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGnGmnGnG 0 1 1 1 mnGnG^3 ~ 1 n=2 base=4 {PossiblePower mnGnG 0 0 -1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnGnGnGmnG 0 1 0 1 nGnGmnG^2 ~ 1 n=3 base=3 {PossiblePower nGnGmnG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower ggMNNgg 0 0 -1 -2 MNNgg^2 ~ 0 n=2 base=2 {PossiblePower MNNgg 0 0 1 2 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnnGG 0 0 1 2 mnnGG^2 ~ 0 n=2 base=2 {PossiblePower mnnGG 0 0 -1 -2 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGMnnGG 0 0 -1 2 MnnGG^2 ~ 0 n=2 base=2 {PossiblePower MnnGG 0 0 1 -2 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGmnnGGmngNgmnGGmnnGGmngNg 1 0 1 1 mnGGmnnGGmngNg^2 ~ 0 n=6 base=6 
+PossiblePower GGnG 0 1 0 0 G^3 ~ 2 n=1 base=1 
+PossiblePower GGNG 0 1 0 0 G^3 ~ 2 n=1 base=1 
+PossiblePower GGnG 0 1 0 1 nG^3 ~ 1 n=1 base=2 
+PossiblePower GGNG 0 1 0 -1 NG^3 ~ 1 n=1 base=2 
+PossiblePower ggngg 0 0 0 1 ngg^2 ~ 0 n=2 base=2 {PossiblePower ngg 0 0 0 -1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgg 0 0 0 -1 Ngg^2 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGG 0 0 0 1 nGG^2 ~ 0 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGNGG 0 0 0 -1 NGG^2 ~ 0 n=2 base=2 {PossiblePower NGG 0 0 0 1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggnggg 0 1 0 0 g^5 ~ 2 n=1 base=1 
+PossiblePower ggNggg 0 1 0 0 g^5 ~ 2 n=1 base=1 
+PossiblePower GGnGGG 0 1 0 0 G^5 ~ 2 n=1 base=1 
+PossiblePower GGNGGG 0 1 0 0 G^5 ~ 2 n=1 base=1 
+PossiblePower ggngggMg 0 1 0 0 ggMg^2 ~ 2 n=3 base=3 {PossiblePower ggMg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GGnGGGmG 0 1 0 0 GGmG^2 ~ 2 n=3 base=3 {PossiblePower GGmG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GGnGGGnG 0 0 0 0 GGnG^2 ~ 0 n=3 base=3 {PossiblePower GGnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GGnGGMgMGGnGGMg 1 0 -1 0 MGGnGGMg^2 ~ 0 n=5 base=5 
+PossiblePower ggNggmNgg 0 1 0 -1 Ngg^3 ~ 4 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggNggMNgg 0 1 0 -1 Ngg^3 ~ 4 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGGmnGG 0 1 0 1 nGG^3 ~ 4 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGGMnGG 0 1 0 1 nGG^3 ~ 4 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggNggmNgg 0 1 1 -1 mNgg^3 ~ 2 n=2 base=4 {PossiblePower mNgg 0 0 -1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggNggMNgg 0 1 -1 -1 MNgg^3 ~ 2 n=2 base=4 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGGmnGG 0 1 1 1 mnGG^3 ~ 2 n=2 base=4 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGGMnGG 0 1 -1 1 MnGG^3 ~ 2 n=2 base=4 {PossiblePower MnGG 0 0 1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGGmnGGmnGG 0 1 1 1 mnGG^4 ~ 2 n=2 base=4 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGGmnGGmnGG 0 1 1 1 mnGGmnGG^2 ~ 2 n=4 base=4 {PossiblePower mnGGmnGG 0 0 0 0 mnGG^2 ~ 0 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }}
+PossiblePower ggNggmNggNgg 0 0 1 -1 mNggNgg^2 ~ 0 n=4 base=4 {PossiblePower mNggNgg 0 0 -1 0 Ngg^2 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower ggNggMNggNgg 0 0 -1 -1 MNggNgg^2 ~ 0 n=4 base=4 {PossiblePower MNggNgg 0 0 1 0 Ngg^2 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GGnGGMnGGnGG 0 0 -1 1 MnGGnGG^2 ~ 0 n=4 base=4 {PossiblePower MnGGnGG 0 0 1 0 nGG^2 ~ 0 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }}
+PossiblePower ggNggmNggNgMg 1 1 1 -1 mNggNgMg^2 ~ 3 n=4 base=4 
+PossiblePower ggnggngg 0 0 0 1 ngg^3 ~ 0 n=2 base=2 {PossiblePower ngg 0 0 0 -1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggNggNgg 0 0 0 -1 Ngg^3 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGGnGG 0 0 0 1 nGG^3 ~ 0 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGNGGNGG 0 0 0 -1 NGG^3 ~ 0 n=2 base=2 {PossiblePower NGG 0 0 0 1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggNggNggMNgg 0 1 0 -1 Ngg^4 ~ 6 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggNggNggMNgg 0 1 0 -1 Ngg^4 ~ 6 n=2 base=4 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggNggNggMNgg 0 1 0 -1 NggMNgg^2 ~ 2 n=4 base=4 {PossiblePower NggMNgg 0 0 -1 0 MNgg^2 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower ggNggNggNgg 0 0 0 -1 Ngg^4 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggNggNggNggNgg 0 0 0 -1 Ngg^5 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggNggNggNggNggNgg 0 0 0 -1 Ngg^6 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGGnGGnGGnGGnGG 0 0 0 1 nGG^6 ~ 0 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggNggNggNggNggNggNgg 0 0 0 -1 Ngg^7 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGGnGGnGGnGGnGGnGG 0 0 0 1 nGG^7 ~ 0 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggNggNgMg 0 1 0 -1 Ngg^3 ~ 5 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgmg 0 1 0 -1 Ngmg^2 ~ 1 n=2 base=2 {PossiblePower Ngmg 0 0 1 1 mg^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgMg 0 1 0 -1 NgMg^2 ~ 1 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGmG 0 1 0 1 nGmG^2 ~ 1 n=2 base=2 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGMG 0 1 0 1 nGMG^2 ~ 1 n=2 base=2 {PossiblePower nGMG 0 0 -1 -1 MG^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgMgMgNg 0 1 -1 0 MgMgNg^2 ~ 1 n=3 base=3 {PossiblePower MgMgNg 0 1 0 0 Mg^3 ~ 2 n=1 base=1 }
+PossiblePower GGnGmGmGnG 0 1 1 0 mGmGnG^2 ~ 1 n=3 base=3 {PossiblePower mGmGnG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }
+PossiblePower ggNgmgNgg 0 1 0 -1 Ngg^3 ~ 3 n=2 base=4 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgMgNgg 0 1 0 -1 Ngg^3 ~ 3 n=2 base=4 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGmGnGG 0 1 0 1 nGG^3 ~ 3 n=2 base=4 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGMGnGG 0 1 0 1 nGG^3 ~ 3 n=2 base=4 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgMgNgMg 0 1 0 -1 NgMg^3 ~ 1 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGmGnGmG 0 1 0 1 nGmG^3 ~ 1 n=2 base=2 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgMgNgMg 0 1 0 -1 NgMg^3 ~ 1 n=2 base=4 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGmGnGmG 0 1 0 1 nGmG^3 ~ 1 n=2 base=4 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgMgNgMgNgMg 0 1 0 -1 NgMg^4 ~ 1 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgMgNgMgNgMg 0 1 0 -1 NgMg^4 ~ 1 n=2 base=4 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgMgNgMgNgMg 0 1 0 -1 NgMgNgMg^2 ~ 1 n=4 base=4 {PossiblePower NgMgNgMg 0 0 0 0 NgMg^2 ~ 0 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }}
+PossiblePower ggNgMgNgMgNgMgNgMg 0 1 0 -1 NgMg^5 ~ 1 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGmGnGmGnGmGnGmG 0 1 0 1 nGmG^5 ~ 1 n=2 base=2 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgMgNgMgNgMgNgMg 0 1 0 -1 NgMg^5 ~ 1 n=2 base=4 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGmGnGmGnGmGnGmG 0 1 0 1 nGmG^5 ~ 1 n=2 base=4 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgmNgNgg 0 1 0 -1 Ngg^3 ~ 3 n=2 base=4 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGMnGnGG 0 1 0 1 nGG^3 ~ 3 n=2 base=4 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggNGmnGNggNGmnG 1 0 0 -1 NggNGmnG^2 ~ 0 n=4 base=4 
+PossiblePower GGnGnG 0 1 0 1 nG^4 ~ 1 n=1 base=2 
+PossiblePower GGnGnG 0 1 0 1 nGnG^2 ~ 1 n=2 base=2 {PossiblePower nGnG 0 0 0 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGnGGG 0 1 0 1 nGGG^2 ~ 2 n=3 base=3 {PossiblePower nGGG 0 0 0 -1 G^3 ~ 0 n=1 base=1 }
+PossiblePower ggNgNggMg 1 1 0 -1 NggMg^2 ~ 2 n=3 base=3 
+PossiblePower GGnGnGGmG 1 1 0 1 nGGmG^2 ~ 2 n=3 base=3 
+PossiblePower GGnGnGGmnG 1 1 0 1 nGGmnG^2 ~ 2 n=3 base=3 
+PossiblePower GGnGnGGMnG 1 1 0 1 nGGMnG^2 ~ 2 n=3 base=3 
+PossiblePower GGnGnGGnG 0 0 0 1 nGGnG^2 ~ 0 n=3 base=3 {PossiblePower nGGnG 0 1 0 0 nG^3 ~ 1 n=1 base=2 }
+PossiblePower GGnGnGGnGnGGnG 0 0 0 1 nGGnG^3 ~ 0 n=3 base=3 {PossiblePower nGGnG 0 1 0 0 nG^3 ~ 1 n=1 base=2 }
+PossiblePower GGnGnGGnGnGGnGnGGnG 0 0 0 1 nGGnG^4 ~ 0 n=3 base=3 {PossiblePower nGGnG 0 1 0 0 nG^3 ~ 1 n=1 base=2 }
+PossiblePower GGnGnGnG 0 1 0 1 nG^5 ~ 1 n=1 base=2 
+PossiblePower ggNgNgNgg 0 1 0 -1 Ngg^3 ~ 3 n=2 base=4 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGnGnGG 0 1 0 1 nGG^3 ~ 3 n=2 base=4 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgNgNgNg 0 1 0 -1 Ng^6 ~ 1 n=1 base=2 
+PossiblePower GGnGnGnGnG 0 1 0 1 nG^6 ~ 1 n=1 base=2 
+PossiblePower ggNgNgNgNg 0 1 0 -1 NgNg^3 ~ 1 n=2 base=2 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGnGnGnG 0 1 0 1 nGnG^3 ~ 1 n=2 base=2 {PossiblePower nGnG 0 0 0 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgNgNgNg 0 1 0 -1 NgNg^3 ~ 1 n=2 base=4 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GGnGnGnGnG 0 1 0 1 nGnG^3 ~ 1 n=2 base=4 {PossiblePower nGnG 0 0 0 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower ggNgNgNgNg 0 1 0 -1 NgNgNg^2 ~ 1 n=3 base=3 {PossiblePower NgNgNg 0 0 0 0 Ng^3 ~ 0 n=1 base=1 }
+PossiblePower GGnGnGnGnG 0 1 0 1 nGnGnG^2 ~ 1 n=3 base=3 {PossiblePower nGnGnG 0 0 0 0 nG^3 ~ 0 n=1 base=1 }
+PossiblePower GGnGnGnGnGnG 0 1 0 1 nG^7 ~ 1 n=1 base=2 
+PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 
+PossiblePower gMgg 0 1 0 0 g^3 ~ 1 n=1 base=2 
+PossiblePower GmGG 0 1 0 0 G^3 ~ 1 n=1 base=2 
+PossiblePower GMGG 0 1 0 0 G^3 ~ 1 n=1 base=2 
+PossiblePower gMgg 0 1 -1 0 Mg^3 ~ 2 n=1 base=1 
+PossiblePower GmGG 0 1 1 0 mG^3 ~ 2 n=1 base=1 
+PossiblePower GMGG 0 1 -1 0 MG^3 ~ 2 n=1 base=1 
+PossiblePower gmggg 0 1 0 0 g^4 ~ 1 n=1 base=2 
+PossiblePower gMggg 0 1 0 0 g^4 ~ 1 n=1 base=2 
+PossiblePower GmGGG 0 1 0 0 G^4 ~ 1 n=1 base=2 
+PossiblePower GMGGG 0 1 0 0 G^4 ~ 1 n=1 base=2 
+PossiblePower gmggg 0 1 0 0 gg^2 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMggg 0 1 0 0 gg^2 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGG 0 1 0 0 GG^2 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GMGGG 0 1 0 0 GG^2 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMgggg 0 1 0 0 g^5 ~ 1 n=1 base=2 
+PossiblePower GmGGGG 0 1 0 0 G^5 ~ 1 n=1 base=2 
+PossiblePower GMGGGG 0 1 0 0 G^5 ~ 1 n=1 base=2 
+PossiblePower gMggggg 0 1 0 0 g^6 ~ 1 n=1 base=2 
+PossiblePower GmGGGGG 0 1 0 0 G^6 ~ 1 n=1 base=2 
+PossiblePower gMggggg 0 1 0 0 gg^3 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGG 0 1 0 0 GG^3 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMggggg 0 1 0 0 gg^3 ~ 1 n=2 base=4 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGG 0 1 0 0 GG^3 ~ 1 n=2 base=4 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMggggg 0 1 0 0 ggg^2 ~ 1 n=3 base=3 {PossiblePower ggg 0 0 0 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGG 0 1 0 0 GGG^2 ~ 1 n=3 base=3 {PossiblePower GGG 0 0 0 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower gMgggggg 0 1 0 0 g^7 ~ 1 n=1 base=2 
+PossiblePower GmGGGGGG 0 1 0 0 G^7 ~ 1 n=1 base=2 
+PossiblePower gMggggggg 0 1 0 0 g^8 ~ 1 n=1 base=2 
+PossiblePower gMggggggg 0 1 0 0 gg^4 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMggggggg 0 1 0 0 gg^4 ~ 1 n=2 base=4 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMggggggg 0 1 0 0 gggg^2 ~ 1 n=4 base=4 {PossiblePower gggg 0 0 0 0 g^4 ~ 0 n=1 base=1 }
+PossiblePower gMgggggggg 0 1 0 0 g^9 ~ 1 n=1 base=2 
+PossiblePower GmGGGGGGGG 0 1 0 0 G^9 ~ 1 n=1 base=2 
+PossiblePower gMgggggggg 0 1 0 0 ggg^3 ~ 1 n=3 base=3 {PossiblePower ggg 0 0 0 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGGGGG 0 1 0 0 GGG^3 ~ 1 n=3 base=3 {PossiblePower GGG 0 0 0 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower gMgggggggg 0 1 0 0 ggg^3 ~ 1 n=3 base=6 {PossiblePower ggg 0 0 0 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGGGGG 0 1 0 0 GGG^3 ~ 1 n=3 base=6 {PossiblePower GGG 0 0 0 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower gMggggggggg 0 1 0 0 g^10 ~ 1 n=1 base=2 
+PossiblePower gMggggggggg 0 1 0 0 gg^5 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMggggggggg 0 1 0 0 gg^5 ~ 1 n=2 base=4 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMggggggggg 0 1 0 0 ggggg^2 ~ 1 n=5 base=5 {PossiblePower ggggg 0 0 0 0 g^5 ~ 0 n=1 base=1 }
+PossiblePower gMgggggggggg 0 1 0 0 g^11 ~ 1 n=1 base=2 
+PossiblePower gMggggggggggg 0 1 0 0 g^12 ~ 1 n=1 base=2 
+PossiblePower GmGGGGGGGGGGG 0 1 0 0 G^12 ~ 1 n=1 base=2 
+PossiblePower gMggggggggggg 0 1 0 0 gg^6 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGGGGGGGG 0 1 0 0 GG^6 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMggggggggggg 0 1 0 0 gg^6 ~ 1 n=2 base=4 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGGGGGGGG 0 1 0 0 GG^6 ~ 1 n=2 base=4 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMggggggggggg 0 1 0 0 ggg^4 ~ 1 n=3 base=3 {PossiblePower ggg 0 0 0 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGGGGGGGG 0 1 0 0 GGG^4 ~ 1 n=3 base=3 {PossiblePower GGG 0 0 0 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower gMggggggggggg 0 1 0 0 ggg^4 ~ 1 n=3 base=6 {PossiblePower ggg 0 0 0 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGGGGGGGG 0 1 0 0 GGG^4 ~ 1 n=3 base=6 {PossiblePower GGG 0 0 0 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower gMggggggggggg 0 1 0 0 gggg^3 ~ 1 n=4 base=4 {PossiblePower gggg 0 0 0 0 g^4 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGGGGGGGG 0 1 0 0 GGGG^3 ~ 1 n=4 base=4 {PossiblePower GGGG 0 0 0 0 G^4 ~ 0 n=1 base=1 }
+PossiblePower gMggggggggggg 0 1 0 0 gggg^3 ~ 1 n=4 base=8 {PossiblePower gggg 0 0 0 0 g^4 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGGGGGGGG 0 1 0 0 GGGG^3 ~ 1 n=4 base=8 {PossiblePower GGGG 0 0 0 0 G^4 ~ 0 n=1 base=1 }
+PossiblePower gMggggggggggg 0 1 0 0 gggggg^2 ~ 1 n=6 base=6 {PossiblePower gggggg 0 0 0 0 g^6 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGGGGGGGG 0 1 0 0 GGGGGG^2 ~ 1 n=6 base=6 {PossiblePower GGGGGG 0 0 0 0 G^6 ~ 0 n=1 base=1 }
+PossiblePower gMgggggMgggg 0 0 0 0 gMgggg^2 ~ 0 n=5 base=5 {PossiblePower gMgggg 0 1 0 0 g^5 ~ 1 n=1 base=2 }
+PossiblePower GmGGGGGmGGGG 0 0 0 0 GmGGGG^2 ~ 0 n=5 base=5 {PossiblePower GmGGGG 0 1 0 0 G^5 ~ 1 n=1 base=2 }
+PossiblePower gMggggMg 0 1 0 0 gMg^3 ~ 3 n=2 base=4 {PossiblePower gMg 0 0 -1 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGmG 0 1 0 0 GmG^3 ~ 3 n=2 base=4 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMggggMggg 0 0 0 0 gMggg^2 ~ 0 n=4 base=4 {PossiblePower gMggg 0 1 0 0 gg^2 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GmGGGGmGGG 0 0 0 0 GmGGG^2 ~ 0 n=4 base=4 {PossiblePower GmGGG 0 1 0 0 GG^2 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }}
+PossiblePower gMggggMggggg 0 1 -1 0 Mggggg^2 ~ 1 n=5 base=5 {PossiblePower Mggggg 0 0 1 0 g^5 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGmGGGGG 0 1 1 0 mGGGGG^2 ~ 1 n=5 base=5 {PossiblePower mGGGGG 0 0 -1 0 G^5 ~ 0 n=1 base=1 }
+PossiblePower GmGGGGmGMmGG 0 0 0 0 GmGGG^2 ~ 0 n=4 base=4 {PossiblePower GmGGG 0 1 0 0 GG^2 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }}
+PossiblePower gMgggMgg 0 0 0 0 gMgg^2 ~ 0 n=3 base=3 {PossiblePower gMgg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower GmGGGmGG 0 0 0 0 GmGG^2 ~ 0 n=3 base=3 {PossiblePower GmGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower gMgggMgggg 0 1 -1 0 Mgggg^2 ~ 1 n=4 base=4 {PossiblePower Mgggg 0 0 1 0 g^4 ~ 0 n=1 base=1 }
+PossiblePower GmGGGmGGGG 0 1 1 0 mGGGG^2 ~ 1 n=4 base=4 {PossiblePower mGGGG 0 0 -1 0 G^4 ~ 0 n=1 base=1 }
+PossiblePower GmGGGmGmG 0 1 0 0 GmGmG^2 ~ 2 n=3 base=3 {PossiblePower GmGmG 0 0 1 0 mG^3 ~ 0 n=1 base=1 }
+PossiblePower gMgggMgMggg 1 0 -1 0 MgMggg^2 ~ 0 n=4 base=4 
+PossiblePower gMGGGMgMGGG 1 0 -1 0 MgMGGG^2 ~ 0 n=4 base=4 
+PossiblePower GmgggmGmggg 1 0 1 0 mGmggg^2 ~ 0 n=4 base=4 
+PossiblePower gMgggMgMNg 1 1 0 0 gMgMNg^2 ~ 2 n=3 base=3 
+PossiblePower GmGGGmGmnG 1 1 0 0 GmGmnG^2 ~ 2 n=3 base=3 
+PossiblePower GmgggmGmnGmgggmG 1 0 1 1 mnGmgggmG^2 ~ 0 n=5 base=5 
+PossiblePower gMgggMgNg 1 1 0 0 gMgNg^2 ~ 2 n=3 base=3 
+PossiblePower GmGGGmGnG 1 1 0 0 GmGnG^2 ~ 2 n=3 base=3 
+PossiblePower gMgggMngg 0 1 0 0 gMngg^2 ~ 1 n=3 base=3 {PossiblePower gMngg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower GmGGGmNGG 0 1 0 0 GmNGG^2 ~ 1 n=3 base=3 {PossiblePower GmNGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower gMgggngg 0 1 0 0 gngg^2 ~ 1 n=3 base=3 {PossiblePower gngg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower GmGGGnGG 0 1 0 0 GnGG^2 ~ 1 n=3 base=3 {PossiblePower GnGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower GmGGGNGG 0 1 0 0 GNGG^2 ~ 1 n=3 base=3 {PossiblePower GNGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower gMggMg 0 0 0 0 gMg^2 ~ 0 n=2 base=2 {PossiblePower gMg 0 0 -1 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGmG 0 0 0 0 GmG^2 ~ 0 n=2 base=2 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMggMggg 0 1 0 0 gMg^3 ~ 5 n=2 base=2 {PossiblePower gMg 0 0 -1 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGmGGG 0 1 0 0 GmG^3 ~ 5 n=2 base=2 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GMGGMGGG 0 1 0 0 GMG^3 ~ 5 n=2 base=2 {PossiblePower GMG 0 0 -1 0 MG^2 ~ 0 n=1 base=1 }
+PossiblePower gMggMggg 0 1 -1 0 Mggg^2 ~ 1 n=3 base=3 {PossiblePower Mggg 0 0 1 0 g^3 ~ 0 n=1 base=1 }
+PossiblePower GmGGmGGG 0 1 1 0 mGGG^2 ~ 1 n=3 base=3 {PossiblePower mGGG 0 0 -1 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower GMGGMGGG 0 1 -1 0 MGGG^2 ~ 1 n=3 base=3 {PossiblePower MGGG 0 0 1 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower gMggMggMg 0 0 0 0 gMg^3 ~ 0 n=2 base=2 {PossiblePower gMg 0 0 -1 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGmGGmG 0 0 0 0 GmG^3 ~ 0 n=2 base=2 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GMGGMGGMGGG 0 1 0 0 GMG^4 ~ 7 n=2 base=2 {PossiblePower GMG 0 0 -1 0 MG^2 ~ 0 n=1 base=1 }
+PossiblePower GMGGMGGMGGG 0 1 0 0 GMG^4 ~ 7 n=2 base=4 {PossiblePower GMG 0 0 -1 0 MG^2 ~ 0 n=1 base=1 }
+PossiblePower GMGGMGGMGGG 0 1 0 0 GMGGG^2 ~ 3 n=4 base=4 {PossiblePower GMGGG 0 1 0 0 GG^2 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }}
+PossiblePower gMggMggMNg 0 1 0 0 gMg^3 ~ 5 n=2 base=2 {PossiblePower gMg 0 0 -1 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gMggMgMg 0 1 -1 0 Mg^5 ~ 2 n=1 base=1 
+PossiblePower gMggMgMgg 0 0 -1 0 MgMgg^2 ~ 0 n=3 base=3 {PossiblePower MgMgg 0 1 0 0 Mg^3 ~ 2 n=1 base=1 }
+PossiblePower GmGGmGmGG 0 0 1 0 mGmGG^2 ~ 0 n=3 base=3 {PossiblePower mGmGG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }
+PossiblePower gmGGmgmGG 1 0 1 0 mgmGG^2 ~ 0 n=3 base=3 
+PossiblePower gMGGMgMGG 1 0 -1 0 MgMGG^2 ~ 0 n=3 base=3 
+PossiblePower GmggmGmgg 1 0 1 0 mGmgg^2 ~ 0 n=3 base=3 
+PossiblePower GMggMGMgg 1 0 -1 0 MGMgg^2 ~ 0 n=3 base=3 
+PossiblePower gmGGmgmGGmgmGG 1 0 1 0 mgmGG^3 ~ 0 n=3 base=3 
+PossiblePower gMGGMgMGGMgMGG 1 0 -1 0 MgMGG^3 ~ 0 n=3 base=3 
+PossiblePower GMggMGMggMGMgg 1 0 -1 0 MGMgg^3 ~ 0 n=3 base=3 
+PossiblePower gmGGmgmGGmgmGG 1 0 1 0 mgmGG^3 ~ 0 n=3 base=6 
+PossiblePower gMGGMgMGGMgMGG 1 0 -1 0 MgMGG^3 ~ 0 n=3 base=6 
+PossiblePower GMggMGMggMGMgg 1 0 -1 0 MGMgg^3 ~ 0 n=3 base=6 
+PossiblePower gMGGMgMGmG 1 1 -1 0 MgMGmG^2 ~ 2 n=3 base=3 
+PossiblePower GmggmGmgMg 1 1 1 0 mGmgMg^2 ~ 2 n=3 base=3 
+PossiblePower gmGGmgMMNgmGGmg 1 0 -2 -1 MMNgmGGmg^2 ~ 0 n=4 base=4 
+PossiblePower gMGGMgMMNgMGGMg 1 0 -2 -1 MMNgMGGMg^2 ~ 0 n=4 base=4 
+PossiblePower GmggmGmmnGmggmG 1 0 2 1 mmnGmggmG^2 ~ 0 n=4 base=4 
+PossiblePower GMggMGmmnGMggMG 1 0 2 1 mmnGMggMG^2 ~ 0 n=4 base=4 
+PossiblePower gmGGmgmNgmGGmg 1 0 1 -1 mNgmGGmg^2 ~ 0 n=4 base=4 
+PossiblePower gmGGmgMNgmGGmg 1 0 -1 -1 MNgmGGmg^2 ~ 0 n=4 base=4 
+PossiblePower gMGGMgmNgMGGMg 1 0 1 -1 mNgMGGMg^2 ~ 0 n=4 base=4 
+PossiblePower gMGGMgMNgMGGMg 1 0 -1 -1 MNgMGGMg^2 ~ 0 n=4 base=4 
+PossiblePower gmGGmgMNgmGMGmg 1 1 -1 -1 MNgmGMGmg^2 ~ 2 n=4 base=4 
+PossiblePower gmGGmgNgmGGmg 1 0 0 -1 NgmGGmg^2 ~ 0 n=4 base=4 
+PossiblePower gMGGMgNgMGGMg 1 0 0 -1 NgMGGMg^2 ~ 0 n=4 base=4 
+PossiblePower GmggmGnGmggmG 1 0 0 1 nGmggmG^2 ~ 0 n=4 base=4 
+PossiblePower gMGGMgNgMGmGMg 1 1 0 -1 NgMGmGMg^2 ~ 2 n=4 base=4 
+PossiblePower gMggMNg 0 1 0 0 gMNg^2 ~ 1 n=2 base=2 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGmnG 0 1 0 0 GmnG^2 ~ 1 n=2 base=2 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GMGGMnG 0 1 0 0 GMnG^2 ~ 1 n=2 base=2 {PossiblePower GMnG 0 0 -1 1 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMggMNggMg 0 1 0 0 gMg^3 ~ 3 n=2 base=4 {PossiblePower gMg 0 0 -1 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGmnGGmG 0 1 0 0 GmG^3 ~ 3 n=2 base=4 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGmNGGmG 0 1 0 0 GmG^3 ~ 3 n=2 base=4 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMggMNgMNgg 0 1 -1 -1 MNgMNgg^2 ~ 1 n=3 base=3 {PossiblePower MNgMNgg 0 1 0 0 MNg^3 ~ 2 n=1 base=1 }
+PossiblePower GmGGmnGmnGG 0 1 1 1 mnGmnGG^2 ~ 1 n=3 base=3 {PossiblePower mnGmnGG 0 1 0 0 mnG^3 ~ 2 n=1 base=1 }
+PossiblePower gMggNg 0 1 0 0 gNg^2 ~ 1 n=2 base=2 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGnG 0 1 0 0 GnG^2 ~ 1 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GMGGnG 0 1 0 0 GnG^2 ~ 1 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gMggNggMg 0 1 0 0 gMg^3 ~ 3 n=2 base=4 {PossiblePower gMg 0 0 -1 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGnGGmG 0 1 0 0 GmG^3 ~ 3 n=2 base=4 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGGNGGmG 0 1 0 0 GmG^3 ~ 3 n=2 base=4 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMGGnGGMgMGGnGG 1 0 -1 0 MgMGGnGG^2 ~ 0 n=5 base=5 
+PossiblePower gMggNgNgg 0 1 0 -1 NgNgg^2 ~ 1 n=3 base=3 {PossiblePower NgNgg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower GmGGnGnGG 0 1 0 1 nGnGG^2 ~ 1 n=3 base=3 {PossiblePower nGnGG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower gMgMg 0 0 -1 0 Mg^3 ~ 0 n=1 base=1 
+PossiblePower GmGmG 0 0 1 0 mG^3 ~ 0 n=1 base=1 
+PossiblePower gMgMgg 0 1 -1 0 Mg^4 ~ 3 n=1 base=1 
+PossiblePower GmGmGG 0 1 1 0 mG^4 ~ 3 n=1 base=1 
+PossiblePower gMgMgg 0 1 -1 0 Mg^4 ~ 3 n=1 base=2 
+PossiblePower GmGmGG 0 1 1 0 mG^4 ~ 3 n=1 base=2 
+PossiblePower gMgMgg 0 1 -1 0 Mgg^2 ~ 1 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGG 0 1 1 0 mGG^2 ~ 1 n=2 base=2 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMgggMg 0 1 0 0 ggMg^2 ~ 1 n=3 base=3 {PossiblePower ggMg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GmGmGGGmG 0 1 0 0 GGmG^2 ~ 1 n=3 base=3 {PossiblePower GGmG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower gMgMgggMgMgg 1 0 0 0 gMgMgg^2 ~ 0 n=4 base=4 
+PossiblePower gMgMggMg 0 1 -1 0 Mg^5 ~ 3 n=1 base=1 
+PossiblePower GmGmGGmG 0 1 1 0 mG^5 ~ 3 n=1 base=1 
+PossiblePower gMgMggMg 0 1 -1 0 Mg^5 ~ 3 n=1 base=2 
+PossiblePower GmGmGGmG 0 1 1 0 mG^5 ~ 3 n=1 base=2 
+PossiblePower GmGmGGmGG 0 1 0 0 GmGG^2 ~ 2 n=3 base=3 {PossiblePower GmGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower GmGmGGmGG 0 1 1 0 mGG^3 ~ 1 n=2 base=2 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGGmGG 0 1 1 0 mGG^3 ~ 1 n=2 base=4 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gmGmggmGmg 1 0 0 0 gmGmg^2 ~ 0 n=3 base=3 
+PossiblePower gMGMggMGMg 1 0 0 0 gMGMg^2 ~ 0 n=3 base=3 
+PossiblePower GmgmGGmgmG 1 0 0 0 GmgmG^2 ~ 0 n=3 base=3 
+PossiblePower GMgMGGMgMG 1 0 0 0 GMgMG^2 ~ 0 n=3 base=3 
+PossiblePower gMgMggMgMgMgg 0 0 -1 0 MgMgMgg^2 ~ 0 n=4 base=4 {PossiblePower MgMgMgg 0 1 0 0 Mgg^2 ~ 1 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GmGmGGmGmGmGG 0 0 1 0 mGmGmGG^2 ~ 0 n=4 base=4 {PossiblePower mGmGmGG 0 1 0 0 mGG^2 ~ 1 n=2 base=2 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }}
+PossiblePower gMgMGGMgMgMGG 1 0 -1 0 MgMgMGG^2 ~ 0 n=4 base=4 
+PossiblePower GmGmggmGmGmgg 1 0 1 0 mGmGmgg^2 ~ 0 n=4 base=4 
+PossiblePower gMgMggMNggMgg 0 1 -1 -1 MNggMgg^2 ~ 1 n=4 base=4 {PossiblePower MNggMgg 0 0 0 1 Mgg^2 ~ 0 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GmGmGGmnGGmGG 0 1 1 1 mnGGmGG^2 ~ 1 n=4 base=4 {PossiblePower mnGGmGG 0 0 0 -1 mGG^2 ~ 0 n=2 base=2 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }}
+PossiblePower gMgMgMg 0 0 -1 0 Mg^4 ~ 0 n=1 base=1 
+PossiblePower GmGmGmG 0 0 1 0 mG^4 ~ 0 n=1 base=1 
+PossiblePower gmGmgmG 1 0 1 0 mgmG^2 ~ 0 n=2 base=2 
+PossiblePower gmGMgmG 1 0 -1 0 MgmG^2 ~ 0 n=2 base=2 
+PossiblePower gMGmgMG 1 0 1 0 mgMG^2 ~ 0 n=2 base=2 
+PossiblePower GmgmGmg 1 0 1 0 mGmg^2 ~ 0 n=2 base=2 
+PossiblePower GmgMGmg 1 0 -1 0 MGmg^2 ~ 0 n=2 base=2 
+PossiblePower GMgmGMg 1 0 1 0 mGMg^2 ~ 0 n=2 base=2 
+PossiblePower GMgMGMg 1 0 -1 0 MGMg^2 ~ 0 n=2 base=2 
+PossiblePower gMgMgMgg 0 1 -1 0 Mg^5 ~ 4 n=1 base=1 
+PossiblePower GmGmGmGG 0 1 1 0 mG^5 ~ 4 n=1 base=1 
+PossiblePower gMgMgMgg 0 1 -1 0 Mg^5 ~ 4 n=1 base=2 
+PossiblePower GmGmGmGG 0 1 1 0 mG^5 ~ 4 n=1 base=2 
+PossiblePower gMgmGmggmG 1 1 1 0 mggmG^2 ~ 1 n=3 base=3 
+PossiblePower GmGmgmGGmg 1 1 1 0 mGGmg^2 ~ 1 n=3 base=3 
+PossiblePower GmGMgMGGMg 1 1 -1 0 MGGMg^2 ~ 1 n=3 base=3 
+PossiblePower gMgMgMgMg 0 0 -1 0 Mg^5 ~ 0 n=1 base=1 
+PossiblePower GmGmGmGmG 0 0 1 0 mG^5 ~ 0 n=1 base=1 
+PossiblePower gMgMgMgMgg 0 1 -1 0 Mg^6 ~ 5 n=1 base=1 
+PossiblePower GmGmGmGmGG 0 1 1 0 mG^6 ~ 5 n=1 base=1 
+PossiblePower gMgMgMgMgg 0 1 -1 0 Mg^6 ~ 5 n=1 base=2 
+PossiblePower GmGmGmGmGG 0 1 1 0 mG^6 ~ 5 n=1 base=2 
+PossiblePower gMgMgMgMgg 0 1 -1 0 MgMg^3 ~ 5 n=2 base=2 {PossiblePower MgMg 0 0 0 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGG 0 1 1 0 mGmG^3 ~ 5 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMgMgMgg 0 1 -1 0 MgMgg^2 ~ 2 n=3 base=3 {PossiblePower MgMgg 0 1 0 0 Mg^3 ~ 2 n=1 base=1 }
+PossiblePower GmGmGmGmGG 0 1 1 0 mGmGG^2 ~ 2 n=3 base=3 {PossiblePower mGmGG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }
+PossiblePower gmGmGmgmGG 1 1 1 0 mgmGG^2 ~ 2 n=3 base=3 
+PossiblePower gMGMGMgMGG 1 1 -1 0 MgMGG^2 ~ 2 n=3 base=3 
+PossiblePower GmgmgmGmgg 1 1 1 0 mGmgg^2 ~ 2 n=3 base=3 
+PossiblePower GMgMgMGMgg 1 1 -1 0 MGMgg^2 ~ 2 n=3 base=3 
+PossiblePower gmGmGmgmGGmgmGG 1 1 1 0 mgmGG^3 ~ 2 n=3 base=3 
+PossiblePower gmGmGmgmGGmgmGG 1 1 1 0 mgmGG^3 ~ 2 n=3 base=6 
+PossiblePower gMgMgMgMgMg 0 0 -1 0 Mg^6 ~ 0 n=1 base=1 
+PossiblePower GmGmGmGmGmG 0 0 1 0 mG^6 ~ 0 n=1 base=1 
+PossiblePower gmGMgmGMgmG 1 0 -1 0 MgmG^3 ~ 0 n=2 base=2 
+PossiblePower gMGmgMGmgMG 1 0 1 0 mgMG^3 ~ 0 n=2 base=2 
+PossiblePower gMGMgMGMgMG 1 0 -1 0 MgMG^3 ~ 0 n=2 base=2 
+PossiblePower GmgmGmgmGmg 1 0 1 0 mGmg^3 ~ 0 n=2 base=2 
+PossiblePower GmgMGmgMGmg 1 0 -1 0 MGmg^3 ~ 0 n=2 base=2 
+PossiblePower GMgmGMgmGMg 1 0 1 0 mGMg^3 ~ 0 n=2 base=2 
+PossiblePower GMgMGMgMGMg 1 0 -1 0 MGMg^3 ~ 0 n=2 base=2 
+PossiblePower gmGMgmGMgmG 1 0 -1 0 MgmG^3 ~ 0 n=2 base=4 
+PossiblePower gMGmgMGmgMG 1 0 1 0 mgMG^3 ~ 0 n=2 base=4 
+PossiblePower gMGMgMGMgMG 1 0 -1 0 MgMG^3 ~ 0 n=2 base=4 
+PossiblePower GmgmGmgmGmg 1 0 1 0 mGmg^3 ~ 0 n=2 base=4 
+PossiblePower GmgMGmgMGmg 1 0 -1 0 MGmg^3 ~ 0 n=2 base=4 
+PossiblePower GMgmGMgmGMg 1 0 1 0 mGMg^3 ~ 0 n=2 base=4 
+PossiblePower GMgMGMgMGMg 1 0 -1 0 MGMg^3 ~ 0 n=2 base=4 
+PossiblePower gmGmgmgmGmg 1 0 1 0 mgmGmg^2 ~ 0 n=3 base=3 
+PossiblePower gmGmgMgmGmg 1 0 -1 0 MgmGmg^2 ~ 0 n=3 base=3 
+PossiblePower gmGmGmgmGmG 1 0 1 0 mgmGmG^2 ~ 0 n=3 base=3 
+PossiblePower gMgmGmgMgmG 1 0 1 0 mgMgmG^2 ~ 0 n=3 base=3 
+PossiblePower gMgMGMgMgMG 1 0 -1 0 MgMgMG^2 ~ 0 n=3 base=3 
+PossiblePower gMGMgMgMGMg 1 0 -1 0 MgMGMg^2 ~ 0 n=3 base=3 
+PossiblePower GmgmGmGmgmG 1 0 1 0 mGmgmG^2 ~ 0 n=3 base=3 
+PossiblePower GmGmgmGmGmg 1 0 1 0 mGmGmg^2 ~ 0 n=3 base=3 
+PossiblePower GmGMgMGmGMg 1 0 -1 0 MGmGMg^2 ~ 0 n=3 base=3 
+PossiblePower GMgMgMGMgMg 1 0 -1 0 MGMgMg^2 ~ 0 n=3 base=3 
+PossiblePower GMgMGMGMgMG 1 0 -1 0 MGMgMG^2 ~ 0 n=3 base=3 
+PossiblePower gMgMgMgMgMgg 0 1 -1 0 Mg^7 ~ 6 n=1 base=1 
+PossiblePower GmGmGmGmGmGG 0 1 1 0 mG^7 ~ 6 n=1 base=1 
+PossiblePower gMgMgMgMgMgg 0 1 -1 0 Mg^7 ~ 6 n=1 base=2 
+PossiblePower GmGmGmGmGmGG 0 1 1 0 mG^7 ~ 6 n=1 base=2 
+PossiblePower gMgMgMgMgMgMg 0 0 -1 0 Mg^7 ~ 0 n=1 base=1 
+PossiblePower GmGmGmGmGmGmG 0 0 1 0 mG^7 ~ 0 n=1 base=1 
+PossiblePower gMgMgMgMgMgMgg 0 1 -1 0 Mg^8 ~ 7 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGG 0 1 1 0 mG^8 ~ 7 n=1 base=1 
+PossiblePower gMgMgMgMgMgMgg 0 1 -1 0 Mg^8 ~ 7 n=1 base=2 
+PossiblePower GmGmGmGmGmGmGG 0 1 1 0 mG^8 ~ 7 n=1 base=2 
+PossiblePower gMgMgMgMgMgMgg 0 1 -1 0 MgMg^4 ~ 7 n=2 base=2 {PossiblePower MgMg 0 0 0 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGmGmGG 0 1 1 0 mGmG^4 ~ 7 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMgMgMgMgMgg 0 1 -1 0 MgMg^4 ~ 7 n=2 base=4 {PossiblePower MgMg 0 0 0 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGmGmGG 0 1 1 0 mGmG^4 ~ 7 n=2 base=4 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMgMgMgMgMgg 0 1 -1 0 MgMgMgg^2 ~ 3 n=4 base=4 {PossiblePower MgMgMgg 0 1 0 0 Mgg^2 ~ 1 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GmGmGmGmGmGmGG 0 1 1 0 mGmGmGG^2 ~ 3 n=4 base=4 {PossiblePower mGmGmGG 0 1 0 0 mGG^2 ~ 1 n=2 base=2 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }}
+PossiblePower gMgMgMgMgMgMgMg 0 0 -1 0 Mg^8 ~ 0 n=1 base=1 
+PossiblePower gMGMgMGMgMGMgMG 0 0 -1 0 MgMGMgMG^2 ~ 0 n=4 base=4 {PossiblePower MgMGMgMG 1 0 0 0 MgMG^2 ~ 0 n=2 base=2 }
+PossiblePower GmgmGmgmGmgmGmg 0 0 1 0 mGmgmGmg^2 ~ 0 n=4 base=4 {PossiblePower mGmgmGmg 1 0 0 0 mGmg^2 ~ 0 n=2 base=2 }
+PossiblePower gMgMgMGMgMgMgMG 1 0 -1 0 MgMgMgMG^2 ~ 0 n=4 base=4 
+PossiblePower GmGmGmGmGmGmGmGG 0 1 1 0 mG^9 ~ 8 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGmGG 0 1 1 0 mG^9 ~ 8 n=1 base=2 
+PossiblePower GmGmGmGmGmGmGmGG 0 1 1 0 mGmGmG^3 ~ 8 n=3 base=3 {PossiblePower mGmGmG 0 0 0 0 mG^3 ~ 0 n=1 base=1 }
+PossiblePower GMgMgMGMgMgMGMgg 1 1 -1 0 MGMgMg^3 ~ 8 n=3 base=3 
+PossiblePower gMgMgMgMgMgMgMgMg 0 0 -1 0 Mg^9 ~ 0 n=1 base=1 
+PossiblePower gMgmGmgMgmGmgMgmG 1 0 1 0 mgMgmG^3 ~ 0 n=3 base=3 
+PossiblePower gMGmGMgMGmGMgMGmG 1 0 -1 0 MgMGmG^3 ~ 0 n=3 base=3 
+PossiblePower gMgmGmgMgmGmgMgmG 1 0 1 0 mgMgmG^3 ~ 0 n=3 base=6 
+PossiblePower gMGmGMgMGmGMgMGmG 1 0 -1 0 MgMGmG^3 ~ 0 n=3 base=6 
+PossiblePower gMgMgMgMgMgMgMgMgg 0 1 -1 0 Mg^10 ~ 9 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGmGmGG 0 1 1 0 mG^10 ~ 9 n=1 base=1 
+PossiblePower gMgMgMgMgMgMgMgMgg 0 1 -1 0 Mg^10 ~ 9 n=1 base=2 
+PossiblePower GmGmGmGmGmGmGmGmGG 0 1 1 0 mG^10 ~ 9 n=1 base=2 
+PossiblePower gMgMgMgMgMgMgMgMgg 0 1 -1 0 MgMg^5 ~ 9 n=2 base=2 {PossiblePower MgMg 0 0 0 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGmGmGmGmGG 0 1 1 0 mGmG^5 ~ 9 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMgMgMgMgMgMgMgg 0 1 -1 0 MgMg^5 ~ 9 n=2 base=4 {PossiblePower MgMg 0 0 0 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGmGmGmGmGG 0 1 1 0 mGmG^5 ~ 9 n=2 base=4 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMgMgMgMgMgMgMgg 0 1 -1 0 MgMgMgMgg^2 ~ 4 n=5 base=5 {PossiblePower MgMgMgMgg 0 1 0 0 Mg^5 ~ 4 n=1 base=2 }
+PossiblePower GmGmGmGmGmGmGmGmGG 0 1 1 0 mGmGmGmGG^2 ~ 4 n=5 base=5 {PossiblePower mGmGmGmGG 0 1 0 0 mG^5 ~ 4 n=1 base=2 }
+PossiblePower gMgMgMgMgMgMgMgMgMg 0 0 -1 0 Mg^10 ~ 0 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGmGmGmG 0 0 1 0 mG^10 ~ 0 n=1 base=1 
+PossiblePower gMGMgMGMgMGMgMGMgMG 1 0 -1 0 MgMG^5 ~ 0 n=2 base=2 
+PossiblePower GmgmGmgmGmgmGmgmGmg 1 0 1 0 mGmg^5 ~ 0 n=2 base=2 
+PossiblePower GMgMGMgMGMgMGMgMGMg 1 0 -1 0 MGMg^5 ~ 0 n=2 base=2 
+PossiblePower gMGMgMGMgMGMgMGMgMG 1 0 -1 0 MgMG^5 ~ 0 n=2 base=4 
+PossiblePower GmgmGmgmGmgmGmgmGmg 1 0 1 0 mGmg^5 ~ 0 n=2 base=4 
+PossiblePower GMgMGMgMGMgMGMgMGMg 1 0 -1 0 MGMg^5 ~ 0 n=2 base=4 
+PossiblePower gMgMgMgMgMgMgMgMgMgg 0 1 -1 0 Mg^11 ~ 10 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGmGmGmGG 0 1 1 0 mG^11 ~ 10 n=1 base=1 
+PossiblePower gMgMgMgMgMgMgMgMgMgg 0 1 -1 0 Mg^11 ~ 10 n=1 base=2 
+PossiblePower GmGmGmGmGmGmGmGmGmGG 0 1 1 0 mG^11 ~ 10 n=1 base=2 
+PossiblePower gMgMgMgMgMgMgMgMgMgMg 0 0 -1 0 Mg^11 ~ 0 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mG^12 ~ 11 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mG^12 ~ 11 n=1 base=2 
+PossiblePower GmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mGmG^6 ~ 11 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mGmG^6 ~ 11 n=2 base=4 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mGmGmG^4 ~ 11 n=3 base=3 {PossiblePower mGmGmG 0 0 0 0 mG^3 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mGmGmG^4 ~ 11 n=3 base=6 {PossiblePower mGmGmG 0 0 0 0 mG^3 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mGmGmGmG^3 ~ 11 n=4 base=4 {PossiblePower mGmGmGmG 0 0 0 0 mG^4 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mGmGmGmGmGG^2 ~ 5 n=6 base=6 {PossiblePower mGmGmGmGmGG 0 1 0 0 mGmGG^2 ~ 2 n=3 base=3 {PossiblePower mGmGG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }}
+PossiblePower gMgMgMgMgMgMgMgMgMgMgMg 0 0 -1 0 Mg^12 ~ 0 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGmGmGmGmGmG 0 0 1 0 mG^12 ~ 0 n=1 base=1 
+PossiblePower gmGmgmGmgmGmgmGmgmGmgmG 0 0 1 0 mgmGmgmG^3 ~ 0 n=4 base=4 {PossiblePower mgmGmgmG 1 0 0 0 mgmG^2 ~ 0 n=2 base=2 }
+PossiblePower GmgmGmgmGmgmGmgmGmgmGmg 0 0 1 0 mGmgmGmg^3 ~ 0 n=4 base=4 {PossiblePower mGmgmGmg 1 0 0 0 mGmg^2 ~ 0 n=2 base=2 }
+PossiblePower GMgMGMgMGMgMGMgMGMgMGMg 0 0 -1 0 MGMgMGMg^3 ~ 0 n=4 base=4 {PossiblePower MGMgMGMg 1 0 0 0 MGMg^2 ~ 0 n=2 base=2 }
+PossiblePower GmGmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mG^13 ~ 12 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mG^13 ~ 12 n=1 base=2 
+PossiblePower gMgMgMgMgMgMgMgMgMgMgMgMg 0 0 -1 0 Mg^13 ~ 0 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGmGmGmGmGmGmG 0 0 1 0 mG^13 ~ 0 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mG^14 ~ 13 n=1 base=1 
+PossiblePower GmGmGmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mG^14 ~ 13 n=1 base=2 
+PossiblePower GmGmGmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mGmG^7 ~ 13 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mGmG^7 ~ 13 n=2 base=4 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmGmGmGmGmGmGmGmGmGmGG 0 1 1 0 mGmGmGmGmGmGG^2 ~ 6 n=7 base=7 {PossiblePower mGmGmGmGmGmGG 0 1 0 0 mG^7 ~ 6 n=1 base=2 }
+PossiblePower gMgMgMgMgMNg 0 1 -1 0 Mg^6 ~ 5 n=1 base=1 
+PossiblePower gMgMgMgMgMNg 0 1 -1 0 Mg^6 ~ 5 n=1 base=2 
+PossiblePower gMgMgMgMgMNg 0 1 -1 0 MgMg^3 ~ 5 n=2 base=2 {PossiblePower MgMg 0 0 0 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMgMgMgMNg 0 1 -1 0 MgMgMNg^2 ~ 2 n=3 base=3 {PossiblePower MgMgMNg 0 1 0 0 Mg^3 ~ 2 n=1 base=1 }
+PossiblePower GmGmgmGmmGmg 1 1 1 0 mGmmGmg^2 ~ 1 n=3 base=3 
+PossiblePower gmGMGmgMMNgmGMGmg 1 0 -2 -1 MMNgmGMGmg^2 ~ 0 n=4 base=4 
+PossiblePower gMgMgMgMNg 0 1 -1 0 Mg^5 ~ 4 n=1 base=1 
+PossiblePower gMgMgMgMNg 0 1 -1 0 Mg^5 ~ 4 n=1 base=2 
+PossiblePower gmGmGmgmNgmGGmg 1 1 1 -1 mNgmGGmg^2 ~ 2 n=4 base=4 
+PossiblePower gMGmGMgmNgMGGMg 1 1 1 -1 mNgMGGMg^2 ~ 2 n=4 base=4 
+PossiblePower GmgMgmGMnGmggmG 1 1 -1 1 MnGmggmG^2 ~ 2 n=4 base=4 
+PossiblePower gmGmGmgmNgmGmGmg 1 0 1 -1 mNgmGmGmg^2 ~ 0 n=4 base=4 
+PossiblePower gmGmGmgMNgmGmGmg 1 0 -1 -1 MNgmGmGmg^2 ~ 0 n=4 base=4 
+PossiblePower gmGMGmgMNgmGMGmg 1 0 -1 -1 MNgmGMGmg^2 ~ 0 n=4 base=4 
+PossiblePower gMGmGMgmNgMGmGMg 1 0 1 -1 mNgMGmGMg^2 ~ 0 n=4 base=4 
+PossiblePower gMGmGMgMNgMGmGMg 1 0 -1 -1 MNgMGmGMg^2 ~ 0 n=4 base=4 
+PossiblePower GmgMgmGmnGmgMgmG 1 0 1 1 mnGmgMgmG^2 ~ 0 n=4 base=4 
+PossiblePower GMgmgMGmnGMgmgMG 1 0 1 1 mnGMgmgMG^2 ~ 0 n=4 base=4 
+PossiblePower GmgmGmGmnGmGmgmGmGmnG 1 0 1 0 mGmgmGmGmnG^2 ~ 0 n=5 base=5 
+PossiblePower gmGmGmgNgmGGmg 1 1 0 -1 NgmGGmg^2 ~ 2 n=4 base=4 
+PossiblePower gMGmGMgNgMGGMg 1 1 0 -1 NgMGGMg^2 ~ 2 n=4 base=4 
+PossiblePower gmGmGmgNgmGmGmg 1 0 0 -1 NgmGmGmg^2 ~ 0 n=4 base=4 
+PossiblePower gMGmGMgNgMGmGMg 1 0 0 -1 NgMGmGMg^2 ~ 0 n=4 base=4 
+PossiblePower GmgMgmGnGmgMgmG 1 0 0 1 nGmgMgmG^2 ~ 0 n=4 base=4 
+PossiblePower gMGMgMMgMGMg 1 0 -2 0 MMgMGMg^2 ~ 0 n=3 base=3 
+PossiblePower gmGmgmmNgmGmg 1 0 2 -1 mmNgmGmg^2 ~ 0 n=3 base=3 
+PossiblePower gMGMgMMNgMGMg 1 0 -2 -1 MMNgMGMg^2 ~ 0 n=3 base=3 
+PossiblePower GmgmGmmnGmgmG 1 0 2 1 mmnGmgmG^2 ~ 0 n=3 base=3 
+PossiblePower gMgMgMNg 0 1 -1 0 Mg^4 ~ 3 n=1 base=1 
+PossiblePower GmGmGmnG 0 1 1 0 mG^4 ~ 3 n=1 base=1 
+PossiblePower gMgMgMNg 0 1 -1 0 Mg^4 ~ 3 n=1 base=2 
+PossiblePower GmGmGmnG 0 1 1 0 mG^4 ~ 3 n=1 base=2 
+PossiblePower gMgMgMNg 0 1 -1 0 MgMNg^2 ~ 1 n=2 base=2 {PossiblePower MgMNg 0 0 0 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmnG 0 1 1 0 mGmnG^2 ~ 1 n=2 base=2 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMgMngMg 0 1 -1 0 Mg^5 ~ 3 n=1 base=1 
+PossiblePower gMgMgMNgMg 0 1 -1 0 Mg^5 ~ 3 n=1 base=1 
+PossiblePower GmGmGmnGmG 0 1 1 0 mG^5 ~ 3 n=1 base=1 
+PossiblePower GmGmGmNGmG 0 1 1 0 mG^5 ~ 3 n=1 base=1 
+PossiblePower gMgMgMngMg 0 1 -1 0 Mg^5 ~ 3 n=1 base=2 
+PossiblePower gMgMgMNgMg 0 1 -1 0 Mg^5 ~ 3 n=1 base=2 
+PossiblePower GmGmGmnGmG 0 1 1 0 mG^5 ~ 3 n=1 base=2 
+PossiblePower GmGmGmNGmG 0 1 1 0 mG^5 ~ 3 n=1 base=2 
+PossiblePower gMgMgMngMgMg 0 0 -1 1 MngMgMg^2 ~ 0 n=3 base=3 {PossiblePower MngMgMg 0 0 0 -1 Mg^3 ~ 0 n=1 base=1 }
+PossiblePower gMgMgMNgMgMg 0 0 -1 -1 MNgMgMg^2 ~ 0 n=3 base=3 {PossiblePower MNgMgMg 0 0 0 1 Mg^3 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmnGmGmG 0 0 1 1 mnGmGmG^2 ~ 0 n=3 base=3 {PossiblePower mnGmGmG 0 0 0 -1 mG^3 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmNGmGmG 0 0 1 -1 mNGmGmG^2 ~ 0 n=3 base=3 {PossiblePower mNGmGmG 0 0 0 1 mG^3 ~ 0 n=1 base=1 }
+PossiblePower gmGmgmNgmGmg 1 0 1 -1 mNgmGmg^2 ~ 0 n=3 base=3 
+PossiblePower gmGmgMNgmGmg 1 0 -1 -1 MNgmGmg^2 ~ 0 n=3 base=3 
+PossiblePower gMGMgMNgMGMg 1 0 -1 -1 MNgMGMg^2 ~ 0 n=3 base=3 
+PossiblePower GmgmGmnGmgmG 1 0 1 1 mnGmgmG^2 ~ 0 n=3 base=3 
+PossiblePower GMgMGmnGMgMG 1 0 1 1 mnGMgMG^2 ~ 0 n=3 base=3 
+PossiblePower GMgMGMnGMgMG 1 0 -1 1 MnGMgMG^2 ~ 0 n=3 base=3 
+PossiblePower gmGmGmnGmGmgmGmGmnGmG 1 0 1 0 mgmGmGmnGmG^2 ~ 0 n=5 base=5 
+PossiblePower gMgmGmnGmgMgmGmnG 1 0 1 0 mgMgmGmnG^2 ~ 0 n=4 base=4 
+PossiblePower GmGMgMNgMGmGMgMNg 1 0 -1 0 MGmGMgMNg^2 ~ 0 n=4 base=4 
+PossiblePower GmGmGmnGmGmnG 0 1 1 0 mGmnG^3 ~ 1 n=2 base=2 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmnGmGmnG 0 1 1 0 mGmnG^3 ~ 1 n=2 base=4 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGmnGmGmnG 0 1 1 1 mnGmGmnG^2 ~ 2 n=3 base=3 {PossiblePower mnGmGmnG 0 1 0 0 mnG^3 ~ 1 n=1 base=2 }
+PossiblePower gMgMgNg 0 1 -1 0 Mg^4 ~ 3 n=1 base=1 
+PossiblePower GmGmGnG 0 1 1 0 mG^4 ~ 3 n=1 base=1 
+PossiblePower gMgMgNg 0 1 -1 0 Mg^4 ~ 3 n=1 base=2 
+PossiblePower GmGmGnG 0 1 1 0 mG^4 ~ 3 n=1 base=2 
+PossiblePower gMgMgNg 0 1 -1 0 MgNg^2 ~ 1 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmGnG 0 1 1 0 mGnG^2 ~ 1 n=2 base=2 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMgngMg 0 1 -1 0 Mg^5 ~ 3 n=1 base=1 
+PossiblePower gMgMgNgMg 0 1 -1 0 Mg^5 ~ 3 n=1 base=1 
+PossiblePower GmGmGNGmG 0 1 1 0 mG^5 ~ 3 n=1 base=1 
+PossiblePower gMgMgngMg 0 1 -1 0 Mg^5 ~ 3 n=1 base=2 
+PossiblePower gMgMgNgMg 0 1 -1 0 Mg^5 ~ 3 n=1 base=2 
+PossiblePower GmGmGNGmG 0 1 1 0 mG^5 ~ 3 n=1 base=2 
+PossiblePower gMgMgngMgMg 0 0 0 1 ngMgMg^2 ~ 0 n=3 base=3 {PossiblePower ngMgMg 0 0 -1 -1 Mg^3 ~ 0 n=1 base=1 }
+PossiblePower GmGmGnGmGmG 0 0 0 1 nGmGmG^2 ~ 0 n=3 base=3 {PossiblePower nGmGmG 0 0 1 -1 mG^3 ~ 0 n=1 base=1 }
+PossiblePower GmGmGNGmGmG 0 0 0 -1 NGmGmG^2 ~ 0 n=3 base=3 {PossiblePower NGmGmG 0 0 1 1 mG^3 ~ 0 n=1 base=1 }
+PossiblePower gmGmgNgmGmg 1 0 0 -1 NgmGmg^2 ~ 0 n=3 base=3 
+PossiblePower gMGMgNgMGMg 1 0 0 -1 NgMGMg^2 ~ 0 n=3 base=3 
+PossiblePower GmgmGnGmgmG 1 0 0 1 nGmgmG^2 ~ 0 n=3 base=3 
+PossiblePower GMgMGnGMgMG 1 0 0 1 nGMgMG^2 ~ 0 n=3 base=3 
+PossiblePower GmGmGNGmGmGNGmGmG 0 0 0 -1 NGmGmG^3 ~ 0 n=3 base=3 {PossiblePower NGmGmG 0 0 1 1 mG^3 ~ 0 n=1 base=1 }
+PossiblePower gMgMMNggMMNggMMNggMMNgg 0 1 -2 -1 MMNgg^5 ~ 1 n=2 base=2 {PossiblePower MMNgg 0 0 2 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMMNggMMNggMMNggMMNgg 0 1 -2 -1 MMNgg^5 ~ 1 n=2 base=4 {PossiblePower MMNgg 0 0 2 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMGmmnGMgmgMGmmnGMg 1 0 1 0 mgMGmmnGMg^2 ~ 0 n=4 base=4 
+PossiblePower gMgmNg 0 1 -1 0 Mg^3 ~ 2 n=1 base=1 
+PossiblePower gMgMNg 0 1 -1 0 Mg^3 ~ 2 n=1 base=1 
+PossiblePower GmGmnG 0 1 1 0 mG^3 ~ 2 n=1 base=1 
+PossiblePower GmGmNG 0 1 1 0 mG^3 ~ 2 n=1 base=1 
+PossiblePower gMgmNg 0 1 1 -1 mNg^3 ~ 1 n=1 base=2 
+PossiblePower gMgMNg 0 1 -1 -1 MNg^3 ~ 1 n=1 base=2 
+PossiblePower GmGmnG 0 1 1 1 mnG^3 ~ 1 n=1 base=2 
+PossiblePower GmGmNG 0 1 1 -1 mNG^3 ~ 1 n=1 base=2 
+PossiblePower gmgMNgg 0 1 -1 -1 MNgg^2 ~ 1 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgg 0 1 -1 -1 MNgg^2 ~ 1 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmnGG 0 1 1 1 mnGG^2 ~ 1 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GmGMnGG 0 1 -1 1 MnGG^2 ~ 1 n=2 base=2 {PossiblePower MnGG 0 0 1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GMGmnGG 0 1 1 1 mnGG^2 ~ 1 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GMGMnGG 0 1 -1 1 MnGG^2 ~ 1 n=2 base=2 {PossiblePower MnGG 0 0 1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgggMNg 0 1 0 0 ggMNg^2 ~ 1 n=3 base=3 {PossiblePower ggMNg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GmGmnGGGmnG 0 1 0 0 GGmnG^2 ~ 1 n=3 base=3 {PossiblePower GGmnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GmGMnGGGMnG 0 1 0 0 GGMnG^2 ~ 1 n=3 base=3 {PossiblePower GGMnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower gMgMNggMNgg 0 1 -1 -1 MNgg^3 ~ 1 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmnGGmnGG 0 1 1 1 mnGG^3 ~ 1 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GmGMnGGMnGG 0 1 -1 1 MnGG^3 ~ 1 n=2 base=2 {PossiblePower MnGG 0 0 1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GMGmnGGmnGG 0 1 1 1 mnGG^3 ~ 1 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNggMNgg 0 1 -1 -1 MNgg^3 ~ 1 n=2 base=4 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmnGGmnGG 0 1 1 1 mnGG^3 ~ 1 n=2 base=4 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GmGMnGGMnGG 0 1 -1 1 MnGG^3 ~ 1 n=2 base=4 {PossiblePower MnGG 0 0 1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GMGmnGGmnGG 0 1 1 1 mnGG^3 ~ 1 n=2 base=4 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNggMNggMNgg 0 1 -1 -1 MNgg^4 ~ 1 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNggMNggMNgg 0 1 -1 -1 MNgg^4 ~ 1 n=2 base=4 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNggMNggMNgg 0 1 -1 -1 MNggMNgg^2 ~ 1 n=4 base=4 {PossiblePower MNggMNgg 0 0 0 0 MNgg^2 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower gMgMNggMNggMNggMNgg 0 1 -1 -1 MNgg^5 ~ 1 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNggMNggMNggMNgg 0 1 -1 -1 MNgg^5 ~ 1 n=2 base=4 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNggMNgMg 0 1 -1 -1 MNgMg^3 ~ 3 n=2 base=4 {PossiblePower MNgMg 0 0 0 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmnGGmnGmG 0 1 1 1 mnGmG^3 ~ 3 n=2 base=4 {PossiblePower mnGmG 0 0 0 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMGmnGGmnGMgMgMGmnGGmnGMg 1 0 -1 0 MgMGmnGGmnGMg^2 ~ 0 n=6 base=6 
+PossiblePower GmGMNggMNGmGMNggMNGmGMNgg 1 0 -1 -1 MNGmGMNgg^3 ~ 0 n=4 base=4 
+PossiblePower GmGMNggMNGmGMNggMNGmGMNgg 1 0 -1 -1 MNGmGMNgg^3 ~ 0 n=4 base=8 
+PossiblePower gMgMNggNggMNgg 0 1 0 -1 NggMNgg^2 ~ 1 n=4 base=4 {PossiblePower NggMNgg 0 0 -1 0 MNgg^2 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GmGmnGGnGGmnGG 0 1 0 1 nGGmnGG^2 ~ 1 n=4 base=4 {PossiblePower nGGmnGG 0 0 1 0 mnGG^2 ~ 0 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }}
+PossiblePower gMgMNgMg 0 0 -1 -1 MNgMg^2 ~ 0 n=2 base=2 {PossiblePower MNgMg 0 0 0 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmnGmG 0 0 1 1 mnGmG^2 ~ 0 n=2 base=2 {PossiblePower mnGmG 0 0 0 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmNGmG 0 0 1 -1 mNGmG^2 ~ 0 n=2 base=2 {PossiblePower mNGmG 0 0 0 1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgMgMg 0 1 -1 0 Mg^5 ~ 2 n=1 base=1 
+PossiblePower GmGmnGmGmG 0 1 1 0 mG^5 ~ 2 n=1 base=1 
+PossiblePower GmGmNGmGmG 0 1 1 0 mG^5 ~ 2 n=1 base=1 
+PossiblePower gMgMngMgMgg 0 1 -1 0 MgMgg^2 ~ 2 n=3 base=3 {PossiblePower MgMgg 0 1 0 0 Mg^3 ~ 2 n=1 base=1 }
+PossiblePower GmGmNGmGmGG 0 1 1 0 mGmGG^2 ~ 2 n=3 base=3 {PossiblePower mGmGG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }
+PossiblePower gmGmnGmgMgmGmnGmg 1 0 -1 0 MgmGmnGmg^2 ~ 0 n=4 base=4 
+PossiblePower GmgMNgmGmGmgMNgmG 1 0 1 0 mGmgMNgmG^2 ~ 0 n=4 base=4 
+PossiblePower gmGMnGmgMgmGnGmg 1 1 -1 0 MgmGnGmg^2 ~ 2 n=4 base=4 
+PossiblePower gMgMNgMgMgMNg 0 0 -1 0 MgMgMNg^2 ~ 0 n=3 base=3 {PossiblePower MgMgMNg 0 1 0 0 Mg^3 ~ 2 n=1 base=1 }
+PossiblePower GmGmnGmGmGmnG 0 0 1 0 mGmGmnG^2 ~ 0 n=3 base=3 {PossiblePower mGmGmnG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }
+PossiblePower gmGmnGmgmGmnG 1 0 1 0 mgmGmnG^2 ~ 0 n=3 base=3 
+PossiblePower GmgMNgmGmgMNg 1 0 1 0 mGmgMNg^2 ~ 0 n=3 base=3 
+PossiblePower GMgMNgMGMgMNg 1 0 -1 0 MGMgMNg^2 ~ 0 n=3 base=3 
+PossiblePower gmGmnGmgmGnG 1 1 1 0 mgmGnG^2 ~ 2 n=3 base=3 
+PossiblePower gMGMnGMgMGnG 1 1 -1 0 MgMGnG^2 ~ 2 n=3 base=3 
+PossiblePower GmgmNgmGmgNg 1 1 1 0 mGmgNg^2 ~ 2 n=3 base=3 
+PossiblePower GMgMNgMGMgNg 1 1 -1 0 MGMgNg^2 ~ 2 n=3 base=3 
+PossiblePower gMgMNgMgMNgg 0 1 -1 -1 MNgMg^3 ~ 5 n=2 base=2 {PossiblePower MNgMg 0 0 0 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmnGmGmnGG 0 1 1 1 mnGmG^3 ~ 5 n=2 base=2 {PossiblePower mnGmG 0 0 0 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgMgMNgMg 0 0 -1 -1 MNgMg^3 ~ 0 n=2 base=2 {PossiblePower MNgMg 0 0 0 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmnGmGmnGmG 0 0 1 1 mnGmG^3 ~ 0 n=2 base=2 {PossiblePower mnGmG 0 0 0 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgmNgMgmNgMg 0 0 1 -1 mNgMg^3 ~ 0 n=2 base=2 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gMgmNgMgmNgMgmNgMg 0 0 1 -1 mNgMg^4 ~ 0 n=2 base=2 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGMnGmGMnGmGMnGmG 0 0 -1 1 MnGmG^4 ~ 0 n=2 base=2 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgmNgMgmNgMgmNgMgmNgMg 0 0 1 -1 mNgMg^5 ~ 0 n=2 base=2 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGMnGmGMnGmGMnGmGMnGmG 0 0 -1 1 MnGmG^5 ~ 0 n=2 base=2 {PossiblePower MnGmG 0 0 2 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgmNgMgmNgMgmNgMgmNgMgmNgMg 0 0 1 -1 mNgMg^6 ~ 0 n=2 base=2 {PossiblePower mNgMg 0 0 -2 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgMNg 0 1 -1 -1 MNg^4 ~ 1 n=1 base=2 
+PossiblePower GmGmnGmnG 0 1 1 1 mnG^4 ~ 1 n=1 base=2 
+PossiblePower gMgMNgMNg 0 1 -1 -1 MNgMNg^2 ~ 1 n=2 base=2 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmnGmnG 0 1 1 1 mnGmnG^2 ~ 1 n=2 base=2 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgMNgMgg 1 1 -1 -1 MNgMgg^2 ~ 2 n=3 base=3 
+PossiblePower GmGmnGmnGmGG 1 1 1 1 mnGmGG^2 ~ 2 n=3 base=3 
+PossiblePower gMgMNgMNgMgMNg 0 0 -1 -1 MNgMgMNg^2 ~ 0 n=3 base=3 {PossiblePower MNgMgMNg 0 1 0 0 MNg^3 ~ 1 n=1 base=2 }
+PossiblePower GmGmnGmnGmGmnG 0 0 1 1 mnGmGmnG^2 ~ 0 n=3 base=3 {PossiblePower mnGmGmnG 0 1 0 0 mnG^3 ~ 1 n=1 base=2 }
+PossiblePower gMgMNgMNgMgNg 1 1 -1 -1 MNgMgNg^2 ~ 2 n=3 base=3 
+PossiblePower GmGmnGmnGmGnG 1 1 1 1 mnGmGnG^2 ~ 2 n=3 base=3 
+PossiblePower gMgMNgMNgMNg 0 1 -1 -1 MNg^5 ~ 1 n=1 base=2 
+PossiblePower GmGmnGmnGmnG 0 1 1 1 mnG^5 ~ 1 n=1 base=2 
+PossiblePower gMgMNgMNgMNgMg 0 1 -1 -1 MNgMg^3 ~ 3 n=2 base=4 {PossiblePower MNgMg 0 0 0 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgMNgMNgMNg 0 1 -1 -1 MNg^6 ~ 1 n=1 base=2 
+PossiblePower GmGmnGmnGmnGmnG 0 1 1 1 mnG^6 ~ 1 n=1 base=2 
+PossiblePower gMgMNgMNgMNgMNg 0 1 -1 -1 MNgMNg^3 ~ 1 n=2 base=2 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmnGmnGmnGmnG 0 1 1 1 mnGmnG^3 ~ 1 n=2 base=2 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgMNgMNgMNg 0 1 -1 -1 MNgMNg^3 ~ 1 n=2 base=4 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGmnGmnGmnGmnG 0 1 1 1 mnGmnG^3 ~ 1 n=2 base=4 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgMNgMNgMNg 0 1 -1 -1 MNgMNgMNg^2 ~ 1 n=3 base=3 {PossiblePower MNgMNgMNg 0 0 0 0 MNg^3 ~ 0 n=1 base=1 }
+PossiblePower GmGmnGmnGmnGmnG 0 1 1 1 mnGmnGmnG^2 ~ 1 n=3 base=3 {PossiblePower mnGmnGmnG 0 0 0 0 mnG^3 ~ 0 n=1 base=1 }
+PossiblePower gmgNg 0 1 0 -1 Ng^3 ~ 1 n=1 base=2 
+PossiblePower gMgng 0 1 0 1 ng^3 ~ 1 n=1 base=2 
+PossiblePower gMgNg 0 1 0 -1 Ng^3 ~ 1 n=1 base=2 
+PossiblePower GmGnG 0 1 0 1 nG^3 ~ 1 n=1 base=2 
+PossiblePower gmgNg 0 1 1 0 mg^3 ~ 2 n=1 base=1 
+PossiblePower gMgng 0 1 -1 0 Mg^3 ~ 2 n=1 base=1 
+PossiblePower gMgNg 0 1 -1 0 Mg^3 ~ 2 n=1 base=1 
+PossiblePower GmGnG 0 1 1 0 mG^3 ~ 2 n=1 base=1 
+PossiblePower gmgNgg 0 1 0 -1 Ngg^2 ~ 1 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNgg 0 1 0 -1 Ngg^2 ~ 1 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGnGG 0 1 0 1 nGG^2 ~ 1 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GMGnGG 0 1 0 1 nGG^2 ~ 1 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNggggNgg 0 1 0 0 ggNgg^2 ~ 1 n=4 base=4 {PossiblePower ggNgg 0 0 0 -1 Ngg^2 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower gMgNgggNg 0 1 0 0 ggNg^2 ~ 1 n=3 base=3 {PossiblePower ggNg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GmGnGGGnG 0 1 0 0 GGnG^2 ~ 1 n=3 base=3 {PossiblePower GGnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GmGnGGGnGGGnG 0 1 0 0 GGnG^3 ~ 1 n=3 base=3 {PossiblePower GGnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GmGnGGGnGGGnG 0 1 0 0 GGnG^3 ~ 1 n=3 base=6 {PossiblePower GGnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GmGnGGMnGGnGG 0 1 -1 1 MnGGnGG^2 ~ 1 n=4 base=4 {PossiblePower MnGGnGG 0 0 1 0 nGG^2 ~ 0 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }}
+PossiblePower gMgNggNgg 0 1 0 -1 Ngg^3 ~ 1 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGnGGnGG 0 1 0 1 nGG^3 ~ 1 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GMGnGGnGG 0 1 0 1 nGG^3 ~ 1 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNggNgg 0 1 0 -1 Ngg^3 ~ 1 n=2 base=4 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmGnGGnGG 0 1 0 1 nGG^3 ~ 1 n=2 base=4 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GMGnGGnGG 0 1 0 1 nGG^3 ~ 1 n=2 base=4 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNggNgMg 0 1 0 -1 NgMg^3 ~ 3 n=2 base=4 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGnGGnGmG 0 1 0 1 nGmG^3 ~ 3 n=2 base=4 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMGnGGnGMgMGnGGnG 1 0 -1 0 MgMGnGGnG^2 ~ 0 n=5 base=5 
+PossiblePower gMgNggNgMgNgg 0 0 0 -1 NgMgNgg^2 ~ 0 n=4 base=4 {PossiblePower NgMgNgg 0 1 0 0 Ngg^2 ~ 1 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower GmGnGGnGmGnGG 0 0 0 1 nGmGnGG^2 ~ 0 n=4 base=4 {PossiblePower nGmGnGG 0 1 0 0 nGG^2 ~ 1 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }}
+PossiblePower gMgngMg 0 0 0 1 ngMg^2 ~ 0 n=2 base=2 {PossiblePower ngMg 0 0 -1 -1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNgMg 0 0 0 -1 NgMg^2 ~ 0 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGnGmG 0 0 0 1 nGmG^2 ~ 0 n=2 base=2 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGNGmG 0 0 0 -1 NGmG^2 ~ 0 n=2 base=2 {PossiblePower NGmG 0 0 1 1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNgMgMg 0 1 -1 0 Mg^5 ~ 2 n=1 base=1 
+PossiblePower GmGnGmGmG 0 1 1 0 mG^5 ~ 2 n=1 base=1 
+PossiblePower gMgngMgMgg 0 1 -1 0 MgMgg^2 ~ 2 n=3 base=3 {PossiblePower MgMgg 0 1 0 0 Mg^3 ~ 2 n=1 base=1 }
+PossiblePower GmGNGmGmGG 0 1 1 0 mGmGG^2 ~ 2 n=3 base=3 {PossiblePower mGmGG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }
+PossiblePower gmGnGmgMgmGmnGmg 1 1 -1 0 MgmGmnGmg^2 ~ 2 n=4 base=4 
+PossiblePower gmGnGmgMgmGMnGmg 1 1 -1 0 MgmGMnGmg^2 ~ 2 n=4 base=4 
+PossiblePower gmGnGmgMgmGnGmg 1 0 -1 0 MgmGnGmg^2 ~ 0 n=4 base=4 
+PossiblePower gMGnGMgMgMGnGMg 1 0 -1 0 MgMGnGMg^2 ~ 0 n=4 base=4 
+PossiblePower GmgNgmGmGmgNgmG 1 0 1 0 mGmgNgmG^2 ~ 0 n=4 base=4 
+PossiblePower GmgNgmGMGmgNgmG 1 0 -1 0 MGmgNgmG^2 ~ 0 n=4 base=4 
+PossiblePower gMGnGMgMGmnG 1 1 -1 0 MgMGmnG^2 ~ 2 n=3 base=3 
+PossiblePower GmgNgmGmgMNg 1 1 1 0 mGmgMNg^2 ~ 2 n=3 base=3 
+PossiblePower GMgNgMGMgmNg 1 1 -1 0 MGMgmNg^2 ~ 2 n=3 base=3 
+PossiblePower gMgNgMgMgNg 0 0 -1 0 MgMgNg^2 ~ 0 n=3 base=3 {PossiblePower MgMgNg 0 1 0 0 Mg^3 ~ 2 n=1 base=1 }
+PossiblePower gmGnGmgmGnG 1 0 1 0 mgmGnG^2 ~ 0 n=3 base=3 
+PossiblePower gMGnGMgMGnG 1 0 -1 0 MgMGnG^2 ~ 0 n=3 base=3 
+PossiblePower GmgNgmGmgNg 1 0 1 0 mGmgNg^2 ~ 0 n=3 base=3 
+PossiblePower GMgNgMGMgNg 1 0 -1 0 MGMgNg^2 ~ 0 n=3 base=3 
+PossiblePower gMgNgMgNgg 0 1 0 -1 NgMg^3 ~ 5 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGnGmGnGG 0 1 0 1 nGmG^3 ~ 5 n=2 base=2 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNgMgNgMg 0 0 0 -1 NgMg^3 ~ 0 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNgMgNgMgNgMg 0 0 0 -1 NgMg^4 ~ 0 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gmgNgmgNgmgNgmgNgg 0 1 0 -1 Ngmg^5 ~ 9 n=2 base=2 {PossiblePower Ngmg 0 0 1 1 mg^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNgMgNgMgNgMgNgg 0 1 0 -1 NgMg^5 ~ 9 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gmgNgmgNgmgNgmgNgg 0 1 0 -1 Ngmg^5 ~ 9 n=2 base=4 {PossiblePower Ngmg 0 0 1 1 mg^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNgMgNgMgNgMgNgg 0 1 0 -1 NgMg^5 ~ 9 n=2 base=4 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gmgNgmgNgmgNgmgNgmg 0 0 0 -1 Ngmg^5 ~ 0 n=2 base=2 {PossiblePower Ngmg 0 0 1 1 mg^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNgMgNgMgNgMgNgMg 0 0 0 -1 NgMg^5 ~ 0 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gmgNgmgNgmgNgmgNgmgNgg 0 1 0 -1 Ngmg^6 ~ 11 n=2 base=2 {PossiblePower Ngmg 0 0 1 1 mg^2 ~ 0 n=1 base=1 }
+PossiblePower gmgNgmgNgmgNgmgNgmgNgg 0 1 0 -1 Ngmg^6 ~ 11 n=2 base=4 {PossiblePower Ngmg 0 0 1 1 mg^2 ~ 0 n=1 base=1 }
+PossiblePower gmgNgmgNgmgNgmgNgmgNgg 0 1 0 -1 NgmgNgmg^3 ~ 11 n=4 base=4 {PossiblePower NgmgNgmg 0 0 0 0 Ngmg^2 ~ 0 n=2 base=2 {PossiblePower Ngmg 0 0 1 1 mg^2 ~ 0 n=1 base=1 }}
+PossiblePower gmgNgmgNgmgNgmgNgmgNgg 0 1 0 -1 NgmgNgmgNgg^2 ~ 5 n=6 base=6 {PossiblePower NgmgNgmgNgg 0 1 0 0 Ngmg^3 ~ 5 n=2 base=2 {PossiblePower Ngmg 0 0 1 1 mg^2 ~ 0 n=1 base=1 }}
+PossiblePower gMgNgMNg 0 1 0 -1 NgMNg^2 ~ 1 n=2 base=2 {PossiblePower NgMNg 0 0 -1 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGnGmnG 0 1 0 1 nGmnG^2 ~ 1 n=2 base=2 {PossiblePower nGmnG 0 0 1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNgMNgMNgNg 0 1 -1 -1 MNgMNgNg^2 ~ 1 n=3 base=3 {PossiblePower MNgMNgNg 0 1 0 0 MNg^3 ~ 2 n=1 base=1 }
+PossiblePower GmGnGmnGmnGnG 0 1 1 1 mnGmnGnG^2 ~ 1 n=3 base=3 {PossiblePower mnGmnGnG 0 1 0 0 mnG^3 ~ 2 n=1 base=1 }
+PossiblePower gMgNgMNgNgMg 0 1 0 -1 NgMg^3 ~ 3 n=2 base=4 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmGnGmnGnGmG 0 1 0 1 nGmG^3 ~ 3 n=2 base=4 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGnGmnGnGmnG 0 1 0 1 nGmnG^3 ~ 1 n=2 base=2 {PossiblePower nGmnG 0 0 1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmGnGmnGnGmnG 0 1 0 1 nGmnG^3 ~ 1 n=2 base=4 {PossiblePower nGmnG 0 0 1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNgNg 0 1 0 -1 Ng^4 ~ 1 n=1 base=2 
+PossiblePower GmGnGnG 0 1 0 1 nG^4 ~ 1 n=1 base=2 
+PossiblePower gMgNgNg 0 1 0 -1 NgNg^2 ~ 1 n=2 base=2 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GmGnGnG 0 1 0 1 nGnG^2 ~ 1 n=2 base=2 {PossiblePower nGnG 0 0 0 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgNgNgMgg 1 1 0 -1 NgMgg^2 ~ 2 n=3 base=3 
+PossiblePower GmGnGnGmGG 1 1 0 1 nGmGG^2 ~ 2 n=3 base=3 
+PossiblePower gMgNgNgMgNg 0 0 0 -1 NgMgNg^2 ~ 0 n=3 base=3 {PossiblePower NgMgNg 0 1 0 0 Ng^3 ~ 1 n=1 base=2 }
+PossiblePower GmGnGnGmGnG 0 0 0 1 nGmGnG^2 ~ 0 n=3 base=3 {PossiblePower nGmGnG 0 1 0 0 nG^3 ~ 1 n=1 base=2 }
+PossiblePower gMgNgNgMNgNg 0 1 0 -1 NgMNgNg^2 ~ 1 n=3 base=3 {PossiblePower NgMNgNg 0 1 0 0 Ng^3 ~ 1 n=1 base=2 }
+PossiblePower GmGnGnGmnGnG 0 1 0 1 nGmnGnG^2 ~ 1 n=3 base=3 {PossiblePower nGmnGnG 0 1 0 0 nG^3 ~ 1 n=1 base=2 }
+PossiblePower GmGnGnGnG 0 1 0 1 nG^5 ~ 1 n=1 base=2 
+PossiblePower gMMNgg 0 1 0 0 g^3 ~ 1 n=1 base=2 
+PossiblePower GmmnGG 0 1 0 0 G^3 ~ 1 n=1 base=2 
+PossiblePower gMMNgg 0 1 -2 -1 MMNg^3 ~ 2 n=1 base=1 
+PossiblePower GmmnGG 0 1 2 1 mmnG^3 ~ 2 n=1 base=1 
+PossiblePower GmmnGGmmnGGmmnGGmmnGGmmnGGmnG 0 1 0 0 GmmnG^6 ~ 11 n=2 base=2 {PossiblePower GmmnG 0 0 2 1 mmnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmmnGGmmnGGmmnGGmmnGGmmnGGmnG 0 1 0 0 GmmnG^6 ~ 11 n=2 base=4 {PossiblePower GmmnG 0 0 2 1 mmnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmmnGGmmnGGmmnGGmmnGGmmnGGmnG 0 1 0 0 GmmnGGmmnG^3 ~ 11 n=4 base=4 {PossiblePower GmmnGGmmnG 0 0 0 0 GmmnG^2 ~ 0 n=2 base=2 {PossiblePower GmmnG 0 0 2 1 mmnG^2 ~ 0 n=1 base=1 }}
+PossiblePower GmmnGGmmnGGmmnGGmmnGGmmnGGmnG 0 1 0 0 GmmnGGmmnGGmnG^2 ~ 5 n=6 base=6 {PossiblePower GmmnGGmmnGGmnG 0 1 0 0 GmmnG^3 ~ 5 n=2 base=2 {PossiblePower GmmnG 0 0 2 1 mmnG^2 ~ 0 n=1 base=1 }}
+PossiblePower GmmnGGmnGGmnG 0 1 0 0 GmnG^3 ~ 1 n=2 base=2 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmmnGGmnGGmnG 0 1 0 0 GmnG^3 ~ 1 n=2 base=4 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmmnGmnGmnG 0 1 1 1 mnG^4 ~ 1 n=1 base=2 
+PossiblePower GmmnGmnGmnG 0 1 1 1 mnGmnG^2 ~ 1 n=2 base=2 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmmnGmnGmnGmnG 0 1 1 1 mnG^5 ~ 1 n=1 base=2 
+PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 
+PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 
+PossiblePower gmNgg 0 1 0 0 g^3 ~ 1 n=1 base=2 
+PossiblePower gMngg 0 1 0 0 g^3 ~ 1 n=1 base=2 
+PossiblePower gMNgg 0 1 0 0 g^3 ~ 1 n=1 base=2 
+PossiblePower GmnGG 0 1 0 0 G^3 ~ 1 n=1 base=2 
+PossiblePower GmNGG 0 1 0 0 G^3 ~ 1 n=1 base=2 
+PossiblePower GMnGG 0 1 0 0 G^3 ~ 1 n=1 base=2 
+PossiblePower gmNgg 0 1 1 -1 mNg^3 ~ 2 n=1 base=1 
+PossiblePower gMngg 0 1 -1 1 Mng^3 ~ 2 n=1 base=1 
+PossiblePower gMNgg 0 1 -1 -1 MNg^3 ~ 2 n=1 base=1 
+PossiblePower GmnGG 0 1 1 1 mnG^3 ~ 2 n=1 base=1 
+PossiblePower GmNGG 0 1 1 -1 mNG^3 ~ 2 n=1 base=1 
+PossiblePower GMnGG 0 1 -1 1 MnG^3 ~ 2 n=1 base=1 
+PossiblePower gmNggg 0 1 0 0 g^4 ~ 1 n=1 base=2 
+PossiblePower gMnggg 0 1 0 0 g^4 ~ 1 n=1 base=2 
+PossiblePower gMNggg 0 1 0 0 g^4 ~ 1 n=1 base=2 
+PossiblePower GmnGGG 0 1 0 0 G^4 ~ 1 n=1 base=2 
+PossiblePower GmNGGG 0 1 0 0 G^4 ~ 1 n=1 base=2 
+PossiblePower GMnGGG 0 1 0 0 G^4 ~ 1 n=1 base=2 
+PossiblePower gmNggg 0 1 0 0 gg^2 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMnggg 0 1 0 0 gg^2 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower gMNggg 0 1 0 0 gg^2 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGG 0 1 0 0 GG^2 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GmNGGG 0 1 0 0 GG^2 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGGG 0 1 0 0 GG^2 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGGG 0 1 0 0 G^5 ~ 1 n=1 base=2 
+PossiblePower gmNgggmgg 0 1 0 0 gmgg^2 ~ 1 n=3 base=3 {PossiblePower gmgg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower gMNgggMgg 0 1 0 0 gMgg^2 ~ 1 n=3 base=3 {PossiblePower gMgg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower GmnGGGmGG 0 1 0 0 GmGG^2 ~ 1 n=3 base=3 {PossiblePower GmGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower GMnGGGMGG 0 1 0 0 GMGG^2 ~ 1 n=3 base=3 {PossiblePower GMGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower gmNgggmNgg 0 0 0 0 gmNgg^2 ~ 0 n=3 base=3 {PossiblePower gmNgg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower gMNgggMNgg 0 0 0 0 gMNgg^2 ~ 0 n=3 base=3 {PossiblePower gMNgg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower GmnGGGmnGG 0 0 0 0 GmnGG^2 ~ 0 n=3 base=3 {PossiblePower GmnGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower GMnGGGMnGG 0 0 0 0 GMnGG^2 ~ 0 n=3 base=3 {PossiblePower GMnGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower gMNgggMNgMg 1 1 0 0 gMNgMg^2 ~ 2 n=3 base=3 
+PossiblePower GmnGGGmnGmG 1 1 0 0 GmnGmG^2 ~ 2 n=3 base=3 
+PossiblePower gMNgggMNgNg 1 1 0 0 gMNgNg^2 ~ 2 n=3 base=3 
+PossiblePower GmnGGGmnGnG 1 1 0 0 GmnGnG^2 ~ 2 n=3 base=3 
+PossiblePower gMNgggNgg 0 1 0 0 gNgg^2 ~ 1 n=3 base=3 {PossiblePower gNgg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower GmnGGGnGG 0 1 0 0 GnGG^2 ~ 1 n=3 base=3 {PossiblePower GnGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower gMNggMg 0 1 0 0 gMg^2 ~ 1 n=2 base=2 {PossiblePower gMg 0 0 -1 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGmG 0 1 0 0 GmG^2 ~ 1 n=2 base=2 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmNGGmG 0 1 0 0 GmG^2 ~ 1 n=2 base=2 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGmGGmG 0 1 0 0 GmG^3 ~ 1 n=2 base=2 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGmGGmG 0 1 0 0 GmG^3 ~ 1 n=2 base=4 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gmNggmggmNg 0 1 0 0 gmNg^3 ~ 3 n=2 base=4 {PossiblePower gmNg 0 0 1 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gMNggMggMNg 0 1 0 0 gMNg^3 ~ 3 n=2 base=4 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGmGGmnG 0 1 0 0 GmnG^3 ~ 3 n=2 base=4 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGGMGGMnG 0 1 0 0 GMnG^3 ~ 3 n=2 base=4 {PossiblePower GMnG 0 0 -1 1 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNggMgMgg 0 1 -1 0 MgMgg^2 ~ 1 n=3 base=3 {PossiblePower MgMgg 0 1 0 0 Mg^3 ~ 2 n=1 base=1 }
+PossiblePower GmnGGmGmGG 0 1 1 0 mGmGG^2 ~ 1 n=3 base=3 {PossiblePower mGmGG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }
+PossiblePower GmNGGmGmGG 0 1 1 0 mGmGG^2 ~ 1 n=3 base=3 {PossiblePower mGmGG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }
+PossiblePower GMnGGMGMGG 0 1 -1 0 MGMGG^2 ~ 1 n=3 base=3 {PossiblePower MGMGG 0 1 0 0 MG^3 ~ 2 n=1 base=1 }
+PossiblePower gMNggMMNggMNg 0 1 0 0 gMNg^3 ~ 3 n=2 base=4 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGmmnGGmnG 0 1 0 0 GmnG^3 ~ 3 n=2 base=4 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNggMNg 0 0 0 0 gMNg^2 ~ 0 n=2 base=2 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGmnG 0 0 0 0 GmnG^2 ~ 0 n=2 base=2 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNggMNggMNg 0 0 0 0 gMNg^3 ~ 0 n=2 base=2 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGmnGGmnG 0 0 0 0 GmnG^3 ~ 0 n=2 base=2 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNggMNggNg 0 1 0 0 gMNg^3 ~ 5 n=2 base=2 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGmnGGnG 0 1 0 0 GmnG^3 ~ 5 n=2 base=2 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGmnGmGmnGGmnG 0 0 1 0 mGmnGGmnG^2 ~ 0 n=4 base=4 {PossiblePower mGmnGGmnG 0 0 -1 0 GmnG^2 ~ 0 n=2 base=2 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }}
+PossiblePower gMNggMNgMNg 0 1 -1 -1 MNg^5 ~ 2 n=1 base=1 
+PossiblePower GmnGGmnGmnG 0 1 1 1 mnG^5 ~ 2 n=1 base=1 
+PossiblePower gmNggmNgmNgg 0 0 1 -1 mNgmNgg^2 ~ 0 n=3 base=3 {PossiblePower mNgmNgg 0 1 0 0 mNg^3 ~ 2 n=1 base=1 }
+PossiblePower gMNggMNgMNgg 0 0 -1 -1 MNgMNgg^2 ~ 0 n=3 base=3 {PossiblePower MNgMNgg 0 1 0 0 MNg^3 ~ 2 n=1 base=1 }
+PossiblePower GmnGGmnGmnGG 0 0 1 1 mnGmnGG^2 ~ 0 n=3 base=3 {PossiblePower mnGmnGG 0 1 0 0 mnG^3 ~ 2 n=1 base=1 }
+PossiblePower GMnGGMnGMnGG 0 0 -1 1 MnGMnGG^2 ~ 0 n=3 base=3 {PossiblePower MnGMnGG 0 1 0 0 MnG^3 ~ 2 n=1 base=1 }
+PossiblePower gMNggNg 0 1 0 0 gNg^2 ~ 1 n=2 base=2 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGnG 0 1 0 0 GnG^2 ~ 1 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGGnG 0 1 0 0 GnG^2 ~ 1 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gmNggNggmNg 0 1 0 0 gmNg^3 ~ 3 n=2 base=4 {PossiblePower gmNg 0 0 1 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gMNggNggMNg 0 1 0 0 gMNg^3 ~ 3 n=2 base=4 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGnGGmnG 0 1 0 0 GmnG^3 ~ 3 n=2 base=4 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGGnGGMnG 0 1 0 0 GMnG^3 ~ 3 n=2 base=4 {PossiblePower GMnG 0 0 -1 1 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNggNggMNggg 0 1 0 0 gMNggg^2 ~ 3 n=4 base=4 {PossiblePower gMNggg 0 1 0 0 gg^2 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }}
+PossiblePower gMNggNggMNggNg 0 0 0 0 gMNggNg^2 ~ 0 n=4 base=4 {PossiblePower gMNggNg 0 1 0 0 gNg^2 ~ 1 n=2 base=2 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }}
+PossiblePower gMNggNggNg 0 1 0 0 gNg^3 ~ 1 n=2 base=2 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGnGGnG 0 1 0 0 GnG^3 ~ 1 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGGnGGnG 0 1 0 0 GnG^3 ~ 1 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNggNggNg 0 1 0 0 gNg^3 ~ 1 n=2 base=4 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGGnGGnG 0 1 0 0 GnG^3 ~ 1 n=2 base=4 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGGnGGnG 0 1 0 0 GnG^3 ~ 1 n=2 base=4 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gmNggNgNgg 0 1 0 -1 NgNgg^2 ~ 1 n=3 base=3 {PossiblePower NgNgg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower gMNggNgNgg 0 1 0 -1 NgNgg^2 ~ 1 n=3 base=3 {PossiblePower NgNgg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower GmnGGnGnGG 0 1 0 1 nGnGG^2 ~ 1 n=3 base=3 {PossiblePower nGnGG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower GMnGGnGnGG 0 1 0 1 nGnGG^2 ~ 1 n=3 base=3 {PossiblePower nGnGG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower gMNgmg 0 1 1 0 mg^3 ~ 1 n=1 base=2 
+PossiblePower gMNgMg 0 1 -1 0 Mg^3 ~ 1 n=1 base=2 
+PossiblePower GmnGmG 0 1 1 0 mG^3 ~ 1 n=1 base=2 
+PossiblePower GmNGmG 0 1 1 0 mG^3 ~ 1 n=1 base=2 
+PossiblePower gMNgmg 0 1 -1 -1 MNg^3 ~ 2 n=1 base=1 
+PossiblePower gMNgMg 0 1 -1 -1 MNg^3 ~ 2 n=1 base=1 
+PossiblePower GmnGmG 0 1 1 1 mnG^3 ~ 2 n=1 base=1 
+PossiblePower GmNGmG 0 1 1 -1 mNG^3 ~ 2 n=1 base=1 
+PossiblePower GmnGmGG 0 1 1 0 mGG^2 ~ 1 n=2 base=2 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMgggMg 0 1 0 0 ggMg^2 ~ 1 n=3 base=3 {PossiblePower ggMg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GmnGmGGGmG 0 1 0 0 GGmG^2 ~ 1 n=3 base=3 {PossiblePower GGmG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower gMNgmGGmgMNgmGG 1 0 1 0 mgMNgmGG^2 ~ 0 n=4 base=4 
+PossiblePower gMNgMGGMgMNgMGG 1 0 -1 0 MgMNgMGG^2 ~ 0 n=4 base=4 
+PossiblePower GmnGMggMGmnGMgg 1 0 -1 0 MGmnGMgg^2 ~ 0 n=4 base=4 
+PossiblePower gMNgmGGmgMNgmGGmgMNgmGG 1 0 1 0 mgMNgmGG^3 ~ 0 n=4 base=4 
+PossiblePower GmnGMggMGmnGMggMGmnGMgg 1 0 -1 0 MGmnGMgg^3 ~ 0 n=4 base=4 
+PossiblePower gMNgmGGmgMNgmGGmgMNgmGG 1 0 1 0 mgMNgmGG^3 ~ 0 n=4 base=8 
+PossiblePower GmnGMggMGmnGMggMGmnGMgg 1 0 -1 0 MGmnGMgg^3 ~ 0 n=4 base=8 
+PossiblePower gMNgmGGmgMNgNgMNgmGGmgMNg 1 0 0 -1 NgMNgmGGmgMNg^2 ~ 0 n=6 base=6 
+PossiblePower GmnGMggMGmnGnGmnGMggMGmnG 1 0 0 1 nGmnGMggMGmnG^2 ~ 0 n=6 base=6 
+PossiblePower GmnGmGmG 0 1 1 0 mG^4 ~ 1 n=1 base=2 
+PossiblePower GmnGmGmG 0 1 1 0 mGmG^2 ~ 1 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGmGmG 0 1 1 0 mG^5 ~ 1 n=1 base=2 
+PossiblePower GmnGmGmGmGmG 0 1 1 0 mG^6 ~ 1 n=1 base=2 
+PossiblePower GmnGmGmGmGmG 0 1 1 0 mGmG^3 ~ 1 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGmGmGmG 0 1 1 0 mGmG^3 ~ 1 n=2 base=4 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGmGmGmG 0 1 1 0 mGmGmG^2 ~ 1 n=3 base=3 {PossiblePower mGmGmG 0 0 0 0 mG^3 ~ 0 n=1 base=1 }
+PossiblePower gMNgMgMgMgMNg 0 1 -1 0 MgMNg^3 ~ 3 n=2 base=4 {PossiblePower MgMNg 0 0 0 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgMGmGMgmNgMGG 1 1 -1 0 MgmNgMGG^2 ~ 3 n=4 base=4 
+PossiblePower gMNgMGmGMgMNgMGmG 1 0 -1 0 MgMNgMGmG^2 ~ 0 n=4 base=4 
+PossiblePower gMNgMgMgMNgg 1 1 -1 0 MgMNgg^2 ~ 2 n=3 base=3 
+PossiblePower GmnGmGmGmnGG 1 1 1 0 mGmnGG^2 ~ 2 n=3 base=3 
+PossiblePower gMNgMgMgMNgMg 0 0 -1 0 MgMNgMg^2 ~ 0 n=3 base=3 {PossiblePower MgMNgMg 0 1 0 0 Mg^3 ~ 1 n=1 base=2 }
+PossiblePower GmnGmGmGmnGmG 0 0 1 0 mGmnGmG^2 ~ 0 n=3 base=3 {PossiblePower mGmnGmG 0 1 0 0 mG^3 ~ 1 n=1 base=2 }
+PossiblePower GmnGmgmGmnGmg 1 0 1 0 mGmnGmg^2 ~ 0 n=3 base=3 
+PossiblePower GmnGMgMGmnGMg 1 0 -1 0 MGmnGMg^2 ~ 0 n=3 base=3 
+PossiblePower gMNgmGmgNgmG 1 1 1 0 mgNgmG^2 ~ 1 n=3 base=3 
+PossiblePower GmnGMgMGnGMg 1 1 -1 0 MGnGMg^2 ~ 1 n=3 base=3 
+PossiblePower GMnGmgmGnGmg 1 1 1 0 mGnGmg^2 ~ 1 n=3 base=3 
+PossiblePower gMNgMgMNg 0 0 -1 0 MgMNg^2 ~ 0 n=2 base=2 {PossiblePower MgMNg 0 0 0 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGmnG 0 0 1 0 mGmnG^2 ~ 0 n=2 base=2 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGmnGGmnG 0 1 0 0 GmnG^3 ~ 2 n=2 base=4 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGmnGGmnG 0 1 1 0 mGmnG^3 ~ 4 n=2 base=2 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMgMNgMgMNg 0 0 -1 0 MgMNg^3 ~ 0 n=2 base=2 {PossiblePower MgMNg 0 0 0 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGmnGmGmnG 0 0 1 0 mGmnG^3 ~ 0 n=2 base=2 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgMgmNgMgmNgMgmNgMgmNgMgNg 0 1 -1 0 MgmNg^6 ~ 11 n=2 base=2 {PossiblePower MgmNg 0 0 2 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgMgmNgMgmNgMgmNgMgmNgMgNg 0 1 -1 0 MgmNg^6 ~ 11 n=2 base=4 {PossiblePower MgmNg 0 0 2 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgMgmNgMgmNgMgmNgMgmNgMgNg 0 1 -1 0 MgmNgMgmNg^3 ~ 11 n=4 base=4 {PossiblePower MgmNgMgmNg 0 0 0 0 MgmNg^2 ~ 0 n=2 base=2 {PossiblePower MgmNg 0 0 2 -1 mNg^2 ~ 0 n=1 base=1 }}
+PossiblePower gmNgMgmNgMgmNgMgmNgMgmNgMgNg 0 1 -1 0 MgmNgMgmNgMgNg^2 ~ 5 n=6 base=6 {PossiblePower MgmNgMgmNgMgNg 0 1 0 0 MgmNg^3 ~ 5 n=2 base=2 {PossiblePower MgmNg 0 0 2 -1 mNg^2 ~ 0 n=1 base=1 }}
+PossiblePower gmNgMgmNgMgmNgMgmNgMgNg 0 1 -1 0 MgmNg^5 ~ 9 n=2 base=2 {PossiblePower MgmNg 0 0 2 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGmGMnGmGMnGmGMnGmGnG 0 1 1 0 mGMnG^5 ~ 9 n=2 base=2 {PossiblePower mGMnG 0 0 -2 1 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgMgmNgMgmNgMgmNgMgNg 0 1 -1 0 MgmNg^5 ~ 9 n=2 base=4 {PossiblePower MgmNg 0 0 2 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGmGMnGmGMnGmGMnGmGnG 0 1 1 0 mGMnG^5 ~ 9 n=2 base=4 {PossiblePower mGMnG 0 0 -2 1 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgMgmNgMgmNgMgNg 0 1 -1 0 MgmNg^4 ~ 7 n=2 base=2 {PossiblePower MgmNg 0 0 2 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgMgmNgMgmNgMgNg 0 1 -1 0 MgmNg^4 ~ 7 n=2 base=4 {PossiblePower MgmNg 0 0 2 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgMgmNgMgmNgMgNg 0 1 -1 0 MgmNgMgNg^2 ~ 3 n=4 base=4 {PossiblePower MgmNgMgNg 0 1 0 0 MgNg^2 ~ 1 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }}
+PossiblePower gMNgMgMNgMgNg 0 1 -1 0 MgMNg^3 ~ 5 n=2 base=2 {PossiblePower MgMNg 0 0 0 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGmnGmGnG 0 1 1 0 mGmnG^3 ~ 5 n=2 base=2 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgMgmNgMgNg 0 1 -1 0 MgmNg^3 ~ 5 n=2 base=2 {PossiblePower MgmNg 0 0 2 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMgMNgMNg 0 1 -1 -1 MNg^5 ~ 2 n=1 base=1 
+PossiblePower GmnGmGmnGmnG 0 1 1 1 mnG^5 ~ 2 n=1 base=1 
+PossiblePower gMNgMgMNgMNgg 0 1 -1 -1 MNgMNgg^2 ~ 2 n=3 base=3 {PossiblePower MNgMNgg 0 1 0 0 MNg^3 ~ 2 n=1 base=1 }
+PossiblePower GmnGmGmnGmnGG 0 1 1 1 mnGmnGG^2 ~ 2 n=3 base=3 {PossiblePower mnGmnGG 0 1 0 0 mnG^3 ~ 2 n=1 base=1 }
+PossiblePower gMNgMgMNgMNgMg 0 0 -1 -1 MNgMNgMg^2 ~ 0 n=3 base=3 {PossiblePower MNgMNgMg 0 1 0 0 MNg^3 ~ 2 n=1 base=1 }
+PossiblePower GmnGmGmnGmnGmG 0 0 1 1 mnGmnGmG^2 ~ 0 n=3 base=3 {PossiblePower mnGmnGmG 0 1 0 0 mnG^3 ~ 2 n=1 base=1 }
+PossiblePower gMNgMgNg 0 1 -1 0 MgNg^2 ~ 1 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGnG 0 1 1 0 mGnG^2 ~ 1 n=2 base=2 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMgNggNgMgNg 0 1 0 0 gNgMgNg^2 ~ 1 n=4 base=4 {PossiblePower gNgMgNg 0 0 -1 0 MgNg^2 ~ 0 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }}
+PossiblePower gMNgMgNgMgMNg 0 1 -1 0 MgMNg^3 ~ 3 n=2 base=4 {PossiblePower MgMNg 0 0 0 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGnGmGmnG 0 1 1 0 mGmnG^3 ~ 3 n=2 base=4 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGnGmGnG 0 1 1 0 mGnG^3 ~ 1 n=2 base=2 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmGnGmGnG 0 1 1 0 mGnG^3 ~ 1 n=2 base=4 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMgNgMgNgMgNg 0 1 -1 0 MgNg^4 ~ 1 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMgNgMgNgMgNg 0 1 -1 0 MgNg^4 ~ 1 n=2 base=4 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMgNgMgNgMgNg 0 1 -1 0 MgNgMgNg^2 ~ 1 n=4 base=4 {PossiblePower MgNgMgNg 0 0 0 0 MgNg^2 ~ 0 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }}
+PossiblePower GmnGmmnGmnG 0 0 2 1 mmnGmnG^2 ~ 0 n=2 base=2 {PossiblePower mmnGmnG 0 0 -1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMMNgMNgMNg 0 1 -1 -1 MNg^5 ~ 2 n=1 base=1 
+PossiblePower GmnGmmnGmnGmnG 0 1 1 1 mnG^5 ~ 2 n=1 base=1 
+PossiblePower gMNgMNg 0 0 -1 -1 MNg^3 ~ 0 n=1 base=1 
+PossiblePower GmnGmnG 0 0 1 1 mnG^3 ~ 0 n=1 base=1 
+PossiblePower gMNgMNgg 0 1 -1 -1 MNg^4 ~ 3 n=1 base=1 
+PossiblePower GmnGmnGG 0 1 1 1 mnG^4 ~ 3 n=1 base=1 
+PossiblePower GMnGMnGG 0 1 -1 1 MnG^4 ~ 3 n=1 base=1 
+PossiblePower gMNgMNgg 0 1 -1 -1 MNg^4 ~ 3 n=1 base=2 
+PossiblePower GmnGmnGG 0 1 1 1 mnG^4 ~ 3 n=1 base=2 
+PossiblePower GMnGMnGG 0 1 -1 1 MnG^4 ~ 3 n=1 base=2 
+PossiblePower gMNgMNgg 0 1 -1 -1 MNgg^2 ~ 1 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGG 0 1 1 1 mnGG^2 ~ 1 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGMnGG 0 1 -1 1 MnGG^2 ~ 1 n=2 base=2 {PossiblePower MnGG 0 0 1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGGmnG 0 1 1 1 mnG^5 ~ 3 n=1 base=1 
+PossiblePower GmnGmnGGmnG 0 1 1 1 mnG^5 ~ 3 n=1 base=2 
+PossiblePower gMNgMNgMg 0 1 -1 -1 MNg^4 ~ 3 n=1 base=1 
+PossiblePower GmnGmnGmG 0 1 1 1 mnG^4 ~ 3 n=1 base=1 
+PossiblePower gMNgMNgMg 0 1 -1 -1 MNg^4 ~ 3 n=1 base=2 
+PossiblePower GmnGmnGmG 0 1 1 1 mnG^4 ~ 3 n=1 base=2 
+PossiblePower gMNgMNgMg 0 1 -1 -1 MNgMg^2 ~ 1 n=2 base=2 {PossiblePower MNgMg 0 0 0 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGmG 0 1 1 1 mnGmG^2 ~ 1 n=2 base=2 {PossiblePower mnGmG 0 0 0 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGmGmnG 0 1 1 1 mnG^5 ~ 3 n=1 base=1 
+PossiblePower GmnGmnGmGmnG 0 1 1 1 mnG^5 ~ 3 n=1 base=2 
+PossiblePower GmnGmnGmGmnGmG 0 1 1 0 mGmnGmG^2 ~ 2 n=3 base=3 {PossiblePower mGmnGmG 0 1 0 0 mG^3 ~ 1 n=1 base=2 }
+PossiblePower GmnGmnGmGmnGmG 0 1 1 1 mnGmG^3 ~ 1 n=2 base=2 {PossiblePower mnGmG 0 0 0 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGmGmnGmG 0 1 1 1 mnGmG^3 ~ 1 n=2 base=4 {PossiblePower mnGmG 0 0 0 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMNgMgMNgMNg 0 0 -1 0 MgMNgMNg^2 ~ 0 n=3 base=3 {PossiblePower MgMNgMNg 0 0 0 -1 MNg^3 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGmGmnGmnG 0 0 1 0 mGmnGmnG^2 ~ 0 n=3 base=3 {PossiblePower mGmnGmnG 0 0 0 1 mnG^3 ~ 0 n=1 base=1 }
+PossiblePower gMNgMNgMMNgMNg 0 1 -1 -1 MNg^5 ~ 3 n=1 base=1 
+PossiblePower gMNgMNgMMNgMNg 0 1 -1 -1 MNg^5 ~ 3 n=1 base=2 
+PossiblePower gMNgMNgMMNgMNgMNg 0 0 -2 -1 MMNgMNgMNg^2 ~ 0 n=3 base=3 {PossiblePower MMNgMNgMNg 0 0 1 0 MNg^3 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGmmnGmnGmnG 0 0 2 1 mmnGmnGmnG^2 ~ 0 n=3 base=3 {PossiblePower mmnGmnGmnG 0 0 -1 0 mnG^3 ~ 0 n=1 base=1 }
+PossiblePower gMNgMNgMNg 0 0 -1 -1 MNg^4 ~ 0 n=1 base=1 
+PossiblePower GmnGmnGmnG 0 0 1 1 mnG^4 ~ 0 n=1 base=1 
+PossiblePower gMNgMNgMNgMg 0 1 -1 -1 MNg^5 ~ 4 n=1 base=1 
+PossiblePower gMNgMNgMNgMg 0 1 -1 -1 MNg^5 ~ 4 n=1 base=2 
+PossiblePower gMNgMNgMNgMMNg 0 1 -1 -1 MNg^5 ~ 4 n=1 base=1 
+PossiblePower gMNgMNgMNgMMNg 0 1 -1 -1 MNg^5 ~ 4 n=1 base=2 
+PossiblePower GmnGmnGmnGmmnGmnG 0 1 1 1 mnG^6 ~ 4 n=1 base=1 
+PossiblePower GmnGmnGmnGmmnGmnG 0 1 1 1 mnG^6 ~ 4 n=1 base=2 
+PossiblePower GmnGmnGmnGmmnGmnG 0 1 1 1 mnGmmnGmnG^2 ~ 1 n=3 base=3 {PossiblePower mnGmmnGmnG 0 1 0 0 mnG^3 ~ 1 n=1 base=2 }
+PossiblePower GmnGmnGmnGmmnGmnG 0 1 1 1 mnGmnG^3 ~ 4 n=2 base=2 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGmnGmmnGmnG 0 1 2 1 mmnGmnG^3 ~ 2 n=2 base=4 {PossiblePower mmnGmnG 0 0 -1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgmNgmNgmNg 0 0 1 -1 mNg^5 ~ 0 n=1 base=1 
+PossiblePower gMNgMNgMNgMNg 0 0 -1 -1 MNg^5 ~ 0 n=1 base=1 
+PossiblePower GmnGmnGmnGmnG 0 0 1 1 mnG^5 ~ 0 n=1 base=1 
+PossiblePower GMnGMnGMnGMnG 0 0 -1 1 MnG^5 ~ 0 n=1 base=1 
+PossiblePower gmNgmNgmNgmNgmNg 0 0 1 -1 mNg^6 ~ 0 n=1 base=1 
+PossiblePower gMNgMNgMNgMNgMNg 0 0 -1 -1 MNg^6 ~ 0 n=1 base=1 
+PossiblePower GmnGmnGmnGmnGmnG 0 0 1 1 mnG^6 ~ 0 n=1 base=1 
+PossiblePower gmNgmNgmNgmNgmNgmNg 0 0 1 -1 mNg^7 ~ 0 n=1 base=1 
+PossiblePower gMNgMNgMNgMNgMNgMNg 0 0 -1 -1 MNg^7 ~ 0 n=1 base=1 
+PossiblePower GmnGmnGmnGmnGmnGmnG 0 0 1 1 mnG^7 ~ 0 n=1 base=1 
+PossiblePower gmNgmNgmNgmNgmNgmNgmNg 0 0 1 -1 mNg^8 ~ 0 n=1 base=1 
+PossiblePower gMNgMNgMNgMNgMNgMNgMNg 0 0 -1 -1 MNg^8 ~ 0 n=1 base=1 
+PossiblePower GMnGMnGMnGMnGMnGMnGMnG 0 0 -1 1 MnG^8 ~ 0 n=1 base=1 
+PossiblePower gmNgmNgmNgmNgmNgmNgmNgmNg 0 0 1 -1 mNg^9 ~ 0 n=1 base=1 
+PossiblePower gMNgMNgMNgMNgMNgMNgMNgMNg 0 0 -1 -1 MNg^9 ~ 0 n=1 base=1 
+PossiblePower GmnGmnGmnGmnGmnGmnGmnGmnG 0 0 1 1 mnG^9 ~ 0 n=1 base=1 
+PossiblePower GMnGMnGMnGMnGMnGMnGMnGMnG 0 0 -1 1 MnG^9 ~ 0 n=1 base=1 
+PossiblePower gMNgMNgMNgMNgMNgMNgMNgMNgMNg 0 0 -1 -1 MNg^10 ~ 0 n=1 base=1 
+PossiblePower GmnGmnGmnGmnGmnGmnGmnGmnGnG 0 1 1 1 mnG^10 ~ 9 n=1 base=1 
+PossiblePower GmnGmnGmnGmnGmnGmnGmnGmnGnG 0 1 1 1 mnG^10 ~ 9 n=1 base=2 
+PossiblePower GmnGmnGmnGmnGmnGmnGmnGmnGnG 0 1 1 1 mnGmnG^5 ~ 9 n=2 base=2 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGmnGmnGmnGmnGmnGmnGnG 0 1 1 1 mnGmnG^5 ~ 9 n=2 base=4 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGmnGmnGmnGmnGmnGmnGnG 0 1 1 1 mnGmnGmnGmnGnG^2 ~ 4 n=5 base=5 {PossiblePower mnGmnGmnGmnGnG 0 1 0 0 mnG^5 ~ 4 n=1 base=2 }
+PossiblePower gMNgMNgMNgMNgMNgNg 0 1 -1 -1 MNg^7 ~ 6 n=1 base=1 
+PossiblePower gMNgMNgMNgMNgMNgNg 0 1 -1 -1 MNg^7 ~ 6 n=1 base=2 
+PossiblePower gMNgMNgMNgMNgNg 0 1 -1 -1 MNg^6 ~ 5 n=1 base=1 
+PossiblePower GmnGmnGmnGmnGnG 0 1 1 1 mnG^6 ~ 5 n=1 base=1 
+PossiblePower gMNgMNgMNgMNgNg 0 1 -1 -1 MNg^6 ~ 5 n=1 base=2 
+PossiblePower GmnGmnGmnGmnGnG 0 1 1 1 mnG^6 ~ 5 n=1 base=2 
+PossiblePower gMNgMNgMNgMNgNg 0 1 -1 -1 MNgMNg^3 ~ 5 n=2 base=2 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGmnGmnGnG 0 1 1 1 mnGmnG^3 ~ 5 n=2 base=2 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMNgMNgMNgNg 0 1 -1 -1 MNgMNgNg^2 ~ 2 n=3 base=3 {PossiblePower MNgMNgNg 0 1 0 0 MNg^3 ~ 2 n=1 base=1 }
+PossiblePower GmnGmnGmnGmnGnG 0 1 1 1 mnGmnGnG^2 ~ 2 n=3 base=3 {PossiblePower mnGmnGnG 0 1 0 0 mnG^3 ~ 2 n=1 base=1 }
+PossiblePower gMNgMNgMNgNg 0 1 -1 -1 MNg^5 ~ 4 n=1 base=1 
+PossiblePower gMNgMNgMNgNg 0 1 -1 -1 MNg^5 ~ 4 n=1 base=2 
+PossiblePower gMNgMNgMNgNgMNg 0 1 0 -1 NgMNg^3 ~ 2 n=2 base=4 {PossiblePower NgMNg 0 0 -1 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGmnGnGmnG 0 1 0 1 nGmnG^3 ~ 2 n=2 base=4 {PossiblePower nGmnG 0 0 1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMNgMNgNgMNg 0 1 -1 -1 MNg^6 ~ 4 n=1 base=1 
+PossiblePower GmnGmnGmnGnGmnG 0 1 1 1 mnG^6 ~ 4 n=1 base=1 
+PossiblePower gMNgMNgMNgNgMNg 0 1 -1 -1 MNg^6 ~ 4 n=1 base=2 
+PossiblePower GmnGmnGmnGnGmnG 0 1 1 1 mnG^6 ~ 4 n=1 base=2 
+PossiblePower gMNgMNgMNgNgMNg 0 1 -1 -1 MNgMNg^3 ~ 4 n=2 base=2 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGmnGnGmnG 0 1 1 1 mnGmnG^3 ~ 4 n=2 base=2 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMNgMNgNgMNg 0 1 -1 -1 MNgNgMNg^2 ~ 1 n=3 base=3 {PossiblePower MNgNgMNg 0 1 0 0 MNg^3 ~ 1 n=1 base=2 }
+PossiblePower GmnGmnGmnGnGmnG 0 1 1 1 mnGnGmnG^2 ~ 1 n=3 base=3 {PossiblePower mnGnGmnG 0 1 0 0 mnG^3 ~ 1 n=1 base=2 }
+PossiblePower gMNgMNgMNgNgMNgMNg 0 1 -1 -1 MNg^7 ~ 4 n=1 base=1 
+PossiblePower gMNgMNgMNgNgMNgMNg 0 1 -1 -1 MNg^7 ~ 4 n=1 base=2 
+PossiblePower gMNgMNgNg 0 1 -1 -1 MNg^4 ~ 3 n=1 base=1 
+PossiblePower GmnGmnGnG 0 1 1 1 mnG^4 ~ 3 n=1 base=1 
+PossiblePower gMNgMNgNg 0 1 -1 -1 MNg^4 ~ 3 n=1 base=2 
+PossiblePower GmnGmnGnG 0 1 1 1 mnG^4 ~ 3 n=1 base=2 
+PossiblePower gMNgMNgNg 0 1 -1 -1 MNgNg^2 ~ 1 n=2 base=2 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGnG 0 1 1 1 mnGnG^2 ~ 1 n=2 base=2 {PossiblePower mnGnG 0 0 -1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMNgNgMNg 0 1 -1 -1 MNg^5 ~ 3 n=1 base=1 
+PossiblePower GmnGmnGnGmnG 0 1 1 1 mnG^5 ~ 3 n=1 base=1 
+PossiblePower gMNgMNgNgMNg 0 1 -1 -1 MNg^5 ~ 3 n=1 base=2 
+PossiblePower GmnGmnGnGmnG 0 1 1 1 mnG^5 ~ 3 n=1 base=2 
+PossiblePower gMNgMNgNgMNgMNg 0 0 0 -1 NgMNgMNg^2 ~ 0 n=3 base=3 {PossiblePower NgMNgMNg 0 0 -1 0 MNg^3 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGnGmnGmnG 0 0 0 1 nGmnGmnG^2 ~ 0 n=3 base=3 {PossiblePower nGmnGmnG 0 0 1 0 mnG^3 ~ 0 n=1 base=1 }
+PossiblePower gMNgMNgNgMNgMNgMNg 0 1 -1 -1 MNg^7 ~ 3 n=1 base=1 
+PossiblePower GmnGmnGnGmnGmnGmnG 0 1 1 1 mnG^7 ~ 3 n=1 base=1 
+PossiblePower gMNgMNgNgMNgMNgMNg 0 1 -1 -1 MNg^7 ~ 3 n=1 base=2 
+PossiblePower GmnGmnGnGmnGmnGmnG 0 1 1 1 mnG^7 ~ 3 n=1 base=2 
+PossiblePower gMNgMNgNgMNgNg 0 1 0 -1 NgMNgNg^2 ~ 2 n=3 base=3 {PossiblePower NgMNgNg 0 1 0 0 Ng^3 ~ 1 n=1 base=2 }
+PossiblePower GmnGmnGnGmnGnG 0 1 0 1 nGmnGnG^2 ~ 2 n=3 base=3 {PossiblePower nGmnGnG 0 1 0 0 nG^3 ~ 1 n=1 base=2 }
+PossiblePower gMNgMNgNgMNgNg 0 1 -1 -1 MNgNg^3 ~ 1 n=2 base=2 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGnGmnGnG 0 1 1 1 mnGnG^3 ~ 1 n=2 base=2 {PossiblePower mnGnG 0 0 -1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgMNgNgMNgNg 0 1 -1 -1 MNgNg^3 ~ 1 n=2 base=4 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGmnGnGmnGnG 0 1 1 1 mnGnG^3 ~ 1 n=2 base=4 {PossiblePower mnGnG 0 0 -1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgNg 0 1 0 -1 Ng^3 ~ 1 n=1 base=2 
+PossiblePower gMNgNg 0 1 0 -1 Ng^3 ~ 1 n=1 base=2 
+PossiblePower GmnGnG 0 1 0 1 nG^3 ~ 1 n=1 base=2 
+PossiblePower GMnGnG 0 1 0 1 nG^3 ~ 1 n=1 base=2 
+PossiblePower gmNgNg 0 1 1 -1 mNg^3 ~ 2 n=1 base=1 
+PossiblePower gMNgNg 0 1 -1 -1 MNg^3 ~ 2 n=1 base=1 
+PossiblePower GmnGnG 0 1 1 1 mnG^3 ~ 2 n=1 base=1 
+PossiblePower GMnGnG 0 1 -1 1 MnG^3 ~ 2 n=1 base=1 
+PossiblePower gmNgNgg 0 1 0 -1 Ngg^2 ~ 1 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGnGG 0 1 0 1 nGG^2 ~ 1 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGnGG 0 1 0 1 nGG^2 ~ 1 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgNgggNg 0 1 0 0 ggNg^2 ~ 1 n=3 base=3 {PossiblePower ggNg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower gMNgNgggNg 0 1 0 0 ggNg^2 ~ 1 n=3 base=3 {PossiblePower ggNg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GmnGnGGGnG 0 1 0 0 GGnG^2 ~ 1 n=3 base=3 {PossiblePower GGnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GMnGnGGGnG 0 1 0 0 GGnG^2 ~ 1 n=3 base=3 {PossiblePower GGnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower gMNgnGGngMNgnGG 1 0 0 1 ngMNgnGG^2 ~ 0 n=4 base=4 
+PossiblePower GmnGNggNGmnGNgg 1 0 0 -1 NGmnGNgg^2 ~ 0 n=4 base=4 
+PossiblePower GmnGnGmG 0 1 0 1 nGmG^2 ~ 1 n=2 base=2 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGnGmGnGmG 0 1 0 1 nGmG^3 ~ 1 n=2 base=2 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGnGmGnGmG 0 1 0 1 nGmG^3 ~ 1 n=2 base=4 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgMgNgMNg 0 1 0 -1 NgMNg^3 ~ 3 n=2 base=4 {PossiblePower NgMNg 0 0 -1 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgMNg 0 0 0 -1 NgMNg^2 ~ 0 n=2 base=2 {PossiblePower NgMNg 0 0 -1 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGnGmnG 0 0 0 1 nGmnG^2 ~ 0 n=2 base=2 {PossiblePower nGmnG 0 0 1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgMNgMNg 0 1 -1 -1 MNg^5 ~ 2 n=1 base=1 
+PossiblePower GmnGnGmnGmnG 0 1 1 1 mnG^5 ~ 2 n=1 base=1 
+PossiblePower gMNgNgMNgMNgg 0 1 -1 -1 MNgMNgg^2 ~ 2 n=3 base=3 {PossiblePower MNgMNgg 0 1 0 0 MNg^3 ~ 2 n=1 base=1 }
+PossiblePower gMNgNgMNgMNgNg 0 0 -1 -1 MNgMNgNg^2 ~ 0 n=3 base=3 {PossiblePower MNgMNgNg 0 1 0 0 MNg^3 ~ 2 n=1 base=1 }
+PossiblePower GmnGnGmnGmnGnG 0 0 1 1 mnGmnGnG^2 ~ 0 n=3 base=3 {PossiblePower mnGmnGnG 0 1 0 0 mnG^3 ~ 2 n=1 base=1 }
+PossiblePower gMNgNgMNgNgMNg 0 0 0 -1 NgMNg^3 ~ 0 n=2 base=2 {PossiblePower NgMNg 0 0 -1 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGnGmnGnGmnG 0 0 0 1 nGmnG^3 ~ 0 n=2 base=2 {PossiblePower nGmnG 0 0 1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgMNgNgMNgNgMNg 0 0 0 -1 NgMNg^4 ~ 0 n=2 base=2 {PossiblePower NgMNg 0 0 -1 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgNgmNgNgNg 0 1 0 -1 NgmNg^3 ~ 5 n=2 base=2 {PossiblePower NgmNg 0 0 1 0 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgMNgNgNg 0 1 0 -1 NgMNg^3 ~ 5 n=2 base=2 {PossiblePower NgMNg 0 0 -1 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGnGmnGnGnG 0 1 0 1 nGmnG^3 ~ 5 n=2 base=2 {PossiblePower nGmnG 0 0 1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gmNgNgmNgNgNg 0 1 1 -1 mNgNgNg^2 ~ 1 n=3 base=3 {PossiblePower mNgNgNg 0 0 -1 0 Ng^3 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgMNgNgNg 0 1 -1 -1 MNgNgNg^2 ~ 1 n=3 base=3 {PossiblePower MNgNgNg 0 0 1 0 Ng^3 ~ 0 n=1 base=1 }
+PossiblePower GmnGnGmnGnGnG 0 1 1 1 mnGnGnG^2 ~ 1 n=3 base=3 {PossiblePower mnGnGnG 0 0 -1 0 nG^3 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNg 0 1 0 -1 Ng^4 ~ 1 n=1 base=2 
+PossiblePower GmnGnGnG 0 1 0 1 nG^4 ~ 1 n=1 base=2 
+PossiblePower GMnGnGnG 0 1 0 1 nG^4 ~ 1 n=1 base=2 
+PossiblePower gMNgNgNg 0 1 0 -1 NgNg^2 ~ 1 n=2 base=2 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGnGnG 0 1 0 1 nGnG^2 ~ 1 n=2 base=2 {PossiblePower nGnG 0 0 0 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGnGnG 0 1 0 1 nGnG^2 ~ 1 n=2 base=2 {PossiblePower nGnG 0 0 0 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgMNgg 1 1 0 -1 NgMNgg^2 ~ 2 n=3 base=3 
+PossiblePower GmnGnGnGmnGG 1 1 0 1 nGmnGG^2 ~ 2 n=3 base=3 
+PossiblePower gMNgNgNgMNgNg 0 0 0 -1 NgMNgNg^2 ~ 0 n=3 base=3 {PossiblePower NgMNgNg 0 1 0 0 Ng^3 ~ 1 n=1 base=2 }
+PossiblePower GmnGnGnGmnGnG 0 0 0 1 nGmnGnG^2 ~ 0 n=3 base=3 {PossiblePower nGmnGnG 0 1 0 0 nG^3 ~ 1 n=1 base=2 }
+PossiblePower gMNgNgNgNg 0 1 0 -1 Ng^5 ~ 1 n=1 base=2 
+PossiblePower GMnGnGnGnG 0 1 0 1 nG^5 ~ 1 n=1 base=2 
+PossiblePower gMNgNgNgNgMNg 0 1 0 -1 NgMNg^3 ~ 3 n=2 base=4 {PossiblePower NgMNg 0 0 -1 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GmnGnGnGnGmnG 0 1 0 1 nGmnG^3 ~ 3 n=2 base=4 {PossiblePower nGmnG 0 0 1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNg 0 1 0 -1 Ng^6 ~ 1 n=1 base=2 
+PossiblePower GMnGnGnGnGnG 0 1 0 1 nG^6 ~ 1 n=1 base=2 
+PossiblePower gMNgNgNgNgNg 0 1 0 -1 NgNg^3 ~ 1 n=2 base=2 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGnGnGnGnG 0 1 0 1 nGnG^3 ~ 1 n=2 base=2 {PossiblePower nGnG 0 0 0 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNg 0 1 0 -1 NgNg^3 ~ 1 n=2 base=4 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GMnGnGnGnGnG 0 1 0 1 nGnG^3 ~ 1 n=2 base=4 {PossiblePower nGnG 0 0 0 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNg 0 1 0 -1 NgNgNg^2 ~ 1 n=3 base=3 {PossiblePower NgNgNg 0 0 0 0 Ng^3 ~ 0 n=1 base=1 }
+PossiblePower GMnGnGnGnGnG 0 1 0 1 nGnGnG^2 ~ 1 n=3 base=3 {PossiblePower nGnGnG 0 0 0 0 nG^3 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNgNg 0 1 0 -1 Ng^7 ~ 1 n=1 base=2 
+PossiblePower GmnGnGnGnGnGnG 0 1 0 1 nG^7 ~ 1 n=1 base=2 
+PossiblePower gMNgNgNgNgNgNgNg 0 1 0 -1 Ng^8 ~ 1 n=1 base=2 
+PossiblePower gMNgNgNgNgNgNgNg 0 1 0 -1 NgNg^4 ~ 1 n=2 base=2 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNgNgNg 0 1 0 -1 NgNg^4 ~ 1 n=2 base=4 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNgNgNg 0 1 0 -1 NgNgNgNg^2 ~ 1 n=4 base=4 {PossiblePower NgNgNgNg 0 0 0 0 Ng^4 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNgNgNgNg 0 1 0 -1 Ng^9 ~ 1 n=1 base=2 
+PossiblePower gMNgNgNgNgNgNgNgNg 0 1 0 -1 NgNgNg^3 ~ 1 n=3 base=3 {PossiblePower NgNgNg 0 0 0 0 Ng^3 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNgNgNgNg 0 1 0 -1 NgNgNg^3 ~ 1 n=3 base=6 {PossiblePower NgNgNg 0 0 0 0 Ng^3 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNgNgNgNgNg 0 1 0 -1 Ng^10 ~ 1 n=1 base=2 
+PossiblePower gMNgNgNgNgNgNgNgNgNg 0 1 0 -1 NgNg^5 ~ 1 n=2 base=2 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNgNgNgNgNg 0 1 0 -1 NgNg^5 ~ 1 n=2 base=4 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNgNgNgNgNg 0 1 0 -1 NgNgNgNgNg^2 ~ 1 n=5 base=5 {PossiblePower NgNgNgNgNg 0 0 0 0 Ng^5 ~ 0 n=1 base=1 }
+PossiblePower gMNgNgNgNgNgNgNgNgNgNg 0 1 0 -1 Ng^11 ~ 1 n=1 base=2 
+PossiblePower GmnGnGnGnGnGnGnGnGnGnG 0 1 0 1 nG^11 ~ 1 n=1 base=2 
+PossiblePower gMNNgg 0 1 0 0 g^3 ~ 1 n=1 base=2 
+PossiblePower gMNNgg 0 1 -1 -2 MNNg^3 ~ 2 n=1 base=1 
+PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 
+PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 
+PossiblePower gNgg 0 1 0 0 g^3 ~ 1 n=1 base=2 
+PossiblePower GnGG 0 1 0 0 G^3 ~ 1 n=1 base=2 
+PossiblePower GNGG 0 1 0 0 G^3 ~ 1 n=1 base=2 
+PossiblePower gNgg 0 1 0 -1 Ng^3 ~ 2 n=1 base=1 
+PossiblePower GnGG 0 1 0 1 nG^3 ~ 2 n=1 base=1 
+PossiblePower GNGG 0 1 0 -1 NG^3 ~ 2 n=1 base=1 
+PossiblePower gnggg 0 1 0 0 g^4 ~ 1 n=1 base=2 
+PossiblePower gNggg 0 1 0 0 g^4 ~ 1 n=1 base=2 
+PossiblePower GnGGG 0 1 0 0 G^4 ~ 1 n=1 base=2 
+PossiblePower GNGGG 0 1 0 0 G^4 ~ 1 n=1 base=2 
+PossiblePower gnggg 0 1 0 0 gg^2 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower gNggg 0 1 0 0 gg^2 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGG 0 1 0 0 GG^2 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GNGGG 0 1 0 0 GG^2 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gNgggg 0 1 0 0 g^5 ~ 1 n=1 base=2 
+PossiblePower GnGGGG 0 1 0 0 G^5 ~ 1 n=1 base=2 
+PossiblePower GnGGGGG 0 1 0 0 G^6 ~ 1 n=1 base=2 
+PossiblePower GnGGGGG 0 1 0 0 GG^3 ~ 1 n=2 base=2 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGGGG 0 1 0 0 GG^3 ~ 1 n=2 base=4 {PossiblePower GG 0 0 0 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGGGG 0 1 0 0 GGG^2 ~ 1 n=3 base=3 {PossiblePower GGG 0 0 0 0 G^3 ~ 0 n=1 base=1 }
+PossiblePower gNggggNg 0 1 0 0 gNg^3 ~ 3 n=2 base=4 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGGGnG 0 1 0 0 GnG^3 ~ 3 n=2 base=4 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNggggNggg 0 0 0 0 gNggg^2 ~ 0 n=4 base=4 {PossiblePower gNggg 0 1 0 0 gg^2 ~ 1 n=2 base=2 {PossiblePower gg 0 0 0 0 g^2 ~ 0 n=1 base=1 }}
+PossiblePower gNgggmgg 0 1 0 0 gmgg^2 ~ 1 n=3 base=3 {PossiblePower gmgg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower gNgggMgg 0 1 0 0 gMgg^2 ~ 1 n=3 base=3 {PossiblePower gMgg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower GnGGGmGG 0 1 0 0 GmGG^2 ~ 1 n=3 base=3 {PossiblePower GmGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower GnGGGMGG 0 1 0 0 GMGG^2 ~ 1 n=3 base=3 {PossiblePower GMGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower gNgggmNgg 0 1 0 0 gmNgg^2 ~ 1 n=3 base=3 {PossiblePower gmNgg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower GnGGGMnGG 0 1 0 0 GMnGG^2 ~ 1 n=3 base=3 {PossiblePower GMnGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower gNgggNgg 0 0 0 0 gNgg^2 ~ 0 n=3 base=3 {PossiblePower gNgg 0 1 0 0 g^3 ~ 1 n=1 base=2 }
+PossiblePower GnGGGnGG 0 0 0 0 GnGG^2 ~ 0 n=3 base=3 {PossiblePower GnGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower gNgggNgggg 0 1 0 -1 Ngggg^2 ~ 1 n=4 base=4 {PossiblePower Ngggg 0 0 0 1 g^4 ~ 0 n=1 base=1 }
+PossiblePower GnGGGnGGGG 0 1 0 1 nGGGG^2 ~ 1 n=4 base=4 {PossiblePower nGGGG 0 0 0 -1 G^4 ~ 0 n=1 base=1 }
+PossiblePower gNgggNgMg 1 1 0 0 gNgMg^2 ~ 2 n=3 base=3 
+PossiblePower GnGGGnGmG 1 1 0 0 GnGmG^2 ~ 2 n=3 base=3 
+PossiblePower gNgggNgmNg 1 1 0 0 gNgmNg^2 ~ 2 n=3 base=3 
+PossiblePower GnGGGnGMnG 1 1 0 0 GnGMnG^2 ~ 2 n=3 base=3 
+PossiblePower gNgggNgMNgNgggNg 1 0 -1 -1 MNgNgggNg^2 ~ 0 n=5 base=5 
+PossiblePower gNgggNgNggg 1 0 0 -1 NgNggg^2 ~ 0 n=4 base=4 
+PossiblePower gNggmg 0 1 0 0 gmg^2 ~ 1 n=2 base=2 {PossiblePower gmg 0 0 1 0 mg^2 ~ 0 n=1 base=1 }
+PossiblePower gNggMg 0 1 0 0 gMg^2 ~ 1 n=2 base=2 {PossiblePower gMg 0 0 -1 0 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGmG 0 1 0 0 GmG^2 ~ 1 n=2 base=2 {PossiblePower GmG 0 0 1 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGMG 0 1 0 0 GMG^2 ~ 1 n=2 base=2 {PossiblePower GMG 0 0 -1 0 MG^2 ~ 0 n=1 base=1 }
+PossiblePower gNggMggNg 0 1 0 0 gNg^3 ~ 3 n=2 base=4 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGmGGnG 0 1 0 0 GnG^3 ~ 3 n=2 base=4 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNggMgMgg 0 1 -1 0 MgMgg^2 ~ 1 n=3 base=3 {PossiblePower MgMgg 0 1 0 0 Mg^3 ~ 2 n=1 base=1 }
+PossiblePower GnGGmGmGG 0 1 1 0 mGmGG^2 ~ 1 n=3 base=3 {PossiblePower mGmGG 0 1 0 0 mG^3 ~ 2 n=1 base=1 }
+PossiblePower gNggmNg 0 1 0 0 gmNg^2 ~ 1 n=2 base=2 {PossiblePower gmNg 0 0 1 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNggMNg 0 1 0 0 gMNg^2 ~ 1 n=2 base=2 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGmnG 0 1 0 0 GmnG^2 ~ 1 n=2 base=2 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGMnG 0 1 0 0 GMnG^2 ~ 1 n=2 base=2 {PossiblePower GMnG 0 0 -1 1 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNggmNggmNg 0 1 0 0 gmNg^3 ~ 1 n=2 base=2 {PossiblePower gmNg 0 0 1 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNggMNggMNg 0 1 0 0 gMNg^3 ~ 1 n=2 base=2 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGmnGGmnG 0 1 0 0 GmnG^3 ~ 1 n=2 base=2 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGMnGGMnG 0 1 0 0 GMnG^3 ~ 1 n=2 base=2 {PossiblePower GMnG 0 0 -1 1 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNggmNggmNg 0 1 0 0 gmNg^3 ~ 1 n=2 base=4 {PossiblePower gmNg 0 0 1 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNggMNggMNg 0 1 0 0 gMNg^3 ~ 1 n=2 base=4 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGmnGGmnG 0 1 0 0 GmnG^3 ~ 1 n=2 base=4 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGMnGGMnG 0 1 0 0 GMnG^3 ~ 1 n=2 base=4 {PossiblePower GMnG 0 0 -1 1 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNggmNggmNggmNg 0 1 0 0 gmNg^4 ~ 1 n=2 base=2 {PossiblePower gmNg 0 0 1 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNggMNggMNggMNg 0 1 0 0 gMNg^4 ~ 1 n=2 base=2 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNggmNggmNggmNg 0 1 0 0 gmNg^4 ~ 1 n=2 base=4 {PossiblePower gmNg 0 0 1 -1 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNggMNggMNggMNg 0 1 0 0 gMNg^4 ~ 1 n=2 base=4 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNggmNggmNggmNg 0 1 0 0 gmNggmNg^2 ~ 1 n=4 base=4 {PossiblePower gmNggmNg 0 0 0 0 gmNg^2 ~ 0 n=2 base=2 {PossiblePower gmNg 0 0 1 -1 mNg^2 ~ 0 n=1 base=1 }}
+PossiblePower gNggMNggMNggMNg 0 1 0 0 gMNggMNg^2 ~ 1 n=4 base=4 {PossiblePower gMNggMNg 0 0 0 0 gMNg^2 ~ 0 n=2 base=2 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }}
+PossiblePower gNggmNggNg 0 1 0 0 gNg^3 ~ 3 n=2 base=4 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNggMNggNg 0 1 0 0 gNg^3 ~ 3 n=2 base=4 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGmnGGnG 0 1 0 0 GnG^3 ~ 3 n=2 base=4 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGMnGGnG 0 1 0 0 GnG^3 ~ 3 n=2 base=4 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNggMNggNggMNg 0 0 0 0 gNggMNg^2 ~ 0 n=4 base=4 {PossiblePower gNggMNg 0 1 0 0 gMNg^2 ~ 1 n=2 base=2 {PossiblePower gMNg 0 0 -1 -1 MNg^2 ~ 0 n=1 base=1 }}
+PossiblePower GnGGmnGGnGGmnG 0 0 0 0 GnGGmnG^2 ~ 0 n=4 base=4 {PossiblePower GnGGmnG 0 1 0 0 GmnG^2 ~ 1 n=2 base=2 {PossiblePower GmnG 0 0 1 1 mnG^2 ~ 0 n=1 base=1 }}
+PossiblePower gNggmNgmNgg 0 1 1 -1 mNgmNgg^2 ~ 1 n=3 base=3 {PossiblePower mNgmNgg 0 1 0 0 mNg^3 ~ 2 n=1 base=1 }
+PossiblePower gNggMNgMNgg 0 1 -1 -1 MNgMNgg^2 ~ 1 n=3 base=3 {PossiblePower MNgMNgg 0 1 0 0 MNg^3 ~ 2 n=1 base=1 }
+PossiblePower GnGGmnGmnGG 0 1 1 1 mnGmnGG^2 ~ 1 n=3 base=3 {PossiblePower mnGmnGG 0 1 0 0 mnG^3 ~ 2 n=1 base=1 }
+PossiblePower GnGGMnGMnGG 0 1 -1 1 MnGMnGG^2 ~ 1 n=3 base=3 {PossiblePower MnGMnGG 0 1 0 0 MnG^3 ~ 2 n=1 base=1 }
+PossiblePower gNggNg 0 0 0 0 gNg^2 ~ 0 n=2 base=2 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGnG 0 0 0 0 GnG^2 ~ 0 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNggNggmNg 0 1 0 0 gNg^3 ~ 5 n=2 base=2 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNggNggMNg 0 1 0 0 gNg^3 ~ 5 n=2 base=2 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGnGGmnG 0 1 0 0 GnG^3 ~ 5 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGnGGMnG 0 1 0 0 GnG^3 ~ 5 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNggNggNg 0 0 0 0 gNg^3 ~ 0 n=2 base=2 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGnGGnG 0 0 0 0 GnG^3 ~ 0 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGnGMgMGnGGnGMg 1 0 -1 0 MGnGGnGMg^2 ~ 0 n=5 base=5 
+PossiblePower gNggNgMgNg 0 1 0 0 gNg^3 ~ 4 n=2 base=2 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGnGmGnG 0 1 0 0 GnG^3 ~ 4 n=2 base=2 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNggNgMgNg 0 1 -1 0 MgNg^3 ~ 2 n=2 base=4 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGGnGmGnG 0 1 1 0 mGnG^3 ~ 2 n=2 base=4 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNggNgmgNggNg 0 0 1 0 mgNggNg^2 ~ 0 n=4 base=4 {PossiblePower mgNggNg 0 0 -1 0 gNg^2 ~ 0 n=2 base=2 {PossiblePower gNg 0 0 0 -1 Ng^2 ~ 0 n=1 base=1 }}
+PossiblePower gNggNgNgg 0 0 0 -1 NgNgg^2 ~ 0 n=3 base=3 {PossiblePower NgNgg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower GnGGnGnGG 0 0 0 1 nGnGG^2 ~ 0 n=3 base=3 {PossiblePower nGnGG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower GnGGnGnGGnGnGG 0 0 0 1 nGnGG^3 ~ 0 n=3 base=3 {PossiblePower nGnGG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower GnGGnGnGGnGnGGnGnGG 0 0 0 1 nGnGG^4 ~ 0 n=3 base=3 {PossiblePower nGnGG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower gNgMg 0 1 0 -1 Ng^3 ~ 2 n=1 base=1 
+PossiblePower GnGmG 0 1 0 1 nG^3 ~ 2 n=1 base=1 
+PossiblePower GNGmG 0 1 0 -1 NG^3 ~ 2 n=1 base=1 
+PossiblePower gNgMg 0 1 -1 0 Mg^3 ~ 1 n=1 base=2 
+PossiblePower GnGmG 0 1 1 0 mG^3 ~ 1 n=1 base=2 
+PossiblePower GNGmG 0 1 1 0 mG^3 ~ 1 n=1 base=2 
+PossiblePower gNgMgg 0 1 -1 0 Mgg^2 ~ 1 n=2 base=2 {PossiblePower Mgg 0 0 1 0 g^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGG 0 1 1 0 mGG^2 ~ 1 n=2 base=2 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgggMg 0 1 0 0 ggMg^2 ~ 1 n=3 base=3 {PossiblePower ggMg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GnGmGGGmG 0 1 0 0 GGmG^2 ~ 1 n=3 base=3 {PossiblePower GGmG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GNGmGGGmG 0 1 0 0 GGmG^2 ~ 1 n=3 base=3 {PossiblePower GGmG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GnGmGGGmGGGmG 0 1 0 0 GGmG^3 ~ 1 n=3 base=3 {PossiblePower GGmG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GnGmGGGmGGGmG 0 1 0 0 GGmG^3 ~ 1 n=3 base=6 {PossiblePower GGmG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GnGmGGmGG 0 1 1 0 mGG^3 ~ 1 n=2 base=2 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGGmGG 0 1 1 0 mGG^3 ~ 1 n=2 base=4 {PossiblePower mGG 0 0 -1 0 G^2 ~ 0 n=1 base=1 }
+PossiblePower gNgmGGmgMNgmGG 1 1 1 0 mgMNgmGG^2 ~ 1 n=4 base=4 
+PossiblePower gNgmGGmgNgmGG 1 0 1 0 mgNgmGG^2 ~ 0 n=4 base=4 
+PossiblePower GnGmggmGnGmgg 1 0 1 0 mGnGmgg^2 ~ 0 n=4 base=4 
+PossiblePower GnGMggMGnGMgg 1 0 -1 0 MGnGMgg^2 ~ 0 n=4 base=4 
+PossiblePower GnGMggMGnGMggMGnGMgg 1 0 -1 0 MGnGMgg^3 ~ 0 n=4 base=4 
+PossiblePower GnGMggMGnGMggMGnGMgg 1 0 -1 0 MGnGMgg^3 ~ 0 n=4 base=8 
+PossiblePower GnGmGmG 0 1 1 0 mG^4 ~ 1 n=1 base=2 
+PossiblePower GNGmGmG 0 1 1 0 mG^4 ~ 1 n=1 base=2 
+PossiblePower GnGmGmG 0 1 1 0 mGmG^2 ~ 1 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GNGmGmG 0 1 1 0 mGmG^2 ~ 1 n=2 base=2 {PossiblePower mGmG 0 0 0 0 mG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGmGmG 0 1 1 0 mG^5 ~ 1 n=1 base=2 
+PossiblePower gNgmGmGmgNgmGG 1 1 1 0 mgNgmGG^2 ~ 3 n=4 base=4 
+PossiblePower gNgMGmGMgNgMGG 1 1 -1 0 MgNgMGG^2 ~ 3 n=4 base=4 
+PossiblePower gNgmGmGmgNgmGmG 1 0 1 0 mgNgmGmG^2 ~ 0 n=4 base=4 
+PossiblePower gNgmGmgmNgmG 1 1 1 0 mgmNgmG^2 ~ 1 n=3 base=3 
+PossiblePower gNgMGMgMNgMG 1 1 -1 0 MgMNgMG^2 ~ 1 n=3 base=3 
+PossiblePower GnGmgmGmnGmg 1 1 1 0 mGmnGmg^2 ~ 1 n=3 base=3 
+PossiblePower GnGMgMGMnGMg 1 1 -1 0 MGMnGMg^2 ~ 1 n=3 base=3 
+PossiblePower gNgMgMgNgg 1 1 -1 0 MgNgg^2 ~ 2 n=3 base=3 
+PossiblePower GnGmGmGnGG 1 1 1 0 mGnGG^2 ~ 2 n=3 base=3 
+PossiblePower gNgMgMgNgMg 0 0 -1 0 MgNgMg^2 ~ 0 n=3 base=3 {PossiblePower MgNgMg 0 1 0 0 Mg^3 ~ 1 n=1 base=2 }
+PossiblePower GnGmGmGnGmG 0 0 1 0 mGnGmG^2 ~ 0 n=3 base=3 {PossiblePower mGnGmG 0 1 0 0 mG^3 ~ 1 n=1 base=2 }
+PossiblePower gNgmGmgNgmG 1 0 1 0 mgNgmG^2 ~ 0 n=3 base=3 
+PossiblePower GnGmgmGnGmg 1 0 1 0 mGnGmg^2 ~ 0 n=3 base=3 
+PossiblePower GnGMgMGnGMg 1 0 -1 0 MGnGMg^2 ~ 0 n=3 base=3 
+PossiblePower gNgMGMgNgMGMgNgMG 1 0 -1 0 MgNgMG^3 ~ 0 n=3 base=3 
+PossiblePower gNgMGMgNgMGMgNgMG 1 0 -1 0 MgNgMG^3 ~ 0 n=3 base=6 
+PossiblePower gNgMgMNg 0 1 -1 0 MgMNg^2 ~ 1 n=2 base=2 {PossiblePower MgMNg 0 0 0 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGmnG 0 1 1 0 mGmnG^2 ~ 1 n=2 base=2 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgMNgMgMNg 0 1 -1 0 MgMNg^3 ~ 1 n=2 base=2 {PossiblePower MgMNg 0 0 0 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGmnGmGmnG 0 1 1 0 mGmnG^3 ~ 1 n=2 base=2 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgMNgMgMNg 0 1 -1 0 MgMNg^3 ~ 1 n=2 base=4 {PossiblePower MgMNg 0 0 0 -1 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGmnGmGmnG 0 1 1 0 mGmnG^3 ~ 1 n=2 base=4 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgmNgMgNg 0 1 -1 0 MgNg^3 ~ 3 n=2 base=4 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgMNgMgNg 0 1 -1 0 MgNg^3 ~ 3 n=2 base=4 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGMnGmGnG 0 1 1 0 mGnG^3 ~ 3 n=2 base=4 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgMNgMNgMg 0 1 -1 -1 MNgMNgMg^2 ~ 1 n=3 base=3 {PossiblePower MNgMNgMg 0 1 0 0 MNg^3 ~ 2 n=1 base=1 }
+PossiblePower GnGmGmnGmnGmG 0 1 1 1 mnGmnGmG^2 ~ 1 n=3 base=3 {PossiblePower mnGmnGmG 0 1 0 0 mnG^3 ~ 2 n=1 base=1 }
+PossiblePower gNgmgNg 0 0 1 0 mgNg^2 ~ 0 n=2 base=2 {PossiblePower mgNg 0 0 -1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgNg 0 0 -1 0 MgNg^2 ~ 0 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGnG 0 0 1 0 mGnG^2 ~ 0 n=2 base=2 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGMGnG 0 0 -1 0 MGnG^2 ~ 0 n=2 base=2 {PossiblePower MGnG 0 0 1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGnGGnG 0 1 0 0 GnG^3 ~ 2 n=2 base=4 {PossiblePower GnG 0 0 0 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGnGGnG 0 1 1 0 mGnG^3 ~ 4 n=2 base=2 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgNgMgg 0 1 -1 0 MgNg^3 ~ 5 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgmgNgmgNg 0 0 1 0 mgNg^3 ~ 0 n=2 base=2 {PossiblePower mgNg 0 0 -1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgNgMgNg 0 0 -1 0 MgNg^3 ~ 0 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGnGmGnG 0 0 1 0 mGnG^3 ~ 0 n=2 base=2 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgmgNgmgNgmgNg 0 0 1 0 mgNg^4 ~ 0 n=2 base=2 {PossiblePower mgNg 0 0 -1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgNgMgNgMgNg 0 0 -1 0 MgNg^4 ~ 0 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgmgNgmgNgmgNgmgNg 0 0 1 0 mgNg^5 ~ 0 n=2 base=2 {PossiblePower mgNg 0 0 -1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgNgMgNgMgNgMgNg 0 0 -1 0 MgNg^5 ~ 0 n=2 base=2 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmGnGmGnGmGnGmGnG 0 0 1 0 mGnG^5 ~ 0 n=2 base=2 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgmgNgmgNgmgNgmgNgmgNg 0 0 1 0 mgNg^6 ~ 0 n=2 base=2 {PossiblePower mgNg 0 0 -1 -1 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGMGnGMNggMNGnGMGnGMNgg 1 0 -1 -1 MNGnGMGnGMNgg^2 ~ 0 n=6 base=6 
+PossiblePower GnGmGnGmnGnGmGnG 0 0 1 1 mnGnGmGnG^2 ~ 0 n=4 base=4 {PossiblePower mnGnGmGnG 0 0 0 -1 mGnG^2 ~ 0 n=2 base=2 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }}
+PossiblePower gNgMgNgNg 0 1 0 -1 Ng^5 ~ 2 n=1 base=1 
+PossiblePower GnGmGnGnG 0 1 0 1 nG^5 ~ 2 n=1 base=1 
+PossiblePower gNgMgNgNgg 0 1 0 -1 NgNgg^2 ~ 2 n=3 base=3 {PossiblePower NgNgg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower gNgMgNgNgMg 0 0 0 -1 NgNgMg^2 ~ 0 n=3 base=3 {PossiblePower NgNgMg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower GnGmGnGnGmG 0 0 0 1 nGnGmG^2 ~ 0 n=3 base=3 {PossiblePower nGnGmG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower gNgMgNgNgMgNgNgg 0 1 0 -1 NgNgMg^3 ~ 8 n=3 base=3 {PossiblePower NgNgMg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower gNgmNg 0 1 0 -1 Ng^3 ~ 2 n=1 base=1 
+PossiblePower gNgMNg 0 1 0 -1 Ng^3 ~ 2 n=1 base=1 
+PossiblePower GnGmnG 0 1 0 1 nG^3 ~ 2 n=1 base=1 
+PossiblePower GnGMnG 0 1 0 1 nG^3 ~ 2 n=1 base=1 
+PossiblePower gNgmNg 0 1 1 -1 mNg^3 ~ 1 n=1 base=2 
+PossiblePower gNgMNg 0 1 -1 -1 MNg^3 ~ 1 n=1 base=2 
+PossiblePower GnGmnG 0 1 1 1 mnG^3 ~ 1 n=1 base=2 
+PossiblePower GnGMnG 0 1 -1 1 MnG^3 ~ 1 n=1 base=2 
+PossiblePower gNgMNgg 0 1 -1 -1 MNgg^2 ~ 1 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGG 0 1 1 1 mnGG^2 ~ 1 n=2 base=2 {PossiblePower mnGG 0 0 -1 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgggMNg 0 1 0 0 ggMNg^2 ~ 1 n=3 base=3 {PossiblePower ggMNg 0 1 0 0 g^3 ~ 2 n=1 base=1 }
+PossiblePower GnGmnGGGmnG 0 1 0 0 GGmnG^2 ~ 1 n=3 base=3 {PossiblePower GGmnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower GnGMnGGGMnG 0 1 0 0 GGMnG^2 ~ 1 n=3 base=3 {PossiblePower GGMnG 0 1 0 0 G^3 ~ 2 n=1 base=1 }
+PossiblePower gNgMNggMggMNgg 0 1 -1 0 MggMNgg^2 ~ 1 n=4 base=4 {PossiblePower MggMNgg 0 0 0 -1 MNgg^2 ~ 0 n=2 base=2 {PossiblePower MNgg 0 0 1 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower gNgMNggMNgNg 0 1 -1 -1 MNgNg^3 ~ 3 n=2 base=4 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgmnGGmngNgmnGGmngNgmnGG 1 0 1 1 mngNgmnGG^3 ~ 0 n=4 base=4 
+PossiblePower GnGMNggMNGnGMNggMNGnGMNgg 1 0 -1 -1 MNGnGMNgg^3 ~ 0 n=4 base=4 
+PossiblePower gNgmnGGmngNgmnGGmngNgmnGG 1 0 1 1 mngNgmnGG^3 ~ 0 n=4 base=8 
+PossiblePower GnGMNggMNGnGMNggMNGnGMNgg 1 0 -1 -1 MNGnGMNgg^3 ~ 0 n=4 base=8 
+PossiblePower gNgMNgMNg 0 1 -1 -1 MNg^4 ~ 1 n=1 base=2 
+PossiblePower GnGmnGmnG 0 1 1 1 mnG^4 ~ 1 n=1 base=2 
+PossiblePower gNgMNgMNg 0 1 -1 -1 MNgMNg^2 ~ 1 n=2 base=2 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGmnG 0 1 1 1 mnGmnG^2 ~ 1 n=2 base=2 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNg 0 1 -1 -1 MNg^5 ~ 1 n=1 base=2 
+PossiblePower GnGmnGmnGmnG 0 1 1 1 mnG^5 ~ 1 n=1 base=2 
+PossiblePower gNgmNgmNgmNgmNg 0 1 1 -1 mNg^6 ~ 1 n=1 base=2 
+PossiblePower gNgMNgMNgMNgMNg 0 1 -1 -1 MNg^6 ~ 1 n=1 base=2 
+PossiblePower GnGmnGmnGmnGmnG 0 1 1 1 mnG^6 ~ 1 n=1 base=2 
+PossiblePower GnGMnGMnGMnGMnG 0 1 -1 1 MnG^6 ~ 1 n=1 base=2 
+PossiblePower gNgmNgmNgmNgmNg 0 1 1 -1 mNgmNg^3 ~ 1 n=2 base=2 {PossiblePower mNgmNg 0 0 0 0 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNgMNg 0 1 -1 -1 MNgMNg^3 ~ 1 n=2 base=2 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGmnGmnGmnG 0 1 1 1 mnGmnG^3 ~ 1 n=2 base=2 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGMnGMnGMnGMnG 0 1 -1 1 MnGMnG^3 ~ 1 n=2 base=2 {PossiblePower MnGMnG 0 0 0 0 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgmNgmNgmNgmNg 0 1 1 -1 mNgmNg^3 ~ 1 n=2 base=4 {PossiblePower mNgmNg 0 0 0 0 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNgMNg 0 1 -1 -1 MNgMNg^3 ~ 1 n=2 base=4 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGmnGmnGmnG 0 1 1 1 mnGmnG^3 ~ 1 n=2 base=4 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGMnGMnGMnGMnG 0 1 -1 1 MnGMnG^3 ~ 1 n=2 base=4 {PossiblePower MnGMnG 0 0 0 0 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgmNgmNgmNgmNg 0 1 1 -1 mNgmNgmNg^2 ~ 1 n=3 base=3 {PossiblePower mNgmNgmNg 0 0 0 0 mNg^3 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNgMNg 0 1 -1 -1 MNgMNgMNg^2 ~ 1 n=3 base=3 {PossiblePower MNgMNgMNg 0 0 0 0 MNg^3 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGmnGmnGmnG 0 1 1 1 mnGmnGmnG^2 ~ 1 n=3 base=3 {PossiblePower mnGmnGmnG 0 0 0 0 mnG^3 ~ 0 n=1 base=1 }
+PossiblePower GnGMnGMnGMnGMnG 0 1 -1 1 MnGMnGMnG^2 ~ 1 n=3 base=3 {PossiblePower MnGMnGMnG 0 0 0 0 MnG^3 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGmnGmnGmnGmnG 0 1 1 1 mnG^7 ~ 1 n=1 base=2 
+PossiblePower gNgMNgMNgMNgMNgMNgMNg 0 1 -1 -1 MNg^8 ~ 1 n=1 base=2 
+PossiblePower gNgMNgMNgMNgMNgMNgMNg 0 1 -1 -1 MNgMNg^4 ~ 1 n=2 base=2 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNgMNgMNgMNg 0 1 -1 -1 MNgMNg^4 ~ 1 n=2 base=4 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNgMNgMNgMNg 0 1 -1 -1 MNgMNgMNgMNg^2 ~ 1 n=4 base=4 {PossiblePower MNgMNgMNgMNg 0 0 0 0 MNg^4 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNgMNgMNgMNgMNg 0 1 -1 -1 MNg^9 ~ 1 n=1 base=2 
+PossiblePower gNgMNgMNgMNgMNgMNgMNgMNg 0 1 -1 -1 MNgMNgMNg^3 ~ 1 n=3 base=3 {PossiblePower MNgMNgMNg 0 0 0 0 MNg^3 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNgMNgMNgMNgMNg 0 1 -1 -1 MNgMNgMNg^3 ~ 1 n=3 base=6 {PossiblePower MNgMNgMNg 0 0 0 0 MNg^3 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNgMNgMNgMNgMNgMNg 0 1 -1 -1 MNg^10 ~ 1 n=1 base=2 
+PossiblePower GnGmnGmnGmnGmnGmnGmnGmnGmnG 0 1 1 1 mnG^10 ~ 1 n=1 base=2 
+PossiblePower gNgMNgMNgMNgMNgMNgMNgMNgMNg 0 1 -1 -1 MNgMNg^5 ~ 1 n=2 base=2 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGmnGmnGmnGmnGmnGmnGmnG 0 1 1 1 mnGmnG^5 ~ 1 n=2 base=2 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNgMNgMNgMNgMNgMNg 0 1 -1 -1 MNgMNg^5 ~ 1 n=2 base=4 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGmnGmnGmnGmnGmnGmnGmnG 0 1 1 1 mnGmnG^5 ~ 1 n=2 base=4 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNgMNgMNgMNgMNgMNg 0 1 -1 -1 MNgMNgMNgMNgMNg^2 ~ 1 n=5 base=5 {PossiblePower MNgMNgMNgMNgMNg 0 0 0 0 MNg^5 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGmnGmnGmnGmnGmnGmnGmnG 0 1 1 1 mnGmnGmnGmnGmnG^2 ~ 1 n=5 base=5 {PossiblePower mnGmnGmnGmnGmnG 0 0 0 0 mnG^5 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgMNgNg 0 1 -1 -1 MNgNg^3 ~ 3 n=2 base=4 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGmnGmnGnG 0 1 1 1 mnGnG^3 ~ 3 n=2 base=4 {PossiblePower mnGnG 0 0 -1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgMNgNgMg 1 1 -1 -1 MNgNgMg^2 ~ 2 n=3 base=3 
+PossiblePower gNgMNgMNgNgMNg 0 0 -1 -1 MNgNgMNg^2 ~ 0 n=3 base=3 {PossiblePower MNgNgMNg 0 1 0 0 MNg^3 ~ 1 n=1 base=2 }
+PossiblePower GnGmnGmnGnGmnG 0 0 1 1 mnGnGmnG^2 ~ 0 n=3 base=3 {PossiblePower mnGnGmnG 0 1 0 0 mnG^3 ~ 1 n=1 base=2 }
+PossiblePower gNgmNgNg 0 0 1 -1 mNgNg^2 ~ 0 n=2 base=2 {PossiblePower mNgNg 0 0 -1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgNg 0 0 -1 -1 MNgNg^2 ~ 0 n=2 base=2 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGnG 0 0 1 1 mnGnG^2 ~ 0 n=2 base=2 {PossiblePower mnGnG 0 0 -1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGMnGnG 0 0 -1 1 MnGnG^2 ~ 0 n=2 base=2 {PossiblePower MnGnG 0 0 1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgNgMNgMNg 0 1 0 -1 NgMNgMNg^2 ~ 1 n=3 base=3 {PossiblePower NgMNgMNg 0 0 -1 0 MNg^3 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGnGmnGmnG 0 1 0 1 nGmnGmnG^2 ~ 1 n=3 base=3 {PossiblePower nGmnGmnG 0 0 1 0 mnG^3 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgNgMNgMNg 0 1 -1 -1 MNgNg^3 ~ 5 n=2 base=2 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGnGmnGmnG 0 1 1 1 mnGnG^3 ~ 5 n=2 base=2 {PossiblePower mnGnG 0 0 -1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgmNgNgmNgNg 0 0 1 -1 mNgNg^3 ~ 0 n=2 base=2 {PossiblePower mNgNg 0 0 -1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgNgMNgNg 0 0 -1 -1 MNgNg^3 ~ 0 n=2 base=2 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGmnGnGmnGnG 0 0 1 1 mnGnG^3 ~ 0 n=2 base=2 {PossiblePower mnGnG 0 0 -1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower GnGMnGnGMnGnG 0 0 -1 1 MnGnG^3 ~ 0 n=2 base=2 {PossiblePower MnGnG 0 0 1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgNgMNgNgMNgNg 0 0 -1 -1 MNgNg^4 ~ 0 n=2 base=2 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgNgMNgNgMNgNgMNgNg 0 0 -1 -1 MNgNg^5 ~ 0 n=2 base=2 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMNgNgMNgNgMNgNgMNgNgMNgNg 0 0 -1 -1 MNgNg^6 ~ 0 n=2 base=2 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgmNgNgNg 0 1 0 -1 Ng^5 ~ 2 n=1 base=1 
+PossiblePower gNgMNgNgNg 0 1 0 -1 Ng^5 ~ 2 n=1 base=1 
+PossiblePower GnGmnGnGnG 0 1 0 1 nG^5 ~ 2 n=1 base=1 
+PossiblePower GnGMnGnGnG 0 1 0 1 nG^5 ~ 2 n=1 base=1 
+PossiblePower gNgmNgNgNgg 0 1 0 -1 NgNgg^2 ~ 2 n=3 base=3 {PossiblePower NgNgg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower gNgMNgNgNgMg 0 1 0 -1 NgNgMg^2 ~ 2 n=3 base=3 {PossiblePower NgNgMg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower GnGmnGnGnGmG 0 1 0 1 nGnGmG^2 ~ 2 n=3 base=3 {PossiblePower nGnGmG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower gNgMNgNgNgMNg 0 0 0 -1 NgNgMNg^2 ~ 0 n=3 base=3 {PossiblePower NgNgMNg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower GnGmnGnGnGmnG 0 0 0 1 nGnGmnG^2 ~ 0 n=3 base=3 {PossiblePower nGnGmnG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower gNgNg 0 0 0 -1 Ng^3 ~ 0 n=1 base=1 
+PossiblePower GnGnG 0 0 0 1 nG^3 ~ 0 n=1 base=1 
+PossiblePower gNgNgg 0 1 0 -1 Ng^4 ~ 3 n=1 base=1 
+PossiblePower GnGnGG 0 1 0 1 nG^4 ~ 3 n=1 base=1 
+PossiblePower gNgNgg 0 1 0 -1 Ng^4 ~ 3 n=1 base=2 
+PossiblePower GnGnGG 0 1 0 1 nG^4 ~ 3 n=1 base=2 
+PossiblePower gNgNgg 0 1 0 -1 Ngg^2 ~ 1 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }
+PossiblePower GnGnGG 0 1 0 1 nGG^2 ~ 1 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNggMNggNgg 0 1 -1 -1 MNggNgg^2 ~ 1 n=4 base=4 {PossiblePower MNggNgg 0 0 1 0 Ngg^2 ~ 0 n=2 base=2 {PossiblePower Ngg 0 0 0 1 g^2 ~ 0 n=1 base=1 }}
+PossiblePower gNgNggNg 0 1 0 -1 Ng^5 ~ 3 n=1 base=1 
+PossiblePower GnGnGGnG 0 1 0 1 nG^5 ~ 3 n=1 base=1 
+PossiblePower gNgNggNg 0 1 0 -1 Ng^5 ~ 3 n=1 base=2 
+PossiblePower GnGnGGnG 0 1 0 1 nG^5 ~ 3 n=1 base=2 
+PossiblePower GnGnGGnGG 0 1 0 0 GnGG^2 ~ 2 n=3 base=3 {PossiblePower GnGG 0 1 0 0 G^3 ~ 1 n=1 base=2 }
+PossiblePower GnGnGGnGG 0 1 0 1 nGG^3 ~ 1 n=2 base=2 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower GnGnGGnGG 0 1 0 1 nGG^3 ~ 1 n=2 base=4 {PossiblePower nGG 0 0 0 -1 G^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgMg 0 1 0 -1 Ng^4 ~ 3 n=1 base=1 
+PossiblePower GnGnGmG 0 1 0 1 nG^4 ~ 3 n=1 base=1 
+PossiblePower gNgNgMg 0 1 0 -1 Ng^4 ~ 3 n=1 base=2 
+PossiblePower GnGnGmG 0 1 0 1 nG^4 ~ 3 n=1 base=2 
+PossiblePower gNgNgMg 0 1 0 -1 NgMg^2 ~ 1 n=2 base=2 {PossiblePower NgMg 0 0 -1 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGnGmG 0 1 0 1 nGmG^2 ~ 1 n=2 base=2 {PossiblePower nGmG 0 0 1 -1 mG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgMgNg 0 1 0 -1 Ng^5 ~ 3 n=1 base=1 
+PossiblePower GnGnGmGnG 0 1 0 1 nG^5 ~ 3 n=1 base=1 
+PossiblePower gNgNgMgNg 0 1 0 -1 Ng^5 ~ 3 n=1 base=2 
+PossiblePower GnGnGmGnG 0 1 0 1 nG^5 ~ 3 n=1 base=2 
+PossiblePower gNgNgmNg 0 1 0 -1 Ng^4 ~ 3 n=1 base=1 
+PossiblePower gNgNgMNg 0 1 0 -1 Ng^4 ~ 3 n=1 base=1 
+PossiblePower GnGnGMnG 0 1 0 1 nG^4 ~ 3 n=1 base=1 
+PossiblePower gNgNgmNg 0 1 0 -1 Ng^4 ~ 3 n=1 base=2 
+PossiblePower gNgNgMNg 0 1 0 -1 Ng^4 ~ 3 n=1 base=2 
+PossiblePower GnGnGMnG 0 1 0 1 nG^4 ~ 3 n=1 base=2 
+PossiblePower gNgNgmNg 0 1 0 -1 NgmNg^2 ~ 1 n=2 base=2 {PossiblePower NgmNg 0 0 1 0 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgMNg 0 1 0 -1 NgMNg^2 ~ 1 n=2 base=2 {PossiblePower NgMNg 0 0 -1 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGnGMnG 0 1 0 1 nGMnG^2 ~ 1 n=2 base=2 {PossiblePower nGMnG 0 0 -1 0 MnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgmNgNg 0 1 0 -1 Ng^5 ~ 3 n=1 base=1 
+PossiblePower gNgNgMNgNg 0 1 0 -1 Ng^5 ~ 3 n=1 base=1 
+PossiblePower GnGnGmnGnG 0 1 0 1 nG^5 ~ 3 n=1 base=1 
+PossiblePower GnGnGMnGnG 0 1 0 1 nG^5 ~ 3 n=1 base=1 
+PossiblePower gNgNgmNgNg 0 1 0 -1 Ng^5 ~ 3 n=1 base=2 
+PossiblePower gNgNgMNgNg 0 1 0 -1 Ng^5 ~ 3 n=1 base=2 
+PossiblePower GnGnGmnGnG 0 1 0 1 nG^5 ~ 3 n=1 base=2 
+PossiblePower GnGnGMnGnG 0 1 0 1 nG^5 ~ 3 n=1 base=2 
+PossiblePower gNgNgmNgNgmNg 0 1 0 -1 NgmNg^3 ~ 1 n=2 base=2 {PossiblePower NgmNg 0 0 1 0 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgMNgNgMNg 0 1 0 -1 NgMNg^3 ~ 1 n=2 base=2 {PossiblePower NgMNg 0 0 -1 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGnGmnGnGmnG 0 1 0 1 nGmnG^3 ~ 1 n=2 base=2 {PossiblePower nGmnG 0 0 1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgmNgNgmNg 0 1 0 -1 NgmNg^3 ~ 1 n=2 base=4 {PossiblePower NgmNg 0 0 1 0 mNg^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgMNgNgMNg 0 1 0 -1 NgMNg^3 ~ 1 n=2 base=4 {PossiblePower NgMNg 0 0 -1 0 MNg^2 ~ 0 n=1 base=1 }
+PossiblePower GnGnGmnGnGmnG 0 1 0 1 nGmnG^3 ~ 1 n=2 base=4 {PossiblePower nGmnG 0 0 1 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgmNgNgmNg 0 1 1 -1 mNgNgmNg^2 ~ 2 n=3 base=3 {PossiblePower mNgNgmNg 0 1 0 0 mNg^3 ~ 1 n=1 base=2 }
+PossiblePower gNgNgMNgNgMNg 0 1 -1 -1 MNgNgMNg^2 ~ 2 n=3 base=3 {PossiblePower MNgNgMNg 0 1 0 0 MNg^3 ~ 1 n=1 base=2 }
+PossiblePower GnGnGmnGnGmnG 0 1 1 1 mnGnGmnG^2 ~ 2 n=3 base=3 {PossiblePower mnGnGmnG 0 1 0 0 mnG^3 ~ 1 n=1 base=2 }
+PossiblePower gNgNgmNgNgNg 0 0 1 -1 mNgNgNg^2 ~ 0 n=3 base=3 {PossiblePower mNgNgNg 0 0 -1 0 Ng^3 ~ 0 n=1 base=1 }
+PossiblePower gNgNgMNgNgNg 0 0 -1 -1 MNgNgNg^2 ~ 0 n=3 base=3 {PossiblePower MNgNgNg 0 0 1 0 Ng^3 ~ 0 n=1 base=1 }
+PossiblePower GnGnGmnGnGnG 0 0 1 1 mnGnGnG^2 ~ 0 n=3 base=3 {PossiblePower mnGnGnG 0 0 -1 0 nG^3 ~ 0 n=1 base=1 }
+PossiblePower GnGnGMnGnGnG 0 0 -1 1 MnGnGnG^2 ~ 0 n=3 base=3 {PossiblePower MnGnGnG 0 0 1 0 nG^3 ~ 0 n=1 base=1 }
+PossiblePower GnGnGmnGnGnGnG 0 1 0 1 nG^7 ~ 3 n=1 base=1 
+PossiblePower GnGnGMnGnGnGnG 0 1 0 1 nG^7 ~ 3 n=1 base=1 
+PossiblePower GnGnGmnGnGnGnG 0 1 0 1 nG^7 ~ 3 n=1 base=2 
+PossiblePower GnGnGMnGnGnGnG 0 1 0 1 nG^7 ~ 3 n=1 base=2 
+PossiblePower gNgNgNg 0 0 0 -1 Ng^4 ~ 0 n=1 base=1 
+PossiblePower GnGnGnG 0 0 0 1 nG^4 ~ 0 n=1 base=1 
+PossiblePower gNgNgNgg 0 1 0 -1 Ng^5 ~ 4 n=1 base=1 
+PossiblePower GnGnGnGG 0 1 0 1 nG^5 ~ 4 n=1 base=1 
+PossiblePower gNgNgNgg 0 1 0 -1 Ng^5 ~ 4 n=1 base=2 
+PossiblePower GnGnGnGG 0 1 0 1 nG^5 ~ 4 n=1 base=2 
+PossiblePower gNgNgNgmNg 0 1 0 -1 Ng^5 ~ 4 n=1 base=1 
+PossiblePower gNgNgNgMNg 0 1 0 -1 Ng^5 ~ 4 n=1 base=1 
+PossiblePower GnGnGnGMnG 0 1 0 1 nG^5 ~ 4 n=1 base=1 
+PossiblePower gNgNgNgmNg 0 1 0 -1 Ng^5 ~ 4 n=1 base=2 
+PossiblePower gNgNgNgMNg 0 1 0 -1 Ng^5 ~ 4 n=1 base=2 
+PossiblePower GnGnGnGMnG 0 1 0 1 nG^5 ~ 4 n=1 base=2 
+PossiblePower gNgNgNgmNgNg 0 1 0 -1 Ng^6 ~ 4 n=1 base=1 
+PossiblePower gNgNgNgMNgNg 0 1 0 -1 Ng^6 ~ 4 n=1 base=1 
+PossiblePower GnGnGnGMnGnG 0 1 0 1 nG^6 ~ 4 n=1 base=1 
+PossiblePower gNgNgNgmNgNg 0 1 0 -1 Ng^6 ~ 4 n=1 base=2 
+PossiblePower gNgNgNgMNgNg 0 1 0 -1 Ng^6 ~ 4 n=1 base=2 
+PossiblePower GnGnGnGMnGnG 0 1 0 1 nG^6 ~ 4 n=1 base=2 
+PossiblePower gNgNgNgmNgNg 0 1 0 -1 NgmNgNg^2 ~ 1 n=3 base=3 {PossiblePower NgmNgNg 0 1 0 0 Ng^3 ~ 1 n=1 base=2 }
+PossiblePower gNgNgNgMNgNg 0 1 0 -1 NgMNgNg^2 ~ 1 n=3 base=3 {PossiblePower NgMNgNg 0 1 0 0 Ng^3 ~ 1 n=1 base=2 }
+PossiblePower GnGnGnGMnGnG 0 1 0 1 nGMnGnG^2 ~ 1 n=3 base=3 {PossiblePower nGMnGnG 0 1 0 0 nG^3 ~ 1 n=1 base=2 }
+PossiblePower gNgNgNgmNgNg 0 1 0 -1 NgNg^3 ~ 4 n=2 base=2 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgNgMNgNg 0 1 0 -1 NgNg^3 ~ 4 n=2 base=2 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGnGnGMnGnG 0 1 0 1 nGnG^3 ~ 4 n=2 base=2 {PossiblePower nGnG 0 0 0 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgNgmNgNg 0 1 1 -1 mNgNg^3 ~ 2 n=2 base=4 {PossiblePower mNgNg 0 0 -1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgNgMNgNg 0 1 -1 -1 MNgNg^3 ~ 2 n=2 base=4 {PossiblePower MNgNg 0 0 1 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGnGnGMnGnG 0 1 -1 1 MnGnG^3 ~ 2 n=2 base=4 {PossiblePower MnGnG 0 0 1 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgNgMNgNgNg 0 1 0 -1 Ng^7 ~ 4 n=1 base=1 
+PossiblePower gNgNgNgMNgNgNg 0 1 0 -1 Ng^7 ~ 4 n=1 base=2 
+PossiblePower gNgNgNgNg 0 0 0 -1 Ng^5 ~ 0 n=1 base=1 
+PossiblePower GnGnGnGnG 0 0 0 1 nG^5 ~ 0 n=1 base=1 
+PossiblePower gNgNgNgNgg 0 1 0 -1 Ng^6 ~ 5 n=1 base=1 
+PossiblePower GnGnGnGnGG 0 1 0 1 nG^6 ~ 5 n=1 base=1 
+PossiblePower gNgNgNgNgg 0 1 0 -1 Ng^6 ~ 5 n=1 base=2 
+PossiblePower GnGnGnGnGG 0 1 0 1 nG^6 ~ 5 n=1 base=2 
+PossiblePower gNgNgNgNgg 0 1 0 -1 NgNg^3 ~ 5 n=2 base=2 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGnGnGnGG 0 1 0 1 nGnG^3 ~ 5 n=2 base=2 {PossiblePower nGnG 0 0 0 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgNgNgg 0 1 0 -1 NgNgg^2 ~ 2 n=3 base=3 {PossiblePower NgNgg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower GnGnGnGnGG 0 1 0 1 nGnGG^2 ~ 2 n=3 base=3 {PossiblePower nGnGG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower gNgNgNgNgMNg 0 1 0 -1 Ng^6 ~ 5 n=1 base=1 
+PossiblePower GnGnGnGnGmnG 0 1 0 1 nG^6 ~ 5 n=1 base=1 
+PossiblePower gNgNgNgNgMNg 0 1 0 -1 Ng^6 ~ 5 n=1 base=2 
+PossiblePower GnGnGnGnGmnG 0 1 0 1 nG^6 ~ 5 n=1 base=2 
+PossiblePower gNgNgNgNgMNg 0 1 0 -1 NgNg^3 ~ 5 n=2 base=2 {PossiblePower NgNg 0 0 0 0 Ng^2 ~ 0 n=1 base=1 }
+PossiblePower GnGnGnGnGmnG 0 1 0 1 nGnG^3 ~ 5 n=2 base=2 {PossiblePower nGnG 0 0 0 0 nG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgNgNgNgMNg 0 1 0 -1 NgNgMNg^2 ~ 2 n=3 base=3 {PossiblePower NgNgMNg 0 1 0 0 Ng^3 ~ 2 n=1 base=1 }
+PossiblePower GnGnGnGnGmnG 0 1 0 1 nGnGmnG^2 ~ 2 n=3 base=3 {PossiblePower nGnGmnG 0 1 0 0 nG^3 ~ 2 n=1 base=1 }
+PossiblePower gNgNgNgNgNg 0 0 0 -1 Ng^6 ~ 0 n=1 base=1 
+PossiblePower gNgNgNgNgNgNg 0 0 0 -1 Ng^7 ~ 0 n=1 base=1 
+PossiblePower GnGnGnGnGnGnG 0 0 0 1 nG^7 ~ 0 n=1 base=1 
+PossiblePower gNgNgNgNgNgNgNg 0 0 0 -1 Ng^8 ~ 0 n=1 base=1 
+PossiblePower GnGnGnGnGnGnGnG 0 0 0 1 nG^8 ~ 0 n=1 base=1 
+PossiblePower gNgNgNgNgNgNgNgNg 0 0 0 -1 Ng^9 ~ 0 n=1 base=1 
+PossiblePower gNgNgNgNgNgNgNgNgNg 0 0 0 -1 Ng^10 ~ 0 n=1 base=1 

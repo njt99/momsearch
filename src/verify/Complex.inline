@@ -1,0 +1,137 @@
+/*61:*/
+#line 45 "glue.w"
+
+inline const XComplex operator-(const XComplex&x)
+{/*42:*/
+#line 32 "Complex.w"
+
+return XComplex(-x.re,-x.im);
+
+/*:42*/
+#line 47 "glue.w"
+}
+inline const AComplex operator+(const XComplex&x,const XComplex&y)
+{/*45:*/
+#line 56 "Complex.w"
+
+double re= x.re+y.re;
+double im= x.im+y.im;
+double e= HALFEPS*((1+EPS)*(fabs(re)+fabs(im)));
+return AComplex(re,im,e);
+
+/*:45*/
+#line 49 "glue.w"
+}
+inline const AComplex operator+(const XComplex&x,double y)
+{/*43:*/
+#line 38 "Complex.w"
+
+double re= x.re+y;
+double e= HALFEPS*fabs(re);
+return AComplex(re,x.im,e);
+
+/*:43*/
+#line 51 "glue.w"
+}
+inline const AComplex operator+(const AComplex&x,const AComplex&y)
+{/*47:*/
+#line 76 "Complex.w"
+
+double re= x.z.re+y.z.re;
+double im= x.z.im+y.z.im;
+double e= (1+2*EPS)*(HALFEPS*(fabs(re)+fabs(im))+(x.e+y.e));
+return AComplex(re,im,e);
+
+/*:47*/
+#line 53 "glue.w"
+}
+inline const AComplex operator-(const XComplex&x,const XComplex&y)
+{/*46:*/
+#line 66 "Complex.w"
+
+double re= x.re-y.re;
+double im= x.im-y.im;
+double e= HALFEPS*((1+EPS)*(fabs(re)+fabs(im)));
+return AComplex(re,im,e);
+
+/*:46*/
+#line 55 "glue.w"
+}
+inline const AComplex operator-(const XComplex&x,double y)
+{/*44:*/
+#line 47 "Complex.w"
+
+double re= x.re-y;
+double e= HALFEPS*fabs(re);
+return AComplex(re,x.im,e);
+
+/*:44*/
+#line 57 "glue.w"
+}
+inline const AComplex operator-(const AComplex&x,const AComplex&y)
+{/*48:*/
+#line 86 "Complex.w"
+
+double re= x.z.re-y.z.re;
+double im= x.z.im-y.z.im;
+double e= (1+2*EPS)*(HALFEPS*(fabs(re)+fabs(im))+(x.e+y.e));
+return AComplex(re,im,e);
+
+/*:48*/
+#line 59 "glue.w"
+}
+inline const AComplex operator*(const XComplex&x,const XComplex&y)
+{/*51:*/
+#line 114 "Complex.w"
+
+double re1= x.re*y.re,re2= x.im*y.im;
+double im1= x.re*y.im,im2= x.im*y.re;
+double e= EPS*((1+2*EPS)*((fabs(re1)+fabs(re2))+(fabs(im1)+fabs(im2))));
+return AComplex(re1-re2,im1+im2,e);
+
+/*:51*/
+#line 61 "glue.w"
+}
+inline const AComplex operator*(const XComplex&x,double y)
+{/*49:*/
+#line 96 "Complex.w"
+
+double re= x.re*y;
+double im= x.im*y;
+return AComplex(re,im,HALFEPS*((1+EPS)*(fabs(re)+fabs(im))));
+
+/*:49*/
+#line 63 "glue.w"
+}
+inline const AComplex operator/(const XComplex&x,double y)
+{/*50:*/
+#line 105 "Complex.w"
+
+double re= x.re/y;
+double im= x.im/y;
+return AComplex(re,im,HALFEPS*((1+EPS)*(fabs(re)+fabs(im))));
+
+/*:50*/
+#line 65 "glue.w"
+}
+inline const double absLB(const XComplex&x)
+{/*57:*/
+#line 182 "Complex.w"
+
+return(1-2*EPS)*hypot(x.re,x.im);
+
+#line 1 "glue.w"
+/*:57*/
+#line 67 "glue.w"
+}
+inline const double absUB(const XComplex&x)
+{/*56:*/
+#line 177 "Complex.w"
+
+return(1+2*EPS)*hypot(x.re,x.im);
+
+/*:56*/
+#line 69 "glue.w"
+}
+
+/*:61*/
