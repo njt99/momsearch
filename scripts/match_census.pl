@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-$census_params_file = 'qr_full_census_manifolds_up_to_area_6_nc';
+$census_params_file = 'qr_census_manifolds_up_to_area_6';
 if ($#ARGV > -1) {
     $census_params_file = $ARGV[0];
 }

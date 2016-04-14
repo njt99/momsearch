@@ -95,7 +95,7 @@ if __name__ == '__main__' :
     truncateDepth = '6'
     inventDepth = '42'
     ballSearchDepth = '9'
-    maxArea = '5.3'
+    maxArea = '5.24'
     fillHoles = ' --fillHoles'
     mom = '/dev/null' #/home/ayarmola/momsearch/momWords'
     parameterized = '/dev/null' #/home/ayarmola/momsearch/parameterizedWords'

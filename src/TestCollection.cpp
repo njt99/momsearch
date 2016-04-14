@@ -24,7 +24,7 @@
 using namespace std;
 // using namespace __gnu_cxx;
 
-double g_maximumArea = 5.1;
+double g_maximumArea = 5.24;
 int g_xLattice;
 int g_yLattice;
 
@@ -119,16 +119,6 @@ SL2ACJ TestCollection::evaluate1(string word, Params<ACJ>& params)
 	return w;
 }
 
-int g_power(string w) {
-    int count = 0;
-    for (string::size_type p = 0; p < w.size(); ++p) {
-        if (w[p] == 'g' || w[p] == 'G') ++count;
-    }
-    return count;
-} 
-
-bool g_power_sort(string a, string b) { return g_power(a) < g_power(b); }
-
 /* Tests is the box is within the variety neighborhood for 
    its shortest g power quasi-relators. This test is used to 
    stop subdivision of a HOLE. The relevant Lemma:
@@ -161,13 +151,18 @@ bool TestCollection::box_inside_at_least_two_nbd(NamedBox& box)
     sort(qrs.begin(), qrs.end(), g_power_sort);
     int min_power = g_power(qrs.front());
     int found = 0;
+    string found_var;
 	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
         if (g_power(*it) > min_power && found > 1) {
             break;
         } else {
             if (!validVariety(*it, box)) { return false; }
+            found_var += *it + ","; 
             found += 1;
         }
+    }
+    if (found > 1) {
+        fprintf(stderr, "BOX %s inside VAR_NBD (%s)\n",box.qr.desc().c_str());
     }
     return (found > 1); 
 }
@@ -394,8 +389,16 @@ const char* TestCollection::getName(int index)
 }
 
 
-int TestCollection::add(string word)
+int TestCollection::add(string buf)
 {
+    size_t start = buf.find('(');   
+    string word;
+    if (start != string::npos) {
+        size_t end = buf.find(')');
+        word = buf.substr(start+1,end-start-1);
+    } else {
+        word = buf;
+    }  
 	map<string, int>::iterator it = stringIndex.find(word);
 	if (it == stringIndex.end()) {
 //		fprintf(stderr, "adding %lu=%s\n", indexString.size(), word.c_str());

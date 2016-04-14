@@ -2,7 +2,7 @@
 
 data_dir="refine_census"
 name="box"
-area="6.0"
+area="5.24"
 
 if [ ! -d "$data_dir" ]; then
     mkdir "$data_dir"

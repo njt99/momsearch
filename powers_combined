@@ -943,9 +943,13 @@ PossiblePower GmGmnGmnGmGnG 1 1 1 1 mnGmGnG^2 ~ 2 n=3 base=3
 PossiblePower gMgMNgMNgMNg 0 1 -1 -1 MNg^5 ~ 1 n=1 base=2 
 PossiblePower GmGmnGmnGmnG 0 1 1 1 mnG^5 ~ 1 n=1 base=2 
 PossiblePower gMgMNgMNgMNgMg 0 1 -1 -1 MNgMg^3 ~ 3 n=2 base=4 {PossiblePower MNgMg 0 0 0 1 Mg^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgMNgMNgMNg 0 1 -1 -1 MNg^6 ~ 1 n=1 base=2 
 PossiblePower GmGmnGmnGmnGmnG 0 1 1 1 mnG^6 ~ 1 n=1 base=2 
+PossiblePower gMgMNgMNgMNgMNg 0 1 -1 -1 MNgMNg^3 ~ 1 n=2 base=2 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
 PossiblePower GmGmnGmnGmnGmnG 0 1 1 1 mnGmnG^3 ~ 1 n=2 base=2 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgMNgMNgMNg 0 1 -1 -1 MNgMNg^3 ~ 1 n=2 base=4 {PossiblePower MNgMNg 0 0 0 0 MNg^2 ~ 0 n=1 base=1 }
 PossiblePower GmGmnGmnGmnGmnG 0 1 1 1 mnGmnG^3 ~ 1 n=2 base=4 {PossiblePower mnGmnG 0 0 0 0 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gMgMNgMNgMNgMNg 0 1 -1 -1 MNgMNgMNg^2 ~ 1 n=3 base=3 {PossiblePower MNgMNgMNg 0 0 0 0 MNg^3 ~ 0 n=1 base=1 }
 PossiblePower GmGmnGmnGmnGmnG 0 1 1 1 mnGmnGmnG^2 ~ 1 n=3 base=3 {PossiblePower mnGmnGmnG 0 0 0 0 mnG^3 ~ 0 n=1 base=1 }
 PossiblePower gmgNg 0 1 0 -1 Ng^3 ~ 1 n=1 base=2 
 PossiblePower gMgng 0 1 0 1 ng^3 ~ 1 n=1 base=2 
@@ -1539,6 +1543,7 @@ PossiblePower gNgMgMNgMgMNg 0 1 -1 0 MgMNg^3 ~ 1 n=2 base=2 {PossiblePower MgMNg
 PossiblePower GnGmGmnGmGmnG 0 1 1 0 mGmnG^3 ~ 1 n=2 base=2 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
 PossiblePower gNgMgMNgMgMNg 0 1 -1 0 MgMNg^3 ~ 1 n=2 base=4 {PossiblePower MgMNg 0 0 0 -1 MNg^2 ~ 0 n=1 base=1 }
 PossiblePower GnGmGmnGmGmnG 0 1 1 0 mGmnG^3 ~ 1 n=2 base=4 {PossiblePower mGmnG 0 0 0 1 mnG^2 ~ 0 n=1 base=1 }
+PossiblePower gNgMgmNgMgNg 0 1 -1 0 MgNg^3 ~ 3 n=2 base=4 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
 PossiblePower gNgMgMNgMgNg 0 1 -1 0 MgNg^3 ~ 3 n=2 base=4 {PossiblePower MgNg 0 0 1 -1 Ng^2 ~ 0 n=1 base=1 }
 PossiblePower GnGmGMnGmGnG 0 1 1 0 mGnG^3 ~ 3 n=2 base=4 {PossiblePower mGnG 0 0 -1 1 nG^2 ~ 0 n=1 base=1 }
 PossiblePower gNgMgMNgMNgMg 0 1 -1 -1 MNgMNgMg^2 ~ 1 n=3 base=3 {PossiblePower MNgMNgMg 0 1 0 0 MNg^3 ~ 2 n=1 base=1 }

@@ -2,7 +2,7 @@
 # serial job using 1 node and 8 processor,
 # and runs for 24 hours (max).
 #SBATCH -N 1 # node count
-#SBATCH --ntasks-per-node=4
+#SBATCH --ntasks-per-node=16
 #SBATCH -t 23:59:00
 # sends mail when process begins, and 
 # when it ends. Make sure you define your email 
@@ -24,4 +24,4 @@ data_dir="/scratch/network/ayarmola/run2015"
 
 cd $bin_dir
 
-python "$search" -w "$words" -p "$powers" -c 12 -d 70 "$data_dir/source" "$data_dir/output" > "$data_dir/search.log" 2>&1
+python "$search" -w "$words" -p "$powers" -c 16 -d 80 "$data_dir/source" "$data_dir/output" > "$data_dir/search.log" 2>&1
