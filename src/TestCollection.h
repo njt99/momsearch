@@ -34,6 +34,7 @@ private:
 	
 	SL2ACJ evaluate1(std::string word, Params<ACJ>& params);
 	bool evaluate(std::string word, Params<XComplex>& params);
+	bool large_horoball(std::string word, Params<ACJ>& params);
 	int evaluate(std::string word, Params<ACJ>& params, bool notIdentity=false);
 //	void enumerate(const char* w);
 //	void enumerateTails(std::string s, int pCount, int lCount);

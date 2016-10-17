@@ -206,6 +206,9 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
         int result = g_tests.evaluateBox(t.testIndex, box);
         if (isEliminated(t.testIndex, result, box)) {
             t.testResult = result;
+            if (result != 1 || result != 3 || result != 4 || result != 5 || result != 6) {
+                fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
+            }
 //          fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
             return true;
         } else {
@@ -251,12 +254,12 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 					string w = box.qr.getName(relatorName(i));
 					hackIndex[w] = i;
                     // TODO: Remoe this validIdenity check. This is just for sanity!
-		            if (!g_tests.validIdentity(w, box)) {
-						t.testIndex = i;
-                        t.testResult = result;
-						fprintf(stderr, "failed quasi-relator variety %s(%s)\n", w.c_str(), box.name.c_str());
-                        return true;
-                    }
+//		            if (!g_tests.validIdentity(w, box)) {
+//						t.testIndex = i;
+//                        t.testResult = 1;
+//						fprintf(stderr, "failed quasi-relator variety %s(%s)\n", w.c_str(), box.name.c_str());
+//                        return true;
+//                    }
 					if (g_momVarieties.find(w) != g_momVarieties.end()) {
 						t.testIndex = i;
                         t.testResult = result;
@@ -277,7 +280,8 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 			if (!g_tests.validIdentity(*it, box)) {
 				fprintf(stderr, "failed quasi-relator identity %s(%s)\n", it->c_str(), box.name.c_str());
 				t.testIndex = hackIndex[*it];
-                t.testResult = 6;
+                t.testResult = 1;
+                fprintf(stderr, "Eliminated %s with test %s with result %d (failed qr)\n", box.name.c_str(), g_tests.getName(t.testIndex), t.testResult);
 				return true;
 			}
 		}
@@ -344,7 +348,7 @@ void refineTree(NamedBox box, PartialTree& t)
 
 void printTree(PartialTree& t)
 {
-	if (t.testIndex >= 0) {
+	if (t.testIndex > 6) {
         char type = 'F';
         switch (t.testResult) {
             case 1:
@@ -363,7 +367,10 @@ void printTree(PartialTree& t)
                 type = 'F'; // We consider result 6 or any other a failure since we don't have any mom varieties at this point    
                 break;
         }
+        if (type == 'F') { fprintf(stderr, "Failing test result %d\n", t.testResult); }
 		printf("%c(%s)\n", type, g_tests.getName(t.testIndex));
+	} else if (t.testIndex >= 0) {
+		printf("%s\n", g_tests.getName(t.testIndex));
 	} else if (t.lChild && t.rChild) {
 		printf("X\n");
 		printTree(*t.lChild);

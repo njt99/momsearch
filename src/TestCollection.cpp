@@ -162,7 +162,7 @@ bool TestCollection::box_inside_at_least_two_nbd(NamedBox& box)
         }
     }
     if (found > 1) {
-        fprintf(stderr, "BOX %s inside VAR_NBD (%s)\n",box.qr.desc().c_str());
+        fprintf(stderr, "BOX %s inside VAR_NBD (%s)\n", box.name.c_str() ,box.qr.desc().c_str());
     }
     return (found > 1); 
 }
@@ -214,6 +214,27 @@ bool TestCollection::validVariety(string word, Box& box)
 	return true;
 }
 
+const int not_identity(const SL2ACJ&x) {
+    return absLB(x.b) > 0 
+        || absLB(x.c) > 0 
+        || ((absLB(x.a-1) > 0 || absLB(x.d-1) > 0) && (absLB(x.a+1) > 0 || absLB(x.d+1) > 0));
+}
+
+const int not_para_fix_inf(const SL2ACJ&x) {
+    return absLB(x.c) > 0 
+        || ((absLB(x.a-1) > 0 || absLB(x.d-1) > 0) && (absLB(x.a+1) > 0 || absLB(x.d+1) > 0));
+}
+
+bool TestCollection::large_horoball(string word, Params<ACJ>& params) {
+    SL2ACJ w(evaluate1(word, params));
+	ACJ r(w.c / params.loxodromicSqrt);
+	if (absUB(r) < 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+    
 bool TestCollection::validIdentity(string word, Box& box)
 {
     // Checks to see is ALL  cyclic permutations of a word is identity somewhere in the box
@@ -221,7 +242,7 @@ bool TestCollection::validIdentity(string word, Box& box)
 	for (string::size_type pos = 0; pos < word.size(); ++pos) {
 		string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
 		SL2ACJ w(evaluate1(pword, params));
-		if (notIdentity(w)) {
+		if (not_identity(w)) {
 			return false;
 //        } else {
 //            XComplex a = w.a.center();
@@ -246,15 +267,23 @@ int TestCollection::evaluate(string word, Params<ACJ>& params, bool isNotParabol
 	SL2ACJ G(constructG(params));
 	SL2ACJ g(inverse(G));
 	if (isNotParabolic) {
-		return absLB(w.c) > 0
-		|| (absLB(w.a-1) > 0 && absLB(w.a+1) > 0)
-		|| (absLB(w.d-1) > 0 && absLB(w.d+1) > 0);
+        return not_para_fix_inf(w);
+//		return absLB(w.c) > 0
+//		|| (absLB(w.a-1) > 0 && absLB(w.a+1) > 0)
+//		|| (absLB(w.d-1) > 0 && absLB(w.d+1) > 0);
 	}
 	ACJ r(w.c / g.c);
+
+//    fprintf(stderr, "word %s\n", word.c_str()); 
+//    fprintf(stderr, "w.c %f\n", absUB(w.c)); 
+//    fprintf(stderr, "g.c %f\n", absLB(g.c));
+//    fprintf(stderr, "ratio %f\n",absUB(r));
+
 	if (absUB(r) < 1) {
-		if (absLB(w.c) > 0
-		 || (absLB(w.a-1) > 0 && absLB(w.a+1) > 0)
-		 || (absLB(w.d-1) > 0 && absLB(w.d+1) > 0)) {
+//		if (absLB(w.c) > 0
+//		 || (absLB(w.a-1) > 0 && absLB(w.a+1) > 0)
+//		 || (absLB(w.d-1) > 0 && absLB(w.d+1) > 0)) {
+        if (not_para_fix_inf(w)) {
 			return 1;
 		} else {
 			list<string> mandatory;
