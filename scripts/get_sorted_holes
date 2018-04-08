@@ -1,7 +1,8 @@
 #!/bin/bash
 
-err_dir='/scratch/network/ayarmola/run2015/output'
-bin_dir='/home/ayarmola/momsearch'
+err_dir='/home/users/ayarmola/mom_search/momsearch/output'
+bin_dir='/home/users/ayarmola/mom_search/momsearch/bin'
+script_dir='/home/users/ayarmola/mom_search/momsearch/scripts'
 
 find "$err_dir" -type f -name "*err" -exec grep 'HOLE' {} + > holes_err
 "$bin_dir/treecat" --all_holes -r "$err_dir" '' > holes
@@ -21,5 +22,5 @@ done < holes
 while read line; do grep "HOLE $line " holes_no_quasi_no_filenames; done < holes > true_holes_no_quasi
 while read line; do grep "HOLE $line " holes_quasi_no_filenames; done < holes > true_holes_quasi
 sort -t" " -k6n,6 true_holes_no_quasi > true_holes_no_quasi_sorted
-perl "$bin_dir/canon_hole.pl" < true_holes_quasi > true_holes_quasi_canon
-perl "$bin_dir/canon_hole_count.pl"  -s -u < true_holes_quasi_canon > sorted_words_canon
+perl "$script_dir/canon_hole.pl" < true_holes_quasi > true_holes_quasi_canon
+perl "$script_dir/canon_hole_count.pl"  -s -u < true_holes_quasi_canon > sorted_words_canon

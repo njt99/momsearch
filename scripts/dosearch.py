@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, subprocess, sys, getopt, glob, time
+import os, subprocess, sys, getopt, glob, time, re
 from time import sleep
 from multiprocessing import Process
 
@@ -44,6 +44,8 @@ def add_words(words, fp):
                word[0] == 'X'    or\
                word[0] == 'H' : continue
             else:
+                if '(' in word :
+                    word = re.findall('\((.*?)\)', word)[-1]
                 words.add(word)
     except:
         print('Error loading words file {0}\n'.format(fp))

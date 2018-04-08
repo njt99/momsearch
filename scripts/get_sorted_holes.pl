@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
-$err_dir = '/scratch/network/ayarmola/run2015/output';
-$bin_dir = '/home/ayarmola/momsearch';
+$err_dir = '/home/users/ayarmola/mom_search/momsearch/output';
+$bin_dir = '/home/users/ayarmola/mom_search/momsearch/bin';
+$script_dir = '/home/users/ayarmola/mom_search/momsearch/scripts';
 
 system('find' . " $err_dir " . '-type f -name \*err -exec grep VAR {} + > holes_err');
 system("$bin_dir/treecat " . '--all_holes -r' . " $err_dir " . '\'\' > holes');
@@ -47,5 +48,5 @@ close $true_no_qr;
 close $missing;
 
 system('sort -k6n,6 true_holes_no_quasi > true_holes_no_quasi_sorted');
-system('perl' . " $bin_dir/canon_hole.pl " . '< true_holes_quasi > true_holes_quasi_canon');
-system('perl' . " $bin_dir/canon_hole_count.pl " . '-s -u < true_holes_quasi_canon > sorted_words_canon');
+system('perl' . " $script_dir/canon_hole.pl " . '< true_holes_quasi > true_holes_quasi_canon');
+system('perl' . " $script_dir/canon_hole_count.pl " . '-s -u < true_holes_quasi_canon > sorted_words_canon');
