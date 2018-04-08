@@ -253,7 +253,7 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 				} else if (result == 6) {
 					string w = box.qr.getName(relatorName(i));
 					hackIndex[w] = i;
-                    // TODO: Remoe this validIdenity check. This is just for sanity!
+                    // TODO: Remove this validIdenity check. This is just for sanity!
 //		            if (!g_tests.validIdentity(w, box)) {
 //						t.testIndex = i;
 //                        t.testResult = 1;

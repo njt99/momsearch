@@ -12,7 +12,7 @@ COPTS=-O4
 	$(CC) $(COPTS) $(CCFLAGS) -c ${@:o=C}
 
 refine: $(REFINEOBJS)
-	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o refine_debug
+	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine
 
 treecat: $(TREECATOBJS)
-	$(CPLUSPLUS) $(COPTS) $(TREECATOBJS) -o treecat
+	$(CPLUSPLUS) $(COPTS) $(TREECATOBJS) -o ../bin/treecat

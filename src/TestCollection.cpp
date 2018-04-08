@@ -119,7 +119,7 @@ SL2ACJ TestCollection::evaluate1(string word, Params<ACJ>& params)
 	return w;
 }
 
-/* Tests is the box is within the variety neighborhood for 
+/* Tests if the box is within the variety neighborhood for 
    its shortest g power quasi-relators. This test is used to 
    stop subdivision of a HOLE. The relevant Lemma:
 
@@ -129,7 +129,7 @@ SL2ACJ TestCollection::evaluate1(string word, Params<ACJ>& params)
 
 bool TestCollection::box_inside_nbd(NamedBox& box)
 {
-	Params<ACJ> params = box.cover();
+    Params<ACJ> params = box.cover();
     vector<string> qrs(box.qr.wordClasses());
     if (qrs.empty()) { return false; }
     sort(qrs.begin(), qrs.end(), g_power_sort);
@@ -184,7 +184,7 @@ bool TestCollection::validIntersection(NamedBox& box) {
         }
     }
     if (found > 1) {
-	    Params<ACJ> params = box.cover();
+	Params<ACJ> params = box.cover();
         string w0 = var_jets[0];
         string w1 = var_jets[1];
         for (string::size_type idx_0 = 0; idx_0 < w0.size(); ++idx_0) {
@@ -207,9 +207,9 @@ bool TestCollection::validVariety(string word, Box& box)
     // Checks to see is ALL  cyclic box is small enough for all cyclic permutations to be inside variety neighborhood
 	Params<ACJ> params = box.cover();
 	for (string::size_type pos = 0; pos < word.size(); ++pos) {
-		string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
-		SL2ACJ w(evaluate1(pword, params));
-        if (!(absUB(w.c) < 1 && absUB(w.b) < 1)) { return false; }
+            string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
+            SL2ACJ w(evaluate1(pword, params));
+            if (!(absUB(w.c) < 1 && absUB(w.b) < 1)) { return false; }
 	}
 	return true;
 }
