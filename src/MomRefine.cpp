@@ -164,25 +164,26 @@ string relatorName(int testIndex)
 	return string(buf);
 }
 
-// For test type n = 6 varfies if valid identity,
+// For test type n = 6 varfies if valid nbd variety,
 // mom variety, or parametrized variety. Otherwise, tests if 
 // n == 1, 3, 4, or 5.
 bool isEliminated(int testIndex, int n, NamedBox& box) {
 	if (n == 6) {
-		string w = box.qr.getName(relatorName(testIndex));
-        // We are assuming tha the input n is obtained from evaluate. In that case, we have a return of 6 only if w.c/g.c < 1 (i.e. big ball)
-		if (!g_tests.validIdentity(w, box)) {
-			fprintf(stderr, "failed quasi-relator %s(%s)\n", w.c_str(), box.name.c_str());
-			return true;
-        }
-		if (g_momVarieties.find(w) != g_momVarieties.end()) {
-			fprintf(stderr, "mom variety %s(%s)\n", w.c_str(), box.name.c_str());
-			return true;
-		}
-		if (g_parameterizedVarieties.find(w) != g_parameterizedVarieties.end()) {
-			fprintf(stderr, "parameterized variety %s(%s)\n", w.c_str(), box.name.c_str());
-			return true;
-		}
+        return g_tests.box_inside_nbd(box);
+//		string w = box.qr.getName(relatorName(testIndex));
+//        // We are assuming tha the input n is obtained from evaluate. In that case, we have a return of 6 only if w.c/g.c < 1 (i.e. big ball)
+//		if (!g_tests.validIdentity(w, box)) {
+//			fprintf(stderr, "failed quasi-relator %s(%s)\n", w.c_str(), box.name.c_str());
+//			return true;
+//        }
+////		if (g_momVarieties.find(w) != g_momVarieties.end()) {
+//			fprintf(stderr, "mom variety %s(%s)\n", w.c_str(), box.name.c_str());
+//			return true;
+//		}
+//		if (g_parameterizedVarieties.find(w) != g_parameterizedVarieties.end()) {
+//			fprintf(stderr, "parameterized variety %s(%s)\n", w.c_str(), box.name.c_str());
+//			return true;
+//		}
 	}
 
 	return (n == 1 || n == 3 || n == 4 || n == 5);
@@ -206,9 +207,9 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
         int result = g_tests.evaluateBox(t.testIndex, box);
         if (isEliminated(t.testIndex, result, box)) {
             t.testResult = result;
-            if (result != 1 || result != 3 || result != 4 || result != 5 || result != 6) {
-                fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
-            }
+//            if (result != 1 || result != 3 || result != 4 || result != 5 || result != 6) {
+//               fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
+//            }
 //          fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
             return true;
         } else {
@@ -253,6 +254,10 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 				} else if (result == 6) {
 					string w = box.qr.getName(relatorName(i));
 					hackIndex[w] = i;
+                    if (g_tests.box_inside_nbd(box)) {
+                        t.testResult = result;
+                        return true;
+                    }
                     // TODO: Remove this validIdenity check. This is just for sanity!
 //		            if (!g_tests.validIdentity(w, box)) {
 //						t.testIndex = i;
@@ -260,18 +265,18 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 //						fprintf(stderr, "failed quasi-relator variety %s(%s)\n", w.c_str(), box.name.c_str());
 //                        return true;
 //                    }
-					if (g_momVarieties.find(w) != g_momVarieties.end()) {
-						t.testIndex = i;
-                        t.testResult = result;
-						fprintf(stderr, "mom variety %s(%s)\n", w.c_str(), box.name.c_str());
-						return true;
-					}
-					if (g_parameterizedVarieties.find(w) != g_parameterizedVarieties.end()) {
-						t.testIndex = i;
-                        t.testResult = result;
-						fprintf(stderr, "parameterized variety %s(%s)\n", w.c_str(), box.name.c_str());
-						return true;
-					}
+//					if (g_momVarieties.find(w) != g_momVarieties.end()) {
+//						t.testIndex = i;
+//                        t.testResult = result;
+//						fprintf(stderr, "mom variety %s(%s)\n", w.c_str(), box.name.c_str());
+//						return true;
+//					}
+//					if (g_parameterizedVarieties.find(w) != g_parameterizedVarieties.end()) {
+//						t.testIndex = i;
+//                        t.testResult = result;
+//						fprintf(stderr, "parameterized variety %s(%s)\n", w.c_str(), box.name.c_str());
+//						return true;
+//					}
 				}
 			}
 		}
@@ -300,16 +305,18 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth || inside_nbd) {
 	        Params<XComplex> params = box.center();
 	        Params<XComplex> nearest = box.nearest();
-			Params<ACJ> cover(box.cover());
-			double absLS = absLB(cover.loxodromicSqrt);
-			double area = dec_d(dec_d(absLS * absLS) * nearest.lattice.im);
+            Params<ACJ> cover(box.cover());
+            double absLS = absLB(cover.loxodromic_sqrt);
+            // Area is |lox_sqrt|^2*|Im(lattice)|.
+            // Make nearest.lattice.im into an ACJ and then multiply twice by absLS 
+            double area = absLB( (ACJ(nearest.lattice.im) * absLS) * absLS );
             if (inside_nbd) {
                 t.nbd_var_box = true;
-			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f VAR (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromicSqrt.re, params.loxodromicSqrt.im, params.parabolic.re,params.parabolic.im, box.qr.min_pow_desc().c_str());
+			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f VAR (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromic_sqrt.re, params.loxodromic_sqrt.im, params.parabolic.re,params.parabolic.im, box.qr.min_pow_desc().c_str());
 		        truncateTree(t);
 			    return true; // We mark this as complete. TODO check this doesn't break anything
             } else {
-			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromicSqrt.re, params.loxodromicSqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
+			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromic_sqrt.re, params.loxodromic_sqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
 			    return false;
             }
 		}
@@ -364,10 +371,10 @@ void printTree(PartialTree& t)
                 type = 'E'; // Relator is a power of a word which is not identity, so Elliptic.
                 break;
             default:
-                type = 'F'; // We consider result 6 or any other a failure since we don't have any mom varieties at this point    
+                type = 'F'; // Updated to test for nbd variety
                 break;
         }
-        if (type == 'F') { fprintf(stderr, "Failing test result %d\n", t.testResult); }
+//        if (type == 'F') { fprintf(stderr, "Failing test result %d\n", t.testResult); }
 		printf("%c(%s)\n", type, g_tests.getName(t.testIndex));
 	} else if (t.testIndex >= 0) {
 		printf("%s\n", g_tests.getName(t.testIndex));

@@ -27,10 +27,4 @@ SL2ACJ constructT(const Params<ACJ>& params, int x, int y);
 int g_power(std::string w);
 bool g_power_sort(std::string a, std::string b);
 
-// ULP functions
-// TODO: CHECK FOR OVERLOW AND UNDERFLOW
-// TODO: Perhaps we should utilize the same bounds for doubles
-//       as are stated in the Annals paper instead of using nextafter
-inline double inc_d(double x) { return nextafter(x,x+1); }
-inline double dec_d(double x) {return nextafter(x,x-1); }
 #endif // __Params_h

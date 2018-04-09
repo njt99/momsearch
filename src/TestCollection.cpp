@@ -227,7 +227,7 @@ const int not_para_fix_inf(const SL2ACJ&x) {
 
 bool TestCollection::large_horoball(string word, Params<ACJ>& params) {
     SL2ACJ w(evaluate1(word, params));
-	ACJ r(w.c / params.loxodromicSqrt);
+	ACJ r(w.c / params.loxodromic_sqrt);
 	if (absUB(r) < 1) {
         return true;
     } else {
@@ -342,10 +342,10 @@ int TestCollection::evaluateCenter(int index, Box& box)
 	Params<XComplex> params = box.center();
 	switch(index) {
 		case 0:	{
-			XComplex sl = params.loxodromicSqrt;
+			XComplex sl = params.loxodromic_sqrt;
 			return sl.re*sl.re + sl.im*sl.im < 1.0;
 		}
-		case 1: return params.loxodromicSqrt.im < 0.0
+		case 1: return params.loxodromic_sqrt.im < 0.0
 		 || params.lattice.im < 0.0
 		 || params.parabolic.im < 0.0
 		 || params.parabolic.re < 0.0;
@@ -354,7 +354,7 @@ int TestCollection::evaluateCenter(int index, Box& box)
 		case 4: return params.parabolic.im > 0.5*params.lattice.im;
 		case 5: return params.parabolic.re > 0.5;
 		case 6: {
-			g_latticeArea = pow(absLB(params.loxodromicSqrt),2)*params.lattice.im;
+			g_latticeArea = pow(absLB(params.loxodromic_sqrt),2)*params.lattice.im;
 			return g_latticeArea > g_maximumArea;
 		}
 		default:
@@ -369,8 +369,8 @@ int TestCollection::evaluateBox(int index, NamedBox& box)
 	Params<XComplex> maximum = box.maximum();
 //	enumerate("");
 	switch(index) {
-		case 0: return absUB(furthest.loxodromicSqrt) < 1.0;
-		case 1: return maximum.loxodromicSqrt.im < 0.0
+		case 0: return absUB(furthest.loxodromic_sqrt) < 1.0;
+		case 1: return maximum.loxodromic_sqrt.im < 0.0
          || maximum.lattice.im < 0.0
 		 || maximum.parabolic.im < 0.0
 		 || maximum.parabolic.re < 0.0;
@@ -383,9 +383,11 @@ int TestCollection::evaluateBox(int index, NamedBox& box)
 		case 4: return nearest.parabolic.im > 0.5*furthest.lattice.im;
 		case 5: return nearest.parabolic.re > 0.5;
 		case 6: {
-			Params<ACJ> cover(box.cover());
-			double absLS = absLB(cover.loxodromicSqrt);
-			double area = dec_d(dec_d(absLS * absLS) * nearest.lattice.im);
+            Params<ACJ> cover(box.cover());
+            double absLS = absLB(cover.loxodromic_sqrt);
+            // Area is |lox_sqrt|^2*|Im(lattice)|.
+            // Make nearest.lattice.im into an ACJ and then multiply twice by absLS 
+            double area = absLB( (ACJ(nearest.lattice.im) * absLS) * absLS );
 			if (area > g_maximumArea) {
 				return true;
 			} else {
