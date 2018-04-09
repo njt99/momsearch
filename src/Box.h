@@ -1,11 +1,3 @@
-/*
- *  Box.h
- *  mom
- *
- *  Created by Nathaniel Thurston on 27/09/2007.
- *  Copyright 2007 THingith ehf.. All rights reserved.
- *
- */
 #ifndef __Box_h
 #define __Box_h
 #include "Params.h"
@@ -21,8 +13,6 @@ struct Box {
 	Params<XComplex> minimum() const; // minimizes all values
 	Params<XComplex> furthest() const; // furthest from 0
 	Params<XComplex> maximum() const; // maximizes all values
-//	void volumeRange(double& low, double& high) const;
-//  double size() const;
 	Box child(int dir) const;
 private:
 	double centerDigits[6];

@@ -1,26 +1,17 @@
-/*
- *  Box.cpp
- *  mom
- *
- *  Created by Nathaniel Thurston on 27/09/2007.
- *  Copyright 2007 THingith ehf.. All rights reserved.
- *
- */
-
 #include "Box.h"
 
 double scale[6];
-static bool scaleInitialized = false; 
+static bool scale_initialized = false; 
 Box::Box() {
-	if (!scaleInitialized) {
-		scaleInitialized = true;
+	if (!scale_initialized) {
+		scale_initialized = true;
 		for (int i = 0; i < 6; ++i) {
 			scale[i] = pow(2, -i / 6.0);
 		}
 	}
 	for (int i = 0; i < 6; ++i) {
 		centerDigits[i] = 0;
-		sizeDigits[i] = 8;
+		size_digits[i] = 8;
 	}
 	pos = 0;
     compute_center_and_size();
@@ -29,8 +20,8 @@ Box::Box() {
 Box Box::child(int dir) const
 {
 	Box child(*this);
-	child.sizeDigits[pos] *= 0.5;
-	child.centerDigits[pos] += (2*dir-1)*child.sizeDigits[pos];
+	child.size_digits[pos] *= 0.5;
+	child.centerDigits[pos] += (2*dir-1)*child.size_digits[pos];
 	++child.pos;
 	if (child.pos == 6)
 		child.pos = 0;
@@ -41,9 +32,13 @@ Box Box::child(int dir) const
 void Box::compute_center_and_size()
 {
 	for (int i = 0; i < 6; ++i) {
-        // Reference the Annals paper for these bounds
+        // GMT paper page 419 of Annals
+        // box_size guarantees that :
+        // box_center - box_size <= true_center - true_size
+        // box_center + box_size >= true_center + true_size
+        // where box operations are floating point. 
         box_center[i] = scale[i]*centerDigits[i];
-        box_size[i]= (1+2*EPS)*(sizeDigits[i]*scale[i]+HALFEPS*fabs(centerDigits[i]));
+        box_size[i]= (1+2*EPS)*(size_digits[i]*scale[i]+HALFEPS*fabs(centerDigits[i]));
     }
 
 }
@@ -52,7 +47,7 @@ Params<XComplex> Box::center() const
 {
     Params<XComplex> result;
     result.lattice = XComplex(box_center[3], box_center[0]);
-    result.loxodromicSqrt = XComplex(box_center[4], box_center[1]);
+    result.loxodromic_sqrt = XComplex(box_center[4], box_center[1]);
     result.parabolic = XComplex(box_center[5], box_center[2]);
 	return result;
 }
@@ -66,7 +61,7 @@ Params<ACJ> Box::cover() const
 		0.,
 		0.
 	);
-	result.loxodromicSqrt = ACJ(
+	result.loxodromic_sqrt = ACJ(
 		XComplex(box_center[4], box_center[1]),
 		0.,
 		XComplex(box_size[4], box_size[1]),
@@ -81,48 +76,24 @@ Params<ACJ> Box::cover() const
 	return result;
 }
 
-//
-//double Box::size() const
-//{
-//    double box_size = 1;
-//	for (int i = 0; i < 6; ++i) {
-//		box_size *= scale[i]*sizeDigits[i];
-//    }
-//    return box_size;
-//}
-
-//Params<XComplex> Box::offset(const double* offset) const
-//{
-//	Params<XComplex> result;
-//	result.lattice = XComplex(
-//		scale[3]*(offset[3]*sizeDigits[3] + centerDigits[3]),
-//		scale[0]*(offset[0]*sizeDigits[0] + centerDigits[0])
-//	);
-//	result.loxodromicSqrt = XComplex(
-//		scale[4]*(offset[4]*sizeDigits[4] + centerDigits[4]),
-//		scale[1]*(offset[1]*sizeDigits[1] + centerDigits[1])
-//	);
-//	result.parabolic = XComplex(
-//		scale[5]*(offset[5]*sizeDigits[5] + centerDigits[5]),
-//		scale[2]*(offset[2]*sizeDigits[2] + centerDigits[2])
-//	);
-//	return result;
-//}
-
 Params<XComplex> Box::nearest() const
 {
 	double m[6];
     double temp;
 	for (int i = 0; i < 6; ++i) {
-		if (centerDigits[i] < 0) {
-            temp = inc_d(box_center[i]+box_size[i]);
+		if (center_digits[i] < 0) {
+            // GMT paper page 419 of Annals
+            // temp is guaranteed to be >= than true_center + true_size
+            temp = box_center[i]+box_size[i];
             if (temp > 0 ) { // Check if we have overlapped 0
                 m[i] = 0;
             } else { // We know scale is positive
 		    	m[i] = temp;
             }  
         } else {
-            temp = dec_d(box_center[i]-box_size[i]);
+            // GMT paper page 419 of Annals
+            // temp is guaranteed to be <= than true_center - true_size
+            temp = box_center[i]-box_size[i];
             if (temp < 0 ) { // Check if we have overlapped 0
                 m[i] = 0;
             } else { // We know scale is positive
@@ -133,7 +104,7 @@ Params<XComplex> Box::nearest() const
 	
 	Params<XComplex> result;
 	result.lattice = XComplex(m[3], m[0]);
-	result.loxodromicSqrt = XComplex(m[4], m[1]);
+	result.loxodromic_sqrt = XComplex(m[4], m[1]);
 	result.parabolic = XComplex(m[5], m[2]);
 	return result;
 }
@@ -142,46 +113,36 @@ Params<XComplex> Box::furthest() const
 {
 	double m[6];
 	for (int i = 0; i < 6; ++i) {
-		if (centerDigits[i] < 0) {
-		    m[i] = dec_d(box_center[i]-box_size[i]);
+		if (center_digits[i] < 0) {
+            // GMT paper page 419 of Annals
+            // guaranteed to be <= than true_center - true_size
+		    m[i] = box_center[i]-box_size[i];
         } else {
-		    m[i] = inc_d(box_center[i]+box_size[i]);
+            // guaranteed to be >= than true_center + true_size
+		    m[i] = box_center[i]+box_size[i];
         }
 	}
 	
 	Params<XComplex> result;
 	result.lattice = XComplex(m[3], m[0]);
-	result.loxodromicSqrt = XComplex(m[4], m[1]);
+	result.loxodromic_sqrt = XComplex(m[4], m[1]);
 	result.parabolic = XComplex(m[5], m[2]);
 	return result;
 }
 
-Params<XComplex> Box::minimum() const
-{
-	double m[6];
-	for (int i = 0; i < 6; ++i) {
-        m[i] = dec_d(box_center[i]-box_size[i]);
-	}
-	
-	Params<XComplex> result;
-	result.lattice = XComplex(m[3], m[0]);
-	result.loxodromicSqrt = XComplex(m[4], m[1]);
-	result.parabolic = XComplex(m[5], m[2]);
-	return result;
-}
-
-// Note: sizeDigits is always positive
+// Note: size_digits is always positive
 Params<XComplex> Box::maximum() const
 {
-	int TODO_ULP;
 	double m[6];
 	for (int i = 0; i < 6; ++i) {
-        m[i] = inc_d(box_center[i]+box_size[i]);
+        // GMT paper page 419 of Annals
+        // guaranteed to be >= than true_center + true_size
+        m[i] = box_center[i]+box_size[i];
 	}
 	
 	Params<XComplex> result;
 	result.lattice = XComplex(m[3], m[0]);
-	result.loxodromicSqrt = XComplex(m[4], m[1]);
+	result.loxodromic_sqrt = XComplex(m[4], m[1]);
 	result.parabolic = XComplex(m[5], m[2]);
 	return result;
 }
@@ -195,15 +156,20 @@ NamedBox NamedBox::child(int dir) const
 	return child;
 }
 
-//void Box::volumeRange(double& low, double& high) const
+//Params<XComplex> Box::offset(const double* offset) const
 //{
-//	Params<XComplex> min = nearest();
-//	Params<XComplex> max = furthest();
-//	
-//	XComplex minSl = min.loxodromicSqrt;
-//	XComplex maxSl = max.loxodromicSqrt;
-//    // Note: we assume that lattice.imag() is positive in the box
-//	low = (minSl.real()*minSl.real() + minSl.imag()*minSl.imag()) * min.lattice.imag();
-//	high = (maxSl.real()*maxSl.real() + maxSl.imag()*maxSl.imag()) * max.lattice.imag();
+//	Params<XComplex> result;
+//	result.lattice = XComplex(
+//		scale[3]*(offset[3]*size_digits[3] + centerDigits[3]),
+//		scale[0]*(offset[0]*size_digits[0] + centerDigits[0])
+//	);
+//	result.loxodromic_sqrt = XComplex(
+//		scale[4]*(offset[4]*size_digits[4] + centerDigits[4]),
+//		scale[1]*(offset[1]*size_digits[1] + centerDigits[1])
+//	);
+//	result.parabolic = XComplex(
+//		scale[5]*(offset[5]*size_digits[5] + centerDigits[5]),
+//		scale[2]*(offset[2]*size_digits[2] + centerDigits[2])
+//	);
+//	return result;
 //}
-//
