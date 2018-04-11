@@ -268,9 +268,6 @@ int TestCollection::evaluate(string word, Params<ACJ>& params, bool isNotParabol
 	SL2ACJ g(inverse(G));
 	if (isNotParabolic) {
         return not_para_fix_inf(w);
-//		return absLB(w.c) > 0
-//		|| (absLB(w.a-1) > 0 && absLB(w.a+1) > 0)
-//		|| (absLB(w.d-1) > 0 && absLB(w.d+1) > 0);
 	}
 	ACJ r(w.c / g.c);
 
@@ -280,9 +277,6 @@ int TestCollection::evaluate(string word, Params<ACJ>& params, bool isNotParabol
 //    fprintf(stderr, "ratio %f\n",absUB(r));
 
 	if (absUB(r) < 1) {
-//		if (absLB(w.c) > 0
-//		 || (absLB(w.a-1) > 0 && absLB(w.a+1) > 0)
-//		 || (absLB(w.d-1) > 0 && absLB(w.d+1) > 0)) {
         if (not_para_fix_inf(w)) {
 			return 1;
 		} else {
@@ -364,30 +358,25 @@ int TestCollection::evaluateCenter(int index, Box& box)
 
 int TestCollection::evaluateBox(int index, NamedBox& box)
 {
-	Params<XComplex> nearest = box.nearest();
-	Params<XComplex> furthest = box.furthest();
-	Params<XComplex> maximum = box.maximum();
-//	enumerate("");
+	Params<XComplex> nearer = box.nearer();
+	Params<XComplex> further = box.further();
+	Params<XComplex> greater = box.greater();
 	switch(index) {
-		case 0: return absUB(furthest.loxodromic_sqrt) < 1.0;
-		case 1: return maximum.loxodromic_sqrt.im < 0.0
-         || maximum.lattice.im < 0.0
-		 || maximum.parabolic.im < 0.0
-		 || maximum.parabolic.re < 0.0;
-		case 2: return fabs(nearest.lattice.re) > 0.5;
-		case 3: return absUB(furthest.lattice) < 1;
+		case 0: return absUB(further.loxodromic_sqrt) < 1.0;
+		case 1: return greater.loxodromic_sqrt.im < 0.0
+         || greater.lattice.im < 0.0
+		 || greater.parabolic.im < 0.0
+		 || greater.parabolic.re < 0.0;
+		case 2: return fabs(nearer.lattice.re) > 0.5;
+		case 3: return absUB(further.lattice) < 1;
         // Note: we can exclude the box if and only if the parabolic imag part is
         // bigger than half the lattice imag part over the WHOLE box
         // We assume that case 1 has been tested. Multiplication by 0.5 is EXACT (if no underflow or overflow)
-        // TODO: ULP
-		case 4: return nearest.parabolic.im > 0.5*furthest.lattice.im;
-		case 5: return nearest.parabolic.re > 0.5;
+		case 4: return nearer.parabolic.im > 0.5*further.lattice.im;
+		case 5: return nearer.parabolic.re > 0.5;
 		case 6: {
-            Params<ACJ> cover(box.cover());
-            double absLS = absLB(cover.loxodromic_sqrt);
             // Area is |lox_sqrt|^2*|Im(lattice)|.
-            // Make nearest.lattice.im into an ACJ and then multiply twice by absLS 
-            double area = absLB( (ACJ(nearest.lattice.im) * absLS) * absLS );
+            double area = areaLB(nearer);
 			if (area > g_maximumArea) {
 				return true;
 			} else {

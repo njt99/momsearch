@@ -304,12 +304,9 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	if (inside_nbd || !t.lChild) {
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth || inside_nbd) {
 	        Params<XComplex> params = box.center();
-	        Params<XComplex> nearest = box.nearest();
-            Params<ACJ> cover(box.cover());
-            double absLS = absLB(cover.loxodromic_sqrt);
+	        Params<XComplex> nearer = box.nearer();
             // Area is |lox_sqrt|^2*|Im(lattice)|.
-            // Make nearest.lattice.im into an ACJ and then multiply twice by absLS 
-            double area = absLB( (ACJ(nearest.lattice.im) * absLS) * absLS );
+            double area = areaLB(nearer);
             if (inside_nbd) {
                 t.nbd_var_box = true;
 			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f VAR (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromic_sqrt.re, params.loxodromic_sqrt.im, params.parabolic.re,params.parabolic.im, box.qr.min_pow_desc().c_str());
