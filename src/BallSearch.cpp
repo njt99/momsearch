@@ -20,7 +20,7 @@ using namespace std;
 namespace BallSearchImpl {
 	struct Word {
 		string name;
-		string nameClass;
+		string nameClass; // cuts off leading or tailing M,N,m,n products
 		SL2C matrix;
 	};
 	
@@ -49,8 +49,8 @@ namespace BallSearchImpl {
 	}
 
 	
-	Word operator * (const Word& lhs, const LatticePoint& rhs);
-	Word operator * (const Word& lhs, const Word& rhs);
+	Word operator * (const Word& lhs, const LatticePoint& rhs); // Multiply word by lattice transtions
+	Word operator * (const Word& lhs, const Word& rhs); // Multiply/concatiante two words
 	
 	struct WordPair {
 		WordPair(Word* first, Word* second, Params<XComplex>* params);
@@ -150,6 +150,7 @@ namespace BallSearchImpl {
 		int x0 = int(floor(centerDiff.re - y0*params->lattice.re));
 		for (int x = -2-x0; x <= 3-x0; ++x) {
 			for (int y = -1-y0; y <= 2-y0; ++y) {
+                // this is here to avoid having to reduce first^(-1) * second
 				if (x == 0 && y == 0 && firstWord->name[0] == secondWord->name[0])
 					continue;
 				LatticePoint l;
@@ -158,7 +159,7 @@ namespace BallSearchImpl {
 				l.y = -y;
 				XComplex t = (centerDiff + double(x) + double(y)*params->lattice).z;
 				l.distance = pow(absUB(t),2);
-				if (abs(l.x) < 4 && abs(l.y) < 4) // TODO: VERIFY THIS IS NOT AN ERROR
+				if (abs(l.x) < 4 && abs(l.y) < 4) 
 					distances.push_back(l);
 			}
 		}
@@ -173,6 +174,7 @@ namespace BallSearchImpl {
 			currentBallSize = 0;
 		} else {
 			currentCombination = (inverse(*firstWord) * distances[i]) * (*secondWord);
+            // Looks like this is an heuristic ball size 
 			currentBallSize = 0.5 / pow(absLB(currentCombination.matrix.c),2);
 		}
 //		printf("WordPair(%s,%s):setCurrentIndex(%d) : %d,%d %f %s size=%f\n",
