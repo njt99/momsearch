@@ -15,7 +15,7 @@
 
 template<class N> struct Params {
 	N lattice;
-	N loxodromicSqrt;
+	N loxodromic_sqrt;
 	N parabolic;
 };
 

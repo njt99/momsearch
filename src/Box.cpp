@@ -10,7 +10,7 @@ Box::Box() {
 		}
 	}
 	for (int i = 0; i < 6; ++i) {
-		centerDigits[i] = 0;
+		center_digits[i] = 0;
 		size_digits[i] = 8;
 	}
 	pos = 0;
@@ -21,7 +21,7 @@ Box Box::child(int dir) const
 {
 	Box child(*this);
 	child.size_digits[pos] *= 0.5;
-	child.centerDigits[pos] += (2*dir-1)*child.size_digits[pos];
+	child.center_digits[pos] += (2*dir-1)*child.size_digits[pos];
 	++child.pos;
 	if (child.pos == 6)
 		child.pos = 0;
@@ -46,8 +46,8 @@ void Box::compute_center_and_size()
         // box_center - box_size <= true_center - true_size
         // box_center + box_size >= true_center + true_size
         // where box operations are floating point. 
-        box_center[i] = scale[i]*centerDigits[i];
-        box_size[i]= (1+2*EPS)*(size_digits[i]*scale[i]+HALFEPS*fabs(centerDigits[i]));
+        box_center[i] = scale[i]*center_digits[i];
+        box_size[i]= (1+2*EPS)*(size_digits[i]*scale[i]+HALFEPS*fabs(center_digits[i]));
     }
 
 }
@@ -204,16 +204,16 @@ Params<XComplex> Box::greater() const
 //{
 //	Params<XComplex> result;
 //	result.lattice = XComplex(
-//		scale[3]*(offset[3]*size_digits[3] + centerDigits[3]),
-//		scale[0]*(offset[0]*size_digits[0] + centerDigits[0])
+//		scale[3]*(offset[3]*size_digits[3] + center_digits[3]),
+//		scale[0]*(offset[0]*size_digits[0] + center_digits[0])
 //	);
 //	result.loxodromic_sqrt = XComplex(
-//		scale[4]*(offset[4]*size_digits[4] + centerDigits[4]),
-//		scale[1]*(offset[1]*size_digits[1] + centerDigits[1])
+//		scale[4]*(offset[4]*size_digits[4] + center_digits[4]),
+//		scale[1]*(offset[1]*size_digits[1] + center_digits[1])
 //	);
 //	result.parabolic = XComplex(
-//		scale[5]*(offset[5]*size_digits[5] + centerDigits[5]),
-//		scale[2]*(offset[2]*size_digits[2] + centerDigits[2])
+//		scale[5]*(offset[5]*size_digits[5] + center_digits[5]),
+//		scale[2]*(offset[2]*size_digits[2] + center_digits[2])
 //	);
 //	return result;
 //}

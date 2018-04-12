@@ -60,12 +60,12 @@ set<string> g_parameterizedVarieties;
 static int g_boxesVisited = 0;
 
 struct PartialTree {
-	PartialTree() :lChild(NULL), rChild(NULL), testIndex(-1),testResult(-1), nbd_var_box(false), qr_desc() {}
+	PartialTree() : lChild(NULL), rChild(NULL), testIndex(-1), testResult(open), aux_word(), qr_desc() {}
 	PartialTree *lChild;
 	PartialTree *rChild;
 	int testIndex;
-	int testResult;
-    bool nbd_var_box;
+	box_state testResult;
+    string aux_word;
     string qr_desc;
 };
 
@@ -92,7 +92,17 @@ PartialTree readTree()
 			t.testIndex = atoi(buf);
 		} else {
             // Add word as eliminator to test collection
-			t.testIndex = g_tests.add(buf);
+            if (strchr("mMnNgG", buf[0]) != NULL) {
+			    t.testIndex = g_tests.add(buf);
+            } else {
+                if (buf[0] == 'E') {
+                    char * comma = strchr(buf,',');
+                    comma[0] = '\0'; 
+                } else {
+                    buf[n-2] = '\0';
+                }
+                t.testIndex = g_tests.add(&buf[2]);
+            }
 		}
 	}
 	return t;
@@ -164,60 +174,43 @@ string relatorName(int testIndex)
 	return string(buf);
 }
 
-// For test type n = 6 varfies if valid nbd variety,
-// mom variety, or parametrized variety. Otherwise, tests if 
-// n == 1, 3, 4, or 5.
-bool isEliminated(int testIndex, int n, NamedBox& box) {
-	if (n == 6) {
-        return g_tests.box_inside_nbd(box);
-//		string w = box.qr.getName(relatorName(testIndex));
-//        // We are assuming tha the input n is obtained from evaluate. In that case, we have a return of 6 only if w.c/g.c < 1 (i.e. big ball)
-//		if (!g_tests.validIdentity(w, box)) {
-//			fprintf(stderr, "failed quasi-relator %s(%s)\n", w.c_str(), box.name.c_str());
-//			return true;
-//        }
-////		if (g_momVarieties.find(w) != g_momVarieties.end()) {
-//			fprintf(stderr, "mom variety %s(%s)\n", w.c_str(), box.name.c_str());
-//			return true;
-//		}
-//		if (g_parameterizedVarieties.find(w) != g_parameterizedVarieties.end()) {
-//			fprintf(stderr, "parameterized variety %s(%s)\n", w.c_str(), box.name.c_str());
-//			return true;
-//		}
-	}
-
-	return (n == 1 || n == 3 || n == 4 || n == 5);
-}
-
 extern double g_latticeArea;
 bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& history, vector< NamedBox >& place, int newDepth, int& searchedDepth)
 {
 	//fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
 	place.push_back(box);
 	int oldTestIndex = t.testIndex;
-    // Forcefully check bounds
-//    for (int b = 0; b < 7; ++b) {
-//        int result = g_tests.evaluateBox(b, box);
-//        if (result) {
-//            t.testIndex = b;
-//            return true;
-//        }
-//    }
+
+    string aux_word;
 	if (t.testIndex >= 0) {
-        int result = g_tests.evaluateBox(t.testIndex, box);
-        if (isEliminated(t.testIndex, result, box)) {
+        box_state result = g_tests.evaluateBox(t.testIndex, box, aux_word);
+        if (result != open && result != open_with_qr) {
+            t.aux_word.swap(aux_word);
             t.testResult = result;
-//            if (result != 1 || result != 3 || result != 4 || result != 5 || result != 6) {
-//               fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
-//            }
 //          fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
             return true;
-        } else {
-            fprintf(stderr, "FAILED to eliminate %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
+//        } else {
+//`            fprintf(stderr, "FAILED to eliminate %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
         }
     }
-	if (t.testIndex == -2 && !g_options.fillHoles)
-		return true;
+
+	if (t.testIndex == -2 && !g_options.fillHoles) {
+	    return true;
+    }
+
+    // Check if the bos is now small enough that some former qrs actually kill it
+    Params<ACJ> cover = box.cover();
+    vector<string> quasiRelators = box.qr.wordClasses();
+    for (vector<string>::iterator it = quasiRelators.begin(); it != quasiRelators.end(); ++it) {
+        // So not idenity and absUB(w.b) < 1
+        SL2ACJ w = g_tests.construct_word(*it, cover); 
+        if (!not_identity(w) && absUB(w.b) < 1) {
+            t.aux_word = *it;
+            t.testResult = killed_failed_qr;
+            return true;
+        }
+    }
+
 	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild)) {
 		while (depth - searchedDepth > g_options.ballSearchDepth) {
 			NamedBox& searchPlace = place[++searchedDepth];
@@ -228,98 +221,54 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 			history.resize(g_tests.size());
 		}
 	}
-	
+
 	if (g_options.improveTree || !t.lChild) {
-		map<string, int> hackIndex;
 		for (int i = 0; i < g_tests.size(); ++i) {
 			vector<bool>& th = history[i];
 			while (th.size() <= depth && (th.size() < depth-6 || th.empty() || th.back())) {
 				bool result = g_tests.evaluateCenter(i, place[th.size()]);
-				//fprintf(stderr, "test %s(%s) = %s\n", g_tests.getName(i), place[th.size()].name.c_str(), result ? "true" : "false");
 				th.push_back(result);
 			}
-			if (th.back()) {
-				int result = g_tests.evaluateBox(i, box);
-				//fprintf(stderr, "evaluate %s(%s) = %d\n", g_tests.getName(i), box.name.c_str(), result);
-				if (result == 1 || result == 3 || result == 4 || result == 5) {
-					if (result == 3)
-						fprintf(stderr, "impossible identity %s(%s)\n", g_tests.getName(i), box.name.c_str());
-					if (result == 4)
-						fprintf(stderr, "impossible lattice %s(%s)\n", g_tests.getName(i), box.name.c_str());
-					if (result == 5)
-						fprintf(stderr, "impossible power %s(%s)\n", g_testCollectionFullWord.c_str(), box.name.c_str());
-					t.testIndex = i;
-                    t.testResult = result;
-					return true;
-				} else if (result == 6) {
-					string w = box.qr.getName(relatorName(i));
-					hackIndex[w] = i;
-                    if (g_tests.box_inside_nbd(box)) {
+			if (th.back() != open) {
+				box_state result = g_tests.evaluateBox(i, box, aux_word);
+
+                switch (result) {
+                    case variety_nbd : 
+                    case killed_bad_parabolic :
+                    case killed_identity_impossible :
+                    case killed_elliptic : {
+                        t.aux_word.swap(aux_word);   
+                    }
+                    case killed_bounds :
+                    case killed_no_parabolics :
+                    case killed_parabolics_impossible : {
+                        t.testIndex = i;
                         t.testResult = result;
                         return true;
                     }
-                    // TODO: Remove this validIdenity check. This is just for sanity!
-//		            if (!g_tests.validIdentity(w, box)) {
-//						t.testIndex = i;
-//                        t.testResult = 1;
-//						fprintf(stderr, "failed quasi-relator variety %s(%s)\n", w.c_str(), box.name.c_str());
-//                        return true;
-//                    }
-//					if (g_momVarieties.find(w) != g_momVarieties.end()) {
-//						t.testIndex = i;
-//                        t.testResult = result;
-//						fprintf(stderr, "mom variety %s(%s)\n", w.c_str(), box.name.c_str());
-//						return true;
-//					}
-//					if (g_parameterizedVarieties.find(w) != g_parameterizedVarieties.end()) {
-//						t.testIndex = i;
-//                        t.testResult = result;
-//						fprintf(stderr, "parameterized variety %s(%s)\n", w.c_str(), box.name.c_str());
-//						return true;
-//					}
-				}
-			}
-		}
-		vector<string> quasiRelators = box.qr.wordClasses();
-		for (vector<string>::iterator it = quasiRelators.begin(); it != quasiRelators.end(); ++it) {
-			if (!g_tests.validIdentity(*it, box)) {
-				fprintf(stderr, "failed quasi-relator identity %s(%s)\n", it->c_str(), box.name.c_str());
-				t.testIndex = hackIndex[*it];
-                t.testResult = 1;
-                fprintf(stderr, "Eliminated %s with test %s with result %d (failed qr)\n", box.name.c_str(), g_tests.getName(t.testIndex), t.testResult);
-				return true;
-			}
+                    case open_with_qr : {
+					    string w = box.qr.getName(aux_word); // Also add qr to the box's list
+                        t.qr_desc = box.qr.min_pow_desc();
+                    }
+                }
+            }
 		}
 	}
 	
 	t.testIndex = -1;
-	
-    bool inside_nbd = g_tests.box_inside_nbd(box);
-    if (inside_nbd) {
-        t.qr_desc = box.qr.min_pow_desc().c_str();
-    } else {
-        t.qr_desc = box.qr.desc().c_str();
-    }
-    // bool inside_nbd = g_tests.box_inside_at_least_two_nbd(box);
-	if (inside_nbd || !t.lChild) {
-		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth || inside_nbd) {
+
+	if (!t.lChild) {
+		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth) {
 	        Params<XComplex> params = box.center();
 	        Params<XComplex> nearer = box.nearer();
-            // Area is |lox_sqrt|^2*|Im(lattice)|.
             double area = areaLB(nearer);
-            if (inside_nbd) {
-                t.nbd_var_box = true;
-			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f VAR (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromic_sqrt.re, params.loxodromic_sqrt.im, params.parabolic.re,params.parabolic.im, box.qr.min_pow_desc().c_str());
-		        truncateTree(t);
-			    return true; // We mark this as complete. TODO check this doesn't break anything
-            } else {
-			    fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromic_sqrt.re, params.loxodromic_sqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
-			    return false;
-            }
+            fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromic_sqrt.re, params.loxodromic_sqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
+            return false;
 		}
 		t.lChild = new PartialTree();
 		t.rChild = new PartialTree();
 	}
+
 	bool isComplete = true;
 	isComplete = refineRecursive(box.child(0), *t.lChild, depth+1, history, place, newDepth, searchedDepth) && isComplete;
 	if (place.size() > depth+1)
@@ -352,40 +301,42 @@ void refineTree(NamedBox box, PartialTree& t)
 
 void printTree(PartialTree& t)
 {
-	if (t.testIndex > 6) {
-        char type = 'F';
-        switch (t.testResult) {
-            case 1:
-                type = 'K'; // Killed by large horoball
-                break;
-            case 3:
-                type = 'I'; // Always impossible relator
-                break;
-            case 4:
-                type = 'L'; // Non-lattice parabolic fixing infinity
-                break;
-            case 5:
-                type = 'E'; // Relator is a power of a word which is not identity, so Elliptic.
-                break;
-            default:
-                type = 'F'; // Updated to test for nbd variety
-                break;
+    char type = 'F';
+    switch (t.testResult) {
+        case open :
+        case open_with_qr : {
+            if (t.lChild && t.rChild) {
+                printf("X\n");
+                printTree(*t.lChild);
+                printTree(*t.rChild);
+            } else {
+		        printf("HOLE (%s)\n", t.qr_desc.c_str());
+            }
+            return;
         }
-//        if (type == 'F') { fprintf(stderr, "Failing test result %d\n", t.testResult); }
-		printf("%c(%s)\n", type, g_tests.getName(t.testIndex));
-	} else if (t.testIndex >= 0) {
-		printf("%s\n", g_tests.getName(t.testIndex));
-	} else if (t.lChild && t.rChild) {
-		printf("X\n");
-		printTree(*t.lChild);
-		printTree(*t.rChild);
-	} else {
-        if (t.nbd_var_box) { 
-		    printf("HOLE VAR (%s)\n", t.qr_desc.c_str());
-        } else {
-		    printf("HOLE (%s)\n", t.qr_desc.c_str());
+        case killed_bounds : {
+		    printf("%s\n", g_tests.getName(t.testIndex));
+            return;
         }
-	}
+        case killed_no_parabolics : type = 'K'; break;
+        case variety_nbd : type = 'V'; break;
+        case killed_parabolics_impossible : type = 'P'; break;
+        case killed_identity_impossible : type = 'I'; break;
+        case killed_failed_qr : type = 'Q'; break;
+        case killed_bad_parabolic : type = 'L'; break;
+        case killed_elliptic : type = 'E'; break;
+    }
+    
+    string killer;
+    if (type == 'P' || type == 'K') {
+        killer = g_tests.getName(t.testIndex);
+    } else if (type = 'E') {
+        killer = g_tests.getName(t.testIndex);
+        killer += "," + t.aux_word; 
+    } else {
+        killer = t.aux_word;
+    }
+    printf("%c(%s)\n", type, killer.c_str());
 }
 
 const char* g_programName;

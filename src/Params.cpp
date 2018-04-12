@@ -19,25 +19,25 @@
 SL2C constructG(const Params<XComplex>& params)
 {
 	XComplex I(0., 1.);
-	const XComplex& sl = params.loxodromicSqrt;
+	const XComplex& sl = params.loxodromic_sqrt;
 	return SL2C((I*(params.parabolic*sl).z).z, (I/sl).z, (I*sl).z, XComplex(0.));
 }
 
 SL2C constructT(const Params<XComplex>& params, int x, int y)
 {
-	return SL2C(XComplex(1.), (params.lattice*double(y)+double(x)).z, XComplex(0.,0.), XComplex(1.,0.));
+	return SL2C(XComplex(1.), (params.lattice * double(y) + double(x)).z, XComplex(0.,0.), XComplex(1.,0.));
 }
 
 SL2ACJ constructG(const Params<ACJ>& params)
 {
 	ACJ I(XComplex(0., 1.));
-	const ACJ& sl = params.loxodromicSqrt;
+	const ACJ& sl = params.loxodromic_sqrt;
 	return SL2ACJ(I*params.parabolic*sl, I/sl, I*sl, ACJ(0.));
 }
 
 SL2ACJ constructT(const Params<ACJ>& params, int x, int y)
 {
-	return SL2ACJ(ACJ(XComplex(1.)), params.lattice*ACJ(double(y))+double(x), ACJ(XComplex(0.)), ACJ(XComplex(1.)));
+	return SL2ACJ(ACJ(XComplex(1.)), params.lattice * double(y) + double(x), ACJ(XComplex(0.)), ACJ(XComplex(1.)));
 }
 
 int g_power(std::string w) {

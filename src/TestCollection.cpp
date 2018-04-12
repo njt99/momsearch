@@ -35,7 +35,7 @@ int TestCollection::size()
 	return 7 + indexString.size();
 }
 
-bool TestCollection::evaluate(string word, Params<XComplex>& params)
+SL2C TestCollection::construct_word(string word, Params<XComplex>& params)
 {
 	SL2C w(1,0,0,1);
 	SL2C G(constructG(params));
@@ -64,10 +64,10 @@ bool TestCollection::evaluate(string word, Params<XComplex>& params)
 		}
 	}
     // Rounding errors are irrelevant here, only used to guide search.
-	return absLB((w.c/g.c).z) < 1;
+	return w;
 }
 
-SL2ACJ TestCollection::evaluate1(string word, Params<ACJ>& params)
+SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params)
 {
 	ACJ one(1), zero(0);
 	SL2ACJ w(one, zero, zero, one);
@@ -127,121 +127,64 @@ SL2ACJ TestCollection::evaluate1(string word, Params<ACJ>& params)
 
 */
 
-bool TestCollection::box_inside_nbd(NamedBox& box)
+bool TestCollection::box_inside_nbd(NamedBox& box, string& var_word)
 {
+    // Checks if a minimal g-power quasi relator pusts the box in a neighborhood.
+    // Returns true if found and copies word into var_word
     Params<ACJ> params = box.cover();
-    vector<string> qrs(box.qr.wordClasses());
+    vector<string> qrs = box.qr.wordClasses();
     if (qrs.empty()) { return false; }
     sort(qrs.begin(), qrs.end(), g_power_sort);
     int min_power = g_power(qrs.front());
 	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
         if (g_power(*it) > min_power) {
-            return true;
+            break;
         } else {
-            if (!validVariety(*it, box)) { return false; }
+            SL2ACJ w = construct_word(*it, params);
+            if (inside_var_nbd(w)) {
+                var_word = *it;
+                return true;
+            } 
         }
     }
-    return true; 
+    return false;
 }
 
-bool TestCollection::box_inside_at_least_two_nbd(NamedBox& box)
+bool TestCollection::box_inside_at_least_two_nbd(NamedBox& box, vector<string>& var_words)
 {
-    vector<string> qrs(box.qr.wordClasses());
+    // Check if there are two quasi-relators that put the box in a neighborhood. 
+    // Returns true of two were found and places them in var_words.
+    Params<ACJ> params = box.cover();
+    vector<string> qrs = box.qr.wordClasses();
     if (qrs.size() < 2) { return false; }
     sort(qrs.begin(), qrs.end(), g_power_sort);
     int min_power = g_power(qrs.front());
-    int found = 0;
-    string found_var;
+    vector<string> found;
 	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
-        if (g_power(*it) > min_power && found > 1) {
+        if (g_power(*it) > min_power && found.size() > 1) {
             break;
         } else {
-            if (!validVariety(*it, box)) { return false; }
-            found_var += *it + ","; 
-            found += 1;
+            SL2ACJ w = construct_word(*it, params);
+            if (inside_var_nbd(w)) {
+                found.push_back(*it);
+            } 
         }
     }
-    if (found > 1) {
-        fprintf(stderr, "BOX %s inside VAR_NBD (%s)\n", box.name.c_str() ,box.qr.desc().c_str());
-    }
-    return (found > 1); 
-}
-
-bool TestCollection::validIntersection(NamedBox& box) {
-    vector<string> qrs(box.qr.wordClasses());
-    if (qrs.size() < 2) { return false; }
-    sort(qrs.begin(), qrs.end(), g_power_sort);
-    int min_power = g_power(qrs.front());
-    int found = 0;
-    vector<string> var_jets;
-	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
-        if (g_power(*it) > min_power && found > 1) {
-            break;
-        } else {
-            if (!validVariety(*it, box)) { return false; }
-            var_jets.push_back(*it);
-            found += 1;
-        }
-    }
-    if (found > 1) {
-	Params<ACJ> params = box.cover();
-        string w0 = var_jets[0];
-        string w1 = var_jets[1];
-        for (string::size_type idx_0 = 0; idx_0 < w0.size(); ++idx_0) {
-            string w0_p = w0.substr(idx_0, w0.size()-idx_0) + w0.substr(0, idx_0);
-            SL2ACJ w0_j(evaluate1(w0_p, params));
-            for (string::size_type idx_1 = 0; idx_1 < w1.size(); ++idx_1) {
-                string w1_p = w1.substr(idx_1, w1.size()-idx_1) + w1.substr(0, idx_1);
-                SL2ACJ w1_j(evaluate1(w1_p, params));
-                if (notZero(w1_j - w0_j) && notZero(w1_j + w0_j)) { return false; }
-            }
-        }
+    if (found.size() > 1) {
+        var_words.swap(found);
         return true;
-    } else {
-        return false;
     }
+    return false; 
 }
 
-bool TestCollection::validVariety(string word, Box& box)
-{
-    // Checks to see is ALL  cyclic box is small enough for all cyclic permutations to be inside variety neighborhood
-	Params<ACJ> params = box.cover();
-	for (string::size_type pos = 0; pos < word.size(); ++pos) {
-            string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
-            SL2ACJ w(evaluate1(pword, params));
-            if (!(absUB(w.c) < 1 && absUB(w.b) < 1)) { return false; }
-	}
-	return true;
-}
 
-const int not_identity(const SL2ACJ&x) {
-    return absLB(x.b) > 0 
-        || absLB(x.c) > 0 
-        || ((absLB(x.a-1) > 0 || absLB(x.d-1) > 0) && (absLB(x.a+1) > 0 || absLB(x.d+1) > 0));
-}
-
-const int not_para_fix_inf(const SL2ACJ&x) {
-    return absLB(x.c) > 0 
-        || ((absLB(x.a-1) > 0 || absLB(x.d-1) > 0) && (absLB(x.a+1) > 0 || absLB(x.d+1) > 0));
-}
-
-bool TestCollection::large_horoball(string word, Params<ACJ>& params) {
-    SL2ACJ w(evaluate1(word, params));
-	ACJ r(w.c / params.loxodromic_sqrt);
-	if (absUB(r) < 1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-    
-bool TestCollection::validIdentity(string word, Box& box)
+bool TestCollection::valid_identity_cyclic(string word, Params<ACJ>& params)
 {
     // Checks to see is ALL  cyclic permutations of a word is identity somewhere in the box
-	Params<ACJ> params = box.cover();
+    if (!word.size()) return false;
 	for (string::size_type pos = 0; pos < word.size(); ++pos) {
 		string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
-		SL2ACJ w(evaluate1(pword, params));
+		SL2ACJ w = construct_word(pword, params);
 		if (not_identity(w)) {
 			return false;
 //        } else {
@@ -261,131 +204,265 @@ bool TestCollection::validIdentity(string word, Box& box)
 	return true;
 }
 
-int TestCollection::evaluate(string word, Params<ACJ>& params, bool isNotParabolic)
+bool TestCollection::valid_variety(string word, Params<ACJ>& params)
 {
-	SL2ACJ w(evaluate1(word, params));
-	SL2ACJ G(constructG(params));
-	SL2ACJ g(inverse(G));
-	if (isNotParabolic) {
-        return not_para_fix_inf(w);
+    // Checks to see is ALL  cyclic box is small enough for all cyclic permutations to be inside variety neighborhood
+    if (!word.size()) return false;
+	for (string::size_type pos = 0; pos < word.size(); ++pos) {
+            string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
+            SL2ACJ w = construct_word(pword, params);
+            if (!(absUB(w.c) < 1 && absUB(w.b) < 1)) { return false; }
 	}
-	ACJ r(w.c / g.c);
+	return true;
+}
 
-//    fprintf(stderr, "word %s\n", word.c_str()); 
-//    fprintf(stderr, "w.c %f\n", absUB(w.c)); 
-//    fprintf(stderr, "g.c %f\n", absLB(g.c));
-//    fprintf(stderr, "ratio %f\n",absUB(r));
+bool TestCollection::valid_intersection(NamedBox& box) {
+    // TODO: Check this does what is should. Should show that two varieties intersect in box
+	Params<ACJ> params = box.cover();
+    vector<string> qrs(box.qr.wordClasses());
+    if (qrs.size() < 2) { return false; }
+    sort(qrs.begin(), qrs.end(), g_power_sort);
+    int min_power = g_power(qrs.front());
+    int found = 0;
+    vector<string> var_jets;
+	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
+        if (g_power(*it) > min_power && found > 1) {
+            break;
+        } else {
+            if (!valid_variety(*it, params)) { return false; }
+            var_jets.push_back(*it);
+            found += 1;
+        }
+    }
+    if (found > 1) {
+        string w0 = var_jets[0];
+        string w1 = var_jets[1];
+        for (string::size_type idx_0 = 0; idx_0 < w0.size(); ++idx_0) {
+            string w0_p = w0.substr(idx_0, w0.size()-idx_0) + w0.substr(0, idx_0);
+            SL2ACJ w0_j(construct_word(w0_p, params));
+            for (string::size_type idx_1 = 0; idx_1 < w1.size(); ++idx_1) {
+                string w1_p = w1.substr(idx_1, w1.size()-idx_1) + w1.substr(0, idx_1);
+                SL2ACJ w1_j(construct_word(w1_p, params));
+                if (notZero(w1_j - w0_j) && notZero(w1_j + w0_j)) { return false; }
+            }
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
 
-	if (absUB(r) < 1) {
+box_state TestCollection::evaluate_approx(string word, Params<XComplex>& params)
+{
+    SL2C w = construct_word(word, params);
+    if (maybe_variety(w) ) return variety_center;
+    if (!maybe_large_horoball(w,params)) return open;
+    return large_horoball_center;
+}
+
+bool TestCollection::ready_for_parabolics_test(SL2ACJ& w)
+{
+     double one = 1; // Exact
+    // We check the box is small enough to determine the sign of translation
+    return ( absUB(w.d - one) < 2 || absUB(w.d + one) < 2 || 
+             absUB(w.a - one) < 2 || absUB(w.a + one) < 2 );
+}
+
+bool TestCollection::only_bad_parabolics(SL2ACJ& w, Params<ACJ>& params)
+{
+    // Tests if w hits any lattice points (when w is parabolic).
+    // This test is inconclusive is w has large transtalion (i.e. translate
+    // w's center into the first postive quad of the lattice.)
+
+    // WE ASSUME ready_for_parabolics_test(w) == true
+
+    // For all parabolic points in the box, we want verify
+    // that none of them are lattice points. At such a point w.a = +/- 1, so
+    //      translation = +/- w.b
+    // Away from the parabolic locus, everything is assumed elimanited.
+
+    // There are now 4 equations to check corresponding to the intersection
+    // of 4 cirles :
+    // |translation - 0          | < |1 + lattice|
+    // |translation - (1+lattice)| < |1 + lattice|
+    // |translation - 1          | < |1 - lattice|
+    // |translation - lattice    | < |1 - lattice|
+    // These inequailties show that transltion is not on the lattice (assuming
+    // parameterd space constraitns). See proof in text.
+    // 
+    // To make the computation efficient, rearange and take absolute values at the end.
+    //
+
+    double one = 1; // Exact
+    ACJ T = (absUB(w.d - one) < 2 || absUB(w.a - one) < 2) ? w.b : -w.b;
+    ACJ L = params.lattice;
+
+    ACJ d1 = T / (L + one);
+    ACJ d2 = d1 - one; // uses fewer operations
+    ACJ d3 = (T - one) / (L - one);
+    ACJ d4 = d3 - one; // better error estimate
+
+    return (absUB(d1) < 1 && absUB(d2) < 1 && absUB(d3) < 1 && absUB(d4) < 1);
+}
+
+string shifted_word(const string& word, int M_pow, int N_pow) {
+    string shifted(word);
+    string::size_type first_g = shifted.find_first_of("gG");
+    if (first_g > 0) {
+        for (int j = 0; j < first_g; ++j) {
+            switch (shifted[j]) {
+                case 'm' : --M_pow; break; 
+                case 'M' : ++M_pow; break;
+                case 'n' : --N_pow; break;
+                case 'N' : ++N_pow; break;
+            }
+        } 
+    }
+    shifted = shifted.substr(first_g, string::npos);
+    for (int i = 0; i <  N_pow; ++i) shifted.insert(0,"N");
+    for (int i = 0; i < -N_pow; ++i) shifted.insert(0,"n");
+    for (int i = 0; i <  M_pow; ++i) shifted.insert(0,"M");
+    for (int i = 0; i < -M_pow; ++i) shifted.insert(0,"m");
+     
+    return shifted;
+}
+
+box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string& aux_word)
+{
+    box_state state = open;
+    aux_word = word;
+	SL2ACJ w = construct_word(word, params);
+
+    if (inside_var_nbd(w)) return variety_nbd;
+
+	if (large_horoball(w,params)) {
+
         if (not_para_fix_inf(w)) {
-			return 1;
+
+			return killed_no_parabolics;
+
 		} else {
+
 			list<string> mandatory;
 			bool isImpossible = impossible->isAlwaysImpossible(word, mandatory);
-			if (isImpossible)
-				return 3;
-			// TODO: ULP and verify this argument
-			XComplex t = (w.b.f / w.a.f).z;
-			int y = int(floor(t.im / params.lattice.f.im));
-			int numFound = 0;
-			int xLattice, yLattice;
-			for (int yi = -1; yi <= 2; ++yi) {
-				XComplex tY = (t - (params.lattice.f * XComplex(y+yi)).z).z;
-				int x = int(floor(tY.re));
-				for (int xi = -1; xi <= 2; ++xi) {
-					ACJ tL = w.b - w.a*(ACJ(y+yi) * params.lattice + ACJ(x+xi));
-					if (absLB(tL) == 0) {
-						++numFound;
-						if (numFound > 1)
-							break;
-						xLattice = x + xi;
-						yLattice = y + yi;
-					}
-				}
+
+			if (isImpossible) return killed_parabolics_impossible;
+   
+            // Look for lattice points. We guess at the center
+            if (ready_for_parabolics_test(w)) { // Makes no sese to do this otherwise
+                ACJ L = params.lattice;
+                XComplex cL = L.f;
+                XComplex cT = w.b.f;
+                // We expect T to be near the lattice point M_pow + N_pow*L
+                double N_pow = floor(cT.im / cL.im);
+                double M_pow = floor((cT - (cL * N_pow).z).z.re);
+                // We look over 16 nearby lattice points
+                for (int y_i = -1; y_i <= 2; ++y_i) {
+                    double N_i = N_pow + y_i;
+                    for (int x_i = -1; x_i <= 2; ++x_i) {
+                        double M_i = M_pow + x_i;
+                        ACJ L_i = L * N_i + M_i; 
+                        SL2ACJ w_i(w.a, w.b - L_i, w.c, w.d); // Cheaper than constucting new word
+                        // What if we now have a variety word?
+                        if (inside_var_nbd(w_i)) { // TODO: Test with constucted word!
+                            state = variety_nbd;
+                        }
+                        else if (only_bad_parabolics(w_i, params)) { // TODO: Test with constucted word!
+                            // w_i is a bad parabolic
+                            state = killed_bad_parabolic;
+                        } else if (absUB(w_i.b) < 1) {
+                            // w_i is a quai-relator
+                            isImpossible = impossible->isImpossible(word, M_i, N_i, mandatory);
+                            if (isImpossible) {
+                                state = killed_identity_impossible;
+                            }
+                            // Mandaotry includes list of things that must be parabolic. If they are not parabolic
+                            // anywhere in the box, we can kill the box
+                            for (list<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
+	                            SL2ACJ w_sub = construct_word(*it, params);
+                                if (not_para_fix_inf(w_sub)) {
+                                    aux_word = *it;
+                                    return killed_elliptic;
+                                }
+                            }
+
+                            // If nothing has worked, at least add w as a quasi relator
+                            state =  open_with_qr;
+                        }
+                        if (state != open) {
+                            aux_word = shifted_word(word, - int(M_i), - int(N_i));
+                            return state;
+                        }
+                    }
+                }
 			}
-			
-			if (numFound == 0) { // cannot be on lattice
-				return 4;
-			}
-			if (numFound == 1) { // exactly one lattice point possible
-				// TODO: prove this, and possibly get better bounds on the number
-				// of points which need to be checked
-				isImpossible = impossible->isImpossible(word, xLattice, yLattice, mandatory);
-				if (isImpossible) {
-					return 3;
-				} else {
-					g_xLattice = xLattice;
-					g_yLattice = yLattice;
-					return 6;
-				}
-			}
-			for (list<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
-				if (evaluate(*it, params, true))
-					return 5;
-			}
-			return 2;
-		}
-	} else {
-		return 0;
-	}
+        }
+    }            
+    return state;
+}
+
+box_state check_bounds_center(bool result) {
+    if (result) return out_of_bounds_center;
+    else return open;
 }
 
 double g_latticeArea;
-int TestCollection::evaluateCenter(int index, Box& box)
+box_state TestCollection::evaluateCenter(int index, Box& box)
 {
 	Params<XComplex> params = box.center();
 	switch(index) {
 		case 0:	{
 			XComplex sl = params.loxodromic_sqrt;
-			return sl.re*sl.re + sl.im*sl.im < 1.0;
+			return check_bounds_center(sl.re*sl.re + sl.im*sl.im < 1.0);
 		}
-		case 1: return params.loxodromic_sqrt.im < 0.0
-		 || params.lattice.im < 0.0
-		 || params.parabolic.im < 0.0
-		 || params.parabolic.re < 0.0;
-		case 2: return fabs(params.lattice.re) > 0.5;
-		case 3: return absUB(params.lattice) < 1;
-		case 4: return params.parabolic.im > 0.5*params.lattice.im;
-		case 5: return params.parabolic.re > 0.5;
+		case 1: return check_bounds_center( params.loxodromic_sqrt.im < 0.0
+                                         || params.lattice.im < 0.0
+                                         || params.parabolic.im < 0.0
+                                         || params.parabolic.re < 0.0);
+		case 2: return check_bounds_center(fabs(params.lattice.re) > 0.5);
+		case 3: return check_bounds_center(absUB(params.lattice) < 1);
+		case 4: return check_bounds_center(params.parabolic.im > 0.5*params.lattice.im);
+		case 5: return check_bounds_center(params.parabolic.re > 0.5);
 		case 6: {
 			g_latticeArea = pow(absLB(params.loxodromic_sqrt),2)*params.lattice.im;
-			return g_latticeArea > g_maximumArea;
+			return check_bounds_center(g_latticeArea > g_maximumArea);
 		}
 		default:
-			return evaluate(indexString[index-7], params);
+			return evaluate_approx(indexString[index-7], params);
 	}
 }
 
-int TestCollection::evaluateBox(int index, NamedBox& box)
+box_state check_bounds(bool result) {
+    if (result) return killed_bounds;
+    else return open;
+}
+
+box_state TestCollection::evaluateBox(int index, NamedBox& box, string& aux_word)
 {
 	Params<XComplex> nearer = box.nearer();
 	Params<XComplex> further = box.further();
 	Params<XComplex> greater = box.greater();
 	switch(index) {
-		case 0: return absUB(further.loxodromic_sqrt) < 1.0;
-		case 1: return greater.loxodromic_sqrt.im < 0.0
-         || greater.lattice.im < 0.0
-		 || greater.parabolic.im < 0.0
-		 || greater.parabolic.re < 0.0;
-		case 2: return fabs(nearer.lattice.re) > 0.5;
-		case 3: return absUB(further.lattice) < 1;
+		case 0: return check_bounds(absUB(further.loxodromic_sqrt) < 1.0);
+		case 1: return check_bounds(greater.loxodromic_sqrt.im < 0.0
+                                 || greater.lattice.im < 0.0
+                                 || greater.parabolic.im < 0.0
+                                 || greater.parabolic.re < 0.0);
+		case 2: return check_bounds(fabs(nearer.lattice.re) > 0.5);
+		case 3: return check_bounds(absUB(further.lattice) < 1.0);
         // Note: we can exclude the box if and only if the parabolic imag part is
         // bigger than half the lattice imag part over the WHOLE box
         // We assume that case 1 has been tested. Multiplication by 0.5 is EXACT (if no underflow or overflow)
-		case 4: return nearer.parabolic.im > 0.5*further.lattice.im;
-		case 5: return nearer.parabolic.re > 0.5;
+		case 4: return check_bounds(nearer.parabolic.im > 0.5*further.lattice.im);
+		case 5: return check_bounds(nearer.parabolic.re > 0.5);
 		case 6: {
             // Area is |lox_sqrt|^2*|Im(lattice)|.
             double area = areaLB(nearer);
-			if (area > g_maximumArea) {
-				return true;
-			} else {
-				return false;
-			}
+		    return check_bounds(area > g_maximumArea);
 		}
 		default: {
 			Params<ACJ> cover(box.cover());
-			int result = evaluate(indexString[index-7], cover, false);
+			box_state result = evaluate_ACJ(indexString[index-7], cover, aux_word);
 //			if (result) {
 //                // TODO: Understand this tail enumeration that adds words based on given word
 //				enumerate(indexString[index-7].c_str());

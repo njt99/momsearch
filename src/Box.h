@@ -14,8 +14,8 @@ struct Box {
 	Params<XComplex> greater() const; // returns all values greater than in the box
 //	Params<XComplex> offset(const double* offset) const;
 private:
-	double centerDigits[6];
-	double sizeDigits[6];
+	double center_digits[6];
+	double size_digits[6];
     double box_center[6];
     double box_size[6];
 	int pos;
