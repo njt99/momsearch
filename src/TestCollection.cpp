@@ -25,10 +25,18 @@ using namespace std;
 // using namespace __gnu_cxx;
 
 double g_maximumArea = 5.24;
-int g_xLattice;
-int g_yLattice;
+int g_max_g_len = 7;
 
 string g_testCollectionFullWord;
+
+int g_length(string& w) 
+{
+    int g_count = 0;
+    for (string::size_type pos = 0; pos < w.size(); ++pos)
+        if (w[pos] == 'g' || w[pos] == 'G')
+            ++g_count;
+    return g_count;
+}
 
 int TestCollection::size()
 {
@@ -331,9 +339,10 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
 {
     box_state state = open;
     aux_word = word;
+    int g_len = g_length(word);
 	SL2ACJ w = construct_word(word, params);
 
-    if (inside_var_nbd(w)) return variety_nbd;
+    if (g_len <= g_max_g_len && inside_var_nbd(w)) return variety_nbd;
 
 	if (large_horoball(w,params)) {
 
@@ -364,7 +373,7 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
                         ACJ L_i = L * N_i + M_i; 
                         SL2ACJ w_i(w.a, w.b - L_i, w.c, w.d); // Cheaper than constucting new word
                         // What if we now have a variety word?
-                        if (inside_var_nbd(w_i)) { // TODO: Test with constucted word!
+                        if (g_len <= g_max_g_len && inside_var_nbd(w_i)) { // TODO: Test with constucted word!
                             state = variety_nbd;
                         }
                         else if (only_bad_parabolics(w_i, params)) { // TODO: Test with constucted word!

@@ -45,6 +45,8 @@ def add_words(words, fp):
                word[0] == 'H' : continue
             else:
                 if '(' in word :
+                    word = re.findall('\((.*?),.*\)', word)[-1]
+                elif '(' in word :
                     word = re.findall('\((.*?)\)', word)[-1]
                 words.add(word)
     except:
@@ -172,7 +174,7 @@ if __name__ == '__main__' :
             for donePid, doneHole in iterDict.iteritems() :
                 pid_file = destDir + '/' + str(donePid) + '.pid'
                 status = command_output('tail -1 {0}'.format(pid_file))
-
+                print status
                 if 'completed' in status :
                     # We should check the output either way to make sure it is clean 
                     subprocess.call('{0} {1} \'{2}\''.format(treecheck, destDir, doneHole), shell=True)
@@ -183,9 +185,8 @@ if __name__ == '__main__' :
                     numPatched = command_output('grep -c Patched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
                     numUnpatched = command_output('grep -c Unpatched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
                     numHoles = command_output('grep -c HOLE {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
-                    numVarHoles = command_output('grep -c VAR {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
                     
-                    print 'Holes: {0} patched, {1} unpatched, {2} open holes\n'.format(numPatched, numUnpatched, int(numHoles)-int(numVarHoles))
+                    print 'Holes: {0} patched, {1} unpatched, {2} open holes\n'.format(numPatched, numUnpatched, int(numHoles))
 
                     boxWords = set()
                     add_words(boxWords, '{0}/{1}.out'.format(destDir, doneHole))        

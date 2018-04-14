@@ -141,38 +141,38 @@ extern double g_maximumArea;
 // multplied by g_xLattice copies of m and g_yLattice
 // copies of n on the left. The front abelian subword is
 // rewriteen with all m's first and n's second.
-string relatorName(int testIndex)
-{
-    // The global lattice counts (# of m and n's) should be set
-    // by TestCollection.evaluate(). TODO Check when these get reset
-	int xLattice = g_xLattice;
-	int yLattice = g_yLattice;
-	const char *wordName = g_tests.getName(testIndex);
-	bool done = false;
-	for (;;) {
-		switch(*wordName) {
-			case 'm': ++xLattice; break;
-			case 'M': --xLattice; break;
-			case 'n': ++yLattice; break;
-			case 'N': --yLattice; break;
-			default: done = true; break;
-		}
-		if (done) break;
-		++wordName;
-	}
-	char buf[10000];
-	char *bp = buf;
-	for (int i = 0; i < xLattice; ++i)
-		*bp++ = 'm';
-	for (int i = 0; i < -xLattice; ++i)
-		*bp++ = 'M';
-	for (int i = 0; i < yLattice; ++i)
-		*bp++ = 'n';
-	for (int i = 0; i < -yLattice; ++i)
-		*bp++ = 'N';
-	strcpy(bp, wordName);
-	return string(buf);
-}
+//string relatorName(int testIndex)
+//{
+//    // The global lattice counts (# of m and n's) should be set
+//    // by TestCollection.evaluate(). TODO Check when these get reset
+//	int xLattice = g_xLattice;
+//	int yLattice = g_yLattice;
+//	const char *wordName = g_tests.getName(testIndex);
+//	bool done = false;
+//	for (;;) {
+//		switch(*wordName) {
+//			case 'm': ++xLattice; break;
+//			case 'M': --xLattice; break;
+//			case 'n': ++yLattice; break;
+//			case 'N': --yLattice; break;
+//			default: done = true; break;
+//		}
+//		if (done) break;
+//		++wordName;
+//	}
+//	char buf[10000];
+//	char *bp = buf;
+//	for (int i = 0; i < xLattice; ++i)
+//		*bp++ = 'm';
+//	for (int i = 0; i < -xLattice; ++i)
+//		*bp++ = 'M';
+//	for (int i = 0; i < yLattice; ++i)
+//		*bp++ = 'n';
+//	for (int i = 0; i < -yLattice; ++i)
+//		*bp++ = 'N';
+//	strcpy(bp, wordName);
+//	return string(buf);
+//}
 
 extern double g_latticeArea;
 bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& history, vector< NamedBox >& place, int newDepth, int& searchedDepth)
@@ -211,16 +211,16 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
         }
     }
 
-	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild)) {
-		while (depth - searchedDepth > g_options.ballSearchDepth) {
-			NamedBox& searchPlace = place[++searchedDepth];
-			vector<string> searchWords = findWords( searchPlace.center(), vector<string>(), -200, g_options.maxWordLength, box.qr.wordClasses());
-			fprintf(stderr, "search (%s) found %s(%s)\n",
-				searchPlace.qr.desc().c_str(), searchWords.back().c_str(), searchPlace.name.c_str());
-			g_tests.add(searchWords.back());
-			history.resize(g_tests.size());
-		}
-	}
+//	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild)) {
+//		while (depth - searchedDepth > g_options.ballSearchDepth) {
+//			NamedBox& searchPlace = place[++searchedDepth];
+//			vector<string> searchWords = findWords( searchPlace.center(), vector<string>(), -200, g_options.maxWordLength, box.qr.wordClasses());
+//			fprintf(stderr, "search (%s) found %s(%s)\n",
+//				searchPlace.qr.desc().c_str(), searchWords.back().c_str(), searchPlace.name.c_str());
+//			g_tests.add(searchWords.back());
+//			history.resize(g_tests.size());
+//		}
+//	}
 
 	if (g_options.improveTree || !t.lChild) {
 		for (int i = 0; i < g_tests.size(); ++i) {
@@ -302,6 +302,7 @@ void refineTree(NamedBox box, PartialTree& t)
 void printTree(PartialTree& t)
 {
     char type = 'F';
+//    printf("%d\n", t.testResult);
     switch (t.testResult) {
         case open :
         case open_with_qr : {
@@ -326,11 +327,11 @@ void printTree(PartialTree& t)
         case killed_bad_parabolic : type = 'L'; break;
         case killed_elliptic : type = 'E'; break;
     }
-    
+//    printf("%c\n", type);
     string killer;
     if (type == 'P' || type == 'K') {
         killer = g_tests.getName(t.testIndex);
-    } else if (type = 'E') {
+    } else if (type == 'E') {
         killer = g_tests.getName(t.testIndex);
         killer += "," + t.aux_word; 
     } else {
