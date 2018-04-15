@@ -44,14 +44,14 @@ def add_words(words, fp):
                word[0] == 'X'    or\
                word[0] == 'H' : continue
             else:
-                if '(' in word :
+                if ',' in word :
                     word = re.findall('\((.*?),.*\)', word)[-1]
                 elif '(' in word :
                     word = re.findall('\((.*?)\)', word)[-1]
                 words.add(word)
     except:
         print('Error loading words file {0}\n'.format(fp))
-        sys.exit(1)
+#       sys.exit(1)
 
 def run_refine(command, destDir) :
     pid = os.getpid()
