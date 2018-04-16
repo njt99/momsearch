@@ -268,21 +268,16 @@ box_state TestCollection::evaluate_approx(string word, Params<XComplex>& params)
     return large_horoball_center;
 }
 
-bool TestCollection::ready_for_parabolics_test(SL2ACJ& w)
-{
-     double one = 1; // Exact
-    // We check the box is small enough to determine the sign of translation
-    return ( absUB(w.d - one) < 2 || absUB(w.d + one) < 2 || 
-             absUB(w.a - one) < 2 || absUB(w.a + one) < 2 );
-}
-
 bool TestCollection::only_bad_parabolics(SL2ACJ& w, Params<ACJ>& params)
 {
     // Tests if w hits any lattice points (when w is parabolic).
     // This test is inconclusive is w has large transtalion (i.e. translate
     // w's center into the first postive quad of the lattice.)
 
-    // WE ASSUME ready_for_parabolics_test(w) == true
+    double one = 1; // Exact
+    // We check the box is small enough to determine the sign of translation
+    if (!( absUB(w.d - one) < 2 || absUB(w.d + one) < 2 || 
+           absUB(w.a - one) < 2 || absUB(w.a + one) < 2 )) { return false; }
 
     // For all parabolic points in the box, we want verify
     // that none of them are lattice points. At such a point w.a = +/- 1, so
@@ -299,9 +294,7 @@ bool TestCollection::only_bad_parabolics(SL2ACJ& w, Params<ACJ>& params)
     // parameterd space constraitns). See proof in text.
     // 
     // To make the computation efficient, rearange and take absolute values at the end.
-    //
 
-    double one = 1; // Exact
     ACJ T = (absUB(w.d - one) < 2 || absUB(w.a - one) < 2) ? w.b : -w.b;
     ACJ L = params.lattice;
 
@@ -340,6 +333,7 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
     box_state state = open;
     aux_word = word;
     int g_len = g_length(word);
+    double one = 1; // Exact
 	SL2ACJ w = construct_word(word, params);
 
     if (g_len <= g_max_g_len && inside_var_nbd(w)) return variety_nbd;
@@ -358,50 +352,47 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
 			if (isImpossible) return killed_parabolics_impossible;
    
             // Look for lattice points. We guess at the center
-            if (ready_for_parabolics_test(w)) { // Makes no sese to do this otherwise
-                ACJ L = params.lattice;
-                XComplex cL = L.f;
-                XComplex cT = w.b.f;
-                // We expect T to be near the lattice point M_pow + N_pow*L
-                double N_pow = floor(cT.im / cL.im);
-                double M_pow = floor((cT - (cL * N_pow).z).z.re);
-                // We look over 16 nearby lattice points
-                for (int y_i = -1; y_i <= 2; ++y_i) {
-                    double N_i = N_pow + y_i;
-                    for (int x_i = -1; x_i <= 2; ++x_i) {
-                        double M_i = M_pow + x_i;
-                        ACJ L_i = L * N_i + M_i; 
-                        SL2ACJ w_i(w.a, w.b - L_i, w.c, w.d); // Cheaper than constucting new word
-                        // What if we now have a variety word?
-                        if (g_len <= g_max_g_len && inside_var_nbd(w_i)) { // TODO: Test with constucted word!
-                            state = variety_nbd;
+            ACJ L = params.lattice;
+            XComplex cL = L.f;
+            XComplex cT = (w.b / w.d).f;
+            // We expect T to be near the lattice point M_pow + N_pow*L
+            double N_pow = floor(cT.im / cL.im);
+            double M_pow = floor((cT - (cL * N_pow).z).z.re);
+            // We look over 16 nearby lattice points
+            for (int y_i = -1; y_i <= 2; ++y_i) {
+                double N_i = N_pow + y_i;
+                for (int x_i = -1; x_i <= 2; ++x_i) {
+                    double M_i = M_pow + x_i;
+                    ACJ L_i = L * N_i + M_i; 
+                    SL2ACJ w_i(w.a - L_i * w.c, w.b - L_i * w.d, w.c, w.d); // Cheaper than constucting new word
+                    // What if we now have a variety word?
+                    if (g_len <= g_max_g_len && inside_var_nbd(w_i)) { // TODO: Test with constucted word!
+                        state = variety_nbd;
+                    } else if (only_bad_parabolics(w_i, params)) { // TODO: Test with constucted word!
+                        // w_i is a bad parabolic
+                        state = killed_bad_parabolic;
+                    } else if (absUB(w_i.b) < 1) {
+                        // w_i is a quai-relator
+                        isImpossible = impossible->isImpossible(word, M_i, N_i, mandatory);
+                        if (isImpossible) {
+                            state = killed_identity_impossible;
                         }
-                        else if (only_bad_parabolics(w_i, params)) { // TODO: Test with constucted word!
-                            // w_i is a bad parabolic
-                            state = killed_bad_parabolic;
-                        } else if (absUB(w_i.b) < 1) {
-                            // w_i is a quai-relator
-                            isImpossible = impossible->isImpossible(word, M_i, N_i, mandatory);
-                            if (isImpossible) {
-                                state = killed_identity_impossible;
+                        // Mandaotry includes list of things that must be parabolic. If they are not parabolic
+                        // anywhere in the box, we can kill the box
+                        for (list<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
+                            SL2ACJ w_sub = construct_word(*it, params);
+                            if (not_para_fix_inf(w_sub)) {
+                                aux_word = *it;
+                                return killed_elliptic;
                             }
-                            // Mandaotry includes list of things that must be parabolic. If they are not parabolic
-                            // anywhere in the box, we can kill the box
-                            for (list<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
-	                            SL2ACJ w_sub = construct_word(*it, params);
-                                if (not_para_fix_inf(w_sub)) {
-                                    aux_word = *it;
-                                    return killed_elliptic;
-                                }
-                            }
+                        }
 
-                            // If nothing has worked, at least add w as a quasi relator
-                            state =  open_with_qr;
-                        }
-                        if (state != open) {
-                            aux_word = shifted_word(word, - int(M_i), - int(N_i));
-                            return state;
-                        }
+                        // If nothing has worked, at least add w as a quasi relator
+                        state =  open_with_qr;
+                    }
+                    if (state != open) {
+                        aux_word = shifted_word(word, - int(M_i), - int(N_i));
+                        return state;
                     }
                 }
 			}
