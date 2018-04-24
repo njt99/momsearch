@@ -19,23 +19,25 @@ void QuasiRelators::addQuasiRelator(string w)
 {
 	if (names.find(w) != names.end())
 		return;
-	string W = inverse(w);
-	vector<string> versions;
-	for (string::size_type p = 0; p < w.size(); ++p) {
-		string::size_type prev = (p == 0) ? w.size()-1 : p-1;
-		if (w[prev] == 'g' || w[prev] == 'G')
-			versions.push_back( w.substr(p, string::npos) + w.substr(0, p));
-		if (W[prev] == 'g' || W[prev] == 'G')
-			versions.push_back( W.substr(p, string::npos) + W.substr(0, p));
-	}
-	string first = versions[0];
-	for (vector<string>::iterator it = versions.begin(); it != versions.end(); ++it) {
-		if (*it < first)
-			first = *it;
-	}
-	for (vector<string>::iterator it = versions.begin(); it != versions.end(); ++it)
-		names[*it] = first;
-	nameVector.push_back(first);
+//  TODO We kill uniquenes for now as this causes ``large horoball'' failures
+//	string W = inverse(w);
+//	vector<string> versions;
+//	for (string::size_type p = 0; p < w.size(); ++p) {
+//		string::size_type prev = (p == 0) ? w.size()-1 : p-1;
+//		if (w[prev] == 'g' || w[prev] == 'G')
+//			versions.push_back( w.substr(p, string::npos) + w.substr(0, p));
+//		if (W[prev] == 'g' || W[prev] == 'G')
+//			versions.push_back( W.substr(p, string::npos) + W.substr(0, p));
+//	}
+//	string first = versions[0];
+//	for (vector<string>::iterator it = versions.begin(); it != versions.end(); ++it) {
+//		if (*it < first)
+//			first = *it;
+//	}
+//	for (vector<string>::iterator it = versions.begin(); it != versions.end(); ++it)
+//		names[*it] = first;
+    names[w] = w;
+	nameVector.push_back(w);
 }
 
 string QuasiRelators::min_pow_desc()
