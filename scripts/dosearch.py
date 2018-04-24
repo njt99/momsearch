@@ -95,8 +95,8 @@ if __name__ == '__main__' :
     depth_limit = 67
 
     maxSize = '3000000'
-    maxDepth = '42'
-    truncateDepth = '6'
+    maxDepth = '72'
+    truncateDepth = '42'
     inventDepth = '42'
     ballSearchDepth = '9'
     maxArea = '5.24'
@@ -174,7 +174,6 @@ if __name__ == '__main__' :
             for donePid, doneHole in iterDict.iteritems() :
                 pid_file = destDir + '/' + str(donePid) + '.pid'
                 status = command_output('tail -1 {0}'.format(pid_file))
-                print status
                 if 'completed' in status :
                     # We should check the output either way to make sure it is clean 
                     subprocess.call('{0} {1} \'{2}\''.format(treecheck, destDir, doneHole), shell=True)
@@ -193,12 +192,12 @@ if __name__ == '__main__' :
                     newWords = boxWords - seenWords
                     seenWords |= newWords
 
-                    if len(newWords) > 0: 
-                        f = open(wordsFile, 'a')
-                        for word in newWords:
-                            print 'Adding word {0}'.format(word)
-                            f.write(word + '\n')
-                        f.close()
+#                    if len(newWords) > 0: 
+#                        f = open(wordsFile, 'a')
+#                        for word in newWords:
+#                            print 'Adding word {0}'.format(word)
+#                            f.write(word + '\n')
+#                        f.close()
 
                     childCount -= 1
                     del activePidToHole[donePid]
