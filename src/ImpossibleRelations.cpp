@@ -16,8 +16,8 @@ using namespace std;
 namespace ImpossibleRelationsImpl {
 	
 	struct Impl : public ImpossibleRelations {
-		bool isAlwaysImpossible(string word, list<string>& mandatoryIdentities);
-		bool isImpossible(string word, int mCoeff, int nCoeff, list<string>& mandatoryIdentities);
+		bool isAlwaysImpossible(string word, vector<string>& mandatoryIdentities);
+		bool isImpossible(string word, int mCoeff, int nCoeff, vector<string>& mandatoryIdentities);
 		void load(const char* filePath);
 	private:
 		struct PossiblePower {
@@ -32,10 +32,10 @@ namespace ImpossibleRelationsImpl {
 		PossibleStore possibleStore;
 	};
 	
-	bool Impl::isAlwaysImpossible(string word, list<string>& mandatoryIdentities)
+	bool Impl::isAlwaysImpossible(string word, vector<string>& mandatoryIdentities)
 	{
 		PossibleStore::iterator it = possibleStore.lower_bound(word);
-		list<string> mandatory;
+		vector<string> mandatory;
 		while (it != possibleStore.end() && it->first == word) {
 			PossiblePower possible = it->second;
 			if (!possible.matchRequired) {
@@ -51,10 +51,10 @@ namespace ImpossibleRelationsImpl {
 		return false;
 	}
 	
-	bool Impl::isImpossible(string word, int mCoeff, int nCoeff, list<string>& mandatoryIdentities)
+	bool Impl::isImpossible(string word, int mCoeff, int nCoeff, vector<string>& mandatoryIdentities)
 	{
 		PossibleStore::iterator it = possibleStore.lower_bound(word);
-		list<string> mandatory;
+		vector<string> mandatory;
 		while (it != possibleStore.end() && it->first == word) {
 			PossiblePower possible = it->second;
 //			printf("considering %s/%s\n", word.c_str(), possible.subWord.c_str());
