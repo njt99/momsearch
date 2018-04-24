@@ -14,6 +14,7 @@
 #include <set>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "Box.h"
 #include "TestCollection.h"
@@ -180,16 +181,24 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	//fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
 	place.push_back(box);
 	int oldTestIndex = t.testIndex;
+    vector<string> new_qrs; 
 
     string aux_word;
 	if (t.testIndex >= 0) {
-        box_state result = g_tests.evaluateBox(t.testIndex, box, aux_word);
+        box_state result = g_tests.evaluateBox(t.testIndex, box, aux_word, new_qrs);
         if (result != open && result != open_with_qr) {
-            t.aux_word.swap(aux_word);
+            t.aux_word.assign(aux_word);
             t.testResult = result;
 //          fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
             return true;
-//        } else {
+        } else if (result == open_with_qr) {
+//            fprintf(stderr,"Retested %d, new qrs len %d\n", result, new_qrs.size());
+            for (vector<string>::iterator it = new_qrs.begin(); it != new_qrs.end(); ++it) {
+//                fprintf(stderr, "New QR is %s\n", (*it).c_str());
+                box.qr.getName(*it); // Also adds qr to the box's list
+            }
+            t.qr_desc = box.qr.min_pow_desc();
+//      } else { 
 //`            fprintf(stderr, "FAILED to eliminate %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
         }
     }
@@ -204,61 +213,107 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
     for (vector<string>::iterator it = quasiRelators.begin(); it != quasiRelators.end(); ++it) {
         // So not idenity and absUB(w.b) < 1
         SL2ACJ w = g_tests.construct_word(*it, cover); 
-        if (!not_identity(w) && absUB(w.b) < 1) {
-            t.aux_word = *it;
+        if (not_identity(w)) {
+//            fprintf(stderr, "Failed qr %s at %s\n", (*it).c_str(), box.name.c_str());
+//            fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
+//                            absLB(w.b), absLB(w.c), absLB(w.a - 1.), absLB(w.d - 1.), absLB(w.a + 1.), absLB(w.d + 1.));
+            t.aux_word.assign(*it);
             t.testResult = killed_failed_qr;
             return true;
         }
     }
 
-//	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild)) {
-//		while (depth - searchedDepth > g_options.ballSearchDepth) {
-//			NamedBox& searchPlace = place[++searchedDepth];
-//			vector<string> searchWords = findWords( searchPlace.center(), vector<string>(), -200, g_options.maxWordLength, box.qr.wordClasses());
-//			fprintf(stderr, "search (%s) found %s(%s)\n",
-//				searchPlace.qr.desc().c_str(), searchWords.back().c_str(), searchPlace.name.c_str());
-//			g_tests.add(searchWords.back());
-//			history.resize(g_tests.size());
-//		}
-//	}
-
 	if (g_options.improveTree || !t.lChild) {
 		for (int i = 0; i < g_tests.size(); ++i) {
 			vector<bool>& th = history[i];
-			while (th.size() <= depth && (th.size() < depth-6 || th.empty() || th.back())) {
+			while (th.size() <= depth && (th.size() < depth-6 || th.empty() || th.back() == open)) {
 				bool result = g_tests.evaluateCenter(i, place[th.size()]);
 				th.push_back(result);
 			}
 			if (th.back() != open) {
-				box_state result = g_tests.evaluateBox(i, box, aux_word);
+                new_qrs.clear();
+				box_state result = g_tests.evaluateBox(i, box, aux_word, new_qrs);
 
                 switch (result) {
                     case variety_nbd : 
+                    case killed_no_parabolics :
                     case killed_bad_parabolic :
+                    case killed_failed_qr :
                     case killed_identity_impossible :
                     case killed_elliptic : {
-                        t.aux_word.swap(aux_word);   
+                        t.aux_word.assign(aux_word);   
                     }
                     case killed_bounds :
-                    case killed_no_parabolics :
                     case killed_parabolics_impossible : {
                         t.testIndex = i;
                         t.testResult = result;
                         return true;
                     }
                     case open_with_qr : {
-					    string w = box.qr.getName(aux_word); // Also add qr to the box's list
+//                        fprintf(stderr,"Result %d, new qrs len %d\n", result, new_qrs.size());
+                        for (vector<string>::iterator it = new_qrs.begin(); it != new_qrs.end(); ++it) {
+//                            fprintf(stderr, "New QR is %s\n", (*it).c_str());
+                            box.qr.getName(*it); // Also adds qr to the box's list
+                        }
                         t.qr_desc = box.qr.min_pow_desc();
+                        break;
                     }
                 }
             }
 		}
 	}
-	
+
+	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild)) {
+		while (depth - searchedDepth > g_options.ballSearchDepth) {
+			NamedBox& searchPlace = place[++searchedDepth];
+			vector<string> searchWords = findWords( searchPlace.center(), vector<string>(), -200, g_options.maxWordLength, box.qr.wordClasses());
+            string new_word = searchWords.back();
+
+            int old_size = g_tests.size();
+    		int new_index = g_tests.add(new_word);
+			history.resize(g_tests.size());
+
+            if (old_size < g_tests.size()) {
+                fprintf(stderr, "search (%s) found %s(%s)\n",
+                    searchPlace.qr.desc().c_str(), new_word.c_str(), searchPlace.name.c_str());
+
+                new_qrs.clear();
+                box_state result = g_tests.evaluateBox(new_index, box, aux_word, new_qrs);
+
+                switch (result) {
+                    case variety_nbd : 
+                    case killed_no_parabolics :
+                    case killed_bad_parabolic :
+                    case killed_failed_qr :
+                    case killed_identity_impossible :
+                    case killed_elliptic : {
+                        t.aux_word.assign(aux_word);   
+                    }
+                    case killed_bounds :
+                    case killed_parabolics_impossible : {
+                        t.testIndex = new_index;
+                        t.testResult = result;
+                        return true;
+                    }
+                    case open_with_qr : {
+    //                        fprintf(stderr,"Result %d, new qrs len %d\n", result, new_qrs.size());
+                        for (vector<string>::iterator it = new_qrs.begin(); it != new_qrs.end(); ++it) {
+    //                            fprintf(stderr, "New QR is %s\n", (*it).c_str());
+                            box.qr.getName(*it); // Also adds qr to the box's list
+                        }
+                        t.qr_desc = box.qr.min_pow_desc();
+                        break;
+                    }
+                }
+            }
+		}
+	}
+
 	t.testIndex = -1;
 
 	if (!t.lChild) {
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth) {
+//            fprintf(stderr,"Deph %d, max depth %d, boxes_visited %d, max size %d, newDepth %d, invent depth %d\n", depth, g_options.maxDepth, g_boxesVisited, g_options.maxSize, newDepth, g_options.inventDepth);
 	        Params<XComplex> params = box.center();
 	        Params<XComplex> nearer = box.nearer();
             double area = areaLB(nearer);
@@ -329,7 +384,7 @@ void printTree(PartialTree& t)
     }
 //    printf("%c\n", type);
     string killer;
-    if (type == 'P' || type == 'K') {
+    if (type == 'P') {
         killer = g_tests.getName(t.testIndex);
     } else if (type == 'E') {
         killer = g_tests.getName(t.testIndex);
@@ -432,8 +487,10 @@ int main(int argc, char** argv)
 		usage();
 		exit(1);
 	}
+
 	int ch;
 	while ((ch = getopt_long(argc, argv, optStr, longOptions, NULL)) != -1) {
+        fprintf(stderr,"Arg %c, %s\n", ch, optarg);
 		switch(ch) {
 		case 'b': g_options.boxName = optarg; break;
 		case 'w': g_options.wordsFile = optarg; break;
@@ -450,7 +507,11 @@ int main(int argc, char** argv)
 		case 'a': g_maximumArea = atof(optarg); break;
 		}
 	}
+
+//    fprintf(stderr, "Max depth %d\n", g_options.maxDepth);
 	
+ //   usleep(30000000);
+
 	NamedBox box;
 	for (const char* boxP = g_options.boxName; *boxP; ++boxP) {
 		if (*boxP == '0') {
