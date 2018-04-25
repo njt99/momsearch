@@ -1,9 +1,7 @@
 #!/bin/bash
-# serial job using 1 node and 8 processor,
-# and runs for 24 hours (max).
 #SBATCH -N 1 # node count
 #SBATCH --ntasks-per-node=16
-#SBATCH -t 23:59:00
+#SBATCH -t 72:00:00
 #SBATCH --mem=2GB
 ##SBATCH --qos=qos-besteffort
 # sends mail when process begins, and 
