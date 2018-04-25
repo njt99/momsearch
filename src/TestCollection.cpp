@@ -9,9 +9,9 @@
 // The bounds:
 // 0. |sl| >= 1 (horoball size)
 // 1. Im(sl) >= 0 (only sl^2 matters)
-// 2. -1/2 <= Re(n) <= 1/2 (reduction modulo M)
-// 3. Im(n) >= 0 (complex conjugate symmetry)
-// 4. 0 <= Im(p) <= Im(n)/2 (reduction modulo N, flipping sign of N)
+// 2. -1/2 <= Re(l) <= 1/2 (reduction modulo M)
+// 3. Im(l >= 0 (negation)
+// 4. 0 <= Im(p) <= Im(l)/2 (reduction modulo N, flipping sign of N)
 // 5. 0 <= Re(p) <= 1/2 (reduction modulo M, flipping sign of M)
 // 6. |sl^2| Im(n) <= 4 (area of fundamental paralleogram)
 // 

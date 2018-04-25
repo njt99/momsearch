@@ -1,5 +1,7 @@
 #include "Box.h"
 
+// Initial box dimensions are 2^(18/6), 2^(17/6), ..., 2^(13/6). The last is > 4.49
+
 double scale[6];
 static bool scale_initialized = false; 
 Box::Box() {
