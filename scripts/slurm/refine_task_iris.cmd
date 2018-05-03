@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH -N 1 # node count
-#SBATCH --ntasks-per-node=16
+#SBATCH --ntasks-per-node=28
 #SBATCH -t 72:00:00
 #SBATCH --mem=2GB
-#SBATCH --qos=qos-besteffort
+#SBATCH --qos=qos-batch
 # sends mail when process begins, and 
 # when it ends. Make sure you define your email 
 #SBATCH --mail-type=begin
@@ -22,4 +22,4 @@ data_dir="$base_dir"
 
 cd $bin_dir
 
-python "$search" -w "$words" -p "$powers" -c 16 "$data_dir/source" "$data_dir/output" > "$data_dir/refine.log" 2>&1
+python "$search" -w "$words" -p "$powers" -c 28 "$data_dir/source" "$data_dir/output" > "$data_dir/refine.log" 2>&1
