@@ -21,7 +21,6 @@
 #include "TestCollection.h"
 #include "ImpossibleRelations.h"
 #include <algorithm>
-#include "type_info.h"
 using namespace std;
 // using namespace __gnu_cxx;
 
@@ -107,7 +106,9 @@ SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params, unordere
     char h;
 	int x = 0;
 	int y = 0;
+    int g_len = 0;
     SL2ACJ temp;
+    SL2ACJ w_store;
     string::iterator it;
     string::iterator mn_it = word.end();
     for (it = word.end(); it != word.begin(); --it) {
@@ -118,38 +119,59 @@ SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params, unordere
 			case 'n': --y; break;
 			case 'N': ++y; break;
 			default: {
-                lookup = words_cache.emplace(string(it-1, word.end()), SL2ACJ());
-                if (lookup.second) { // tail of word was not found
-                    if (x != 0 || y != 0) { // need to deal with parabolic
-                        lookup_prev = words_cache.emplace(string(it, word.end()), SL2ACJ());
-                        if (lookup_prev.second) { // parabolic + prev_tail was no found
-                            lookup_para = words_cache.emplace(string(it, mn_it), SL2ACJ());
-                            if (lookup_para.second) {
-                                temp = constructT(params, x, y);
-                              //  printf("Building T %d %d :", x, y);
-                              //  print_SL2ACJ(temp);
-                                swap(lookup_para.first->second, temp);
+                if (g_len < 9) {
+                    lookup = words_cache.emplace(string(it-1, word.end()), SL2ACJ());
+                    if (lookup.second) { // tail of word was not found
+                        if (x != 0 || y != 0) { // need to deal with parabolic
+                            lookup_prev = words_cache.emplace(string(it, word.end()), SL2ACJ());
+                            if (lookup_prev.second) { // parabolic + prev_tail was no found
+                                lookup_para = words_cache.emplace(string(it, mn_it), SL2ACJ());
+                                if (lookup_para.second) {
+                                    temp = constructT(params, x, y);
+                                    swap(lookup_para.first->second, temp);
+                                }
+                                temp = lookup_para.first->second * (*w);
+                                swap(lookup_prev.first->second, temp);
                             }
-                            temp = lookup_para.first->second * (*w);
-                            swap(lookup_prev.first->second, temp);
+                            w = &(lookup_prev.first->second);
                         }
-                        w = &(lookup_prev.first->second);
+                        if (h == 'g') {
+                            temp = (*g) * (*w);
+                        }
+                        else if (h == 'G') {
+                            temp = (*G) * (*w);
+                        }
+                        else {
+                            fprintf(stderr, "Error constructing word: %s. Unknown generator!\n", word.c_str());
+                        }
+                        swap(lookup.first->second, temp);
+                    }
+                    w = &(lookup.first->second); 
+                } else {
+                    if (x != 0 || y != 0) { // need to deal with parabolic
+                        lookup_para = words_cache.emplace(string(it, mn_it), SL2ACJ());
+                        if (lookup_para.second) {
+                            temp = constructT(params, x, y);
+                            swap(lookup_para.first->second, temp);
+                        }
+                        w_store = lookup_para.first->second * (*w);
+                        w = &w_store;
                     }
                     if (h == 'g') {
-                        temp = (*g) * (*w);
+                        w_store = (*g) * (*w);
                     }
                     else if (h == 'G') {
-                        temp = (*G) * (*w);
+                        w_store = (*G) * (*w);
                     }
                     else {
                         fprintf(stderr, "Error constructing word: %s. Unknown generator!\n", word.c_str());
                     }
-                    swap(lookup.first->second, temp);
+                    w = &w_store;
                 }
-                w = &(lookup.first->second); 
                 mn_it = it-1;
                 x = 0;
                 y = 0;
+                ++g_len;
             }
 		}
 	}
@@ -160,12 +182,16 @@ SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params, unordere
             temp = constructT(params, x, y);
             swap(lookup_para.first->second, temp);
         }
-        temp = lookup_para.first->second * (*w);
-        lookup = words_cache.emplace(word, temp);
-        if (!lookup.second) {
-            fprintf(stderr, "Error constructing word: %s. It already exists but shouldn't!\n", word.c_str());
+        w_store = lookup_para.first->second * (*w);
+        if (g_len < 9) {
+            lookup = words_cache.emplace(word, w_store);
+            if (!lookup.second) {
+                fprintf(stderr, "Error constructing word: %s. It already exists but shouldn't!\n", word.c_str());
+            } 
+            w = &(lookup.first->second);
+        } else {
+            w = &w_store;
         } 
-        w = &(lookup.first->second);  
     }
 	return *w;
 }
