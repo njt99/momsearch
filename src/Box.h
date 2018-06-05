@@ -6,29 +6,31 @@
 
 struct Box {
 	Box();
-	Params<XComplex> center() const;
+	std::string name;
+	QuasiRelators qr;
 	Box child(int dir) const;
-	Params<ACJ> cover() const;
-	Params<XComplex> nearer() const; // returns all values closer to 0 than in box or 0 if box overlaps
-	Params<XComplex> further() const; // returns all values futher from 0 that in the box
-	Params<XComplex> greater() const; // returns all values greater than in the box
+	Params<XComplex> center() const { return _center; }
+	Params<ACJ> cover() const { return _cover; }
+	Params<XComplex> nearer() const { return _nearer; } // returns all values closer to 0 than in box or 0 if box overlaps
+	Params<XComplex> further() const { return _further; } // returns all values futher from 0 that in the box
+	Params<XComplex> greater() const { return _greater; } // returns all values greater than in the box
 //	Params<XComplex> offset(const double* offset) const;
 private:
+	int pos;
 	double center_digits[6];
 	double size_digits[6];
     double box_center[6];
     double box_size[6];
-	int pos;
+	Params<XComplex> _center;
+	Params<ACJ> _cover;
+	Params<XComplex> _nearer;
+	Params<XComplex> _further;
+	Params<XComplex> _greater;
     void compute_center_and_size();
-};
-
-struct NamedBox : public Box {
-	NamedBox() {}
-	NamedBox(Box box) :Box(box) {}
-	
-	std::string name;
-	QuasiRelators qr;
-	NamedBox child(int dir) const;
+	void compute_cover();
+    void compute_nearer();
+	void compute_further();
+	void compute_greater();
 };
 
 inline const double areaLB(const Params<XComplex>&nearer)

@@ -10,7 +10,7 @@
 #include <getopt.h>
 #include <stdio.h>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <set>
 #include <stdlib.h>
 #include <string.h>
@@ -176,16 +176,18 @@ extern double g_maximumArea;
 //}
 
 extern double g_latticeArea;
-bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& history, vector< NamedBox >& place, int newDepth, int& searchedDepth)
+bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, vector< Box >& place, int newDepth, int& searchedDepth)
 {
 	//fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
 	place.push_back(box);
 	int oldTestIndex = t.testIndex;
-    vector<string> new_qrs; 
+    vector<string> new_qrs;
+    unordered_map<string,SL2C>* cache_SL2C = new unordered_map<string,SL2C>();
+    unordered_map<string,SL2ACJ>* cache_SL2ACJ = new unordered_map<string,SL2ACJ>();
 
     string aux_word;
 	if (t.testIndex >= 0) {
-        box_state result = g_tests.evaluateBox(t.testIndex, box, aux_word, new_qrs);
+        box_state result = g_tests.evaluateBox(t.testIndex, box, aux_word, new_qrs, *cache_SL2ACJ);
         if (result != open && result != open_with_qr) {
             t.aux_word.assign(aux_word);
             t.testResult = result;
@@ -207,12 +209,12 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	    return true;
     }
 
-    // Check if the bos is now small enough that some former qrs actually kill it
+    // Check if the box is now small enough that some former qrs actually kill it
     Params<ACJ> cover = box.cover();
     vector<string> quasiRelators = box.qr.wordClasses();
     for (vector<string>::iterator it = quasiRelators.begin(); it != quasiRelators.end(); ++it) {
         // So not idenity and absUB(w.b) < 1
-        SL2ACJ w = g_tests.construct_word(*it, cover); 
+        SL2ACJ w = g_tests.construct_word(*it, cover, *cache_SL2ACJ); 
         if (not_identity(w)) {
 //            fprintf(stderr, "Failed qr %s at %s\n", (*it).c_str(), box.name.c_str());
 //            fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
@@ -227,12 +229,12 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 		for (int i = 0; i < g_tests.size(); ++i) {
 			vector<bool>& th = history[i];
 			while (th.size() <= depth && (th.size() < depth-6 || th.empty() || th.back() == open)) {
-				bool result = g_tests.evaluateCenter(i, place[th.size()]);
+				bool result = g_tests.evaluateCenter(i, place[th.size()], *cache_SL2C);
 				th.push_back(result);
 			}
 			if (th.back() != open) {
                 new_qrs.clear();
-				box_state result = g_tests.evaluateBox(i, box, aux_word, new_qrs);
+				box_state result = g_tests.evaluateBox(i, box, aux_word, new_qrs, *cache_SL2ACJ);
 
                 switch (result) {
                     case variety_nbd : 
@@ -265,7 +267,7 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 
 	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild)) {
 		while (depth - searchedDepth > g_options.ballSearchDepth) {
-			NamedBox& searchPlace = place[++searchedDepth];
+			Box& searchPlace = place[++searchedDepth];
 			vector<string> searchWords = findWords( searchPlace.center(), vector<string>(), -200, g_options.maxWordLength, box.qr.wordClasses());
             string new_word = searchWords.back();
 
@@ -278,7 +280,7 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
                     searchPlace.qr.desc().c_str(), new_word.c_str(), searchPlace.name.c_str());
 
                 new_qrs.clear();
-                box_state result = g_tests.evaluateBox(new_index, box, aux_word, new_qrs);
+                box_state result = g_tests.evaluateBox(new_index, box, aux_word, new_qrs, *cache_SL2ACJ);
 
                 switch (result) {
                     case variety_nbd : 
@@ -325,6 +327,9 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	}
 
 	bool isComplete = true;
+    delete cache_SL2C;
+    delete cache_SL2ACJ;
+
 	isComplete = refineRecursive(box.child(0), *t.lChild, depth+1, history, place, newDepth, searchedDepth) && isComplete;
 	if (place.size() > depth+1)
 		place.resize(depth+1);
@@ -346,10 +351,10 @@ bool refineRecursive(NamedBox box, PartialTree& t, int depth, TestHistory& histo
 	return isComplete;
 }
 
-void refineTree(NamedBox box, PartialTree& t)
+void refineTree(Box box, PartialTree& t)
 {
 	TestHistory history(g_tests.size());
-	vector<NamedBox> place;
+	vector<Box> place;
 	int searchedDepth = 0;
 	refineRecursive(box, t, 0, history, place, 0, searchedDepth);
 }
@@ -512,7 +517,7 @@ int main(int argc, char** argv)
 	
  //   usleep(30000000);
 
-	NamedBox box;
+	Box box;
 	for (const char* boxP = g_options.boxName; *boxP; ++boxP) {
 		if (*boxP == '0') {
 			box = box.child(0);

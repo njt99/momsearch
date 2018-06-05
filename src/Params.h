@@ -19,10 +19,10 @@ template<class N> struct Params {
 	N parabolic;
 };
 
-SL2C constructG(const Params<XComplex>& params);
-SL2C constructT(const Params<XComplex>& params, int x, int y);
-SL2ACJ constructG(const Params<ACJ>& params);
-SL2ACJ constructT(const Params<ACJ>& params, int x, int y);
+const SL2C constructG(const Params<XComplex>& params);
+const SL2C constructT(const Params<XComplex>& params, int x, int y);
+const SL2ACJ constructG(const Params<ACJ>& params);
+const SL2ACJ constructT(const Params<ACJ>& params, int x, int y);
 
 int g_power(std::string w);
 bool g_power_sort(std::string a, std::string b);

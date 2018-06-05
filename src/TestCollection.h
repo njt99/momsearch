@@ -7,7 +7,7 @@
  *
  */
 
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <vector>
 #include "Params.h"
@@ -35,24 +35,25 @@ struct ImpossibleRelations;
 
 struct TestCollection {
 	int size();
-	box_state evaluateCenter(int index, Box& box);
-	box_state evaluateBox(int index, NamedBox& box, std::string& aux_word, std::vector<std::string>& new_qrs);
-    bool box_inside_nbd(NamedBox& box, std::string& var_word);
-	bool box_inside_at_least_two_nbd(NamedBox& box, std::vector<std::string>& var_words); 
-	bool valid_intersection(NamedBox& box);
-	bool valid_variety(std::string word, Params<ACJ>& params); 
-	bool valid_identity_cyclic(std::string word, Params<ACJ>& params);
+	box_state evaluateCenter(int index, Box& box, std::unordered_map<std::string,SL2C>& words_cache);
+	box_state evaluateBox(int index, Box& box, std::string& aux_word, std::vector<std::string>& new_qrs, std::unordered_map<std::string,SL2ACJ>& words_cache);
 	const char* getName(int index);
 	int add(std::string word);
 	void load(const char* fileName);
 	void loadImpossibleRelations(const char* fileName);
-	SL2ACJ construct_word(std::string word, Params<ACJ>& params);
-	SL2C construct_word(std::string word, Params<XComplex>& params);
+	SL2ACJ construct_word(const std::string word, Params<ACJ>& params, std::unordered_map<std::string,SL2ACJ>& words_cache);
+	SL2C construct_word(const std::string word, Params<XComplex>& params, std::unordered_map<std::string,SL2C>& words_cache);
+    // old validation code
+//    bool box_inside_nbd(Box& box, std::string& var_word);
+//	bool box_inside_at_least_two_nbd(Box& box, std::vector<std::string>& var_words); 
+//	bool valid_intersection(Box& box);
+//	bool valid_variety(std::string word, Params<ACJ>& params); 
+//	bool valid_identity_cyclic(std::string word, Params<ACJ>& params);
 private:
 	std::map<std::string, int> stringIndex;
 	std::vector<std::string> indexString;
-	box_state evaluate_approx(std::string word, Params<XComplex>& params);
-    box_state evaluate_ACJ(std::string word, Params<ACJ>& params, std::string& aux_word, std::vector<std::string>& new_qrs);
+	box_state evaluate_approx(std::string word, Params<XComplex>& params, std::unordered_map<std::string,SL2C>& words_cache);
+    box_state evaluate_ACJ(std::string word, Params<ACJ>& params, std::string& aux_word, std::vector<std::string>& new_qrs, std::unordered_map<std::string,SL2ACJ>& words_cache);
     bool ready_for_parabolics_test(SL2ACJ& w);
     bool only_bad_parabolics(SL2ACJ& w, Params<ACJ>& params);
 //	void enumerate(const char* w);

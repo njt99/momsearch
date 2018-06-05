@@ -21,6 +21,7 @@
 #include "TestCollection.h"
 #include "ImpossibleRelations.h"
 #include <algorithm>
+#include "type_info.h"
 using namespace std;
 // using namespace __gnu_cxx;
 
@@ -43,47 +44,11 @@ int TestCollection::size()
 	return 7 + indexString.size();
 }
 
-SL2C TestCollection::construct_word(string word, Params<XComplex>& params)
+SL2C TestCollection::construct_word(string word, Params<XComplex>& params, unordered_map<string,SL2C>& words_cache)
 {
-	SL2C w(1,0,0,1);
+    SL2C w(1,0,0,1);
 	SL2C G(constructG(params));
 	SL2C g(inverse(G));
-
-    char h;
-	int x = 0;
-	int y = 0;
-    string::reverse_iterator rit;
-    for (rit = word.rbegin(); rit != word.rend(); ++rit) {
-        h = *rit;
-		switch(h) {
-			case 'm': --x; break;
-			case 'M': ++x; break;
-			case 'n': --y; break;
-			case 'N': ++y; break;
-			default: {
-				if (x != 0 || y != 0) {
-					w = constructT(params, x, y) * w;
-					x=y=0;
-				}
-				if (h == 'g')
-					w = g * w;
-				else if (h == 'G')
-					w = G * w;
-			}
-		}
-	}
-    // Any leading M,N's
-    if (x != 0 || y != 0) w = constructT(params, x, y) * w;
-    // Rounding errors are irrelevant here, only used to guide search.
-	return w;
-}
-
-SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params)
-{
-	ACJ one(1), zero(0);
-	SL2ACJ w(one, zero, zero, one);
-	SL2ACJ G(constructG(params));
-	SL2ACJ g(inverse(G));
 
     char h;	
 	int x = 0;
@@ -110,28 +75,99 @@ SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params)
 	}
     // Any leading M,N's
     if (x != 0 || y != 0) w = constructT(params, x, y) * w;
-
-//    XComplex a = w.a.f;
-//    XComplex b = w.b.f;
-//    XComplex c = w.c.f;
-//    XComplex d = w.d.f;
-//    fprintf(stderr, "Word: %s\n", word.c_str());
-//    fprintf(stderr, "At the center is has coords\n");
-//    fprintf(stderr, "a: %f + I %f\n", a.re, a.im);
-//    fprintf(stderr, "b: %f + I %f\n", b.re, b.im);
-//    fprintf(stderr, "c: %f + I %f\n", c.re, c.im);
-//    fprintf(stderr, "d: %f + I %f\n", d.re, d.im);
-//    a = G.a.f;
-//    b = G.b.f;
-//    c = G.c.f;
-//    d = G.d.f;
-//    fprintf(stderr, "Word: G\n");
-//    fprintf(stderr, "At the center is has coords\n");
-//    fprintf(stderr, "a: %f + I %f\n", a.re, a.im);
-//    fprintf(stderr, "b: %f + I %f\n", b.re, b.im);
-//    fprintf(stderr, "c: %f + I %f\n", c.re, c.im);
-//    fprintf(stderr, "d: %f + I %f\n", d.re, d.im);
+    // Rounding errors are irrelevant here, only used to guide search.
 	return w;
+}
+
+SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params, unordered_map<string,SL2ACJ>& words_cache)
+{
+    pair<unordered_map<string,SL2ACJ>::iterator,bool> lookup;
+    pair<unordered_map<string,SL2ACJ>::iterator,bool> lookup_prev;
+    pair<unordered_map<string,SL2ACJ>::iterator,bool> lookup_para;
+    if (words_cache.size() == 0) {
+        ACJ one(1), zero(0);
+        words_cache.emplace("", SL2ACJ(one,zero,zero,one));
+        lookup = words_cache.emplace("G", constructG(params));
+        words_cache.emplace("g", inverse(lookup.first->second));
+    }
+
+    // Check, just in case we've already seen this word
+    lookup = words_cache.emplace(word, SL2ACJ());
+    if (lookup.second) {// not found 
+        words_cache.erase(lookup.first);
+    }
+    else {
+        return lookup.first->second;
+    }
+    
+	SL2ACJ* w = &words_cache[""];
+	SL2ACJ* G = &words_cache["G"];
+	SL2ACJ* g = &words_cache["g"];
+
+    char h;
+	int x = 0;
+	int y = 0;
+    SL2ACJ temp;
+    string::iterator it;
+    string::iterator mn_it = word.end();
+    for (it = word.end(); it != word.begin(); --it) {
+        h = *(it-1);
+		switch(h) {
+			case 'm': --x; break;
+			case 'M': ++x; break;
+			case 'n': --y; break;
+			case 'N': ++y; break;
+			default: {
+                lookup = words_cache.emplace(string(it-1, word.end()), SL2ACJ());
+                if (lookup.second) { // tail of word was not found
+                    if (x != 0 || y != 0) { // need to deal with parabolic
+                        lookup_prev = words_cache.emplace(string(it, word.end()), SL2ACJ());
+                        if (lookup_prev.second) { // parabolic + prev_tail was no found
+                            lookup_para = words_cache.emplace(string(it, mn_it), SL2ACJ());
+                            if (lookup_para.second) {
+                                temp = constructT(params, x, y);
+                              //  printf("Building T %d %d :", x, y);
+                              //  print_SL2ACJ(temp);
+                                swap(lookup_para.first->second, temp);
+                            }
+                            temp = lookup_para.first->second * (*w);
+                            swap(lookup_prev.first->second, temp);
+                        }
+                        w = &(lookup_prev.first->second);
+                    }
+                    if (h == 'g') {
+                        temp = (*g) * (*w);
+                    }
+                    else if (h == 'G') {
+                        temp = (*G) * (*w);
+                    }
+                    else {
+                        fprintf(stderr, "Error constructing word: %s. Unknown generator!\n", word.c_str());
+                    }
+                    swap(lookup.first->second, temp);
+                }
+                w = &(lookup.first->second); 
+                mn_it = it-1;
+                x = 0;
+                y = 0;
+            }
+		}
+	}
+    // Any leading M,N's
+    if (x != 0 || y != 0) { // need to deal with parabolic
+        lookup_para = words_cache.emplace(string(word.begin(), mn_it), SL2ACJ());
+        if (lookup_para.second) {
+            temp = constructT(params, x, y);
+            swap(lookup_para.first->second, temp);
+        }
+        temp = lookup_para.first->second * (*w);
+        lookup = words_cache.emplace(word, temp);
+        if (!lookup.second) {
+            fprintf(stderr, "Error constructing word: %s. It already exists but shouldn't!\n", word.c_str());
+        } 
+        w = &(lookup.first->second);  
+    }
+	return *w;
 }
 
 /* Tests if the box is within the variety neighborhood for 
@@ -142,134 +178,134 @@ SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params)
 
 */
 
-bool TestCollection::box_inside_nbd(NamedBox& box, string& var_word)
-{
-    // Checks if a minimal g-power quasi relator pusts the box in a neighborhood.
-    // Returns true if found and copies word into var_word
-    Params<ACJ> params = box.cover();
-    vector<string> qrs = box.qr.wordClasses();
-    if (qrs.empty()) { return false; }
-    sort(qrs.begin(), qrs.end(), g_power_sort);
-    int min_power = g_power(qrs.front());
-	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
-        if (g_power(*it) > min_power) {
-            break;
-        } else {
-            SL2ACJ w = construct_word(*it, params);
-            if (inside_var_nbd(w)) {
-                var_word = *it;
-                return true;
-            } 
-        }
-    }
-    return false;
-}
-
-bool TestCollection::box_inside_at_least_two_nbd(NamedBox& box, vector<string>& var_words)
-{
-    // Check if there are two quasi-relators that put the box in a neighborhood. 
-    // Returns true of two were found and places them in var_words.
-    Params<ACJ> params = box.cover();
-    vector<string> qrs = box.qr.wordClasses();
-    if (qrs.size() < 2) { return false; }
-    sort(qrs.begin(), qrs.end(), g_power_sort);
-    int min_power = g_power(qrs.front());
-    vector<string> found;
-	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
-        if (g_power(*it) > min_power && found.size() > 1) {
-            break;
-        } else {
-            SL2ACJ w = construct_word(*it, params);
-            if (inside_var_nbd(w)) {
-                found.push_back(*it);
-            } 
-        }
-    }
-    if (found.size() > 1) {
-        var_words.swap(found);
-        return true;
-    }
-    return false; 
-}
-
-
-bool TestCollection::valid_identity_cyclic(string word, Params<ACJ>& params)
-{
-    // Checks to see is ALL  cyclic permutations of a word is identity somewhere in the box
-    if (!word.size()) return false;
-	for (string::size_type pos = 0; pos < word.size(); ++pos) {
-		string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
-		SL2ACJ w = construct_word(pword, params);
-		if (not_identity(w)) {
-			return false;
+//bool TestCollection::box_inside_nbd(Box& box, string& var_word)
+//{
+//    // Checks if a minimal g-power quasi relator pusts the box in a neighborhood.
+//    // Returns true if found and copies word into var_word
+//    Params<ACJ> params = box.cover();
+//    vector<string> qrs = box.qr.wordClasses();
+//    if (qrs.empty()) { return false; }
+//    sort(qrs.begin(), qrs.end(), g_power_sort);
+//    int min_power = g_power(qrs.front());
+//	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
+//        if (g_power(*it) > min_power) {
+//            break;
 //        } else {
-//            XComplex a = w.a.center();
-//            XComplex b = w.b.center();
-//            XComplex c = w.c.center();
-//            XComplex d = w.d.center();
-//            fprintf(stderr, "This word is identity somewhere in the box\n");
-//            fprintf(stderr, "Word: %s\n", word.c_str());
-//            fprintf(stderr, "At the center is has coords\n");
-//            fprintf(stderr, "a: %f + I %f\n", a.re, a.im);
-//            fprintf(stderr, "b: %f + I %f\n", b.re, b.im);
-//            fprintf(stderr, "c: %f + I %f\n", c.re, c.im);
-//            fprintf(stderr, "d: %f + I %f\n", d.re, d.im);
-        }
-	}
-	return true;
-}
+//            SL2ACJ w = construct_word(*it, params);
+//            if (inside_var_nbd(w)) {
+//                var_word = *it;
+//                return true;
+//            } 
+//        }
+//    }
+//    return false;
+//}
+//
+//bool TestCollection::box_inside_at_least_two_nbd(Box& box, vector<string>& var_words)
+//{
+//    // Check if there are two quasi-relators that put the box in a neighborhood. 
+//    // Returns true of two were found and places them in var_words.
+//    Params<ACJ> params = box.cover();
+//    vector<string> qrs = box.qr.wordClasses();
+//    if (qrs.size() < 2) { return false; }
+//    sort(qrs.begin(), qrs.end(), g_power_sort);
+//    int min_power = g_power(qrs.front());
+//    vector<string> found;
+//	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
+//        if (g_power(*it) > min_power && found.size() > 1) {
+//            break;
+//        } else {
+//            SL2ACJ w = construct_word(*it, params);
+//            if (inside_var_nbd(w)) {
+//                found.push_back(*it);
+//            } 
+//        }
+//    }
+//    if (found.size() > 1) {
+//        var_words.swap(found);
+//        return true;
+//    }
+//    return false; 
+//}
 
-bool TestCollection::valid_variety(string word, Params<ACJ>& params)
+
+//bool TestCollection::valid_identity_cyclic(string word, Params<ACJ>& params)
+//{
+//    // Checks to see is ALL  cyclic permutations of a word is identity somewhere in the box
+//    if (!word.size()) return false;
+//	for (string::size_type pos = 0; pos < word.size(); ++pos) {
+//		string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
+//		SL2ACJ w = construct_word(pword, params);
+//		if (not_identity(w)) {
+//			return false;
+////        } else {
+////            XComplex a = w.a.center();
+////            XComplex b = w.b.center();
+////            XComplex c = w.c.center();
+////            XComplex d = w.d.center();
+////            fprintf(stderr, "This word is identity somewhere in the box\n");
+////            fprintf(stderr, "Word: %s\n", word.c_str());
+////            fprintf(stderr, "At the center is has coords\n");
+////            fprintf(stderr, "a: %f + I %f\n", a.re, a.im);
+////            fprintf(stderr, "b: %f + I %f\n", b.re, b.im);
+////            fprintf(stderr, "c: %f + I %f\n", c.re, c.im);
+////            fprintf(stderr, "d: %f + I %f\n", d.re, d.im);
+//        }
+//	}
+//	return true;
+//}
+
+//bool TestCollection::valid_variety(string word, Params<ACJ>& params)
+//{
+//    // Checks to see is ALL  cyclic box is small enough for all cyclic permutations to be inside variety neighborhood
+//    if (!word.size()) return false;
+//	for (string::size_type pos = 0; pos < word.size(); ++pos) {
+//            string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
+//            SL2ACJ w = construct_word(pword, params);
+//            if (!(absUB(w.c) < 1 && absUB(w.b) < 1)) { return false; }
+//	}
+//	return true;
+//}
+//
+//bool TestCollection::valid_intersection(Box& box) {
+//    // TODO: Check this does what is should. Should show that two varieties intersect in box
+//	Params<ACJ> params = box.cover();
+//    vector<string> qrs(box.qr.wordClasses());
+//    if (qrs.size() < 2) { return false; }
+//    sort(qrs.begin(), qrs.end(), g_power_sort);
+//    int min_power = g_power(qrs.front());
+//    int found = 0;
+//    vector<string> var_jets;
+//	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
+//        if (g_power(*it) > min_power && found > 1) {
+//            break;
+//        } else {
+//            if (!valid_variety(*it, params)) { return false; }
+//            var_jets.push_back(*it);
+//            found += 1;
+//        }
+//    }
+//    if (found > 1) {
+//        string w0 = var_jets[0];
+//        string w1 = var_jets[1];
+//        for (string::size_type idx_0 = 0; idx_0 < w0.size(); ++idx_0) {
+//            string w0_p = w0.substr(idx_0, w0.size()-idx_0) + w0.substr(0, idx_0);
+//            SL2ACJ w0_j(construct_word(w0_p, params));
+//            for (string::size_type idx_1 = 0; idx_1 < w1.size(); ++idx_1) {
+//                string w1_p = w1.substr(idx_1, w1.size()-idx_1) + w1.substr(0, idx_1);
+//                SL2ACJ w1_j(construct_word(w1_p, params));
+//                if (notZero(w1_j - w0_j) && notZero(w1_j + w0_j)) { return false; }
+//            }
+//        }
+//        return true;
+//    } else {
+//        return false;
+//    }
+//}
+
+box_state TestCollection::evaluate_approx(string word, Params<XComplex>& params, unordered_map<string,SL2C>& words_cache)
 {
-    // Checks to see is ALL  cyclic box is small enough for all cyclic permutations to be inside variety neighborhood
-    if (!word.size()) return false;
-	for (string::size_type pos = 0; pos < word.size(); ++pos) {
-            string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
-            SL2ACJ w = construct_word(pword, params);
-            if (!(absUB(w.c) < 1 && absUB(w.b) < 1)) { return false; }
-	}
-	return true;
-}
-
-bool TestCollection::valid_intersection(NamedBox& box) {
-    // TODO: Check this does what is should. Should show that two varieties intersect in box
-	Params<ACJ> params = box.cover();
-    vector<string> qrs(box.qr.wordClasses());
-    if (qrs.size() < 2) { return false; }
-    sort(qrs.begin(), qrs.end(), g_power_sort);
-    int min_power = g_power(qrs.front());
-    int found = 0;
-    vector<string> var_jets;
-	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
-        if (g_power(*it) > min_power && found > 1) {
-            break;
-        } else {
-            if (!valid_variety(*it, params)) { return false; }
-            var_jets.push_back(*it);
-            found += 1;
-        }
-    }
-    if (found > 1) {
-        string w0 = var_jets[0];
-        string w1 = var_jets[1];
-        for (string::size_type idx_0 = 0; idx_0 < w0.size(); ++idx_0) {
-            string w0_p = w0.substr(idx_0, w0.size()-idx_0) + w0.substr(0, idx_0);
-            SL2ACJ w0_j(construct_word(w0_p, params));
-            for (string::size_type idx_1 = 0; idx_1 < w1.size(); ++idx_1) {
-                string w1_p = w1.substr(idx_1, w1.size()-idx_1) + w1.substr(0, idx_1);
-                SL2ACJ w1_j(construct_word(w1_p, params));
-                if (notZero(w1_j - w0_j) && notZero(w1_j + w0_j)) { return false; }
-            }
-        }
-        return true;
-    } else {
-        return false;
-    }
-}
-
-box_state TestCollection::evaluate_approx(string word, Params<XComplex>& params)
-{
-    SL2C w = construct_word(word, params);
+    SL2C w = construct_word(word, params, words_cache);
     if (maybe_variety(w) ) return variety_center;
     if (!maybe_large_horoball(w,params)) return open;
     return large_horoball_center;
@@ -335,14 +371,14 @@ string shifted_word(const string& word, int M_pow, int N_pow) {
     return shifted;
 }
 
-box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string& aux_word, vector<string>& new_qrs)
+box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string& aux_word, vector<string>& new_qrs, unordered_map<string,SL2ACJ>& words_cache)
 {
     box_state state = open;
     bool found_qrs = false;
     aux_word.assign(word);
     int g_len = g_length(word);
     double one = 1; // Exact
-	SL2ACJ w = construct_word(word, params);
+	SL2ACJ w = construct_word(word, params, words_cache);
 
     if (g_len <= g_max_g_len && inside_var_nbd(w)) return variety_nbd;
 
@@ -360,7 +396,7 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
 			if (isImpossible) return killed_parabolics_impossible;
             else if (mandatory.size() > 0) {
                 for (vector<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
-                    SL2ACJ w_sub = construct_word(*it, params);
+                    SL2ACJ w_sub = construct_word(*it, params, words_cache);
                     if (not_para_fix_inf(w_sub)) {
                         aux_word.assign(*it);
                         return killed_elliptic;
@@ -408,7 +444,7 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
                             // Mandaotry includes list of things that must be parabolic. If they are not parabolic
                             // anywhere in the box, we can kill the box
                             for (vector<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
-                                SL2ACJ w_sub = construct_word(*it, params);
+                                SL2ACJ w_sub = construct_word(*it, params, words_cache);
                                 if (not_para_fix_inf(w_sub)) {
                                     aux_word.assign(*it);
                                     return killed_elliptic;
@@ -463,7 +499,7 @@ box_state check_bounds_center(bool result) {
 }
 
 double g_latticeArea;
-box_state TestCollection::evaluateCenter(int index, Box& box)
+box_state TestCollection::evaluateCenter(int index, Box& box, unordered_map<string,SL2C>& words_cache)
 {
 	Params<XComplex> params = box.center();
 	switch(index) {
@@ -484,7 +520,7 @@ box_state TestCollection::evaluateCenter(int index, Box& box)
 			return check_bounds_center(g_latticeArea > g_maximumArea);
 		}
 		default:
-			return evaluate_approx(indexString[index-7], params);
+			return evaluate_approx(indexString[index-7], params, words_cache);
 	}
 }
 
@@ -493,7 +529,7 @@ box_state check_bounds(bool result) {
     else return open;
 }
 
-box_state TestCollection::evaluateBox(int index, NamedBox& box, string& aux_word, vector<string>& new_qrs)
+box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vector<string>& new_qrs, unordered_map<string,SL2ACJ>& words_cache)
 {
 	Params<XComplex> nearer = box.nearer();
 	Params<XComplex> further = box.further();
@@ -518,7 +554,7 @@ box_state TestCollection::evaluateBox(int index, NamedBox& box, string& aux_word
 		}
 		default: {
 			Params<ACJ> cover(box.cover());
-			box_state result = evaluate_ACJ(indexString[index-7], cover, aux_word, new_qrs);
+			box_state result = evaluate_ACJ(indexString[index-7], cover, aux_word, new_qrs, words_cache);
 //			if (result) {
 //                // TODO: Understand this tail enumeration that adds words based on given word
 //				enumerate(indexString[index-7].c_str());
