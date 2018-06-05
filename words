@@ -258,7 +258,6 @@ GGGGG
 GGmnGGGmnGG
 GMgMNgMGGnG
 GMgMgMGMgMG
-GGmgmGGmg,mGGmg
 GGmgMNgmGMg
 ggMGMgMgMGMg
 GMgmGMggMGmg
@@ -276,7 +275,6 @@ GmggmGmgMg
 gmGnGmgMGGMg
 GMgmGmgMGGMg
 GMgMgMgMG
-GMgMGGMgMG,GMgMG
 GGGmnGmGmnG
 GMgMG
 GGMgmNgMGG
@@ -344,7 +342,6 @@ GmgmGMggMGmg
 gmGMgMGmggmG
 GmGmgmGG
 GGGnGmG
-GmgmGGmgmG,GmgmG
 GMgMGGnGmG
 GGGMgNg
 GMgggMG
@@ -392,7 +389,6 @@ GmgMGMgmGnGmg
 GnGGmGmGG
 GnGGmgNg
 GmgMGmgg
-GMgMGMGMgMG,MGMgMG
 GGmnGmGmnGG
 ggmGmGmnGmG
 GmgMGGGMgmG
@@ -431,7 +427,6 @@ GMgMGMgMgMGMg
 GnGmggmGnG
 GnGGmnGmGmG
 GGmnGGmg
-GGMgMGGMg,MGGMg
 gMggg
 ggNgmGGnG
 ggmNggNgMG
@@ -452,7 +447,6 @@ GGGmG
 gmNggmGnG
 gggmGnG
 GGGGmGnG
-GmgmGmGmgmG,mGmgmG
 GGmnGmGmgmGmG
 gmGMGmgMNgmG
 ggMGMggMNgg
@@ -472,7 +466,6 @@ GGmnGGmnGG
 GGMGGMgNg
 GmnGMgMGMgMg
 GnGGmg
-GmgmGmnGmgmG,mnGmgmG
 gMgMGmnGMg
 ggmggmGnG
 GGGMgNgNg
@@ -514,7 +507,6 @@ ggMGMgMG
 gMgg
 GMgmGmgMG
 GMgggMGnG
-ggMGMggMG,MggMG
 ggNgmGmGmG
 GmgMGMgmGmg
 ggmgg
@@ -590,7 +582,6 @@ gMgMgMgMg
 GmGnGGnG
 GGnGGMnG
 ggmNggmGnG
-gmGmgmgmGmg,mgmGmg
 gmNgMGmGMg
 GmnGmGmnGmG
 GnGMgMgMG
@@ -601,7 +592,6 @@ GMgmGGmG
 GnGGMg
 GGmgMG
 ggMNgnGGmnG
-GMgMGMnGMgMG,MnGMgMG
 gMNgMNg
 gMGGMgmNgMG
 GGGMgNggg
@@ -627,7 +617,6 @@ GmgmGmggNg
 gmGGGmGGmG
 GmgMGMggMGMg
 GGGmgMNgmGG
-gmGmgmNgmGmg,mNgmGmg
 GmnGGmnGmGmgmG
 GmnGGmgNgmG
 GGGmGGG
@@ -640,7 +629,6 @@ ggMggMGnGnG
 GGmnGMgg
 gMGMgMNgMGMg
 GMnGMggNgmG
-ggmGmggmG,mggmG
 ggMgMggNgNg
 GMgmGMgmG
 ggmgggmG
@@ -675,10 +663,8 @@ GGmgmNgmGGmg
 gMggNgNg
 GGGmg
 GmgMGmGG
-gMGMgMNgMGMg,MNgMGMg
 GnGmggmG
 GGnGMg
-GMgMGnGMgMG,nGMgMG
 GGmGGmgMNg
 GnGGMgMGMg
 GMgMgMGmnGMg
@@ -942,7 +928,6 @@ ggmGMnGmgMgmG
 GGmGGmgMGmnG
 GGmnGmG
 GGGnGmGnGmG
-gMGMggMGMg,gMGMg
 GGnGmgg
 GMggMgMggMG
 gggMggMnGnG
@@ -997,7 +982,6 @@ gmGGmGGmgNg
 GmGmGGmnGG
 GGnGmGmgmGmG
 gMggMGmnG
-GmgMGmgMGmg,MGmg
 GGnGGmgmGG
 GmggMNgMg
 GmnGGmGmGG
@@ -1020,8 +1004,6 @@ gmgMGnGMg
 gMgMGMgMgMGMg
 GmgggmGmnGmg
 GmmnGmnGmgMgmG
-GmgMGmg,MGmg
-gmGmgNgmGmg,NgmGmg
 GnGGGnGmgg
 GmgNgmNgNg
 gmggmGnGnG
@@ -1053,7 +1035,6 @@ GmGmnGmGmnGG
 gggMGnGnG
 ggNggmNggNgg
 ggNggMGMgMGMgMGg
-GmgmGnGmgmG,nGmgmG
 GMGmgNgmG
 GmGMgmNgMG
 GGmGmGGmnG
@@ -1081,7 +1062,6 @@ ggMggMGmnGMg
 GGNgMg
 GnGMgMGnG
 GmgNgmGGmnG
-gMGMgMgMGMg,MgMGMg
 GGGmGmnGmnG
 GGGnGmGn
 GmgmGmgmGmg
@@ -1154,7 +1134,6 @@ GmGmgmGmgmG
 GmnGnGmnGnG
 GnGGGnGMgg
 GGMgNgNgMG
-GMgMGMg,MGMg
 ggmNggmGmgg
 gMggMggMGmg
 GGmgmGmGmGmg
@@ -1225,7 +1204,6 @@ ggMGmgNgmG
 GnGMggMgMgg
 GmgNgNgNg
 GGnGmggmGnG
-GmGmgmGmGmg,mGmGmg
 GGmgmGGnGGmg
 gggMNgg
 ggmGnGmg
@@ -1419,7 +1397,6 @@ GmgmgmG
 GGMgNgMGGGG
 GmgmGmgmgmGmg
 ggmNgmGmgmGmG
-gggmGmgggmG,mgggmG
 gmGGnGMgMG
 ggMggMnGnG
 gggMNggMGnG
@@ -1448,7 +1425,6 @@ GGGMnGGGnG
 GGMgmGmnG
 ggNgmGGnGMg
 gmNgMGGMgmG
-gMGMgNgMGMg,NgMGMg
 GmnGGmgMNg
 GGnGmgmGnG
 GGnGmGnGGG
@@ -1463,7 +1439,6 @@ ggNgNggMGnG
 GMnGMnGMggMG
 GGMgNggmGmg
 GMggMGnGnGMg
-GGGmGmGGGmG,mGGGmG
 gMGnGnGG
 gMGGMgMGGnG
 GMgMNgMGmgggmG
@@ -1472,7 +1447,6 @@ GGMgMGMgMGGn
 gMGmGMgmGmnG
 GMgmGGGG
 GGGmnGnGnG
-GmgmGmmnGmgmG,mmnGmgmG
 gMggNgmNgNg
 GGnGnGnG
 gmGmGmgg
@@ -1559,7 +1533,6 @@ GmGmgNg
 GMgmGmnGmgMgmG
 gNggMGnGMg
 GGmgMNgmGGmG
-gMGMgMMgMGMg,MMgMGMg
 gmGmgMGMgMgMG
 GmggmGmnGmG
 gmGmgmGmgmGmg
@@ -1646,7 +1619,6 @@ GmgMGnGnGMg
 GmnGmnG
 gggggMgmG
 GGGmnGmGmGmn
-GmgmGmgmGmg,mGmg
 GmGmGmnGGmnG
 gmGMgmGGGmG
 GmgmGmnGmgmgmG
@@ -2016,7 +1988,6 @@ GGGnGmggmGn
 GnGGmnGGmnGG
 GmgNgmGmGmg
 GmGmGGmgMG
-gMGMgMMNgMGMg,MMNgMGMg
 gMggnGmnG
 GMgmGnG
 gggNgNgmGG
@@ -2037,7 +2008,6 @@ gmGGGmgNg
 GMGmgMNgmGMg
 gMgNgMGG
 GmGmnGmGmgg
-GMgmGMg,mGMg
 GmGGGmGnG
 GmggMNgMgMGMg
 gMGMGMgNgMGMg
@@ -2172,7 +2142,6 @@ GGmGngg
 gmGmGmGmnGG
 GMgggMGmgMGnG
 GMnGGMnGGMg
-gmGmgMNgmGmg,MNgmGmg
 ggMGmgmGMggMG
 gMGMggNgmG
 GmnGnGmgMgmG
@@ -2226,7 +2195,6 @@ gNgNggMg
 ggNGmGG
 GnGmGnGGGG
 ggMGmgMGmnGMgmG
-GMgMGmnGMgMG,mnGMgMG
 gggnGmnGmnG
 gNgMgmGnGmg
 ggmGnGnGGG
@@ -2528,7 +2496,6 @@ GmGNggNGmG
 gNg
 gMNgMNgMg
 ggNGmnG
-gmGMgmG,MgmG
 GmGGngMg
 gmGGmgmNgmGG
 GmgMgNgMg
@@ -3056,7 +3023,6 @@ GMggMgMggMGmg
 GGmnGGmGG
 gMgNggmG
 gNgggNgg
-GmgmGmg,mGmg
 gMGMgNggmGmg
 ggMNgmGG
 gMGmGGGmGMg
@@ -3369,7 +3335,6 @@ gMGGnGG
 GNggNGmGmG
 GGmmnGGmnGMg
 ggMNgMNgmGGmg
-GMgmGMgmGMg,mGMg
 gnGGmnGGnG
 GGMnGGG
 gNgNgMGG
@@ -3402,7 +3367,6 @@ gggNgggmGmG
 ggMNgmGGmgMNg
 GmnGmgMg
 gmGmgNgmGmgNg
-gmGmgmmNgmGmg,mmNgmGmg
 GMgmGmGmg
 GGnGmggmGmnG
 ggmGmnGGG
@@ -3438,7 +3402,6 @@ GmnGGnGGmnGmG
 GGmGmgMNgmGG
 ggNgMGGG
 GnGmgMgmGmnG
-GmgNgmGmgNg,mGmgNg
 GMGMnGGnG
 GGmgNgNgNgmG
 GmnGMgmGGGG
@@ -3449,7 +3412,6 @@ gnGGngMgMg
 gMNgmGMg
 gmGGmgmGGnG
 GmnGGmGGmnGnG
-gMGGMgmNgMGGMg,mNgMGGMg
 GMgMNgMgmGmnG
 GnGGMgMGGMg
 GGnGnGGmGG
@@ -3459,7 +3421,6 @@ gNgNgMNggMg
 ggmggmNgMGG
 gNgMNgg
 GGmggMGMg
-GmggmGnGmggmG,nGmggmG
 gmggmggmGMnG
 gmNgMGmgMG
 GGmnGMgMgMgMG
@@ -3487,7 +3448,6 @@ GGGnGGMgMGGn
 GmnGmGmGmnGNg
 GmGnGmgmG
 ggMGMnGMnG
-GmggmGmmnGmggmG,mmnGmggmG
 gMgMgMgMgMg
 gMgggMgmGMg
 GmGmnGGnGnG
@@ -3501,7 +3461,6 @@ GGNGGG
 gnGnGnGnG
 GmnGmgg
 GGmnGGmGmGGmnG
-GmgggmGmggg,mGmggg
 GMgMGMgNggNg
 GMgMg
 GMnGGnGGnG
@@ -3903,7 +3862,6 @@ GmGMgmGMnGmgMG
 gNgMGmgggmG
 GmgmGmnGmG
 gNgmgNggMG
-GMgmgMGmnGMgmgMG,mnGMgmgMG
 gMgMNgMGG
 gNgNgMggnGnG
 gmNgMGmgMGmg
@@ -3930,7 +3888,6 @@ gggMgmGnG
 ggmNgmGmgmGmg
 GMgmNgMGG
 GMgNgNgMGmg
-gmGmGmgmGmG,mgmGmG
 GNggMNgnGGmnG
 gMgMgMGnG
 ggmNgmGmgmG
@@ -4311,7 +4268,6 @@ gNgNgNgNGmGmG
 gMNgmGMggMGmnG
 GMgmgMGnGnGMg
 GGmgMGnGnGnGMgm
-gmGGmgMNgmGGmg,MNgmGGmg
 gMGmgMGnGnG
 gMngMgMnGG
 gMNgmGMgmGMg
@@ -4399,7 +4355,6 @@ ggNgNggMgMg
 GmgggmNgMGGG
 gMGGGGMgmGMnG
 gmggmGMnGGG
-GnGmgmGnGmg,mGnGmg
 GmgMNg
 GmGnGmgmGnGmg
 gmGmnGmggmG
@@ -4413,7 +4368,6 @@ GMgMGmGMgNgMG
 GnGmGmGnGmG
 gMgNgMgNgMG
 gmGmgmNgmG
-GmnGmgmGmnGmg,mGmnGmg
 gngMgmnGG
 GMgmGMggMgMggMG
 gMGGmnGmgmGmg
@@ -4456,7 +4410,6 @@ GmgmNggNgMgMG
 GMgMNgMgMNgMg
 gMNggMgnGnGnG
 gnGGmnGmGmGmG
-GMggMGmmnGMggMG,mmnGMggMG
 GGngMNgnGGnG
 ggNGmnGmGmg
 GMgMNgMGGGnG
@@ -4645,7 +4598,6 @@ GMGMnGGnGG
 GGmGGmnGnGnGnGmn
 ggMggnGnGnG
 GGMgMNgMGGGMg
-GMgNgMGMgNg,MGMgNg
 GmgNggMGnGG
 GMgmgMGmnGMgg
 ggMGmnGmnG
@@ -4715,7 +4667,6 @@ gmGnGnGmGGG
 GmGnGmGmgg
 GnGMggMNggMGMg
 GmgMGGMgNgMg
-gNgggNgNggg,NgNggg
 GGmnGmGmnGGn
 gMNgMgMgMGG
 gMNgMNgmGMgmGMg
@@ -4827,7 +4778,6 @@ gggMgmGnGmg
 GmGmGmGmnGGmnG
 GmnGmnGmnGmnGmnG
 GnGGMgMGGMnG
-gmGGmgmNgmGGmg,mNgmGGmg
 GGMgMGGG
 GmnGmGmGmgNg
 GMnGnGnGnGnG
