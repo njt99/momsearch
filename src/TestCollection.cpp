@@ -43,27 +43,27 @@ int TestCollection::size()
 	return 7 + indexString.size();
 }
 
-SL2C TestCollection::construct_word(string word, Params<XComplex>& params, unordered_map<string,SL2C>& words_cache)
+SL2C TestCollection::construct_word(string word, Params<XComplex>& params)
 {
     SL2C w(1,0,0,1);
 	SL2C G(constructG(params));
 	SL2C g(inverse(G));
 
     char h;	
-	int x = 0;
-	int y = 0;
+	int N = 0;
+	int M = 0;
     string::reverse_iterator rit;
     for (rit = word.rbegin(); rit != word.rend(); ++rit) {
         h = *rit;
 		switch(h) {
-			case 'm': --x; break;
-			case 'M': ++x; break;
-			case 'n': --y; break;
-			case 'N': ++y; break;
+			case 'm': --M; break;
+			case 'M': ++M; break;
+			case 'n': --N; break;
+			case 'N': ++M; break;
 			default: {
-				if (x != 0 || y != 0) {
-					w = constructT(params, x, y) * w;
-					x = y = 0;
+				if (M != 0 || N != 0) {
+					w = constructT(params, M, N) * w;
+					M = N = 0;
 				}
 				if (h == 'g')
 					w = g * w;
@@ -73,16 +73,16 @@ SL2C TestCollection::construct_word(string word, Params<XComplex>& params, unord
 		}
 	}
     // Any leading M,N's
-    if (x != 0 || y != 0) w = constructT(params, x, y) * w;
+    if (M != 0 || N != 0) w = constructT(params, M, N) * w;
     // Rounding errors are irrelevant here, only used to guide search.
 	return w;
 }
 
-SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params, unordered_map<string,SL2ACJ>& words_cache)
+SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params, 
+               unordered_map<int,ACJ>& para_cache, unordered_map<string,SL2ACJ>& words_cache)
 {
     pair<unordered_map<string,SL2ACJ>::iterator,bool> lookup;
-    pair<unordered_map<string,SL2ACJ>::iterator,bool> lookup_prev;
-    pair<unordered_map<string,SL2ACJ>::iterator,bool> lookup_para;
+    pair<unordered_map<int,ACJ>::iterator,bool> lookup_para;
     if (words_cache.size() == 0) {
         ACJ one(1), zero(0);
         words_cache.emplace("", SL2ACJ(one,zero,zero,one));
@@ -104,57 +104,54 @@ SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params, unordere
 	SL2ACJ* g = &words_cache["g"];
 
     char h;
-	int x = 0;
-	int y = 0;
+	int M = 0;
+	int N = 0;
     int g_len = 0;
-    SL2ACJ temp;
+    ACJ T;
     SL2ACJ w_store;
     string::iterator it;
-    string::iterator mn_it = word.end();
     for (it = word.end(); it != word.begin(); --it) {
         h = *(it-1);
 		switch(h) {
-			case 'm': --x; break;
-			case 'M': ++x; break;
-			case 'n': --y; break;
-			case 'N': ++y; break;
+			case 'm': --M; break;
+			case 'M': ++M; break;
+			case 'n': --N; break;
+			case 'N': ++N; break;
 			default: {
-                if (g_len < 9) {
+                if (g_len < 4) {
                     lookup = words_cache.emplace(string(it-1, word.end()), SL2ACJ());
                     if (lookup.second) { // tail of word was not found
-                        if (x != 0 || y != 0) { // need to deal with parabolic
-                            lookup_prev = words_cache.emplace(string(it, word.end()), SL2ACJ());
-                            if (lookup_prev.second) { // parabolic + prev_tail was no found
-                                lookup_para = words_cache.emplace(string(it, mn_it), SL2ACJ());
-                                if (lookup_para.second) {
-                                    temp = constructT(params, x, y);
-                                    swap(lookup_para.first->second, temp);
-                                }
-                                temp = lookup_para.first->second * (*w);
-                                swap(lookup_prev.first->second, temp);
+                        if (M != 0 || N != 0) { // need to deal with parabolic
+                            if (abs(M) > 1024 || abs(N) > 1024) { fprintf(stderr, "Error constructing word: huge translation\n"); }
+                            lookup_para = para_cache.emplace(4096*M+N, ACJ());
+                            if (lookup_para.second) {
+                                T = params.lattice*double(N) + double(M);
+                                swap(lookup_para.first->second, T);
                             }
-                            w = &(lookup_prev.first->second);
+                            w_store = SL2ACJ(w->a + lookup_para.first->second * w->c, w->b + lookup_para.first->second * w->d, w->c, w->d); // Cheaper multiplying
+                            w = &w_store;
                         }
                         if (h == 'g') {
-                            temp = (*g) * (*w);
+                            w_store = (*g) * (*w);
                         }
                         else if (h == 'G') {
-                            temp = (*G) * (*w);
+                            w_store = (*G) * (*w);
                         }
                         else {
                             fprintf(stderr, "Error constructing word: %s. Unknown generator!\n", word.c_str());
                         }
-                        swap(lookup.first->second, temp);
+                        swap(lookup.first->second, w_store);
                     }
                     w = &(lookup.first->second); 
                 } else {
-                    if (x != 0 || y != 0) { // need to deal with parabolic
-                        lookup_para = words_cache.emplace(string(it, mn_it), SL2ACJ());
+                    if (M != 0 || N != 0) { // need to deal with parabolic
+                        if (abs(M) > 1024 || abs(N) > 1024) { fprintf(stderr, "Error constructing word: huge translation\n"); }
+                        lookup_para = para_cache.emplace(4096*M+N, ACJ());
                         if (lookup_para.second) {
-                            temp = constructT(params, x, y);
-                            swap(lookup_para.first->second, temp);
+                            T = params.lattice*double(N) + double(M);
+                            swap(lookup_para.first->second, T);
                         }
-                        w_store = lookup_para.first->second * (*w);
+                        w_store = SL2ACJ(w->a + lookup_para.first->second * w->c, w->b + lookup_para.first->second * w->d, w->c, w->d); // Cheaper multiplying
                         w = &w_store;
                     }
                     if (h == 'g') {
@@ -168,22 +165,22 @@ SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params, unordere
                     }
                     w = &w_store;
                 }
-                mn_it = it-1;
-                x = 0;
-                y = 0;
+                M = 0;
+                N = 0;
                 ++g_len;
             }
 		}
 	}
     // Any leading M,N's
-    if (x != 0 || y != 0) { // need to deal with parabolic
-        lookup_para = words_cache.emplace(string(word.begin(), mn_it), SL2ACJ());
+    if (M != 0 || N != 0) { // need to deal with parabolic
+        if (abs(M) > 1024 || abs(N) > 1024) { fprintf(stderr, "Error constructing word: huge translation\n"); }
+        lookup_para = para_cache.emplace(4096*M+N, ACJ());
         if (lookup_para.second) {
-            temp = constructT(params, x, y);
-            swap(lookup_para.first->second, temp);
+            T = params.lattice*double(N) + double(M);
+            swap(lookup_para.first->second, T);
         }
-        w_store = lookup_para.first->second * (*w);
-        if (g_len < 9) {
+        w_store = SL2ACJ(w->a + lookup_para.first->second * w->c, w->b + lookup_para.first->second * w->d, w->c, w->d); // Cheaper multiplying
+        if (g_len < 5) {
             lookup = words_cache.emplace(word, w_store);
             if (!lookup.second) {
                 fprintf(stderr, "Error constructing word: %s. It already exists but shouldn't!\n", word.c_str());
@@ -329,9 +326,9 @@ SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params, unordere
 //    }
 //}
 
-box_state TestCollection::evaluate_approx(string word, Params<XComplex>& params, unordered_map<string,SL2C>& words_cache)
+box_state TestCollection::evaluate_approx(string word, Params<XComplex>& params)
 {
-    SL2C w = construct_word(word, params, words_cache);
+    SL2C w = construct_word(word, params);
     if (maybe_variety(w) ) return variety_center;
     if (!maybe_large_horoball(w,params)) return open;
     return large_horoball_center;
@@ -368,11 +365,14 @@ bool TestCollection::only_bad_parabolics(SL2ACJ& w, Params<ACJ>& params)
     ACJ L = params.lattice;
 
     ACJ d1 = T / (L + one);
+    if (absUB(d1) >= 1) { return false; }
     ACJ d2 = d1 - one; // uses fewer operations
+    if (absUB(d2) >= 1) { return false; }
     ACJ d3 = (T - one) / (L - one);
+    if (absUB(d3) >= 1) { return false; }
     ACJ d4 = d3 - one; // better error estimate
-
-    return (absUB(d1) < 1 && absUB(d2) < 1 && absUB(d3) < 1 && absUB(d4) < 1);
+    if (absUB(d4) >= 1) { return false; }
+    return true;
 }
 
 string shifted_word(const string& word, int M_pow, int N_pow) {
@@ -397,14 +397,15 @@ string shifted_word(const string& word, int M_pow, int N_pow) {
     return shifted;
 }
 
-box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string& aux_word, vector<string>& new_qrs, unordered_map<string,SL2ACJ>& words_cache)
+box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string& aux_word, vector<string>& new_qrs,
+                                       unordered_map<int,ACJ>& para_cache, unordered_map<string,SL2ACJ>& words_cache)
 {
     box_state state = open;
     bool found_qrs = false;
     aux_word.assign(word);
     int g_len = g_length(word);
     double one = 1; // Exact
-	SL2ACJ w = construct_word(word, params, words_cache);
+	SL2ACJ w = construct_word(word, params, para_cache, words_cache);
 
     if (g_len <= g_max_g_len && inside_var_nbd(w)) return variety_nbd;
 
@@ -422,7 +423,7 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
 			if (isImpossible) return killed_parabolics_impossible;
             else if (mandatory.size() > 0) {
                 for (vector<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
-                    SL2ACJ w_sub = construct_word(*it, params, words_cache);
+                    SL2ACJ w_sub = construct_word(*it, params, para_cache, words_cache);
                     if (not_para_fix_inf(w_sub)) {
                         aux_word.assign(*it);
                         return killed_elliptic;
@@ -431,85 +432,96 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
             }
    
             // Look for lattice points. We guess at the center
+            // No reason to look for a unique lattice point if w.b has large size
             ACJ L = params.lattice;
-            XComplex cL = L.f;
-            XComplex cT = (absUB((w.d.f - 1.).z) < 2 || absUB((w.a.f - 1.).z) < 2) ? w.b.f : -w.b.f;
-            // We expect T to be near the lattice point M_pow + N_pow*L
-            double N_pow = floor(cT.im / cL.im);
-            double M_pow = floor((cT - (cL * N_pow).z).z.re);
-            // We look over 16 nearby lattice points
-            int s[4] = {0,-1,1,2};
-            SL2ACJ w_k;
-            double N_k = N_pow;
-            double M_k = M_pow; 
-            for (int i = 0; i < 4; ++i) {
-                N_k = N_pow + s[i];
-                for (int j = 0; j < 4; ++j) {
-                    state = open;
-                    M_k = M_pow + s[j];
-                    if (i == 0 && j == 0) {
-                        w_k = w;
-                    } else {
-                        ACJ L_k = L * N_k + M_k;
-                        w_k = SL2ACJ(w.a - L_k * w.c, w.b - L_k * w.d, w.c, w.d); // Cheaper than constucting new word
-                        // What if we now have a variety word?
-                        if (g_len <= g_max_g_len && inside_var_nbd(w_k)) { // TODO: Test with constucted word!
-                            state = variety_nbd;
-                            break;
-                        }
-                        if (not_para_fix_inf(w_k)) {
-                            state = killed_no_parabolics;
-                            break;
-                        }
-                        if (absUB(w_k.b) < 1) {
-                            isImpossible = impossible->isImpossible(word, M_k, N_k, mandatory);
-                            if (isImpossible) {
-                                state = killed_identity_impossible;
+            if (absLB(L) > 2*w.b.size) {
+                XComplex cL = L.f;
+                XComplex cT = (absUB((w.d.f - one).z) < 2 || absUB((w.a.f - one).z) < 2) ? w.b.f : -w.b.f;
+                // XComplex cT = (w.b.f/w.d.f).z;
+                // We expect T to be near the lattice point M_pow + N_pow*L
+                int N_pow = (int) floor(cT.im / cL.im);
+                int M_pow = (int) floor((cT - (cL * N_pow).z).z.re);
+                // We look over 16 nearby lattice points
+                int s[4] = {0,-1,1,2};
+                SL2ACJ w_k;
+                ACJ T;
+                pair<unordered_map<int,ACJ>::iterator,bool> lookup_para;
+                int N, M;
+                for (int i = 0; i < 4; ++i) {
+                    N = N_pow + s[i];
+                    for (int j = 0; j < 4; ++j) {
+                        state = open;
+                        M = M_pow + s[j];
+                        if (i == 0 && j == 0) {
+                            w_k = w;
+                        } else {
+                            if (abs(M) > 1024 || abs(N) > 1024) { fprintf(stderr, "Error constructing word: huge translation\n"); }
+                            lookup_para = para_cache.emplace(4096*M+N, ACJ());
+                            if (lookup_para.second) {
+                                T = params.lattice*double(N) + double(M);
+                                swap(lookup_para.first->second, T);
+                            }
+                            // Shift to "0"
+                            w_k = SL2ACJ(w.a - lookup_para.first->second * w.c, w.b - lookup_para.first->second * w.d, w.c, w.d); // Cheaper multiplying
+                            // What if we now have a variety word?
+                            if (g_len <= g_max_g_len && inside_var_nbd(w_k)) { // TODO: Test with constucted word!
+                                state = variety_nbd;
                                 break;
                             }
-                            // Mandaotry includes list of things that must be parabolic. If they are not parabolic
-                            // anywhere in the box, we can kill the box
-                            for (vector<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
-                                SL2ACJ w_sub = construct_word(*it, params, words_cache);
-                                if (not_para_fix_inf(w_sub)) {
-                                    aux_word.assign(*it);
-                                    return killed_elliptic;
+                            if (not_para_fix_inf(w_k)) {
+                                state = killed_no_parabolics;
+                                break;
+                            }
+                            if (absUB(w_k.b) < 1) {
+                                isImpossible = impossible->isImpossible(word, M, N, mandatory);
+                                if (isImpossible) {
+                                    state = killed_identity_impossible;
+                                    break;
+                                }
+                                // Mandaotry includes list of things that must be parabolic. If they are not parabolic
+                                // anywhere in the box, we can kill the box
+                                for (vector<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
+                                    SL2ACJ w_sub = construct_word(*it, params, para_cache, words_cache);
+                                    if (not_para_fix_inf(w_sub)) {
+                                        aux_word.assign(*it);
+                                        return killed_elliptic;
+                                    }
                                 }
                             }
                         }
-                    }
-                    if (absUB(w_k.b) < 1 && absLB(w_k.b) > 0) {
-//                        string word_k = shifted_word(word, - int(M_k), - int(N_k));
-//                        fprintf(stderr, "Killed by Failed qr %s\n", word_k.c_str());
-//                        SL2ACJ new_w_k = construct_word(word_k, params);
-//                        SL2ACJ gah_k = constructT(params, - int(M_k), - int(N_k)) * w;
-//                        fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
-//                                        absLB(w_k.b), absLB(w_k.c), absLB(w_k.a - 1.), absLB(w_k.d - 1.), absLB(w_k.a + 1.), absLB(w_k.d + 1.));
-//                        fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
-//                                        absLB(new_w_k.b), absLB(new_w_k.c), absLB(new_w_k.a - 1.), absLB(new_w_k.d - 1.), absLB(new_w_k.a + 1.), absLB(new_w_k.d + 1.));
-//                        fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
-//                                        absLB(gah_k.b), absLB(gah_k.c), absLB(gah_k.a - 1.), absLB(gah_k.d - 1.), absLB(gah_k.a + 1.), absLB(gah_k.d + 1.));
-                        state = killed_failed_qr;
-                        break;
-                    }
-                    if (only_bad_parabolics(w_k, params)) { // TODO: Test with constucted word!
-                        // w_k is a bad parabolic
-                        state = killed_bad_parabolic;
-                        break;
-                    }
-                    if (absUB(w_k.b) < 1) {
-                        // If nothing has worked, at least add w as a quasi relator
-                        state = open_with_qr;
-                        found_qrs = true;
-                        new_qrs.push_back(shifted_word(word, - int(M_k), - int(N_k)));
-//                        string word_k = shifted_word(word, - int(M_k), - int(N_k));
-//                        SL2ACJ new_w_k = construct_word(word_k, params);
-//                        fprintf(stderr,"Horo Ratio for new QR is %f\n", absUB(w_k.c / params.loxodromic_sqrt));
-//                        fprintf(stderr,"Reconstucted horo ratio for QR is %f\n", absUB(new_w_k.c / params.loxodromic_sqrt));
+                        if (absUB(w_k.b) < 1 && absLB(w_k.b) > 0) {
+    //                        string word_k = shifted_word(word, - M, - N);
+    //                        fprintf(stderr, "Killed by Failed qr %s\n", word_k.c_str());
+    //                        SL2ACJ new_w_k = construct_word(word_k, params);
+    //                        SL2ACJ gah_k = constructT(params, - M, - N) * w;
+    //                        fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
+    //                                        absLB(w_k.b), absLB(w_k.c), absLB(w_k.a - 1.), absLB(w_k.d - 1.), absLB(w_k.a + 1.), absLB(w_k.d + 1.));
+    //                        fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
+    //                                        absLB(new_w_k.b), absLB(new_w_k.c), absLB(new_w_k.a - 1.), absLB(new_w_k.d - 1.), absLB(new_w_k.a + 1.), absLB(new_w_k.d + 1.));
+    //                        fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
+    //                                        absLB(gah_k.b), absLB(gah_k.c), absLB(gah_k.a - 1.), absLB(gah_k.d - 1.), absLB(gah_k.a + 1.), absLB(gah_k.d + 1.));
+                            state = killed_failed_qr;
+                            break;
+                        }
+                        if (only_bad_parabolics(w_k, params)) { // TODO: Test with constucted word!
+                            // w_k is a bad parabolic
+                            state = killed_bad_parabolic;
+                            break;
+                        }
+                        if (absUB(w_k.b) < 1) {
+                            // If nothing has worked, at least add w as a quasi relator
+                            state = open_with_qr;
+                            found_qrs = true;
+                            new_qrs.push_back(shifted_word(word, - M, - N));
+    //                        string word_k = shifted_word(word, - M, - N);
+    //                        SL2ACJ new_w_k = construct_word(word_k, params);
+    //                        fprintf(stderr,"Horo Ratio for new QR is %f\n", absUB(w_k.c / params.loxodromic_sqrt));
+    //                        fprintf(stderr,"Reconstucted horo ratio for QR is %f\n", absUB(new_w_k.c / params.loxodromic_sqrt));
+                        }
                     }
                 }
                 if (state != open && state != open_with_qr) {
-                    aux_word.assign(shifted_word(word, - int(M_k), - int(N_k)));
+                    aux_word.assign(shifted_word(word, - M, - N));
                     return state;
                 }
             }
@@ -525,7 +537,7 @@ box_state check_bounds_center(bool result) {
 }
 
 double g_latticeArea;
-box_state TestCollection::evaluateCenter(int index, Box& box, unordered_map<string,SL2C>& words_cache)
+box_state TestCollection::evaluateCenter(int index, Box& box)
 {
 	Params<XComplex> params = box.center();
 	switch(index) {
@@ -546,7 +558,7 @@ box_state TestCollection::evaluateCenter(int index, Box& box, unordered_map<stri
 			return check_bounds_center(g_latticeArea > g_maximumArea);
 		}
 		default:
-			return evaluate_approx(indexString[index-7], params, words_cache);
+			return evaluate_approx(indexString[index-7], params);
 	}
 }
 
@@ -555,7 +567,8 @@ box_state check_bounds(bool result) {
     else return open;
 }
 
-box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vector<string>& new_qrs, unordered_map<string,SL2ACJ>& words_cache)
+box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vector<string>& new_qrs,
+                                      unordered_map<int,ACJ>& para_cache, unordered_map<string,SL2ACJ>& words_cache)
 {
 	Params<XComplex> nearer = box.nearer();
 	Params<XComplex> further = box.further();
@@ -580,7 +593,7 @@ box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vec
 		}
 		default: {
 			Params<ACJ> cover(box.cover());
-			box_state result = evaluate_ACJ(indexString[index-7], cover, aux_word, new_qrs, words_cache);
+			box_state result = evaluate_ACJ(indexString[index-7], cover, aux_word, new_qrs, para_cache, words_cache);
 //			if (result) {
 //                // TODO: Understand this tail enumeration that adds words based on given word
 //				enumerate(indexString[index-7].c_str());
