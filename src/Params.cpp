@@ -23,9 +23,9 @@ const SL2C constructG(const Params<XComplex>& params)
 	return SL2C((I*(params.parabolic*sl).z).z, (I/sl).z, (I*sl).z, XComplex(0.));
 }
 
-const SL2C constructT(const Params<XComplex>& params, int x, int y)
+const SL2C constructT(const Params<XComplex>& params, int M, int N)
 {
-	return SL2C(XComplex(1.), (params.lattice * double(y) + double(x)).z, XComplex(0.,0.), XComplex(1.,0.));
+	return SL2C(XComplex(1.), (params.lattice * double(N) + double(M)).z, XComplex(0.,0.), XComplex(1.,0.));
 }
 
 const SL2ACJ constructG(const Params<ACJ>& params)
@@ -35,9 +35,9 @@ const SL2ACJ constructG(const Params<ACJ>& params)
 	return SL2ACJ(I*params.parabolic*sl, I/sl, I*sl, ACJ(0.));
 }
 
-const SL2ACJ constructT(const Params<ACJ>& params, int x, int y)
+const SL2ACJ constructT(const Params<ACJ>& params, int M, int N)
 {
-	return SL2ACJ(ACJ(XComplex(1.)), params.lattice * double(y) + double(x), ACJ(XComplex(0.)), ACJ(XComplex(1.)));
+	return SL2ACJ(ACJ(XComplex(1.)), params.lattice * double(N) + double(M), ACJ(XComplex(0.)), ACJ(XComplex(1.)));
 }
 
 int g_power(std::string w) {
