@@ -1,14 +1,13 @@
 #!/bin/bash
 #SBATCH -N 1 # node count
 #SBATCH --ntasks-per-node=16
-#SBATCH -t 72:00:00
-#SBATCH --mem=2GB
-##SBATCH --qos=qos-besteffort
+#SBATCH -t 95:00:00
+#SBATCH --mem=32GB
 # sends mail when process begins, and 
 # when it ends. Make sure you define your email 
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
-#SBATCH --mail-user=andrew.yarmola@uni.lu
+#SBATCH --mail-user=yarmola@princeton.edu
 
 base_dir="/home/ayarmola/momsearch"
 bin_dir="$base_dir/bin"

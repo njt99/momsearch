@@ -48,10 +48,11 @@ def add_words(words, fp):
                     word = re.findall('\((.*?),.*\)', word)[-1]
                 elif '(' in word :
                     word = re.findall('\((.*?)\)', word)[-1]
-                words.add(word)
+                if word[0] == 'G' or word[0] == 'g' :
+                    words.add(word)
     except:
         print('Error loading words file {0}\n'.format(fp))
-#       sys.exit(1)
+        sys.exit(1)
 
 def run_refine(command, destDir) :
     pid = os.getpid()
@@ -97,7 +98,7 @@ if __name__ == '__main__' :
     maxSize = '3000000'
     maxDepth = '72'
     truncateDepth = '6'
-    inventDepth = '36'
+    inventDepth = '12'
     ballSearchDepth = '6'
     maxArea = '5.24'
     fillHoles = ' --fillHoles'
@@ -156,7 +157,7 @@ if __name__ == '__main__' :
         else : 
             bestHole = '1'*200
         for hole in openHoles:
-            if len(hole) < len(bestHole):
+            if len(hole) > len(bestHole) or len(bestHole) == 200 : # the 200 is from two lines above, a little hacky
                 bestHole = hole    
 
         if len(bestHole) > depth_limit:
@@ -192,12 +193,12 @@ if __name__ == '__main__' :
                     newWords = boxWords - seenWords
                     seenWords |= newWords
 
-#                    if len(newWords) > 0: 
-#                        f = open(wordsFile, 'a')
-#                        for word in newWords:
-#                            print 'Adding word {0}'.format(word)
-#                            f.write(word + '\n')
-#                        f.close()
+                    if len(newWords) > 0: 
+                        f = open(wordsFile, 'a')
+                        for word in newWords:
+                            print 'Adding word {0}'.format(word)
+                            f.write(word + '\n')
+                        f.close()
 
                     childCount -= 1
                     del activePidToHole[donePid]

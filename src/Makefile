@@ -3,7 +3,7 @@ TREECATOBJS= treecat.o
 CPLUSPLUS= g++
 CC= g++
 
-COPTS=-O4
+COPTS=-O3 -std=c++11
 
 .cpp.o:
 	$(CPLUSPLUS) $(COPTS) $(CCFLAGS) -c ${@:o=cpp}
