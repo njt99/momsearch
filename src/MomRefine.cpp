@@ -55,7 +55,7 @@ struct Options {
 
 Options g_options;
 TestCollection g_tests;
-typedef vector< vector< bool > > TestHistory;
+typedef vector< vector< box_state > > TestHistory;
 set<string> g_momVarieties;
 set<string> g_parameterizedVarieties;
 static int g_boxesVisited = 0;
@@ -230,9 +230,9 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 
 	if (g_options.improveTree || !t.lChild) {
 		for (int i = 0; i < g_tests.size(); ++i) {
-			vector<bool>& th = history[i];
+			vector<box_state>& th = history[i];
 			while (th.size() <= depth && (th.size() < depth-6 || th.empty() || th.back() == open)) {
-				bool result = g_tests.evaluateCenter(i, place[th.size()]);
+				box_state result = g_tests.evaluateCenter(i, place[th.size()]);
 				th.push_back(result);
 			}
 			if (th.back() != open) {
