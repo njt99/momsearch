@@ -268,9 +268,10 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 		}
 	}
 
-	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild)) {
+	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth > 71) {
 		while (depth - searchedDepth > g_options.ballSearchDepth) {
 			Box& searchPlace = place[++searchedDepth];
+            // fprintf(stderr, "Search Depth %d and search place %s for box %s\n", searchedDepth, searchPlace.name.c_str(), box.name.c_str());
 			vector<string> searchWords = findWords( searchPlace.center(), vector<string>(), -200, g_options.maxWordLength, box.qr.wordClasses());
             string new_word = searchWords.back();
 
@@ -333,7 +334,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 
 	isComplete = refineRecursive(box.child(0), *t.lChild, depth+1, history, place, newDepth, searchedDepth) && isComplete;
 	if (place.size() > depth+1)
-		place.resize(depth+1);
+		place.resize(depth+1); // truncates place for right child
 	for (int i = 0; i < g_tests.size(); ++i) {
 		if (history[i].size() > depth)
 			history[i].resize(depth);

@@ -407,7 +407,13 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
     double one = 1; // Exact
 	SL2ACJ w = construct_word(word, params, para_cache, words_cache);
 
-    if (g_len <= g_max_g_len && inside_var_nbd(w)) return variety_nbd;
+    if (inside_var_nbd(w)) { 
+        if (g_len <= g_max_g_len) {
+            return variety_nbd;
+        } else {
+            fprintf(stderr, "Box in large length word VAR nbd, word : %s box : %s\n", word.c_str(), params.box_name.c_str()); 
+        }
+    }
 
 	if (large_horoball(w,params)) {
 
@@ -464,9 +470,13 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
                             // Shift to "0"
                             w_k = SL2ACJ(w.a - lookup_para.first->second * w.c, w.b - lookup_para.first->second * w.d, w.c, w.d); // Cheaper multiplying
                             // What if we now have a variety word?
-                            if (g_len <= g_max_g_len && inside_var_nbd(w_k)) { // TODO: Test with constucted word!
-                                state = variety_nbd;
-                                break;
+                            if (inside_var_nbd(w_k)) { 
+                                if (g_len <= g_max_g_len) {
+                                    state = variety_nbd;
+                                    break;
+                                } else {
+                                    fprintf(stderr, "Box in large length word VAR nbd, word : %s N: %d M: %d box : %s\n", word.c_str(), N, M, params.box_name.c_str()); 
+                                }
                             }
                             if (not_para_fix_inf(w_k)) {
                                 state = killed_no_parabolics;
@@ -573,6 +583,9 @@ box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vec
 	Params<XComplex> nearer = box.nearer();
 	Params<XComplex> further = box.further();
 	Params<XComplex> greater = box.greater();
+//    if (index < 7) {
+//        fprintf(stderr, "Evaluate for bounds of box %s\n", box.name.c_str());
+//    }
 	switch(index) {
 		case 0: return check_bounds(absUB(further.loxodromic_sqrt) < 1.0);
 		case 1: return check_bounds(greater.loxodromic_sqrt.im < 0.0
@@ -593,6 +606,7 @@ box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vec
 		}
 		default: {
 			Params<ACJ> cover(box.cover());
+            // fprintf(stderr, "Evaluate for word %s and box %s\n", indexString[index-7].c_str(), box.name.c_str());
 			box_state result = evaluate_ACJ(indexString[index-7], cover, aux_word, new_qrs, para_cache, words_cache);
 //			if (result) {
 //                // TODO: Understand this tail enumeration that adds words based on given word
