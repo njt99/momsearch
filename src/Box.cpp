@@ -31,10 +31,12 @@ Box Box::child(int dir) const
 	++child.pos;
 	if (child.pos == 6) { child.pos = 0; }
 
-	child.name = name;
+//	child.name = name;
 	child.name.append(1, '0'+dir);
 
-	child.qr = qr;
+//  fprintf(stderr, "Test name %s\n", child.name.c_str());
+//  fprintf(stderr, "Test qr %s\n", child.qr.desc().c_str());
+//	child.qr = qr;
 
     child.compute_center_and_size();
 	child.compute_cover();
@@ -58,6 +60,7 @@ void Box::compute_center_and_size()
     _center.lattice = XComplex(box_center[3], box_center[0]);
     _center.loxodromic_sqrt = XComplex(box_center[4], box_center[1]);
     _center.parabolic = XComplex(box_center[5], box_center[2]);
+    _center.box_name = name;
 }
 
 void Box::compute_cover()
@@ -80,6 +83,7 @@ void Box::compute_cover()
 		0.,
 		XComplex(box_size[5], box_size[2])
 	);
+    _cover.box_name = name;
 }
 
 void Box::compute_nearer()
@@ -120,6 +124,7 @@ void Box::compute_nearer()
 	_nearer.lattice = XComplex(m[3], m[0]);
 	_nearer.loxodromic_sqrt = XComplex(m[4], m[1]);
 	_nearer.parabolic = XComplex(m[5], m[2]);
+    _nearer.box_name = name;
 }
 
 void Box::compute_further()
@@ -153,6 +158,7 @@ void Box::compute_further()
 	_further.lattice = XComplex(m[3], m[0]);
 	_further.loxodromic_sqrt = XComplex(m[4], m[1]);
 	_further.parabolic = XComplex(m[5], m[2]);
+    _further.box_name = name;
 }
 
 void Box::compute_greater()
@@ -189,6 +195,7 @@ void Box::compute_greater()
 	_greater.lattice = XComplex(m[3], m[0]);
 	_greater.loxodromic_sqrt = XComplex(m[4], m[1]);
 	_greater.parabolic = XComplex(m[5], m[2]);
+    _greater.box_name = name;
 }
 
 //Params<XComplex> Box::offset(const double* offset) const

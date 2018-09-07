@@ -17,6 +17,7 @@ template<class N> struct Params {
 	N lattice;
 	N loxodromic_sqrt;
 	N parabolic;
+	std::string box_name;
 };
 
 const SL2C constructG(const Params<XComplex>& params);
