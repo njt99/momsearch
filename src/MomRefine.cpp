@@ -33,7 +33,7 @@ struct Options {
 		maxDepth(18), // Maximum depth for a file
         truncateDepth(6), 
         inventDepth(12),
-        maxSize(1000000),
+        maxSize(3000000),
 		improveTree(false),
 		ballSearchDepth(-1),
 		fillHoles(false),
@@ -514,7 +514,6 @@ int main(int argc, char** argv)
 		case 'a': g_maximumArea = atof(optarg); break;
 		}
 	}
-
 //    fprintf(stderr, "Max depth %d\n", g_options.maxDepth);
 	
  //   usleep(30000000);
