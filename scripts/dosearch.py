@@ -52,7 +52,7 @@ def add_words(words, fp):
                     words.add(word)
     except:
         print('Error loading words file {0}\n'.format(fp))
-        sys.exit(1)
+        # sys.exit(1)
 
 def run_refine(command, destDir) :
     pid = os.getpid()
@@ -73,7 +73,7 @@ def run_refine(command, destDir) :
 if __name__ == '__main__' :
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:],'w:p:c:d:h:',['words=','powers=','child_limit=','depth_limit=','holes='])
+        opts, args = getopt.getopt(sys.argv[1:],'w:p:c:d:h:r:i:t:s:',['words=','powers=','child_limit=','depth_limit=','holes=','refine=','invent_depth=','truncate_depth','search_depth='])
     except getopt.GetoptError as err:
         print str(err)
         print('Usage: dosearch [-w,--words <wordsfile>] [-p,--powers <powersFile>] [-c,--child_limit <limit>] [-d,--depth_limit <limit>] [-h,-holes <holesfile>] srcDir destDir')
@@ -96,9 +96,9 @@ if __name__ == '__main__' :
     depth_limit = 67
 
     maxSize = '3000000'
-    maxDepth = '72'
-    truncateDepth = '6'
-    inventDepth = '12'
+    maxDepth = '114'
+    truncateDepth = '12'
+    inventDepth = '18'
     ballSearchDepth = '6'
     maxArea = '5.24'
     fillHoles = ' --fillHoles'
@@ -121,6 +121,14 @@ if __name__ == '__main__' :
             depth_limit = int(val)
         if opt in ('-h', '--holes'):
             holes_file = val
+        if opt in ('-r', '--refine'):
+	    refine = val
+        if opt in ('-i', '--invent_depth'):
+	    inventDepth = str(int(val))
+        if opt in ('-t', '--truncate_depth'):
+	    truncateDepth = str(int(val))
+        if opt in ('-s', '--search_depth'):
+	    ballSearchDepth = str(int(val))
             
     add_words(seenWords, wordsFile)
 
@@ -150,14 +158,14 @@ if __name__ == '__main__' :
     childCount = 0
     waitForHoles = False
     while True:
-        sleep(1) # We don't need to to run the main loop to death since we aren't using os.wait
+        sleep(0.1) # We don't need to to run the main loop to death since we aren't using os.wait
         openHoles = holes - done
         if len(openHoles) == 0 and refineRunCount == 0:
             bestHole = 'root'
         else : 
             bestHole = '1'*200
         for hole in openHoles:
-            if len(hole) > len(bestHole) or len(bestHole) == 200 : # the 200 is from two lines above, a little hacky
+            if len(hole) < len(bestHole) :
                 bestHole = hole    
 
         if len(bestHole) > depth_limit:
@@ -218,10 +226,11 @@ if __name__ == '__main__' :
                     continue
                 else :
                     continue
-            sleep(5) # We don't need to to run the main loop to death since we aren't using os.wait
+            sleep(0.1) # We don't need to to run the main loop to death since we aren't using os.wait
             continue        
 
         # If we make it here. We are running refine
+        print 'Open hole count: {0}\n'.format(len(openHoles))
         print 'Best hole: {0}\n'.format(bestHole)
 
         out = destDir + '/' + bestHole + '.out'
