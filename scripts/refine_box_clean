@@ -23,4 +23,4 @@ if [[ $# > 2 ]]; then
     box="$3"
 fi
 
-echo '1' | ./bin/refine --fillHoles --box "$box" --maxDepth 36 --truncateDepth 6 --inventDepth 12 --maxSize 3000000 --words words_debug --ballSearchDepth 9 --maxArea "$area" --powers powers_combined --mom /dev/null --parameterized /dev/null > "$data_dir/$name.out" 2> "$data_dir/$name.err"
+echo '1' | ./bin/refine_debug --fillHoles --box "$box" --maxDepth 120 --truncateDepth 120 --inventDepth 72 --maxSize 3000000 --words words --ballSearchDepth 6 --maxArea "$area" --powers powers_combined --mom /dev/null --parameterized /dev/null > "$data_dir/$name.out" 2> "$data_dir/$name.err"

@@ -190,7 +190,13 @@ SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params,
             w = &w_store;
         } 
     }
-	return *w;
+//    fprintf(stderr, "Word: %s\n", word.c_str());
+//    fprintf(stderr, "Box: %s\n", params.box_name.c_str());
+//    fprintf(stderr, "a: %f + I %f with absLB  %f and absUB %f\n", w->a.f.re, w->a.f.im, absLB(w->a), absUB(w->a));
+//    fprintf(stderr, "b: %f + I %f with absLB  %f and absUB %f\n", w->b.f.re, w->b.f.im, absLB(w->b), absUB(w->b));
+//    fprintf(stderr, "c: %f + I %f with absLB  %f and absUB %f\n", w->c.f.re, w->c.f.im, absLB(w->c), absUB(w->c));
+//    fprintf(stderr, "d: %f + I %f with absLB  %f and absUB %f\n", w->a.f.re, w->a.f.im, absLB(w->a), absUB(w->a));
+    return *w;
 }
 
 /* Tests if the box is within the variety neighborhood for 
@@ -340,10 +346,14 @@ bool TestCollection::only_bad_parabolics(SL2ACJ& w, Params<ACJ>& params)
     // This test is inconclusive is w has large transtalion (i.e. translate
     // w's center into the first postive quad of the lattice.)
 
+    // fprintf(stderr, "Bad Parabolics\n");
+
     double one = 1; // Exact
     // We check the box is small enough to determine the sign of translation
     if (!( absUB(w.d - one) < 2 || absUB(w.d + one) < 2 || 
            absUB(w.a - one) < 2 || absUB(w.a + one) < 2 )) { return false; }
+
+    // fprintf(stderr, "Signs d-1: %f d+1: %f a-1: %f a+1: %f\n", absUB(w.d - one), absUB(w.d + one), absUB(w.a - one), absUB(w.d + one));
 
     // For all parabolic points in the box, we want verify
     // that none of them are lattice points. At such a point w.a = +/- 1, so
@@ -363,14 +373,20 @@ bool TestCollection::only_bad_parabolics(SL2ACJ& w, Params<ACJ>& params)
 
     ACJ T = (absUB(w.d - one) < 2 || absUB(w.a - one) < 2) ? w.b : -w.b;
     ACJ L = params.lattice;
+    // fprintf(stderr, "T: %f + I %f with absLB  %f and absUB %f\n", T.f.re, T.f.im, absLB(T), absUB(T));
+    // fprintf(stderr, "L: %f + I %f with absLB  %f and absUB %f\n", L.f.re, L.f.im, absLB(L), absUB(L));
 
     ACJ d1 = T / (L + one);
+    // fprintf(stderr, "Test T/(L+1): %f\n", absUB(d1));
     if (absUB(d1) >= 1) { return false; }
     ACJ d2 = d1 - one; // uses fewer operations
+    // fprintf(stderr, "Test T/(L+1) - 1: %f\n", absUB(d2));
     if (absUB(d2) >= 1) { return false; }
     ACJ d3 = (T - one) / (L - one);
+    // fprintf(stderr, "Test (T-1)/(L-1): %f\n", absUB(d3));
     if (absUB(d3) >= 1) { return false; }
     ACJ d4 = d3 - one; // better error estimate
+    // fprintf(stderr, "Test (T-1)/(L-1) - 1: %f\n", absUB(d4));
     if (absUB(d4) >= 1) { return false; }
     return true;
 }
@@ -415,7 +431,7 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
         }
     }
 
-	if (large_horoball(w,params)) {
+    if (large_horoball(w,params)) {
 
         if (not_para_fix_inf(w)) {
 
@@ -442,23 +458,24 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
             ACJ L = params.lattice;
             if (absLB(L) > 2*w.b.size) {
                 XComplex cL = L.f;
-                XComplex cT = (absUB((w.d.f - one).z) < 2 || absUB((w.a.f - one).z) < 2) ? w.b.f : -w.b.f;
+                XComplex cT = (absUB(w.d - one) < 2 || absUB(w.a - one) < 2) ? w.b.f : -w.b.f;
                 // XComplex cT = (w.b.f/w.d.f).z;
                 // We expect T to be near the lattice point M_pow + N_pow*L
-                int N_pow = (int) floor(cT.im / cL.im);
-                int M_pow = (int) floor((cT - (cL * N_pow).z).z.re);
+                int N_pow = (int) round(cT.im / cL.im);
+                int M_pow = (int) round((cT - (cL * N_pow).z).z.re);
+                // fprintf(stderr,"cT: %f + I%f with N_pow: %d and M_pos: %d\n", cT.re, cT.im, N_pow, M_pow);
                 // We look over 16 nearby lattice points
-                int s[4] = {0,-1,1,2};
+                int s[5] = {0,-1,1,-2,2};
                 SL2ACJ w_k;
                 ACJ T;
                 pair<unordered_map<int,ACJ>::iterator,bool> lookup_para;
                 int N, M;
-                for (int i = 0; i < 4; ++i) {
+                for (int i = 0; i < 5; ++i) {
                     N = N_pow + s[i];
-                    for (int j = 0; j < 4; ++j) {
+                    for (int j = 0; j < 5; ++j) {
                         state = open;
                         M = M_pow + s[j];
-                        if (i == 0 && j == 0) {
+                        if (N == 0 && M == 0) {
                             w_k = w;
                         } else {
                             if (abs(M) > 1024 || abs(N) > 1024) { fprintf(stderr, "Error constructing word: huge translation\n"); }
@@ -470,6 +487,12 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
                             // Shift to "0"
                             w_k = SL2ACJ(w.a - lookup_para.first->second * w.c, w.b - lookup_para.first->second * w.d, w.c, w.d); // Cheaper multiplying
                             // What if we now have a variety word?
+//                            string word_k = shifted_word(word, - M, - N);
+//                            fprintf(stderr, "Shifted Word %s\n", word_k.c_str());
+//                            fprintf(stderr, "a: %f + I %f with absLB  %f and absUB %f\n", w_k.a.f.re, w_k.a.f.im, absLB(w_k.a), absUB(w_k.a));
+//                            fprintf(stderr, "b: %f + I %f with absLB  %f and absUB %f\n", w_k.b.f.re, w_k.b.f.im, absLB(w_k.b), absUB(w_k.b));
+//                            fprintf(stderr, "c: %f + I %f with absLB  %f and absUB %f\n", w_k.c.f.re, w_k.c.f.im, absLB(w_k.c), absUB(w_k.c));
+//                            fprintf(stderr, "d: %f + I %f with absLB  %f and absUB %f\n", w_k.a.f.re, w_k.a.f.im, absLB(w_k.a), absUB(w_k.a));
                             if (inside_var_nbd(w_k)) { 
                                 if (g_len <= g_max_g_len) {
                                     state = variety_nbd;
@@ -529,10 +552,10 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
     //                        fprintf(stderr,"Reconstucted horo ratio for QR is %f\n", absUB(new_w_k.c / params.loxodromic_sqrt));
                         }
                     }
-                }
-                if (state != open && state != open_with_qr) {
-                    aux_word.assign(shifted_word(word, - M, - N));
-                    return state;
+					if (state != open && state != open_with_qr) {
+						aux_word.assign(shifted_word(word, - M, - N));
+						return state;
+					}
                 }
             }
         }
