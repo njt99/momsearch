@@ -1,7 +1,0 @@
-#!/bin/bash
-#PBS -N momclient
-#PBS -l nodes=1:ppn=1,walltime=4:00:00
-#PBS -m abe
-cd $HOME/momsearch/search2
-echo "momclient somehost.edu:12345"
-sleep 180

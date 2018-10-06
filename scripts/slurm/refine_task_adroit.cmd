@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH -N 1 # node count
-#SBATCH --ntasks-per-node=16
-#SBATCH -t 95:00:00
-#SBATCH --mem=32GB
+#SBATCH --ntasks-per-node=32
+#SBATCH -t 90:00:00
+#SBATCH --mem=64GB
 # sends mail when process begins, and 
 # when it ends. Make sure you define your email 
 #SBATCH --mail-type=begin
@@ -21,4 +21,4 @@ data_dir="/scratch/network/ayarmola"
 
 cd $bin_dir
 
-python "$search" -w "$words" -p "$powers" -c 16 "$data_dir/source" "$data_dir/output" > "$data_dir/refine.log" 2>&1
+python "$search" -w "$words" -p "$powers" -c 32 "$data_dir/source" "$data_dir/output" > "$data_dir/refine.log" 2>&1

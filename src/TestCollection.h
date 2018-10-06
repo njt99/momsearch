@@ -64,12 +64,12 @@ private:
 };
 
 inline const bool maybe_variety(const SL2C& w) {
-    return (absUB(w.c) < 1) && (absUB(w.b) < 1);
+    return (absUB(w.c) < 1) && (absUB(w.b) < 1 || absLB(w.c) > 0);
 }
 
 inline const bool inside_var_nbd(const SL2ACJ& w)
 {
-    return (absUB(w.c) < 1) && (absUB(w.b) < 1);
+    return (absUB(w.c) < 1) && (absUB(w.b) < 1 || absLB(w.c) > 0);
 }
 
 inline const bool not_para_fix_inf(const SL2ACJ&x) {
