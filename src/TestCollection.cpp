@@ -59,7 +59,7 @@ SL2C TestCollection::construct_word(string word, Params<XComplex>& params)
 			case 'm': --M; break;
 			case 'M': ++M; break;
 			case 'n': --N; break;
-			case 'N': ++M; break;
+			case 'N': ++N; break;
 			default: {
 				if (M != 0 || N != 0) {
 					w = constructT(params, M, N) * w;
