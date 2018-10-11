@@ -95,10 +95,10 @@ if __name__ == '__main__' :
     childLimit = 8
     depth_limit = 67
 
-    maxSize = '3000000'
-    maxDepth = '114'
-    truncateDepth = '12'
-    inventDepth = '18'
+    maxSize = '5000000'
+    maxDepth = '181'
+    truncateDepth = '139'
+    inventDepth = '145'
     ballSearchDepth = '6'
     maxArea = '5.24'
     fillHoles = ' --fillHoles'
