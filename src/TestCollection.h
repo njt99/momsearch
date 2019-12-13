@@ -42,8 +42,9 @@ struct TestCollection {
 	int add(std::string word);
 	void load(const char* fileName);
 	void loadImpossibleRelations(const char* fileName);
-	SL2ACJ construct_word(std::string word, Params<ACJ>& params, std::unordered_map<int,ACJ>& para_cache,std::unordered_map<std::string,SL2ACJ>& words_cache);
-	SL2C construct_word(std::string word, Params<XComplex>& params);
+	SL2ACJ construct_word(std::string word, const Params<ACJ>& params, std::unordered_map<int,ACJ>& para_cache,std::unordered_map<std::string,SL2ACJ>& words_cache);
+	SL2ACJ construct_word_simple(std::string word, const Params<ACJ>& params);
+	SL2C construct_word(std::string word, const Params<XComplex>& params);
 // old validation code
 //  bool box_inside_nbd(Box& box, std::string& var_word);
 //	bool box_inside_at_least_two_nbd(Box& box, std::vector<std::string>& var_words); 

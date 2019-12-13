@@ -43,7 +43,46 @@ int TestCollection::size()
 	return 7 + indexString.size();
 }
 
-SL2C TestCollection::construct_word(string word, Params<XComplex>& params)
+SL2ACJ TestCollection::construct_word_simple(string word, const Params<ACJ>& params)
+{
+	ACJ one(1.), zero(0.);
+	SL2ACJ w(one, zero, zero, one);
+	SL2ACJ G(constructG(params));
+	SL2ACJ g(inverse(G));
+
+    char h;
+	int M = 0;
+	int N = 0;
+    ACJ T;
+    string::reverse_iterator rit;
+    for (rit = word.rbegin(); rit != word.rend(); ++rit) {
+        h = *rit;
+		switch(h) {
+			case 'm': --M; break;
+			case 'M': ++M; break;
+			case 'n': --N; break;
+			case 'N': ++N; break;
+			default: {
+				if (M != 0 || N != 0) {
+                    T = params.lattice * double(N) + double(M);
+                    w = SL2ACJ(w.a + T * w.c, w.b + T * w.d, w.c, w.d);
+					M = N = 0;
+				}
+				if (h == 'g')
+					w = g * w;
+				else if (h == 'G')
+					w = G * w;
+			}
+		}
+	}
+    if (M != 0 || N != 0) {
+        T = params.lattice * double(N) + double(M);
+        w = SL2ACJ(w.a + T * w.c, w.b + T * w.d, w.c, w.d);
+    }
+    return w;
+}
+
+SL2C TestCollection::construct_word(string word, const Params<XComplex>& params)
 {
     SL2C w(1,0,0,1);
 	SL2C G(constructG(params));
@@ -78,7 +117,7 @@ SL2C TestCollection::construct_word(string word, Params<XComplex>& params)
 	return w;
 }
 
-SL2ACJ TestCollection::construct_word(string word, Params<ACJ>& params, 
+SL2ACJ TestCollection::construct_word(string word, const Params<ACJ>& params, 
                unordered_map<int,ACJ>& para_cache, unordered_map<string,SL2ACJ>& words_cache)
 {
     pair<unordered_map<string,SL2ACJ>::iterator,bool> lookup;
@@ -422,6 +461,7 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
     int g_len = g_length(word);
     double one = 1; // Exact
 	SL2ACJ w = construct_word(word, params, para_cache, words_cache);
+	//SL2ACJ w = construct_word_simple(word, params);
 
     if (inside_var_nbd(w)) { 
         if (g_len <= g_max_g_len) {
@@ -446,6 +486,7 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
             else if (mandatory.size() > 0) {
                 for (vector<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
                     SL2ACJ w_sub = construct_word(*it, params, para_cache, words_cache);
+                    //SL2ACJ w_sub = construct_word_simple(*it, params);
                     if (not_para_fix_inf(w_sub)) {
                         aux_word.assign(*it);
                         return killed_elliptic;
@@ -478,14 +519,15 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
                         if (N == 0 && M == 0) {
                             w_k = w;
                         } else {
-                            if (abs(M) > 1024 || abs(N) > 1024) { fprintf(stderr, "Error constructing word: huge translation\n"); }
-                            lookup_para = para_cache.emplace(4096*M+N, ACJ());
-                            if (lookup_para.second) {
-                                T = params.lattice*double(N) + double(M);
-                                swap(lookup_para.first->second, T);
-                            }
+                            //if (abs(M) > 1024 || abs(N) > 1024) { fprintf(stderr, "Error constructing word: huge translation\n"); }
+                           // lookup_para = para_cache.emplace(4096*M+N, ACJ());
+                            //if (lookup_para.second) {
+                            T = params.lattice*double(-N) + double(-M);
+                           //     swap(lookup_para.first->second, T);
+                           // }
                             // Shift to "0"
-                            w_k = SL2ACJ(w.a - lookup_para.first->second * w.c, w.b - lookup_para.first->second * w.d, w.c, w.d); // Cheaper multiplying
+                            //w_k = SL2ACJ(w.a - lookup_para.first->second * w.c, w.b - lookup_para.first->second * w.d, w.c, w.d); // Cheaper multiplying
+                            w_k = SL2ACJ(w.a + T * w.c, w.b + T * w.d, w.c, w.d); // Cheaper multiplying
                             // What if we now have a variety word?
 //                            string word_k = shifted_word(word, - M, - N);
 //                            fprintf(stderr, "Shifted Word %s\n", word_k.c_str());
@@ -515,6 +557,7 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
                                 // anywhere in the box, we can kill the box
                                 for (vector<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
                                     SL2ACJ w_sub = construct_word(*it, params, para_cache, words_cache);
+                                    //SL2ACJ w_sub = construct_word_simple(*it, params);
                                     if (not_para_fix_inf(w_sub)) {
                                         aux_word.assign(*it);
                                         return killed_elliptic;

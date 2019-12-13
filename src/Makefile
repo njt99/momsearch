@@ -1,5 +1,6 @@
 REFINEOBJS= MomRefine.o BallSearch.o TestCollection.o Box.o ImpossibleRelations.o ACJ.o Params.o SL2C.o SL2ACJ.o Complex.o roundoff.o CanonicalName.o QuasiRelators.o
 TREECATOBJS= treecat.o
+STREECATOBJS= simple_tree_cat.o
 #CPLUSPLUS= icpc
 #CC= icpc
 CPLUSPLUS= g++
@@ -21,3 +22,6 @@ refine: $(REFINEOBJS)
 
 treecat: $(TREECATOBJS)
 	$(CPLUSPLUS) $(COPTS) $(TREECATOBJS) -o ../bin/treecat
+
+simple_tree_cat: $(STREECATOBJS)
+	$(CPLUSPLUS) $(COPTS) $(STREECATOBJS) -o ../bin/simple_tree_cat

@@ -95,13 +95,14 @@ if __name__ == '__main__' :
     childLimit = 8
     depth_limit = 67
 
-    maxSize = '5000000'
-    maxDepth = '181'
-    truncateDepth = '139'
-    inventDepth = '145'
+    maxSize = '25000000'
+    maxDepth = '257'
+    truncateDepth = '211'
+    inventDepth = '207'
     ballSearchDepth = '6'
-    maxArea = '5.24'
-    fillHoles = ' --fillHoles'
+    maxArea = '5.3'
+    #fillHoles = ' --fillHoles'
+    fillHoles = ''
     mom = '/dev/null' #/home/ayarmola/momsearch/momWords'
     parameterized = '/dev/null' #/home/ayarmola/momsearch/parameterizedWords'
     powers = '/home/ayarmola/momsearch/powers_combined'
@@ -122,13 +123,13 @@ if __name__ == '__main__' :
         if opt in ('-h', '--holes'):
             holes_file = val
         if opt in ('-r', '--refine'):
-	    refine = val
+            refine = val
         if opt in ('-i', '--invent_depth'):
-	    inventDepth = str(int(val))
+            inventDepth = str(int(val))
         if opt in ('-t', '--truncate_depth'):
-	    truncateDepth = str(int(val))
+            truncateDepth = str(int(val))
         if opt in ('-s', '--search_depth'):
-	    ballSearchDepth = str(int(val))
+            ballSearchDepth = str(int(val))
             
     add_words(seenWords, wordsFile)
 
