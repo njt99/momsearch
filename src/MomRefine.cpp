@@ -218,6 +218,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
     for (vector<string>::iterator it = quasiRelators.begin(); it != quasiRelators.end(); ++it) {
         // So not idenity and absUB(w.b) < 1
         SL2ACJ w = g_tests.construct_word(*it, cover, para_cache, short_words_cache); 
+        // SL2ACJ w = g_tests.construct_word_simple(*it, cover); 
         if (not_identity(w)) {
 //            fprintf(stderr, "Failed qr %s at %s\n", (*it).c_str(), box.name.c_str());
 //            fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
@@ -268,7 +269,8 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 		}
 	}
 
-	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth > 71) {
+	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth > 71
+        ) {
 		while (depth - searchedDepth > g_options.ballSearchDepth) {
 			Box& searchPlace = place[++searchedDepth];
             // fprintf(stderr, "Search Depth %d and search place %s for box %s\n", searchedDepth, searchPlace.name.c_str(), box.name.c_str());
