@@ -14,8 +14,10 @@
 # lox_sqrt = -1.7320508....
 # parabolic = 0.5000000....
 
+require 'qr_tools.pl';
+
 $refine_dir = 'refine_census';
-$area_bnd = 6.0;
+$area_bnd = 5.9;
 
 while (<>) {
 	if (/M (.*)=(.*)/ || /(.*) = (.*)/) {
@@ -39,10 +41,27 @@ sub get_quasi_relators {
     my $out_file = "$refine_dir/$name.out";
     my $canon_file = "$refine_dir/$name.holes";
     my $canon_code = `perl canon_hole.pl < $err_file > $canon_file`;
-    my $hole_count = `grep HOLE $out_file | wc -l | bc`;
-    chomp $hole_count;
+    my $hole_and_var_count = `grep "HOLE\\\|V" $out_file | wc -l | bc`;
+    chomp $hole_and_var_count;
+
+    open my $all_words, '>>', "../words" or die "Could not open words file";
+    open my $err, $err_file or die "Could not open $err_file";
+    while (<$err>) {
+        if (/search .* found (.*)\(.*\)/) {
+            my @v = &versions($1);
+            say $all_words $v[0];
+        }   
+    }
+    close $all_words;
 
     my %quasi_relators = ();
+    open my $out, $out_file or die "Could not open $out_file";
+    while (<$out>) {
+        if (/V\((.+)\)/) {
+            my @v = &versions($1);
+            $quasi_relators{$v[0]} = 1;
+        }   
+    }
     open my $canon, $canon_file or die "Could not open $canon_file";
     while (<$canon>) {
         if (/HOLE .* \((.+)\)/) {
@@ -53,7 +72,7 @@ sub get_quasi_relators {
         }   
     }
     @qr = sort keys %quasi_relators;
-    if ($hole_count > 0) {
+    if ($hole_and_var_count > 0) {
         if (@qr == 0) {
             if ($cusp_area <= $area_bnd) {
                 print STDERR "$name : no quasirelators found (INSIDE area bound)!\n";
