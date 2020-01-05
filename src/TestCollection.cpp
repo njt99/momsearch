@@ -14,11 +14,15 @@
 // 4. 0 <= Im(p) <= Im(l)/2 (reduction modulo N, flipping sign of N)
 // 5. 0 <= Re(p) <= 1/2 (reduction modulo M, flipping sign of M)
 // 6. |sl^2| Im(n) <= 4 (area of fundamental paralleogram)
+// 7. all slopes of length at most 6 have distance at most 5
+// 8. we are in the var_nbd of two quasi-relators
 // 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "TestCollection.h"
+#include "CanonicalName.h"
+#include "slopes.h"
 #include "ImpossibleRelations.h"
 #include <algorithm>
 using namespace std;
@@ -26,6 +30,8 @@ using namespace std;
 
 double g_maximumArea = 5.24;
 int g_max_g_len = 7;
+int g_num_bnd_tests = 9;
+int g_var_int_depth = 72; // don't look for var_int unles we are this deep
 
 string g_testCollectionFullWord;
 
@@ -40,7 +46,7 @@ int g_length(string& w)
 
 int TestCollection::size()
 {
-	return 7 + indexString.size();
+	return g_num_bnd_tests + indexString.size();
 }
 
 SL2ACJ TestCollection::construct_word_simple(string word, const Params<ACJ>& params)
@@ -251,7 +257,7 @@ SL2ACJ TestCollection::construct_word(string word, const Params<ACJ>& params,
 //    // Checks if a minimal g-power quasi relator pusts the box in a neighborhood.
 //    // Returns true if found and copies word into var_word
 //    Params<ACJ> params = box.cover();
-//    vector<string> qrs = box.qr.wordClasses();
+//    vector<string> qrs = box.qr.words();
 //    if (qrs.empty()) { return false; }
 //    sort(qrs.begin(), qrs.end(), g_power_sort);
 //    int min_power = g_power(qrs.front());
@@ -274,7 +280,7 @@ SL2ACJ TestCollection::construct_word(string word, const Params<ACJ>& params,
 //    // Check if there are two quasi-relators that put the box in a neighborhood. 
 //    // Returns true of two were found and places them in var_words.
 //    Params<ACJ> params = box.cover();
-//    vector<string> qrs = box.qr.wordClasses();
+//    vector<string> qrs = box.qr.words();
 //    if (qrs.size() < 2) { return false; }
 //    sort(qrs.begin(), qrs.end(), g_power_sort);
 //    int min_power = g_power(qrs.front());
@@ -334,42 +340,59 @@ SL2ACJ TestCollection::construct_word(string word, const Params<ACJ>& params,
 //	}
 //	return true;
 //}
-//
-//bool TestCollection::valid_intersection(Box& box) {
-//    // TODO: Check this does what is should. Should show that two varieties intersect in box
-//	Params<ACJ> params = box.cover();
-//    vector<string> qrs(box.qr.wordClasses());
-//    if (qrs.size() < 2) { return false; }
-//    sort(qrs.begin(), qrs.end(), g_power_sort);
-//    int min_power = g_power(qrs.front());
-//    int found = 0;
-//    vector<string> var_jets;
-//	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
-//        if (g_power(*it) > min_power && found > 1) {
-//            break;
-//        } else {
-//            if (!valid_variety(*it, params)) { return false; }
-//            var_jets.push_back(*it);
-//            found += 1;
-//        }
-//    }
-//    if (found > 1) {
-//        string w0 = var_jets[0];
-//        string w1 = var_jets[1];
-//        for (string::size_type idx_0 = 0; idx_0 < w0.size(); ++idx_0) {
-//            string w0_p = w0.substr(idx_0, w0.size()-idx_0) + w0.substr(0, idx_0);
-//            SL2ACJ w0_j(construct_word(w0_p, params));
-//            for (string::size_type idx_1 = 0; idx_1 < w1.size(); ++idx_1) {
-//                string w1_p = w1.substr(idx_1, w1.size()-idx_1) + w1.substr(0, idx_1);
-//                SL2ACJ w1_j(construct_word(w1_p, params));
-//                if (notZero(w1_j - w0_j) && notZero(w1_j + w0_j)) { return false; }
-//            }
-//        }
-//        return true;
-//    } else {
-//        return false;
-//    }
-//}
+
+box_state TestCollection::is_var_intersection(Box& box, string& aux_word,
+                                       unordered_map<int,ACJ>& para_cache, unordered_map<string,SL2ACJ>& words_cache)
+{
+    // TODO: Check this does what is should. Should show that two varieties intersect in box
+    if (box.qr.words().size() < 2 || box.name.length() < g_var_int_depth) {
+         if (box.qr.words().size() == 0) { return open; } 
+         else { return open_with_qr; }
+    }
+	Params<ACJ> params = box.cover();
+    vector<string> qrs(box.qr.words());
+    sort(qrs.begin(), qrs.end(), g_power_sort);
+    int min_power = g_power(qrs.front());
+    vector<string> var_words;
+	for (auto it = qrs.begin(); it != qrs.end(); ++it) {
+        // We avoid high g_power relators for optimization.
+        // TODO: check that this does not need to be relaxed when pushing for higher powers
+        if (g_power(*it) > min_power + 1) {
+            break;
+        } else {
+            SL2ACJ w = construct_word(*it, params, para_cache, words_cache);
+            if (inside_var_nbd(w)) {
+                var_words.push_back(*it);
+            }
+        }
+    }
+    if (var_words.size() > 1) {
+	    for (auto it0 = var_words.begin(); it0 != var_words.end(); ++it0) {
+	        for (auto it1 = ++(var_words.begin()); it1 != var_words.end(); ++it1) {
+                // it is possible that the two words are related as qrs are not
+                // always reprented by canonical names, especially given shifting,
+                // so we check here. note, it is likely a no-op in practice given 
+                // the way the word list in generated currently
+                CanonicalName canonicalName;
+                canonicalName.addRelator(*it0);
+                // note, since g power increase, we only need to check one direction
+                string can1 = canonicalName.getCanonicalName(*it1); 
+                if (g_power(can1) == 0) { continue; }
+                SL2ACJ w0 = construct_word(*it0, params, para_cache, words_cache); 
+                SL2ACJ w1 = construct_word(*it1, params, para_cache, words_cache);
+                // we want a point to be on the intersection 
+                if (notZero(w1 - w0) && notZero(w1 + w0)) {
+                    continue;
+                } else {
+                    string two_relators = *it0 + "," + *it1;
+                    aux_word.assign(two_relators); 
+                    return two_var_inter; 
+                }
+            }
+        }
+    }
+    return open_with_qr;
+}
 
 box_state TestCollection::evaluate_approx(string word, Params<XComplex>& params)
 {
@@ -633,8 +656,19 @@ box_state TestCollection::evaluateCenter(int index, Box& box)
 			g_latticeArea = pow(absLB(params.loxodromic_sqrt),2)*params.lattice.im;
 			return check_bounds_center(g_latticeArea > g_maximumArea);
 		}
+		case 7: {
+            int max_dist = short_slopes_max_dist_center(box);
+		    return check_bounds_center(max_dist > 0 && max_dist < 6);
+		}
+		case 8: {
+            if (box.qr.words().size() < 2 || box.name.length() < g_var_int_depth) {
+                 if (box.qr.words().size() == 0) { return open; } 
+                 else { return open_with_qr; }
+            }
+		    return two_var_center;
+		}
 		default:
-			return evaluate_approx(indexString[index-7], params);
+			return evaluate_approx(indexString[index-g_num_bnd_tests], params);
 	}
 }
 
@@ -649,7 +683,7 @@ box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vec
 	Params<XComplex> nearer = box.nearer();
 	Params<XComplex> further = box.further();
 	Params<XComplex> greater = box.greater();
-//    if (index < 7) {
+//    if (index < g_num_bnd_tests) {
 //        fprintf(stderr, "Evaluate for bounds of box %s\n", box.name.c_str());
 //    }
 	switch(index) {
@@ -670,29 +704,36 @@ box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vec
             double area = areaLB(nearer);
 		    return check_bounds(area > g_maximumArea);
 		}
+		case 7: {
+            int max_dist = short_slopes_max_dist(box);
+		    return check_bounds(max_dist > 0 && max_dist < 6);
+		}
+		case 8: {
+		    return is_var_intersection(box, aux_word, para_cache, words_cache);
+		}
 		default: {
 			Params<ACJ> cover(box.cover());
-            // fprintf(stderr, "Evaluate for word %s and box %s\n", indexString[index-7].c_str(), box.name.c_str());
-			box_state result = evaluate_ACJ(indexString[index-7], cover, aux_word, new_qrs, para_cache, words_cache);
+            // fprintf(stderr, "Evaluate for word %s and box %s\n", indexString[index-g_num_bnd_tests].c_str(), box.name.c_str());
+			box_state result = evaluate_ACJ(indexString[index-g_num_bnd_tests], cover, aux_word, new_qrs, para_cache, words_cache);
 //			if (result) {
 //                // TODO: Understand this tail enumeration that adds words based on given word
-//				enumerate(indexString[index-7].c_str());
+//				enumerate(indexString[index-g_num_bnd_tests].c_str());
 //			}
 			return result;
 		}
 	}
 }
 
-// Returns the index number for the first basic 7 tests
-// or the quasi-relator if the index is 7 or above
+// Returns the index number for the first basic g_num_bnd_tests tests
+// or the quasi-relator if the index is g_num_bnd_tests or above
 const char* TestCollection::getName(int index)
 {
 	static char buf[4];
-	if (index < 7) {
+	if (index < g_num_bnd_tests) {
 		sprintf(buf, "%d", index);
 		return buf;
 	} else {
-		return indexString[index-7].c_str();
+		return indexString[index-g_num_bnd_tests].c_str();
 	}
 }
 
@@ -712,10 +753,10 @@ int TestCollection::add(string buf)
 //		fprintf(stderr, "adding %lu=%s\n", indexString.size(), word.c_str());
 		stringIndex[word] = indexString.size();
 		indexString.push_back(word);
-		return indexString.size()+6;
+		return indexString.size()+g_num_bnd_tests-1;
 	}
 	else
-		return it->second+7;
+		return it->second+g_num_bnd_tests;
 }
 
 void TestCollection::load(const char* fileName)

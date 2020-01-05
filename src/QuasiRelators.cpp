@@ -19,23 +19,9 @@ void QuasiRelators::addQuasiRelator(string w)
 {
 	if (names.find(w) != names.end())
 		return;
-//  TODO We kill uniquenes for now as this causes ``large horoball'' failures
-//	string W = inverse(w);
-//	vector<string> versions;
-//	for (string::size_type p = 0; p < w.size(); ++p) {
-//		string::size_type prev = (p == 0) ? w.size()-1 : p-1;
-//		if (w[prev] == 'g' || w[prev] == 'G')
-//			versions.push_back( w.substr(p, string::npos) + w.substr(0, p));
-//		if (W[prev] == 'g' || W[prev] == 'G')
-//			versions.push_back( W.substr(p, string::npos) + W.substr(0, p));
-//	}
-//	string first = versions[0];
-//	for (vector<string>::iterator it = versions.begin(); it != versions.end(); ++it) {
-//		if (*it < first)
-//			first = *it;
-//	}
-//	for (vector<string>::iterator it = versions.begin(); it != versions.end(); ++it)
-//		names[*it] = first;
+//  TODO We kill uniquenes as this causes problems when checking for ``large horoball'' failures in smaller boxes
+//  This is because order of evaluations matters for us and changing the word can cause problems
+//	Any validation of uniqueness will have to be done by code using qrs
     names[w] = w;
 	nameVector.push_back(w);
 }
@@ -68,21 +54,15 @@ string QuasiRelators::desc()
 	}
 	return buf;
 }
-	std::vector<std::string> allWords();
-	std::vector<std::string> wordClasses();
 
-vector<string> QuasiRelators::wordClasses()
+vector<string> QuasiRelators::words()
 {
-	return nameVector;
-}
-
-vector<string> QuasiRelators::allWords()
-{
-	vector<string> result;
-	for (NameStore::iterator it = names.begin(); it != names.end(); ++it) {
-		result.push_back(it->first);
-	}
-	return result;
+    return nameVector;
+//	vector<string> result;
+//	for (NameStore::iterator it = names.begin(); it != names.end(); ++it) {
+//		result.push_back(it->first);
+//	}
+//	return result;
 }
 
 bool QuasiRelators::isQuasiRelator(std::string w)

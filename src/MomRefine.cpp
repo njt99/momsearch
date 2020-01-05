@@ -14,6 +14,7 @@
 #include <set>
 #include <stdlib.h>
 #include <string.h>
+#include <sstream>
 #include <unistd.h>
 
 #include "Box.h"
@@ -91,7 +92,11 @@ PartialTree readTree()
 	} else {
 		if (isdigit(buf[0])) {
 			t.testIndex = atoi(buf);
-		} else {
+		} else if (buf[0] == 'T') {
+            buf[n-2] = '\0';
+            t.qr_desc.assign(&buf[2]);
+            t.testIndex = 8;
+        } else {
             // Add word as eliminator to test collection
             if (strchr("mMnNgG", buf[0]) != NULL) {
 			    t.testIndex = g_tests.add(buf);
@@ -190,6 +195,13 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 
     string aux_word;
 	if (t.testIndex >= 0) {
+        if (t.testIndex == 8) {
+            stringstream qrs(t.qr_desc);
+            string segment;
+            while(std::getline(qrs, segment, ',')) {
+               box.qr.getName(segment);
+            }            
+        }
         box_state result = g_tests.evaluateBox(t.testIndex, box, aux_word, new_qrs, para_cache, short_words_cache);
         if (result != open && result != open_with_qr) {
             t.aux_word.assign(aux_word);
@@ -214,7 +226,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 
     // Check if the box is now small enough that some former qrs actually kill it
     Params<ACJ> cover = box.cover();
-    vector<string> quasiRelators = box.qr.wordClasses();
+    vector<string> quasiRelators = box.qr.words();
     for (vector<string>::iterator it = quasiRelators.begin(); it != quasiRelators.end(); ++it) {
         // So not idenity and absUB(w.b) < 1
         SL2ACJ w = g_tests.construct_word(*it, cover, para_cache, short_words_cache); 
@@ -241,7 +253,8 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 				box_state result = g_tests.evaluateBox(i, box, aux_word, new_qrs, para_cache, short_words_cache);
 
                 switch (result) {
-                    case variety_nbd : 
+                    case variety_nbd :
+                    case two_var_inter :
                     case killed_no_parabolics :
                     case killed_bad_parabolic :
                     case killed_failed_qr :
@@ -274,7 +287,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 		while (depth - searchedDepth > g_options.ballSearchDepth) {
 			Box& searchPlace = place[++searchedDepth];
             // fprintf(stderr, "Search Depth %d and search place %s for box %s\n", searchedDepth, searchPlace.name.c_str(), box.name.c_str());
-			vector<string> searchWords = findWords( searchPlace.center(), vector<string>(), -200, g_options.maxWordLength, box.qr.wordClasses());
+			vector<string> searchWords = findWords( searchPlace.center(), vector<string>(), -200, g_options.maxWordLength, box.qr.words());
             string new_word = searchWords.back();
 
             int old_size = g_tests.size();
@@ -290,6 +303,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 
                 switch (result) {
                     case variety_nbd : 
+                    case two_var_inter : 
                     case killed_no_parabolics :
                     case killed_bad_parabolic :
                     case killed_failed_qr :
@@ -385,6 +399,7 @@ void printTree(PartialTree& t)
         }
         case killed_no_parabolics : type = 'K'; break;
         case variety_nbd : type = 'V'; break;
+        case two_var_inter : type = 'T'; break;
         case killed_parabolics_impossible : type = 'P'; break;
         case killed_identity_impossible : type = 'I'; break;
         case killed_failed_qr : type = 'Q'; break;
