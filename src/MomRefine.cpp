@@ -38,7 +38,7 @@ struct Options {
 		improveTree(false),
 		ballSearchDepth(-1),
 		fillHoles(false),
-		maxWordLength(20) {}
+		maxWordLength(40) {}
 	const char* boxName;
 	const char* wordsFile;
 	const char* powersFile;

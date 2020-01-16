@@ -17,7 +17,7 @@
 require 'qr_tools.pl';
 
 $refine_dir = 'refine_census';
-$area_bnd = 5.9;
+$area_bnd = 6.0;
 
 while (<>) {
 	if (/M (.*)=(.*)/ || /(.*) = (.*)/) {

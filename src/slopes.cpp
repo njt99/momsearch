@@ -34,13 +34,22 @@ const int slope_dist(slope s1, slope s2) {
     else { return dist; }
 }
 
+inline const ACJ sq(const ACJ& x) {
+    return x*x;
+}
+
+inline const XComplex sq(const XComplex& x) {
+    return (x*x).z;
+}
+
 const int short_slopes_max_dist(Box& box) {
     // Return max distance between short slopes over the box
     // Returns -1 in case of error
     vector< slope > short_slopes;
     Params<XComplex> nearer = box.nearer();
-    if (nearer.lattice.im < 0) {
-        fprintf(stderr, "Error: lattice with zero imaginary part in box %s\n", box.name.c_str());
+    Params<XComplex> greater = box.greater();
+    if (greater.lattice.im < 0 || nearer.lattice.im <= 0) {
+        fprintf(stderr, "Error: lattice with negative or zero imaginary part in box %s\n", box.name.c_str());
         return -1;
     }
     if (fabs(nearer.lattice.re) > 0.5) {
@@ -57,7 +66,10 @@ const int short_slopes_max_dist(Box& box) {
     while (absLB((S*nearer.lattice.im)*b) <= 6) {
         double a = 0;  
         // fprintf(stderr, "b is %d\n", (int) b);
-        while ((1-EPS)*(absLB((S*a)*(S*a)) + absLB((SL*b)*(SL*b))) <= (1+EPS)*(36 + absUB((S*a)*(S*b)))) {
+        // want a*s <= b*s/2 + sqrt(36 - (b s lattice.im)^2)
+        // unwrap to 2 a <= b or 4 * s^2 (2 a - b)^2 <= 72 -
+        ACJ cut_off = (-sq((S*nearer.lattice.im)*b)) + 144; 
+        while ( 2*a <= b || absLB(sq(S*(2*a-b))) <= absUB(cut_off) ) { 
             // fprintf(stderr, "a is %d and b is %d\n", (int) a, (int) b);
             for (int sgn = -1; sgn < 2; sgn += 2) {
                 ACJ g = ((L * b) + (sgn * a))*S;
@@ -108,7 +120,8 @@ const int short_slopes_max_dist_center(Box& box) {
     while (absLB(((S * L.im).z * b).z) <= 6) {
         double a = 0;  
         // fprintf(stderr, "b is %d\n", (int) b);
-        while (absLB(((S*a).z * (S*a).z).z) + absLB(((SL*b).z * (SL*b).z).z) <= (36 + absUB(((S*a).z*(S*b).z).z))) {
+        XComplex cut_off = (-sq(((S * L.im).z * b).z) + 144).z; 
+        while ( 2*a <= b || absLB(sq((S*(2*a-b)).z)) <= absUB(cut_off) ) { 
             // fprintf(stderr, "a is %d and b is %d\n", (int) a, (int) b);
             for (int sgn = -1; sgn < 2; sgn += 2) {
                 XComplex g = (((L * b).z + (sgn * a)).z * S).z;

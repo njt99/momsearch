@@ -31,7 +31,7 @@ using namespace std;
 double g_maximumArea = 5.24;
 int g_max_g_len = 7;
 int g_num_bnd_tests = 9;
-int g_var_int_depth = 72; // don't look for var_int unles we are this deep
+int g_var_int_depth = 30; // don't look for var_int unles we are this deep
 
 string g_testCollectionFullWord;
 
