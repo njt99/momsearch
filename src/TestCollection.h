@@ -35,6 +35,8 @@ box_state;
 
 struct ImpossibleRelations;
 
+int g_length(std::string& w); 
+
 struct TestCollection {
 	int size();
 	box_state evaluateCenter(int index, Box& box);

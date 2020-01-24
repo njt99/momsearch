@@ -26,12 +26,13 @@
 #include "ImpossibleRelations.h"
 #include <algorithm>
 using namespace std;
-// using namespace __gnu_cxx;
 
-double g_maximumArea = 5.24;
+double g_maximumArea = 6.0;
+double g_minimumArea = 0.0;
 int g_max_g_len = 7;
 int g_num_bnd_tests = 9;
-int g_var_int_depth = 30; // don't look for var_int unles we are this deep
+int g_var_int_depth = 36; // don't look for var_int unles we are this deep
+int g_slope_dist_depth = 36; 
 
 string g_testCollectionFullWord;
 
@@ -244,102 +245,6 @@ SL2ACJ TestCollection::construct_word(string word, const Params<ACJ>& params,
     return *w;
 }
 
-/* Tests if the box is within the variety neighborhood for 
-   its shortest g power quasi-relators. This test is used to 
-   stop subdivision of a HOLE. The relevant Lemma:
-
-{\bf Lemma (Variety Buffer-Zone Lemma):} {\it Let $W(p) =  (a\ \ b\ \ c\ \ d)$ be the matrix in ${\bf PSL}(2,{\bf C})$ determined by the variety word $W = W(m,n,g)$ at the point $p \in {\cal P}$, let $V_W$ be the variety determined by $W = I$ in ${\cal P}$, and let $N_W$ be the neighborhood of $V_W$  determined by the conditions that the absolute value of the $c$ co-ordinate of $W(p)$ is less than $1$ and (if the absolute value of the $c$ co-ordinate of $W(p)$ is zero) the absolute value of the $b$ coordinate is less than $1$.  Then no point in $N_W - V_W$ corresponds to a discrete, torsion-free hyperbolic 3-manifold.}
-
-*/
-
-//bool TestCollection::box_inside_nbd(Box& box, string& var_word)
-//{
-//    // Checks if a minimal g-power quasi relator pusts the box in a neighborhood.
-//    // Returns true if found and copies word into var_word
-//    Params<ACJ> params = box.cover();
-//    vector<string> qrs = box.qr.words();
-//    if (qrs.empty()) { return false; }
-//    sort(qrs.begin(), qrs.end(), g_power_sort);
-//    int min_power = g_power(qrs.front());
-//	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
-//        if (g_power(*it) > min_power) {
-//            break;
-//        } else {
-//            SL2ACJ w = construct_word(*it, params);
-//            if (inside_var_nbd(w)) {
-//                var_word = *it;
-//                return true;
-//            } 
-//        }
-//    }
-//    return false;
-//}
-//
-//bool TestCollection::box_inside_at_least_two_nbd(Box& box, vector<string>& var_words)
-//{
-//    // Check if there are two quasi-relators that put the box in a neighborhood. 
-//    // Returns true of two were found and places them in var_words.
-//    Params<ACJ> params = box.cover();
-//    vector<string> qrs = box.qr.words();
-//    if (qrs.size() < 2) { return false; }
-//    sort(qrs.begin(), qrs.end(), g_power_sort);
-//    int min_power = g_power(qrs.front());
-//    vector<string> found;
-//	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
-//        if (g_power(*it) > min_power && found.size() > 1) {
-//            break;
-//        } else {
-//            SL2ACJ w = construct_word(*it, params);
-//            if (inside_var_nbd(w)) {
-//                found.push_back(*it);
-//            } 
-//        }
-//    }
-//    if (found.size() > 1) {
-//        var_words.swap(found);
-//        return true;
-//    }
-//    return false; 
-//}
-
-
-//bool TestCollection::valid_identity_cyclic(string word, Params<ACJ>& params)
-//{
-//    // Checks to see is ALL  cyclic permutations of a word is identity somewhere in the box
-//    if (!word.size()) return false;
-//	for (string::size_type pos = 0; pos < word.size(); ++pos) {
-//		string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
-//		SL2ACJ w = construct_word(pword, params);
-//		if (not_identity(w)) {
-//			return false;
-////        } else {
-////            XComplex a = w.a.center();
-////            XComplex b = w.b.center();
-////            XComplex c = w.c.center();
-////            XComplex d = w.d.center();
-////            fprintf(stderr, "This word is identity somewhere in the box\n");
-////            fprintf(stderr, "Word: %s\n", word.c_str());
-////            fprintf(stderr, "At the center is has coords\n");
-////            fprintf(stderr, "a: %f + I %f\n", a.re, a.im);
-////            fprintf(stderr, "b: %f + I %f\n", b.re, b.im);
-////            fprintf(stderr, "c: %f + I %f\n", c.re, c.im);
-////            fprintf(stderr, "d: %f + I %f\n", d.re, d.im);
-//        }
-//	}
-//	return true;
-//}
-
-//bool TestCollection::valid_variety(string word, Params<ACJ>& params)
-//{
-//    // Checks to see is ALL  cyclic box is small enough for all cyclic permutations to be inside variety neighborhood
-//    if (!word.size()) return false;
-//	for (string::size_type pos = 0; pos < word.size(); ++pos) {
-//            string pword = word.substr(pos, word.size()-pos) + word.substr(0, pos);
-//            SL2ACJ w = construct_word(pword, params);
-//            if (!(absUB(w.c) < 1 && absUB(w.b) < 1)) { return false; }
-//	}
-//	return true;
-//}
 
 box_state TestCollection::is_var_intersection(Box& box, string& aux_word,
                                        unordered_map<int,ACJ>& para_cache, unordered_map<string,SL2ACJ>& words_cache)
@@ -484,7 +389,6 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
     int g_len = g_length(word);
     double one = 1; // Exact
 	SL2ACJ w = construct_word(word, params, para_cache, words_cache);
-	//SL2ACJ w = construct_word_simple(word, params);
 
     if (inside_var_nbd(w)) { 
         if (g_len <= g_max_g_len) {
@@ -531,7 +435,6 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
                 // We look over 16 nearby lattice points
                 int s[5] = {0,-1,1,-2,2};
                 SL2ACJ w_k;
-                ACJ T;
                 pair<unordered_map<int,ACJ>::iterator,bool> lookup_para;
                 int N, M;
                 for (int i = 0; i < 5; ++i) {
@@ -542,22 +445,14 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
                         if (N == 0 && M == 0) {
                             w_k = w;
                         } else {
-                            //if (abs(M) > 1024 || abs(N) > 1024) { fprintf(stderr, "Error constructing word: huge translation\n"); }
-                           // lookup_para = para_cache.emplace(4096*M+N, ACJ());
-                            //if (lookup_para.second) {
-                            T = params.lattice*double(-N) + double(-M);
-                           //     swap(lookup_para.first->second, T);
-                           // }
-                            // Shift to "0"
-                            //w_k = SL2ACJ(w.a - lookup_para.first->second * w.c, w.b - lookup_para.first->second * w.d, w.c, w.d); // Cheaper multiplying
-                            w_k = SL2ACJ(w.a + T * w.c, w.b + T * w.d, w.c, w.d); // Cheaper multiplying
-                            // What if we now have a variety word?
-//                            string word_k = shifted_word(word, - M, - N);
-//                            fprintf(stderr, "Shifted Word %s\n", word_k.c_str());
-//                            fprintf(stderr, "a: %f + I %f with absLB  %f and absUB %f\n", w_k.a.f.re, w_k.a.f.im, absLB(w_k.a), absUB(w_k.a));
-//                            fprintf(stderr, "b: %f + I %f with absLB  %f and absUB %f\n", w_k.b.f.re, w_k.b.f.im, absLB(w_k.b), absUB(w_k.b));
-//                            fprintf(stderr, "c: %f + I %f with absLB  %f and absUB %f\n", w_k.c.f.re, w_k.c.f.im, absLB(w_k.c), absUB(w_k.c));
-//                            fprintf(stderr, "d: %f + I %f with absLB  %f and absUB %f\n", w_k.a.f.re, w_k.a.f.im, absLB(w_k.a), absUB(w_k.a));
+                            if (abs(M) > 1024 || abs(N) > 1024) { fprintf(stderr, "Error constructing word: huge translation\n"); }
+                            lookup_para = para_cache.emplace(4096*(-M)-N, ACJ());
+                            if (lookup_para.second) {
+                                ACJ T = params.lattice*double(-N) + double(-M);
+                                swap(lookup_para.first->second, T);
+                            }
+                            w_k = SL2ACJ(w.a + lookup_para.first->second * w.c, w.b + lookup_para.first->second * w.d, w.c, w.d); // Cheaper multiplying
+
                             if (inside_var_nbd(w_k)) { 
                                 if (g_len <= g_max_g_len) {
                                     state = variety_nbd;
@@ -580,7 +475,6 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
                                 // anywhere in the box, we can kill the box
                                 for (vector<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
                                     SL2ACJ w_sub = construct_word(*it, params, para_cache, words_cache);
-                                    //SL2ACJ w_sub = construct_word_simple(*it, params);
                                     if (not_para_fix_inf(w_sub)) {
                                         aux_word.assign(*it);
                                         return killed_elliptic;
@@ -654,11 +548,14 @@ box_state TestCollection::evaluateCenter(int index, Box& box)
 		case 5: return check_bounds_center(params.parabolic.re > 0.5);
 		case 6: {
 			g_latticeArea = pow(absLB(params.loxodromic_sqrt),2)*params.lattice.im;
-			return check_bounds_center(g_latticeArea > g_maximumArea);
+			return check_bounds_center(g_latticeArea > g_maximumArea || g_latticeArea < g_minimumArea);
 		}
 		case 7: {
+            if (box.name.length() < g_slope_dist_depth) {
+                return open;
+            } 
             int max_dist = short_slopes_max_dist_center(box);
-		    return check_bounds_center(max_dist > 0 && max_dist < 6);
+            return check_bounds_center(max_dist > 0 && max_dist < 6);
 		}
 		case 8: {
             if (box.qr.words().size() < 2 || box.name.length() < g_var_int_depth) {
@@ -683,9 +580,6 @@ box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vec
 	Params<XComplex> nearer = box.nearer();
 	Params<XComplex> further = box.further();
 	Params<XComplex> greater = box.greater();
-//    if (index < g_num_bnd_tests) {
-//        fprintf(stderr, "Evaluate for bounds of box %s\n", box.name.c_str());
-//    }
 	switch(index) {
 		case 0: return check_bounds(absUB(further.loxodromic_sqrt) < 1.0);
 		case 1: return check_bounds(greater.loxodromic_sqrt.im < 0.0
@@ -701,24 +595,27 @@ box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vec
 		case 5: return check_bounds(nearer.parabolic.re > 0.5);
 		case 6: {
             // Area is |lox_sqrt|^2*|Im(lattice)|.
-            double area = areaLB(nearer);
-		    return check_bounds(area > g_maximumArea);
+            double area_lb = areaLB(nearer);
+            double area_ub = areaUB(further);
+		    return check_bounds(area_lb > g_maximumArea || area_ub < g_minimumArea );
 		}
 		case 7: {
+            if (box.name.length() < g_slope_dist_depth) {
+                return open;
+            }
             int max_dist = short_slopes_max_dist(box);
-		    return check_bounds(max_dist > 0 && max_dist < 6);
+            return check_bounds(max_dist > 0 && max_dist < 6);
 		}
 		case 8: {
+            if (box.qr.words().size() < 2 || box.name.length() < g_var_int_depth) {
+                 if (box.qr.words().size() == 0) { return open; } 
+                 else { return open_with_qr; }
+            }
 		    return is_var_intersection(box, aux_word, para_cache, words_cache);
 		}
 		default: {
 			Params<ACJ> cover(box.cover());
-            // fprintf(stderr, "Evaluate for word %s and box %s\n", indexString[index-g_num_bnd_tests].c_str(), box.name.c_str());
 			box_state result = evaluate_ACJ(indexString[index-g_num_bnd_tests], cover, aux_word, new_qrs, para_cache, words_cache);
-//			if (result) {
-//                // TODO: Understand this tail enumeration that adds words based on given word
-//				enumerate(indexString[index-g_num_bnd_tests].c_str());
-//			}
 			return result;
 		}
 	}
@@ -750,7 +647,6 @@ int TestCollection::add(string buf)
     }  
 	map<string, int>::iterator it = stringIndex.find(word);
 	if (it == stringIndex.end()) {
-//		fprintf(stderr, "adding %lu=%s\n", indexString.size(), word.c_str());
 		stringIndex[word] = indexString.size();
 		indexString.push_back(word);
 		return indexString.size()+g_num_bnd_tests-1;
@@ -776,97 +672,3 @@ void TestCollection::loadImpossibleRelations(const char* fileName)
 	impossible = ImpossibleRelations::create(fileName);
 }
 
-//int g_maxWordLength = 2;
-//void TestCollection::enumerate(const char* w)
-//{
-//	static vector<int> maxP;
-//	if (!*w && !maxP.empty())
-//		return;
-//	int pCount=0, lCount=0;
-//	while (*w) {
-//		if (*w == 'g' || *w == 'G')
-//			++lCount;
-//		else
-//			++pCount;
-//		++w;
-//	}
-//	if (lCount == 0) lCount = 1;
-//	if (lCount >= maxP.size()) {
-//		maxP.resize(lCount+1, -1);
-//	}
-//	if (pCount <= maxP[lCount]) {
-//		return;
-//	}
-//	
-//	if (lCount + pCount > g_maxWordLength)
-//		g_maxWordLength = lCount + pCount;
-//	
-//	maxP[lCount] = pCount;
-//	
-//	if (pCount > 2)
-//		pCount = 2;
-//	if (lCount > 2)
-//		lCount = 2;
-////	printf("ENUMERATING %d,%d\n", pCount, lCount);
-////	enumerateTails("", pCount, lCount);
-//}
-//
-//void TestCollection::enumerateTails(string s, int pCount, int lCount)
-//{
-//	if (pCount < -1 || lCount < -1 || (pCount == -1 && lCount == -1))
-//		return;
-//	const char* p = "Gg";
-//	if (s.size() > 0) {
-//		char last = s[s.size()-1];
-//		switch(last) {
-//			case 'G': p = "GMmNn"; break;
-//			case 'g': p = "gMmNn"; break;
-//			case 'M': p = "GgMNn"; break;
-//			case 'm': p = "GgmNn"; break;
-//			case 'N': p = "GgN"; break;
-//			case 'n': p = "Ggn"; break;
-//		}
-//	}
-//	for (; *p; ++p) {
-//		string n = s;
-//		n.append(1, *p);
-//		if (*p == 'g' || *p == 'G') {
-//			add(n);
-//			enumerateTails(n, pCount, lCount-1);
-//		} else {
-//			enumerateTails(n, pCount-1, lCount);
-//		}
-//	}
-//}
-//
-//string checkPower(string word, int x, int y)
-//{
-//	char buf[200];
-//	char *bp = buf;
-//	if (abs(x) > 10 || abs(y) > 10)
-//		return "";
-//	while (x > 0) { *bp++ = 'm'; --x; }
-//	while (x < 0) { *bp++ = 'M'; ++x; }
-//	while (y > 0) { *bp++ = 'n'; --y; }
-//	while (y < 0) { *bp++ = 'N'; ++y; }
-//	strcpy(bp, word.c_str());
-//	int l = strlen(buf);
-//	for (int n = 2; n+n <= l; ++n) {
-//		int k;
-//		for ( k = 1; k*n < l; ++k) ;
-//		if (k*n == l) {
-//			for (--k; k > 0; --k) {
-//				if (strncmp(buf, buf+k*n, n))
-//					break;
-//			}
-//			if (k == 0) {
-////				fprintf(stderr, "id %s x%d\n", buf, n);
-//				g_testCollectionFullWord = buf;
-//				buf[n] = '\0';
-//				return buf;
-//			}
-//		}
-//	}
-////	fprintf(stderr, "fullWord = %s\n", buf);
-//	return "";
-//}

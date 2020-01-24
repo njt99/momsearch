@@ -31,12 +31,7 @@ Box Box::child(int dir) const
 	++child.pos;
 	if (child.pos == 6) { child.pos = 0; }
 
-//	child.name = name;
 	child.name.append(1, '0'+dir);
-
-//  fprintf(stderr, "Test name %s\n", child.name.c_str());
-//  fprintf(stderr, "Test qr %s\n", child.qr.desc().c_str());
-//	child.qr = qr;
 
     child.compute_center_and_size();
 	child.compute_cover();
@@ -197,21 +192,3 @@ void Box::compute_greater()
 	_greater.parabolic = XComplex(m[5], m[2]);
     _greater.box_name = name;
 }
-
-//Params<XComplex> Box::offset(const double* offset) const
-//{
-//	Params<XComplex> result;
-//	result.lattice = XComplex(
-//		scale[3]*(offset[3]*size_digits[3] + center_digits[3]),
-//		scale[0]*(offset[0]*size_digits[0] + center_digits[0])
-//	);
-//	result.loxodromic_sqrt = XComplex(
-//		scale[4]*(offset[4]*size_digits[4] + center_digits[4]),
-//		scale[1]*(offset[1]*size_digits[1] + center_digits[1])
-//	);
-//	result.parabolic = XComplex(
-//		scale[5]*(offset[5]*size_digits[5] + center_digits[5]),
-//		scale[2]*(offset[2]*size_digits[2] + center_digits[2])
-//	);
-//	return result;
-//}

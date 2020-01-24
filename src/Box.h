@@ -3,6 +3,7 @@
 #include "Params.h"
 #include "ACJ.h"
 #include "QuasiRelators.h"
+#include <set>
 
 struct Box {
 	Box();
@@ -14,7 +15,7 @@ struct Box {
 	Params<XComplex> nearer() const { return _nearer; } // returns all values closer to 0 than in box or 0 if box overlaps
 	Params<XComplex> further() const { return _further; } // returns all values futher from 0 that in the box
 	Params<XComplex> greater() const { return _greater; } // returns all values greater than in the box
-//	Params<XComplex> offset(const double* offset) const;
+    std::set<std::pair<double,double> > short_slopes;
 private:
 	int pos;
 	double center_digits[6];
@@ -43,6 +44,18 @@ inline const double areaLB(const Params<XComplex>&nearer)
     double lox_im = (1-EPS)*(lox_sqrt.im*lox_sqrt.im);
     double lox_norm = (1-EPS)*(lox_re + lox_im);
     return (1-EPS)*(lox_norm*lat_im);
+}
+
+inline const double areaUB(const Params<XComplex>&further)
+{
+    // Area is |lox_sqrt|^2*|Im(lattice)|.
+    XComplex lox_sqrt = further.loxodromic_sqrt;
+    double lat_im     = further.lattice.im;
+    // Apply Lemma 7 of GMT.
+    double lox_re = (1+EPS)*(lox_sqrt.re*lox_sqrt.re);
+    double lox_im = (1+EPS)*(lox_sqrt.im*lox_sqrt.im);
+    double lox_norm = (1+EPS)*(lox_re + lox_im);
+    return (1+EPS)*(lox_norm*lat_im);
 }
 
 #endif // __Box_h

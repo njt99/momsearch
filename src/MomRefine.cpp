@@ -141,7 +141,9 @@ int treeSize(PartialTree& t) {
 extern string g_testCollectionFullWord;
 extern int g_xLattice;
 extern int g_yLattice;
+extern int g_max_g_len;
 extern double g_maximumArea;
+extern double g_minimumArea;
 
 // Provides the word for a testIndex while
 // multplied by g_xLattice copies of m and g_yLattice
@@ -200,6 +202,10 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
             string segment;
             while(std::getline(qrs, segment, ',')) {
                box.qr.getName(segment);
+                if (g_length(segment) <= g_max_g_len) {
+                    t.testIndex = g_tests.add(segment);
+                    break;
+                } 
             }            
         }
         box_state result = g_tests.evaluateBox(t.testIndex, box, aux_word, new_qrs, para_cache, short_words_cache);
@@ -436,6 +442,7 @@ static struct option longOptions[] = {
 	{"ballSearchDepth", required_argument, NULL, 'B'},
 	{"fillHoles", no_argument, NULL, 'f'},
 	{"maxArea", required_argument, NULL, 'a'},
+	{"minArea", required_argument, NULL, 'A'},
 	{NULL, 0, NULL, 0}
 };
 
@@ -529,6 +536,7 @@ int main(int argc, char** argv)
 		case 'B': g_options.ballSearchDepth = atoi(optarg); break;
 		case 'f': g_options.fillHoles = true; break;
 		case 'a': g_maximumArea = atof(optarg); break;
+		case 'A': g_minimumArea = atof(optarg); break;
 		}
 	}
 //    fprintf(stderr, "Max depth %d\n", g_options.maxDepth);

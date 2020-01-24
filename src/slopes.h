@@ -13,6 +13,11 @@
 
 using namespace std;
 
+// should use ints, but to avoid type casting
+// we use doubles, which give exact integers
+// in our range for slopes
+typedef pair<double,double> slope;
+
 const int short_slopes_max_dist(Box& box);
 const int short_slopes_max_dist_center(Box& box);
 
