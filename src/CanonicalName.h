@@ -15,8 +15,10 @@ class CanonicalName {
 public:
 	CanonicalName();
 	std::string inverse(std::string name);
+	std::string mirror(std::string name);
 	void addRelator(std::string relator);
 	std::string getCanonicalName(std::string name);
+	std::string canonical_mirror(std::string name);
 	std::string getCanonicalClass(std::string name);
 	
 private:

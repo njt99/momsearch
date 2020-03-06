@@ -10,6 +10,7 @@
 #include "Params.h"
 
 #include <vector>
+#include <set>
 #include <string>
 
 std::vector<std::string> findWords(
@@ -19,3 +20,5 @@ std::vector<std::string> findWords(
 	int maxLength,
 	std::vector< std::string > quasiRelators
 );
+
+std::set<std::string> find_words(const Params<XComplex> params, int num_words, int max_g_len, std::vector<std::string> relators);

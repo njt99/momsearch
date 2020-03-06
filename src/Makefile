@@ -9,6 +9,7 @@ CC= g++
 #COPTS=-O3 -std=c++11 -stdlib=libc++
 #COPTS=-xHost -O3 -std=c++11
 #COPTS=-g3 -Wall -std=c++11
+#COPTS=-O3 -pg -std=c++11
 COPTS=-O3 -std=c++11
 
 .cpp.o:
@@ -18,7 +19,7 @@ COPTS=-O3 -std=c++11
 	$(CC) $(COPTS) $(CCFLAGS) -c ${@:o=C}
 
 refine: $(REFINEOBJS)
-	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes
+	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes_old
 
 treecat: $(TREECATOBJS)
 	$(CPLUSPLUS) $(COPTS) $(TREECATOBJS) -o ../bin/treecat_debug

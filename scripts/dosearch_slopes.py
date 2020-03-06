@@ -86,25 +86,25 @@ if __name__ == '__main__' :
     treecat = './treecat'
     treeholes = './treecat --open_holes'
     treecheck = './treecat --mark -s'
-    refine = './refine_slopes_dbg'
+    refine = './refine_slopes'
 
     # Set up the rest of the arguments
     srcDir = args[0]
     destDir = args[1]
     childLimit = 8
-    depth_limit = 160
+    depth_limit = 240
 
     # maxSize = '25000000'
     # maxDepth = '257'
     # truncateDepth = '211'
     # inventDepth = '207'
     maxSize = '5000000'
-    maxDepth = '180'
+    maxDepth = '240'
     truncateDepth = '6'
-    inventDepth = '60'
+    inventDepth = '42'
     ballSearchDepth = '6'
     # ballSearchDepth = '-1'
-    maxArea = '5.6'
+    maxArea = '5.7'
     minArea = '0.0'
     # fillHoles = ' --fillHoles'
     fillHoles = ''

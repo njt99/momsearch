@@ -40,7 +40,6 @@ inline const XComplex sq(const XComplex& x) {
     return (x*x).z;
 }
 
-
 void fill_slope_candidates(Box& box) {
     Params<XComplex> nearer = box.nearer();
     Params<ACJ> cover = box.cover();
@@ -49,22 +48,23 @@ void fill_slope_candidates(Box& box) {
     ACJ SL = S*L;
     double b = 0;
     while (absLB((S*nearer.lattice.im)*b) <= 6) {
-        double a = 0;  
-        // want a*s <= b*s/2 + sqrt(36 - (b s lattice.im)^2)
-        // unwrap to 2 a <= b or 4 * s^2 (2 a - b)^2 <= 72 -
-        ACJ cut_off = (-sq((S*nearer.lattice.im)*b)) + 144; 
-        while ( 2*a <= b || absLB(sq(S*(2*a-b))) <= absUB(cut_off) ) { 
-            for (int sgn = -1; sgn < 2; sgn += 2) {
+        double a = 0; 
+        // want a*s <= b*s/2 + sqrt(36 - (b s lattice.im)^2) with s = |S|
+        // unwrap to 2 a <= b or s^2 (2 a - b)^2 <= 144 - 4(b s lattice.im)^2
+        double cutoff = (1-EPS)*(absLB(sq(S*(2*a - b))) + absLB(sq((S*nearer.lattice.im)*b*2)));
+        while ( 2*a <= b || cutoff <= 144 ) { 
+            for (double sgn = -1; sgn < 2; sgn += 2) {
                 ACJ g = ((L * b) + (sgn * a))*S;
                 // avoid long slopes, non-primatives, and overconting (-1,0) and (1,0) or (0,1)
                 if ((a == 0 && b == 0) || (sgn == -1 && (a == 0 || b == 0)) ||
-                    gcd((int) a, (int) b) > 1 || absLB(g) > 6) {
+                    gcd(int(a), int(b)) > 1 || absLB(g) > 6) {
                     continue;
                 } 
                 slope p(sgn*a, b);
                 box.short_slopes.insert(p);
             }
             a += 1;
+            cutoff = (1-EPS)*(absLB(sq(S*(2*a - b))) + absLB(sq((S*nearer.lattice.im)*b)));
         }
         b += 1;
     }

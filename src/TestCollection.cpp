@@ -32,7 +32,7 @@ double g_minimumArea = 0.0;
 int g_max_g_len = 7;
 int g_num_bnd_tests = 9;
 int g_var_int_depth = 36; // don't look for var_int unles we are this deep
-int g_slope_dist_depth = 36; 
+int g_slope_dist_depth = 42; 
 
 string g_testCollectionFullWord;
 
