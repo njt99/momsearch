@@ -394,7 +394,7 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
         if (g_len <= g_max_g_len) {
             return variety_nbd;
         } else {
-            fprintf(stderr, "Box in large length word VAR nbd, word : %s box : %s\n", word.c_str(), params.box_name.c_str()); 
+            // fprintf(stderr, "Box in large length word VAR nbd, word : %s box : %s\n", word.c_str(), params.box_name.c_str()); 
         }
     }
 

@@ -19,7 +19,7 @@ COPTS=-O3 -std=c++11
 	$(CC) $(COPTS) $(CCFLAGS) -c ${@:o=C}
 
 refine: $(REFINEOBJS)
-	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes_old
+	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes
 
 treecat: $(TREECATOBJS)
 	$(CPLUSPLUS) $(COPTS) $(TREECATOBJS) -o ../bin/treecat_debug

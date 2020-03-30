@@ -188,7 +188,7 @@ unordered_map<string,SL2ACJ> short_words_cache;
 extern double g_latticeArea;
 bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, vector< Box >& place, int newDepth, int& searchedDepth)
 {
-	//fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
+	// fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
 	place.push_back(box);
 	int oldTestIndex = t.testIndex;
     vector<string> new_qrs;
@@ -288,16 +288,13 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 		}
 	}
 
-	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth > 42) {
+	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth > 0) {
 		while (depth - searchedDepth > g_options.ballSearchDepth) {
             // fprintf(stderr, "Looking for words\n");
 			Box& searchPlace = place[++searchedDepth];
-            // fprintf(stderr, "Search Depth %d and search place %s for box %s\n", searchedDepth, searchPlace.name.c_str(), box.name.c_str());
-			set<string> search_words = find_words(searchPlace.center(),4,12,box.qr.words());
-            if (search_words.size() > 0) {
-                // add some varaition to the choice of word
-                auto s_it = search_words.begin();
-                advance(s_it, (depth % search_words.size()) % 4);
+            //fprintf(stderr, "Search Depth %d and search place %s for box %s\n", searchedDepth, searchPlace.name.c_str(), box.name.c_str());
+			set<string> search_words = find_words(searchPlace.center(),6,24,box.qr.words());
+            for (auto s_it = search_words.begin(); s_it != search_words.end(); ++s_it) {
                 string new_word = *s_it;
 
                 int old_size = g_tests.size();

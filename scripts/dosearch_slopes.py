@@ -92,14 +92,14 @@ if __name__ == '__main__' :
     srcDir = args[0]
     destDir = args[1]
     childLimit = 8
-    depth_limit = 240
+    depth_limit = 330
 
     # maxSize = '25000000'
     # maxDepth = '257'
     # truncateDepth = '211'
     # inventDepth = '207'
     maxSize = '5000000'
-    maxDepth = '240'
+    maxDepth = '330'
     truncateDepth = '6'
     inventDepth = '42'
     ballSearchDepth = '6'
