@@ -87,7 +87,7 @@ if __name__ == '__main__' :
     treecat = './treecat'
     treeholes = './treecat --open_holes'
     treecheck = './treecat --mark -s'
-    refine = './refine'
+    refine = './refine_dumb'
 
     # Set up the rest of the arguments
     srcDir = args[0]
@@ -95,12 +95,12 @@ if __name__ == '__main__' :
     childLimit = 8
     depth_limit = 67
 
-    maxSize = '25000000'
-    maxDepth = '257'
-    truncateDepth = '211'
-    inventDepth = '207'
+    maxSize = '5000000'
+    maxDepth = '181'
+    truncateDepth = '139'
+    inventDepth = '145'
     ballSearchDepth = '6'
-    maxArea = '5.32'
+    maxArea = '5.24'
     #fillHoles = ' --fillHoles'
     fillHoles = ''
     mom = '/dev/null' #/home/ayarmola/momsearch/momWords'
@@ -123,13 +123,13 @@ if __name__ == '__main__' :
         if opt in ('-h', '--holes'):
             holes_file = val
         if opt in ('-r', '--refine'):
-            refine = val
+	    refine = val
         if opt in ('-i', '--invent_depth'):
-            inventDepth = str(int(val))
+	    inventDepth = str(int(val))
         if opt in ('-t', '--truncate_depth'):
-            truncateDepth = str(int(val))
+	    truncateDepth = str(int(val))
         if opt in ('-s', '--search_depth'):
-            ballSearchDepth = str(int(val))
+	    ballSearchDepth = str(int(val))
             
     add_words(seenWords, wordsFile)
 

@@ -47,6 +47,13 @@ string CanonicalName::inverse(string s)
 	return s;
 }
 
+string CanonicalName::mirror(string s)
+{
+	for (string::size_type sp = 0; sp < s.size(); ++sp)
+		s[sp] = invertLetter(s[sp]);
+	return s;
+}
+
 CanonicalName::CanonicalName()
 {
 	impl = 0;
@@ -179,6 +186,20 @@ string CanonicalName::getCanonicalName(string s)
 	string result = impl->reduce(inverse(impl->reduce(inverse(s))));
 	//fprintf(stderr, "CanonicalName(%s) = %s\n", s.c_str(), result.c_str());
 	return result;
+}
+
+string CanonicalName::canonical_mirror(string s)
+{
+	if (!impl) {
+		initImpl();
+	}
+	string result1 = impl->reduce(inverse(impl->reduce(inverse(s))));
+	string result2 = impl->reduce(inverse(impl->reduce(inverse(mirror(s)))));
+    if (result1[0] == 'G') {
+        return result1;
+    } else {
+        return result2;
+    }
 }
 
 string CanonicalName::getCanonicalClass(string s)

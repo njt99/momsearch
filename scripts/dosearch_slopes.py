@@ -22,7 +22,7 @@ def add_holes(holes, treeholes, directory, boxfile):
     byte_string = byte_string.replace('root','')
     if len(byte_string) == 0 : byte_string = 'root'
     newHoles = set(byte_string.rstrip().split('\n'))
-    holes |= newHoles
+    holes |= set(h for h in newHoles if len(h) < 110)
 
 def add_holes_from_file(holes,fp) :
     try:
@@ -30,11 +30,10 @@ def add_holes_from_file(holes,fp) :
             hole = line.rstrip()
             if hole[0] == '1' or\
                hole[0] == '0' :
-                holes.add(hole)
+                if len(hole) < 20 :  
+                    holes.add(hole)
     except:
         print('Error loading holes file {0}\n'.format(fp))
-        sys.exit(1)
-
 
 def add_words(words, fp):
     try:
@@ -87,26 +86,34 @@ if __name__ == '__main__' :
     treecat = './treecat'
     treeholes = './treecat --open_holes'
     treecheck = './treecat --mark -s'
-    refine = './refine'
+    refine = './refine_slopes'
 
     # Set up the rest of the arguments
     srcDir = args[0]
     destDir = args[1]
     childLimit = 8
-    depth_limit = 67
+    depth_limit = 330
 
-    maxSize = '25000000'
-    maxDepth = '257'
-    truncateDepth = '211'
-    inventDepth = '207'
+    # maxSize = '25000000'
+    # maxDepth = '257'
+    # truncateDepth = '211'
+    # inventDepth = '207'
+    maxSize = '5000000'
+    maxDepth = '330'
+    truncateDepth = '6'
+    inventDepth = '42'
     ballSearchDepth = '6'
-    maxArea = '5.32'
-    #fillHoles = ' --fillHoles'
+    # ballSearchDepth = '-1'
+    maxArea = '5.7'
+    minArea = '0.0'
+    # fillHoles = ' --fillHoles'
     fillHoles = ''
-    mom = '/dev/null' #/home/ayarmola/momsearch/momWords'
-    parameterized = '/dev/null' #/home/ayarmola/momsearch/parameterizedWords'
+    # improveTree = ' --improveTree'
+    improveTree = ''
+    mom = '/dev/null' 
+    parameterized = '/dev/null'
     powers = '/home/ayarmola/momsearch/powers_combined'
-    wordsFile = '/home/ayarmola/momsearch/words'.format(time.time())
+    wordsFile = '/home/ayarmola/momsearch/words'
 
     # Get config
     holes_file = None
@@ -123,13 +130,13 @@ if __name__ == '__main__' :
         if opt in ('-h', '--holes'):
             holes_file = val
         if opt in ('-r', '--refine'):
-            refine = val
+	    refine = val
         if opt in ('-i', '--invent_depth'):
-            inventDepth = str(int(val))
+	    inventDepth = str(int(val))
         if opt in ('-t', '--truncate_depth'):
-            truncateDepth = str(int(val))
+	    truncateDepth = str(int(val))
         if opt in ('-s', '--search_depth'):
-            ballSearchDepth = str(int(val))
+	    ballSearchDepth = str(int(val))
             
     add_words(seenWords, wordsFile)
 
@@ -159,9 +166,9 @@ if __name__ == '__main__' :
     childCount = 0
     waitForHoles = False
     while True:
-        sleep(0.1) # We don't need to to run the main loop to death since we aren't using os.wait
+        sleep(0.01) # We don't need to to run the main loop to death since we aren't using os.wait
         openHoles = holes - done
-        if len(openHoles) == 0 and refineRunCount == 0:
+        if len(openHoles) == 0 and refineRunCount == 0 and len(done) == 0:
             bestHole = 'root'
         else : 
             bestHole = '1'*200
@@ -227,7 +234,7 @@ if __name__ == '__main__' :
                     continue
                 else :
                     continue
-            sleep(0.1) # We don't need to to run the main loop to death since we aren't using os.wait
+            sleep(0.01) # We don't need to to run the main loop to death since we aren't using os.wait
             continue        
 
         # If we make it here. We are running refine
@@ -245,6 +252,7 @@ if __name__ == '__main__' :
         treecat_command = '{0} {1} {2}'.format(treecat, srcDir, bestHole)
         refine_command = refine + \
                     fillHoles + \
+                    improveTree + \
                     ' --box ' + bestHole + \
                     ' --maxDepth ' + maxDepth + \
                     ' --truncateDepth ' + truncateDepth + \
@@ -252,6 +260,7 @@ if __name__ == '__main__' :
                     ' --maxSize ' + maxSize + \
                     ' --words ' + wordsFile + \
                     ' --ballSearchDepth ' + pidBallSearchDepth + \
+                    ' --minArea ' + minArea + \
                     ' --maxArea ' + maxArea + \
                     ' --powers ' + powers + \
                     ' --mom ' + mom + \

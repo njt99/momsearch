@@ -14,19 +14,25 @@
 // 4. 0 <= Im(p) <= Im(l)/2 (reduction modulo N, flipping sign of N)
 // 5. 0 <= Re(p) <= 1/2 (reduction modulo M, flipping sign of M)
 // 6. |sl^2| Im(n) <= 4 (area of fundamental paralleogram)
+// 7. all slopes of length at most 6 have distance at most 5
+// 8. we are in the var_nbd of two quasi-relators
 // 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "TestCollection.h"
+#include "CanonicalName.h"
+#include "slopes.h"
 #include "ImpossibleRelations.h"
 #include <algorithm>
 using namespace std;
-// using namespace __gnu_cxx;
 
-double g_maximumArea = 5.24;
+double g_maximumArea = 6.0;
+double g_minimumArea = 0.0;
 int g_max_g_len = 7;
-int num_bound_tests = 8;
+int g_num_bnd_tests = 10;
+int g_var_int_depth = 36; // don't look for var_int unles we are this deep
+int g_slope_dist_depth = 42; 
 
 string g_testCollectionFullWord;
 
@@ -41,7 +47,7 @@ int g_length(string& w)
 
 int TestCollection::size()
 {
-	return num_bound_tests + indexString.size();
+	return g_num_bnd_tests + indexString.size();
 }
 
 SL2ACJ TestCollection::construct_word_simple(string word, const Params<ACJ>& params)
@@ -239,6 +245,59 @@ SL2ACJ TestCollection::construct_word(string word, const Params<ACJ>& params,
   return *w;
 }
 
+box_state TestCollection::is_var_intersection(Box& box, string& aux_word,
+                                       unordered_map<int,ACJ>& para_cache, unordered_map<string,SL2ACJ>& words_cache)
+{
+    // TODO: Check this does what is should. Should show that two varieties intersect in box
+    if (box.qr.words().size() < 2 || box.name.length() < g_var_int_depth) {
+         if (box.qr.words().size() == 0) { return open; } 
+         else { return open_with_qr; }
+    }
+	Params<ACJ> params = box.cover();
+    vector<string> qrs(box.qr.words());
+    sort(qrs.begin(), qrs.end(), g_power_sort);
+    int min_power = g_power(qrs.front());
+    vector<string> var_words;
+	for (auto it = qrs.begin(); it != qrs.end(); ++it) {
+        // We avoid high g_power relators for optimization.
+        // TODO: check that this does not need to be relaxed when pushing for higher powers
+        if (g_power(*it) > min_power + 1) {
+            break;
+        } else {
+            SL2ACJ w = construct_word(*it, params, para_cache, words_cache);
+            if (inside_var_nbd(w)) {
+                var_words.push_back(*it);
+            }
+        }
+    }
+    if (var_words.size() > 1) {
+	    for (auto it0 = var_words.begin(); it0 != var_words.end(); ++it0) {
+	        for (auto it1 = ++(var_words.begin()); it1 != var_words.end(); ++it1) {
+                // it is possible that the two words are related as qrs are not
+                // always reprented by canonical names, especially given shifting,
+                // so we check here. note, it is likely a no-op in practice given 
+                // the way the word list in generated currently
+                CanonicalName canonicalName;
+                canonicalName.addRelator(*it0);
+                // note, since g power increase, we only need to check one direction
+                string can1 = canonicalName.getCanonicalName(*it1); 
+                if (g_power(can1) == 0) { continue; }
+                SL2ACJ w0 = construct_word(*it0, params, para_cache, words_cache); 
+                SL2ACJ w1 = construct_word(*it1, params, para_cache, words_cache);
+                // we want a point to be on the intersection 
+                if (notZero(w1 - w0) && notZero(w1 + w0)) {
+                    continue;
+                } else {
+                    string two_relators = *it0 + "," + *it1;
+                    aux_word.assign(two_relators); 
+                    return two_var_inter; 
+                }
+            }
+        }
+    }
+    return open_with_qr;
+}
+
 box_state TestCollection::evaluate_approx(string word, Params<XComplex>& params)
 {
     SL2C w = construct_word(word, params);
@@ -321,20 +380,20 @@ string shifted_word(const string& word, int M_pow, int N_pow) {
 }
 	
 box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string& aux_word, vector<string>& new_qrs,
-                                       unordered_map<int,ACJ>& para_cache, unordered_map<string,SL2ACJ>& words_cache) {
+                                       unordered_map<int,ACJ>& para_cache, unordered_map<string,SL2ACJ>& words_cache)
+{
   box_state state = open;
   bool found_qrs = false;
   aux_word.assign(word);
   int g_len = g_length(word);
   double one = 1; // Exact
-  SL2ACJ w = construct_word(word, params, para_cache, words_cache);
-  //SL2ACJ w = construct_word_simple(word, params);
+	SL2ACJ w = construct_word(word, params, para_cache, words_cache);
 
   if (inside_var_nbd(w)) { 
     if (g_len <= g_max_g_len) {
       return variety_nbd;
     } else {
-      fprintf(stderr, "Box in large length word VAR nbd, word : %s box : %s\n", word.c_str(), params.box_name.c_str()); 
+      // fprintf(stderr, "Box in large length word VAR nbd, word : %s box : %s\n", word.c_str(), params.box_name.c_str()); 
     }
   }
 
@@ -342,21 +401,21 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
     if (not_para_fix_inf(w)) {
       return killed_no_parabolics;
     } else {
+
 			vector<string> mandatory;
 			bool isImpossible = impossible->isAlwaysImpossible(word, mandatory);
-			if (isImpossible) {
+
+			if (isImpossible) { 
         return killed_parabolics_impossible;
       } else if (mandatory.size() > 0) {
         for (vector<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
           SL2ACJ w_sub = construct_word(*it, params, para_cache, words_cache);
-          //SL2ACJ w_sub = construct_word_simple(*it, params);
           if (not_para_fix_inf(w_sub)) {
             aux_word.assign(*it);
             return killed_elliptic;
           }
         }
       }
-   
       // Look for lattice points. We guess at the center
       // No reason to look for a unique lattice point if w.b has large size
       ACJ L = params.lattice;
@@ -371,7 +430,6 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
         // We look over 16 nearby lattice points
         int s[5] = {0,-1,1,-2,2};
         SL2ACJ w_k;
-        ACJ T;
         pair<unordered_map<int,ACJ>::iterator,bool> lookup_para;
         int N, M;
         for (int i = 0; i < 5; ++i) {
@@ -382,22 +440,14 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
             if (N == 0 && M == 0) {
               w_k = w;
             } else {
-//            if (abs(M) > 1024 || abs(N) > 1024) { fprintf(stderr, "Error constructing word: huge translation\n"); }
-//            lookup_para = para_cache.emplace(4096*M+N, ACJ());
-//            if (lookup_para.second) {
-              T = params.lattice*double(-N) + double(-M);
-//            swap(lookup_para.first->second, T);
-//            }
-//            Shift to "0"
-//            w_k = SL2ACJ(w.a - lookup_para.first->second * w.c, w.b - lookup_para.first->second * w.d, w.c, w.d); // Cheaper multiplying
-              w_k = SL2ACJ(w.a + T * w.c, w.b + T * w.d, w.c, w.d); // Cheaper multiplying
-//            What if we now have a variety word?
-//            string word_k = shifted_word(word, - M, - N);
-//            fprintf(stderr, "Shifted Word %s\n", word_k.c_str());
-//            fprintf(stderr, "a: %f + I %f with absLB  %f and absUB %f\n", w_k.a.f.re, w_k.a.f.im, absLB(w_k.a), absUB(w_k.a));
-//            fprintf(stderr, "b: %f + I %f with absLB  %f and absUB %f\n", w_k.b.f.re, w_k.b.f.im, absLB(w_k.b), absUB(w_k.b));
-//            fprintf(stderr, "c: %f + I %f with absLB  %f and absUB %f\n", w_k.c.f.re, w_k.c.f.im, absLB(w_k.c), absUB(w_k.c));
-//            fprintf(stderr, "d: %f + I %f with absLB  %f and absUB %f\n", w_k.a.f.re, w_k.a.f.im, absLB(w_k.a), absUB(w_k.a));
+              if (abs(M) > 1024 || abs(N) > 1024) { fprintf(stderr, "Error constructing word: huge translation\n"); }
+              lookup_para = para_cache.emplace(4096*(-M)-N, ACJ());
+              if (lookup_para.second) {
+                ACJ T = params.lattice*double(-N) + double(-M);
+                swap(lookup_para.first->second, T);
+              }
+              w_k = SL2ACJ(w.a + lookup_para.first->second * w.c, w.b + lookup_para.first->second * w.d, w.c, w.d); // Cheaper multiplying
+
               if (inside_var_nbd(w_k)) { 
                 if (g_len <= g_max_g_len) {
                   state = variety_nbd;
@@ -420,7 +470,6 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
                 // anywhere in the box, we can kill the box
                 for (vector<string>::iterator it = mandatory.begin(); it != mandatory.end(); ++it) {
                   SL2ACJ w_sub = construct_word(*it, params, para_cache, words_cache);
-                  //SL2ACJ w_sub = construct_word_simple(*it, params);
                   if (not_para_fix_inf(w_sub)) {
                     aux_word.assign(*it);
                     return killed_elliptic;
@@ -429,16 +478,6 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
               }
             }
             if (absUB(w_k.b) < 1 && absLB(w_k.b) > 0) {
-//            string word_k = shifted_word(word, - M, - N);
-//            fprintf(stderr, "Killed by Failed qr %s\n", word_k.c_str());
-//            SL2ACJ new_w_k = construct_word(word_k, params);
-//            SL2ACJ gah_k = constructT(params, - M, - N) * w;
-//            fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
-//                    absLB(w_k.b), absLB(w_k.c), absLB(w_k.a - 1.), absLB(w_k.d - 1.), absLB(w_k.a + 1.), absLB(w_k.d + 1.));
-//            fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
-//                    absLB(new_w_k.b), absLB(new_w_k.c), absLB(new_w_k.a - 1.), absLB(new_w_k.d - 1.), absLB(new_w_k.a + 1.), absLB(new_w_k.d + 1.));
-//            fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
-//                    absLB(gah_k.b), absLB(gah_k.c), absLB(gah_k.a - 1.), absLB(gah_k.d - 1.), absLB(gah_k.a + 1.), absLB(gah_k.d + 1.));
               state = killed_failed_qr;
               break;
             }
@@ -448,27 +487,21 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
               break;
             }
             if (absUB(w_k.b) < 1) {
-//            If nothing has worked, at least add w as a quasi relator
+              // If nothing has worked, at least add w as a quasi relator
               state = open_with_qr;
               found_qrs = true;
               new_qrs.push_back(shifted_word(word, - M, - N));
-//            string word_k = shifted_word(word, - M, - N);
-//            SL2ACJ new_w_k = construct_word(word_k, params);
-//            fprintf(stderr,"Horo Ratio for new QR is %f\n", absUB(w_k.c / params.loxodromic_sqrt));
-//            fprintf(stderr,"Reconstucted horo ratio for QR is %f\n", absUB(new_w_k.c / params.loxodromic_sqrt));
             }
           }
-					if (state != open && state != open_with_qr) {
-				    aux_word.assign(shifted_word(word, - M, - N));
-					  return state;
-					}
+          if (state != open && state != open_with_qr) {
+            aux_word.assign(shifted_word(word, - M, - N));
+            return state;
+          }
         }
       }
     }
   }
-  if (found_qrs) {
-    return open_with_qr; 
-  }
+  if (found_qrs) return open_with_qr; 
   return open;
 }
 
@@ -499,11 +532,26 @@ box_state TestCollection::evaluateCenter(int index, Box& box)
 		case 5: return check_bounds_center(params.parabolic.re > 0.5);
 		case 6: {
 			g_latticeArea = pow(absLB(params.loxodromic_sqrt),2)*params.lattice.im;
-			return check_bounds_center(g_latticeArea > g_maximumArea);
+			return check_bounds_center(g_latticeArea > g_maximumArea || g_latticeArea < g_minimumArea);
 		}
-    case 7: return open;
-		default:
-			return evaluate_approx(indexString[index - num_bound_tests], params);
+		case 7: {
+            if (box.name.length() < g_slope_dist_depth) {
+                return open;
+            } 
+            int max_dist = short_slopes_max_dist_center(box);
+            return check_bounds_center(max_dist > 0 && max_dist < 6);
+		}
+		case 8: {
+            if (box.qr.words().size() < 2 || box.name.length() < g_var_int_depth) {
+                 if (box.qr.words().size() == 0) { return open; } 
+                 else { return open_with_qr; }
+            }
+		    return two_var_center;
+		}
+    case 9: return open;
+		default: {
+			return evaluate_approx(indexString[index - g_num_bnd_tests], params);
+    }
 	}
 }
 
@@ -529,21 +577,35 @@ box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vec
                                  || greater.parabolic.re < 0.0);
 		case 2: return check_bounds(fabs(nearer.lattice.re) > 0.5);
 		case 3: return check_bounds(absUB(further.lattice) < 1.0);
-        // Note: we can exclude the box if and only if the parabolic imag part is
-        // bigger than half the lattice imag part over the WHOLE box
-        // We assume that case 1 has been tested. Multiplication by 0.5 is EXACT (if no underflow or overflow)
+    // Note: we can exclude the box if and only if the parabolic imag part is
+    // bigger than half the lattice imag part over the WHOLE box
+    // We assume that case 1 has been tested. Multiplication by 0.5 is EXACT (if no underflow or overflow)
 		case 4: return check_bounds(nearer.parabolic.im > 0.5*further.lattice.im);
 		case 5: return check_bounds(nearer.parabolic.re > 0.5);
 		case 6: {
-//    Area is |lox_sqrt|^2*|Im(lattice)|.
-      double area = areaLB(nearer);
-		  return check_bounds(area > g_maximumArea);
+      // Area is |lox_sqrt|^2*|Im(lattice)|.
+      double area_lb = areaLB(nearer);
+      double area_ub = areaUB(further);
+      return check_bounds(area_lb > g_maximumArea || area_ub < g_minimumArea );
 		}
-    case 7: return open;
+		case 7: {
+      if (box.name.length() < g_slope_dist_depth) {
+        return open;
+      }
+      int max_dist = short_slopes_max_dist(box);
+      return check_bounds(max_dist > 0 && max_dist < 6);
+		}
+		case 8: {
+      if (box.qr.words().size() < 2 || box.name.length() < g_var_int_depth) {
+        if (box.qr.words().size() == 0) { return open; } 
+        else { return open_with_qr; }
+      }
+      return is_var_intersection(box, aux_word, para_cache, words_cache);
+		}
+    case 9: return open;
 		default: {
 			Params<ACJ> cover(box.cover());
-//    fprintf(stderr, "Evaluate for word %s and box %s\n", indexString[index-num_bound_tests].c_str(), box.name.c_str());
-			box_state result = evaluate_ACJ(indexString[index - num_bound_tests], cover, aux_word, new_qrs, para_cache, words_cache);
+			box_state result = evaluate_ACJ(indexString[index - g_num_bnd_tests], cover, aux_word, new_qrs, para_cache, words_cache);
 			return result;
 		}
 	}
@@ -558,10 +620,12 @@ bool TestCollection::kills_disk_center(int index, const Disk& d, const Box& box)
 		case 3: 
 		case 4: 
 		case 5: 
-		case 6: {
+		case 6: 
+		case 7: 
+		case 8: {
       return false;
     }
-		case 7: {
+		case 9: {
       XComplex L = params.lattice;
       XComplex c = d.center(); 
       XComplex r = d.radius(); 
@@ -576,7 +640,7 @@ bool TestCollection::kills_disk_center(int index, const Disk& d, const Box& box)
       return false;
 		}
 		default: {
-	    SL2C w = construct_word(indexString[index - num_bound_tests], params);
+	    SL2C w = construct_word(indexString[index - g_num_bnd_tests], params);
       return disk_maybe_killed_by(d, w);  
     }
   }
@@ -592,10 +656,12 @@ bool TestCollection::kills_disk(int index, const Disk& d, const Box& box,
 		case 3: 
 		case 4: 
 		case 5: 
-		case 6: {
+		case 6: 
+		case 7: 
+		case 8: {
       return false;
     }
-		case 7: {
+		case 9: {
       ACJ L = cover.lattice;
       ACJ c = d.c_ACJ(); 
       ACJ r = d.r_ACJ(); 
@@ -610,25 +676,24 @@ bool TestCollection::kills_disk(int index, const Disk& d, const Box& box,
       return false;
 		}
 		default: {
-	    SL2ACJ w = construct_word(indexString[index - num_bound_tests], cover, para_cache, words_cache);
+	    SL2ACJ w = construct_word(indexString[index - g_num_bnd_tests], cover, para_cache, words_cache);
       return disk_killed_by(d, w);  
     }
   }
 }
 
-// Returns the index number for the first basic num_bound_tests tests
-// or the quasi-relator if the index is num_bound_tests or above
+// Returns the index number for the first basic g_num_bnd_tests tests
+// or the quasi-relator if the index is g_num_bnd_tests or above
 const char* TestCollection::getName(int index)
 {
 	static char buf[4];
-	if (index < num_bound_tests) {
+	if (index < g_num_bnd_tests) {
 		sprintf(buf, "%d", index);
 		return buf;
 	} else {
-		return indexString[index - num_bound_tests].c_str();
+		return indexString[index - g_num_bnd_tests].c_str();
 	}
 }
-
 
 int TestCollection::add(string buf)
 {
@@ -642,13 +707,12 @@ int TestCollection::add(string buf)
     }  
 	map<string, int>::iterator it = stringIndex.find(word);
 	if (it == stringIndex.end()) {
-//		fprintf(stderr, "adding %lu=%s\n", indexString.size(), word.c_str());
 		stringIndex[word] = indexString.size();
 		indexString.push_back(word);
-		return indexString.size() + num_bound_tests - 1;
-	}
-	else
-		return it->second + num_bound_tests;
+		return indexString.size() + g_num_bnd_tests - 1;
+	} else {
+		return it->second + g_num_bnd_tests;
+  }
 }
 
 void TestCollection::load(const char* fileName)
@@ -663,102 +727,7 @@ void TestCollection::load(const char* fileName)
 	}
 }
 
-void TestCollection::loadImpossibleRelations(const char* fileName)
-{
+void TestCollection::loadImpossibleRelations(const char* fileName) {
 	impossible = ImpossibleRelations::create(fileName);
 }
 
-//int g_maxWordLength = 2;
-//void TestCollection::enumerate(const char* w)
-//{
-//	static vector<int> maxP;
-//	if (!*w && !maxP.empty())
-//		return;
-//	int pCount=0, lCount=0;
-//	while (*w) {
-//		if (*w == 'g' || *w == 'G')
-//			++lCount;
-//		else
-//			++pCount;
-//		++w;
-//	}
-//	if (lCount == 0) lCount = 1;
-//	if (lCount >= maxP.size()) {
-//		maxP.resize(lCount+1, -1);
-//	}
-//	if (pCount <= maxP[lCount]) {
-//		return;
-//	}
-//	
-//	if (lCount + pCount > g_maxWordLength)
-//		g_maxWordLength = lCount + pCount;
-//	
-//	maxP[lCount] = pCount;
-//	
-//	if (pCount > 2)
-//		pCount = 2;
-//	if (lCount > 2)
-//		lCount = 2;
-////	printf("ENUMERATING %d,%d\n", pCount, lCount);
-////	enumerateTails("", pCount, lCount);
-//}
-//
-//void TestCollection::enumerateTails(string s, int pCount, int lCount)
-//{
-//	if (pCount < -1 || lCount < -1 || (pCount == -1 && lCount == -1))
-//		return;
-//	const char* p = "Gg";
-//	if (s.size() > 0) {
-//		char last = s[s.size()-1];
-//		switch(last) {
-//			case 'G': p = "GMmNn"; break;
-//			case 'g': p = "gMmNn"; break;
-//			case 'M': p = "GgMNn"; break;
-//			case 'm': p = "GgmNn"; break;
-//			case 'N': p = "GgN"; break;
-//			case 'n': p = "Ggn"; break;
-//		}
-//	}
-//	for (; *p; ++p) {
-//		string n = s;
-//		n.append(1, *p);
-//		if (*p == 'g' || *p == 'G') {
-//			add(n);
-//			enumerateTails(n, pCount, lCount-1);
-//		} else {
-//			enumerateTails(n, pCount-1, lCount);
-//		}
-//	}
-//}
-//
-//string checkPower(string word, int x, int y)
-//{
-//	char buf[200];
-//	char *bp = buf;
-//	if (abs(x) > 10 || abs(y) > 10)
-//		return "";
-//	while (x > 0) { *bp++ = 'm'; --x; }
-//	while (x < 0) { *bp++ = 'M'; ++x; }
-//	while (y > 0) { *bp++ = 'n'; --y; }
-//	while (y < 0) { *bp++ = 'N'; ++y; }
-//	strcpy(bp, word.c_str());
-//	int l = strlen(buf);
-//	for (int n = 2; n+n <= l; ++n) {
-//		int k;
-//		for ( k = 1; k*n < l; ++k) ;
-//		if (k*n == l) {
-//			for (--k; k > 0; --k) {
-//				if (strncmp(buf, buf+k*n, n))
-//					break;
-//			}
-//			if (k == 0) {
-////				fprintf(stderr, "id %s x%d\n", buf, n);
-//				g_testCollectionFullWord = buf;
-//				buf[n] = '\0';
-//				return buf;
-//			}
-//		}
-//	}
-////	fprintf(stderr, "fullWord = %s\n", buf);
-//	return "";
-//}

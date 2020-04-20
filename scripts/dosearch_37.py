@@ -22,7 +22,7 @@ def add_holes(holes, treeholes, directory, boxfile):
     byte_string = byte_string.replace('root','')
     if len(byte_string) == 0 : byte_string = 'root'
     newHoles = set(byte_string.rstrip().split('\n'))
-    holes |= newHoles
+    holes |= set(h for h in newHoles if len(h) < 20)
 
 def add_holes_from_file(holes,fp) :
     try:
@@ -30,11 +30,10 @@ def add_holes_from_file(holes,fp) :
             hole = line.rstrip()
             if hole[0] == '1' or\
                hole[0] == '0' :
-                holes.add(hole)
+                if len(hole) < 20 :  
+                    holes.add(hole)
     except:
         print('Error loading holes file {0}\n'.format(fp))
-        sys.exit(1)
-
 
 def add_words(words, fp):
     try:
@@ -87,7 +86,7 @@ if __name__ == '__main__' :
     treecat = './treecat'
     treeholes = './treecat --open_holes'
     treecheck = './treecat --mark -s'
-    refine = './refine'
+    refine = './refine_dumb'
 
     # Set up the rest of the arguments
     srcDir = args[0]
@@ -95,14 +94,13 @@ if __name__ == '__main__' :
     childLimit = 8
     depth_limit = 67
 
-    maxSize = '25000000'
-    maxDepth = '257'
-    truncateDepth = '211'
-    inventDepth = '207'
-    ballSearchDepth = '6'
-    maxArea = '5.32'
-    #fillHoles = ' --fillHoles'
-    fillHoles = ''
+    maxSize = '5000000'
+    maxDepth = '127'
+    truncateDepth = '12'
+    inventDepth = '18'
+    ballSearchDepth = '-1'
+    maxArea = '5.24'
+    fillHoles = ' --fillHoles'
     mom = '/dev/null' #/home/ayarmola/momsearch/momWords'
     parameterized = '/dev/null' #/home/ayarmola/momsearch/parameterizedWords'
     powers = '/home/ayarmola/momsearch/powers_combined'
@@ -123,13 +121,13 @@ if __name__ == '__main__' :
         if opt in ('-h', '--holes'):
             holes_file = val
         if opt in ('-r', '--refine'):
-            refine = val
+	    refine = val
         if opt in ('-i', '--invent_depth'):
-            inventDepth = str(int(val))
+	    inventDepth = str(int(val))
         if opt in ('-t', '--truncate_depth'):
-            truncateDepth = str(int(val))
+	    truncateDepth = str(int(val))
         if opt in ('-s', '--search_depth'):
-            ballSearchDepth = str(int(val))
+	    ballSearchDepth = str(int(val))
             
     add_words(seenWords, wordsFile)
 

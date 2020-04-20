@@ -12,6 +12,7 @@
 #include "SL2C.h"
 #include "Params.h"
 #include <list>
+#include <set>
 #include <map>
 #include <queue>
 #include <algorithm>
@@ -345,4 +346,202 @@ vector<string> findWords(Params<XComplex> center, vector<string> seedWords, int 
 		foundWords.push_back(w.nameClass);
 	}
 	return foundWords;
+}
+
+typedef struct {
+    XComplex center;
+    double height;
+    SL2C gamma;
+    string word;
+} horoball; 
+
+inline double sqnorm(const XComplex &x) {
+    return x.re * x.re + x.im * x.im;
+}
+
+inline const XComplex conj(const XComplex &x) {
+    return XComplex(x.re, -x.im);
+}
+
+inline XComplex mobius(const SL2C &x, const XComplex &p) {
+    return (((x.a * p).z + x.b).z / ((x.c * p).z + x.d).z).z;
+}
+
+inline XComplex horo_center_inf(const SL2C &x) {
+    if (absLB(x.c) == 0) {
+        fprintf(stderr, "Transformation fixes infinity\n");
+        return XComplex(1.0/0.0, 0.0);
+    }
+    return (x.a/x.c).z;
+}
+
+// Height of image of infinity horoball under x
+double horo_image_height_inf(SL2C &x, double h) {
+    if (absLB(x.c) == 0) {
+        fprintf(stderr, "Transformation fixes infinity\n");
+        return h;
+    }
+    return 1. / (h * sqnorm(x.c));
+}
+
+double horo_image_height_inf(SL2C &x, XComplex z, double h) {
+    if (absLB(((x.c * z).z + x.d).z) != 0) {
+        return h / sqnorm(((x.c * z).z + x.d).z);
+    } else {
+        // same as infinity horoball for inverse(x), but since only c matters, we don't bother
+        return horo_image_height_inf(x, h);
+    }
+}
+
+
+double g_height_cutoff = 0.05;
+double g_eps = pow(2,-100);
+
+inline double cusp_height(const Params<XComplex> params) {
+    return 1. / absLB(params.loxodromic_sqrt);
+}
+
+inline double horo_center_cutoff(const Params<XComplex> params) {
+    double cusp_h = cusp_height(params);
+    return absUB(params.parabolic) +  sqrt(cusp_h/g_height_cutoff)/absLB(params.loxodromic_sqrt);
+}
+
+typedef pair<double,double> range;
+
+inline range quad_sol(double a, double b, double c) {
+    double d = b * b - 4. * a * c;
+    double sq_d = sqrt(d);
+    return range((-b - sq_d)/(2*a), (-b + sq_d)/(2*a));
+}
+
+set<string> find_words(const Params<XComplex> params, int num_words, int max_g_len, vector<string> relators)
+{
+    CanonicalName canonicalName;
+    set<string> new_words;
+    horoball I = { XComplex(0.0,0.0), 0.0, SL2C(), "" };  
+    vector<horoball> level_zero;
+    level_zero.push_back(I);
+    map< int, vector<horoball> > horoballs;
+    horoballs[0] = level_zero;
+    // Generate new horoballs
+    XComplex lattice = params.lattice;
+    double cusp_h = cusp_height(params);
+    int d = 0;
+    while (d < max_g_len) {
+        vector<horoball> level;
+        horoballs[d+1] = level;
+        for ( const auto &ball : horoballs[d] ) {
+            SL2C gamma = ball.gamma;
+            double height = ball.height;
+            string word = ball.word;
+            char first = word[0];
+            map<string,SL2C> valid;
+            if ( first == 'g' ) {  
+                valid["g"] = inverse(constructG(params));
+            } else if ( first == 'G' ) {
+                valid["G"] = constructG(params);
+            } else {
+                valid["G"] = constructG(params);
+                valid["g"] = inverse(constructG(params));
+            } 
+            // Apply G and g if possible
+            for ( const auto &h : valid ) {
+                SL2C h_gamma = h.second * gamma;
+                XComplex h_center = horo_center_inf(h_gamma);
+
+                // The pojection of h_center to the real axis along lattice
+                // Recall that we assume -0.5 < real(lattice) < 0.5 and imag(lattice) > 0
+                double N_len = h_center.im / lattice.im;
+                double M_len = h_center.re - N_len * lattice.re;
+
+                // Adjustments we make sure to land inside the fundamental domain 
+                int N_pow, M_pow;
+                if (abs(N_len) > pow(2.,-10) && abs(N_len - 1.0) > pow(2.,-10)) {
+                    N_pow = -int(floor(N_len));
+                } else {
+                    N_pow = 0;
+                }
+                if (abs(M_len) > pow(2.,-10) && abs(M_len - 1.0) > pow(2.,-10)) {
+                    M_pow = -int(floor(M_len));
+                } else {
+                    M_pow = 0;
+                }
+
+                // Keep track of the word and it's representative
+                string h_word = h.first + word;
+                double new_height = horo_image_height_inf(h_gamma, cusp_h);
+                if ( new_height > 1.25 * cusp_h ) {
+                    if ( find(relators.begin(), relators.end(), h_word) == relators.end() ) {
+                        new_words.insert(h_word);
+                        // new_words.insert(canonicalName.canonical_mirror(h_word));
+                        // printf("word %s\n", h_word.c_str());
+                        if (new_words.size() >= num_words) {
+                            return new_words;
+                        }
+                    }
+                } else {
+                    if ( new_height < g_height_cutoff + g_eps) {
+                        continue;
+                    }
+                    string M_word, N_word;
+                    if (M_pow > 0) {
+                        M_word = string(M_pow, 'M');
+                    } else {
+                        M_word = string(-M_pow, 'm');
+                    }
+                    if (N_pow > 0) {
+                        N_word = string(N_pow, 'N');
+                    } else {
+                        N_word = string(-N_pow, 'n');
+                    }
+                    string new_word = N_word + M_word + h_word;
+                    // fprintf(stderr, "New word generated %s\n", new_word.c_str());
+                    SL2C T = constructT(params, M_pow, N_pow); 
+                    SL2C new_gamma = T * h_gamma;
+                    XComplex new_center = mobius(T, h_center);
+
+                    horoball new_ball = { new_center, new_height, new_gamma, new_word };
+                    horoballs[d+1].push_back(new_ball);
+
+                    // Add translates that will be good for next depth
+                    double x = new_center.re;
+                    double y = new_center.im;
+                    double r = horo_center_cutoff(params);
+                    range h_range = quad_sol(1., 2.*x, sqnorm(new_center) - r * r);
+                    range v_range = quad_sol(sqnorm(lattice), 2*(x * lattice.re + y * lattice.im), sqnorm(new_center) - r * r);
+                    pair<int,int> horiz_range = range(int(floor(h_range.first)), int(ceil(h_range.second)));
+                    pair<int,int> vert_range = range(int(floor(v_range.first)), int(ceil(v_range.second)));
+                    for (int n = vert_range.first; n < vert_range.second; ++n) {
+                        for (int m = horiz_range.first; m < horiz_range.second; ++m) {
+                            if (m != 0 || n != 0) {
+                                int shift_M_pow = M_pow + m;
+                                int shift_N_pow = N_pow + n;
+                                T = constructT(params, shift_M_pow, shift_N_pow);
+                                XComplex shift_center = mobius(T, h_center);
+                                // Make sure the horoball images in next depth are not too small
+                                if (absLB(shift_center) < r) {
+                                    SL2C shift_gamma = T * h_gamma;
+                                    if (shift_M_pow > 0) {
+                                        M_word = string(shift_M_pow, 'M');
+                                    } else {
+                                        M_word = string(-shift_M_pow, 'm');
+                                    }
+                                    if (shift_N_pow > 0) {
+                                        N_word = string(shift_N_pow, 'N');
+                                    } else {
+                                        N_word = string(-shift_N_pow, 'n');
+                                    }
+                                    string shift_word = N_word + M_word + h_word;
+                                    horoball shift_ball = { shift_center, new_height, shift_gamma, shift_word };
+                                    horoballs[d+1].push_back(shift_ball);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        d += 1;
+    }
+    return new_words;
 }

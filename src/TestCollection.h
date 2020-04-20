@@ -26,8 +26,10 @@ killed_elliptic = 5,
 killed_failed_qr = 2,
 open_with_qr = 6,
 variety_nbd = 7,
-killed_e2 = 13,
+killed_e2 = 15,
+two_var_inter = 13,
 variety_center = 10,
+two_var_center = 14,
 large_horoball_center = 11,
 out_of_bounds_center = 12,
 open = -1
@@ -35,6 +37,8 @@ open = -1
 box_state;
 
 struct ImpossibleRelations;
+
+int g_length(std::string& w); 
 
 struct TestCollection {
 	int size();
@@ -60,7 +64,8 @@ private:
                          std::unordered_map<int,ACJ>& para_cache, std::unordered_map<std::string,SL2ACJ>& words_cache);
   bool ready_for_parabolics_test(SL2ACJ& w);
   bool only_bad_parabolics(SL2ACJ& w, Params<ACJ>& params);
-  bool kills_e2(SL2ACJ& w, ACJ& e2);
+  box_state is_var_intersection(Box& box, std::string& aux_word,
+                         std::unordered_map<int,ACJ>& para_cache, std::unordered_map<std::string,SL2ACJ>& words_cache);
 	ImpossibleRelations *impossible;
 };
 

@@ -14,6 +14,7 @@ bool g_recursive = false;
 bool g_verbose = false;
 bool g_mark_incomplete = false;
 bool g_start_is_root = false;
+bool g_print_inter = false;
 char* g_treeLocation;
 
 std::vector<std::string> unopened_out_files;
@@ -64,7 +65,7 @@ bool ends_with(const char *str, const char *suffix)
     return strncmp(str + lenstr - lensuffix, suffix, lensuffix) == 0;
 }
 
-bool  putStream(FILE* dest, FILE* source) {
+bool putStream(FILE* dest, FILE* source) {
     size_t size;
     char buf[BUFSIZ];
     while ((size = fread(buf, 1, BUFSIZ, source))) {
@@ -133,6 +134,9 @@ bool processTree(FILE* fp, FILE* out, bool printTree, int printHoles, char* boxc
 		if (printTree && !filledHole) {
 			fputs(buf, out); // Print the buffer if we are printing out the filled tree
         }
+		if (!printTree && !filledHole && g_print_inter && buf[0] == 'T') {
+            fprintf(out, "%s\n", boxcode); // Print the missing boxcode to stdout
+        }
 		if (buf[0] == 'X') {
 			boxcode[boxdepth + depth] = '0'; // Descend via left branch
 			++depth;
@@ -189,6 +193,13 @@ int main(int argc, char** argv)
 		--argc;
 	}
 
+	if (argc > 1 && strcmp(argv[1], "--print_inter") == 0) {
+        printTree = false;
+		g_print_inter = true;
+		++argv;
+		--argc;
+	}
+
 	if (argc > 1 && strcmp(argv[1], "--mark") == 0) {
         g_mark_incomplete = true;
 		++argv;
@@ -201,7 +212,6 @@ int main(int argc, char** argv)
 		++argv;
 		--argc;
 	}
-
 
 	if (argc > 1 && strcmp(argv[1], "-v") == 0) {
 		g_verbose = true;
@@ -216,8 +226,9 @@ int main(int argc, char** argv)
 	}
 
 	if (argc != 3) {
-		fprintf(stderr, "Usage: treecat [--all_holes/--open_holes] [--mark] [-s] [-v] [-r] treeLocation boxcode\n");
+		fprintf(stderr, "Usage: treecat [--all_holes/--open_holes/--print_inter] [--mark] [-s] [-v] [-r] treeLocation boxcode\n");
 		fprintf(stderr, "open_holes/all_holes : do not print the tree but print the holes. non open holes are ones marked VAR\n");
+        fprintf(stderr, "print_inter : print intersection varieties\n");
 		fprintf(stderr, "mark : rename incomplete (sub)tree file(s) containing given boxcode (sub if -r)\n");
 		fprintf(stderr, "s : silent, don't print trees or holes\n");
 		fprintf(stderr, "v : verbose\n");

@@ -10,8 +10,7 @@ public:
 	std::string getName(std::string w);               // get the canonical name of a quasi-relator
 	void addQuasiRelator(std::string w);        // record that this word is a quasi-relator
 
-	std::vector<std::string> allWords();
-	std::vector<std::string> wordClasses();
+	std::vector<std::string> words();
 	std::string desc();                               // string describing this set of quasi-relators
 	std::string min_pow_desc();                               // string describing minimal power set of quasi-relators
 	bool isQuasiRelator(std::string w);         // is this word a quasi-relator?
