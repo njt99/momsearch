@@ -9,8 +9,8 @@ CC= g++
 
 #COPTS=-O3 -std=c++17 -stdlib=libc++
 #COPTS=-xHost -O3 -std=c++17
-#COPTS=-g3 -Wall -std=c++17
-COPTS=-O3 -std=c++17
+COPTS=-g -Wall -std=c++17
+#COPTS=-O3 -std=c++17
 
 .cpp.o:
 	$(CPLUSPLUS) $(COPTS) $(CCFLAGS) -c ${@:o=cpp}

@@ -1,5 +1,77 @@
 #include "Box.h"
 
+// Initial disk box dimensions are 2^(6/2), 2^(5/2) 
+
+double disk_scale[2];
+static bool disk_scale_initialized = false; 
+
+Disk::Disk() {
+	if (!disk_scale_initialized) {
+		for (int i = 0; i < 2; ++i) {
+			disk_scale[i] = pow(2., -i / 2.);
+		}
+		disk_scale_initialized = true;
+	}
+	for (int i = 0; i < 2; ++i) {
+		center_digits[i] = 0;
+		size_digits[i] = 8;
+	}
+	pos = 0;
+  compute_center_and_radius();
+}
+
+void Disk::compute_center_and_radius() {
+	for (int i = 0; i < 2; ++i) {
+    // GMT paper page 419 of Annals
+    // disk_size guarantees that :
+    // disk_center - disk_size <= true_center - true_size
+    // disk_center + disk_size >= true_center + true_size
+    // where box operations are floating point. 
+    disk_center[i] = disk_scale[i]*center_digits[i];
+    disk_size[i]= (1+2*EPS)*(size_digits[i]*disk_scale[i]+HALFEPS*fabs(center_digits[i]));
+  }
+  _center = XComplex(disk_center[1], disk_center[0]);
+  _radius = XComplex(disk_size[1], disk_size[0]);
+  _c_ACJ = ACJ(_center); 
+  _r_ACJ = ACJ(_radius); 
+}
+
+Disk Disk::child(int dir) const
+{
+	Disk child(*this);
+	child.size_digits[pos] *= 0.5;
+	child.center_digits[pos] += (2 * dir - 1) * child.size_digits[pos];
+	++child.pos;
+	if (child.pos == 2) { child.pos = 0; }
+
+	child.name.append(1, '0' + dir);
+  child.compute_center_and_radius();
+	return child;
+}
+
+/*
+bool DiskNode::is_complete()
+{
+  if (test_index > 0) {
+    return true;
+  }
+  if (left != nullptr) {
+    return left->is_complete() && right->is_complete();
+  }
+  return false;
+}
+
+void DiskNode::clone_children() {
+  // Clones all child nodes redursively. Used when splitting a box
+  if (left == nullptr) {
+    return;
+  }
+  left = new DiskNode(*left); 
+  right = new DiskNode(*right); 
+  left.clone_children();
+  right.clone_children();
+} */
+
 // Initial box dimensions are 2^(18/6), 2^(17/6), ..., 2^(13/6). The last is > 4.49
 
 double scale[6];
@@ -8,7 +80,7 @@ Box::Box() {
 	if (!scale_initialized) {
 		scale_initialized = true;
 		for (int i = 0; i < 6; ++i) {
-			scale[i] = pow(2, -i / 6.0);
+			scale[i] = pow(2., -i / 6.);
 		}
 	}
 	for (int i = 0; i < 6; ++i) {
@@ -16,11 +88,12 @@ Box::Box() {
 		size_digits[i] = 8;
 	}
 	pos = 0;
-    compute_center_and_size();
+  compute_center_and_size();
 	compute_cover();
-    compute_nearer();
+  compute_nearer();
 	compute_further();
 	compute_greater();
+  e2_todo.insert(Disk());
 }
 
 Box Box::child(int dir) const
@@ -31,16 +104,11 @@ Box Box::child(int dir) const
 	++child.pos;
 	if (child.pos == 6) { child.pos = 0; }
 
-//	child.name = name;
 	child.name.append(1, '0'+dir);
 
-//  fprintf(stderr, "Test name %s\n", child.name.c_str());
-//  fprintf(stderr, "Test qr %s\n", child.qr.desc().c_str());
-//	child.qr = qr;
-
-    child.compute_center_and_size();
+  child.compute_center_and_size();
 	child.compute_cover();
-    child.compute_nearer();
+  child.compute_nearer();
 	child.compute_further();
 	child.compute_greater();
 	return child;
@@ -195,23 +263,6 @@ void Box::compute_greater()
 	_greater.lattice = XComplex(m[3], m[0]);
 	_greater.loxodromic_sqrt = XComplex(m[4], m[1]);
 	_greater.parabolic = XComplex(m[5], m[2]);
-    _greater.box_name = name;
+  _greater.box_name = name;
 }
 
-//Params<XComplex> Box::offset(const double* offset) const
-//{
-//	Params<XComplex> result;
-//	result.lattice = XComplex(
-//		scale[3]*(offset[3]*size_digits[3] + center_digits[3]),
-//		scale[0]*(offset[0]*size_digits[0] + center_digits[0])
-//	);
-//	result.loxodromic_sqrt = XComplex(
-//		scale[4]*(offset[4]*size_digits[4] + center_digits[4]),
-//		scale[1]*(offset[1]*size_digits[1] + center_digits[1])
-//	);
-//	result.parabolic = XComplex(
-//		scale[5]*(offset[5]*size_digits[5] + center_digits[5]),
-//		scale[2]*(offset[2]*size_digits[2] + center_digits[2])
-//	);
-//	return result;
-//}

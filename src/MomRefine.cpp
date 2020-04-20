@@ -25,15 +25,15 @@ using namespace std;
 
 struct Options {
 	Options() :
-        boxName(""), // Binary representation of box
-        wordsFile("./current_refine_run"), // Previously generated words
+    boxName(""), // Binary representation of box
+    wordsFile("../words"), // Previously generated words
 		powersFile("null"), // Output from power parabolic.pl
-		momFile("null"), // TODO: Find what generates
-		parameterizedFile("null"), // TODO: Find what generates
+		momFile("/dev/null"), // TODO: Find what generates
+		parameterizedFile("/dev/null"), // TODO: Find what generates
 		maxDepth(18), // Maximum depth for a file
-        truncateDepth(6), 
-        inventDepth(12),
-        maxSize(3000000),
+    truncateDepth(6), 
+    inventDepth(12),
+    maxSize(5000000),
 		improveTree(false),
 		ballSearchDepth(-1),
 		fillHoles(false),
@@ -55,6 +55,7 @@ struct Options {
 
 Options g_options;
 TestCollection g_tests;
+// For each test a list of box_states
 typedef vector< vector< box_state > > TestHistory;
 set<string> g_momVarieties;
 set<string> g_parameterizedVarieties;
@@ -66,8 +67,9 @@ struct PartialTree {
 	PartialTree *rChild;
 	int testIndex;
 	box_state testResult;
-    string aux_word;
-    string qr_desc;
+  string aux_word;
+  string qr_desc;
+  string e2_killers;
 };
 
 // Consume tree from stdin. The tree must be
@@ -90,20 +92,21 @@ PartialTree readTree()
 		t.testIndex = -2;
 	} else {
 		if (isdigit(buf[0])) {
+      buf[1] = '\0';
 			t.testIndex = atoi(buf);
 		} else {
-            // Add word as eliminator to test collection
-            if (strchr("mMnNgG", buf[0]) != NULL) {
-			    t.testIndex = g_tests.add(buf);
-            } else {
-                if (buf[0] == 'E') {
-                    char * comma = strchr(buf,',');
-                    comma[0] = '\0'; 
-                } else {
-                    buf[n-2] = '\0';
-                }
-                t.testIndex = g_tests.add(&buf[2]);
-            }
+      // Add word as eliminator to test collection
+      if (strchr("mMnNgG", buf[0]) != NULL) {
+        t.testIndex = g_tests.add(buf);
+      } else {
+        if (buf[0] == 'E') {
+          char * comma = strchr(buf,',');
+          comma[0] = '\0'; 
+        } else {
+          buf[n-2] = '\0';
+        }
+        t.testIndex = g_tests.add(&buf[2]);
+      }
 		}
 	}
 	return t;
@@ -184,50 +187,50 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 	//fprintf(stderr, "rr: %s depth %d placeSize %lu\n", box.name.c_str(), depth, place.size());
 	place.push_back(box);
 	int oldTestIndex = t.testIndex;
-    vector<string> new_qrs;
-    para_cache.clear();
-    short_words_cache.clear();
+  vector<string> new_qrs;
+  para_cache.clear();
+  short_words_cache.clear();
 
-    string aux_word;
+  string aux_word;
 	if (t.testIndex >= 0) {
-        box_state result = g_tests.evaluateBox(t.testIndex, box, aux_word, new_qrs, para_cache, short_words_cache);
-        if (result != open && result != open_with_qr) {
-            t.aux_word.assign(aux_word);
-            t.testResult = result;
-//          fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
-            return true;
-        } else if (result == open_with_qr) {
-//            fprintf(stderr,"Retested %d, new qrs len %d\n", result, new_qrs.size());
-            for (vector<string>::iterator it = new_qrs.begin(); it != new_qrs.end(); ++it) {
-//                fprintf(stderr, "New QR is %s\n", (*it).c_str());
-                box.qr.getName(*it); // Also adds qr to the box's list
-            }
-            t.qr_desc = box.qr.min_pow_desc();
-//      } else { 
-//`            fprintf(stderr, "FAILED to eliminate %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
-        }
+    box_state result = g_tests.evaluateBox(t.testIndex, box, aux_word, new_qrs, para_cache, short_words_cache);
+    if (result != open && result != open_with_qr) {
+      t.aux_word.assign(aux_word);
+      t.testResult = result;
+//    fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
+      return true;
+    } else if (result == open_with_qr) {
+//    fprintf(stderr,"Retested %d, new qrs len %d\n", result, new_qrs.size());
+      for (vector<string>::iterator it = new_qrs.begin(); it != new_qrs.end(); ++it) {
+//      fprintf(stderr, "New QR is %s\n", (*it).c_str());
+        box.qr.getName(*it); // Also adds qr to the box's list
+      }
+      t.qr_desc = box.qr.min_pow_desc();
+//    } else { 
+//`     fprintf(stderr, "FAILED to eliminate %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
     }
+  }
 
 	if (t.testIndex == -2 && !g_options.fillHoles) {
-	    return true;
-    }
+	  return true;
+  }
 
-    // Check if the box is now small enough that some former qrs actually kill it
-    Params<ACJ> cover = box.cover();
-    vector<string> quasiRelators = box.qr.wordClasses();
-    for (vector<string>::iterator it = quasiRelators.begin(); it != quasiRelators.end(); ++it) {
-        // So not idenity and absUB(w.b) < 1
-        SL2ACJ w = g_tests.construct_word(*it, cover, para_cache, short_words_cache); 
-        // SL2ACJ w = g_tests.construct_word_simple(*it, cover); 
-        if (not_identity(w)) {
-//            fprintf(stderr, "Failed qr %s at %s\n", (*it).c_str(), box.name.c_str());
-//            fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
-//                            absLB(w.b), absLB(w.c), absLB(w.a - 1.), absLB(w.d - 1.), absLB(w.a + 1.), absLB(w.d + 1.));
-            t.aux_word.assign(*it);
-            t.testResult = killed_failed_qr;
-            return true;
-        }
+  // Check if the box is now small enough that some former qrs actually kill it
+  Params<ACJ> cover = box.cover();
+  vector<string> quasiRelators = box.qr.wordClasses();
+  for (vector<string>::iterator it = quasiRelators.begin(); it != quasiRelators.end(); ++it) {
+    // So not idenity and absUB(w.b) < 1
+    SL2ACJ w = g_tests.construct_word(*it, cover, para_cache, short_words_cache); 
+    // SL2ACJ w = g_tests.construct_word_simple(*it, cover); 
+    if (not_identity(w)) {
+//     fprintf(stderr, "Failed qr %s at %s\n", (*it).c_str(), box.name.c_str());
+//     fprintf(stderr," absLB(b) = %f\n absLB(c) = %f\n absLB(a-1) = %f\n absLB(d-1) = %f\n absLB(a+1) = %f\n absLB(d+1) = %f\n",
+//                      absLB(w.b), absLB(w.c), absLB(w.a - 1.), absLB(w.d - 1.), absLB(w.a + 1.), absLB(w.d + 1.));
+      t.aux_word.assign(*it);
+      t.testResult = killed_failed_qr;
+      return true;
     }
+  }
 
 	if (g_options.improveTree || !t.lChild) {
 		for (int i = 0; i < g_tests.size(); ++i) {
@@ -237,83 +240,106 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 				th.push_back(result);
 			}
 			if (th.back() != open) {
-                new_qrs.clear();
+        new_qrs.clear();
 				box_state result = g_tests.evaluateBox(i, box, aux_word, new_qrs, para_cache, short_words_cache);
 
-                switch (result) {
-                    case variety_nbd : 
-                    case killed_no_parabolics :
-                    case killed_bad_parabolic :
-                    case killed_failed_qr :
-                    case killed_identity_impossible :
-                    case killed_elliptic : {
-                        t.aux_word.assign(aux_word);   
-                    }
-                    case killed_bounds :
-                    case killed_parabolics_impossible : {
-                        t.testIndex = i;
-                        t.testResult = result;
-                        return true;
-                    }
-                    case open_with_qr : {
-//                        fprintf(stderr,"Result %d, new qrs len %d\n", result, new_qrs.size());
-                        for (vector<string>::iterator it = new_qrs.begin(); it != new_qrs.end(); ++it) {
-//                            fprintf(stderr, "New QR is %s\n", (*it).c_str());
-                            box.qr.getName(*it); // Also adds qr to the box's list
-                        }
-                        t.qr_desc = box.qr.min_pow_desc();
-                        break;
-                    }
-                }
+        switch (result) {
+          case variety_nbd : 
+          case killed_no_parabolics :
+          case killed_bad_parabolic :
+          case killed_failed_qr :
+          case killed_identity_impossible :
+          case killed_elliptic : {
+            t.aux_word.assign(aux_word);   
+          }
+          case killed_bounds :
+          case killed_parabolics_impossible : {
+            t.testIndex = i;
+            t.testResult = result;
+            return true;
+          }
+          case open_with_qr : {
+//          fprintf(stderr,"Result %d, new qrs len %d\n", result, new_qrs.size());
+            for (vector<string>::iterator it = new_qrs.begin(); it != new_qrs.end(); ++it) {
+//            fprintf(stderr, "New QR is %s\n", (*it).c_str());
+              box.qr.getName(*it); // Also adds qr to the box's list
             }
+            t.qr_desc = box.qr.min_pow_desc();
+            break;
+          }
+        }
+      }
+      // e2 elimination
+      if (i > 6) {
+        auto it = box.e2_todo.begin();
+        while(it != box.e2_todo.end()) {
+          if (g_tests.kills_disk_center(i, *it, box)) {
+            if (g_tests.kills_disk(i, *it, box, para_cache, short_words_cache)) {
+              box.e2_killers.insert(i);
+              it = box.e2_todo.erase(it); // returns new iterator
+              continue;
+            } 
+          }
+          ++it;
+        }
+      }
+      if (box.e2_todo.empty()) {
+        t.testIndex = 7;
+        t.testResult = killed_e2;
+        for (auto it = box.e2_killers.begin(); it != box.e2_killers.end(); ++it) {
+          t.e2_killers += g_tests.getName(*it);
+          t.e2_killers += ",";
+        }
+        t.e2_killers.pop_back(); // should never crash 
+        return true;
+      }
 		}
 	}
 
-	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth > 71
-        ) {
+	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth > 71) {
 		while (depth - searchedDepth > g_options.ballSearchDepth) {
 			Box& searchPlace = place[++searchedDepth];
-            // fprintf(stderr, "Search Depth %d and search place %s for box %s\n", searchedDepth, searchPlace.name.c_str(), box.name.c_str());
+//    fprintf(stderr, "Search Depth %d and search place %s for box %s\n", searchedDepth, searchPlace.name.c_str(), box.name.c_str());
 			vector<string> searchWords = findWords( searchPlace.center(), vector<string>(), -200, g_options.maxWordLength, box.qr.wordClasses());
-            string new_word = searchWords.back();
+      string new_word = searchWords.back();
 
-            int old_size = g_tests.size();
-    		int new_index = g_tests.add(new_word);
+      int old_size = g_tests.size();
+      int new_index = g_tests.add(new_word);
 			history.resize(g_tests.size());
 
-            if (old_size < g_tests.size()) {
-                fprintf(stderr, "search (%s) found %s(%s)\n",
-                    searchPlace.qr.desc().c_str(), new_word.c_str(), searchPlace.name.c_str());
+      if (old_size < g_tests.size()) {
+        fprintf(stderr, "search (%s) found %s(%s)\n",
+        searchPlace.qr.desc().c_str(), new_word.c_str(), searchPlace.name.c_str());
 
-                new_qrs.clear();
-                box_state result = g_tests.evaluateBox(new_index, box, aux_word, new_qrs, para_cache, short_words_cache);
+        new_qrs.clear();
+        box_state result = g_tests.evaluateBox(new_index, box, aux_word, new_qrs, para_cache, short_words_cache);
 
-                switch (result) {
-                    case variety_nbd : 
-                    case killed_no_parabolics :
-                    case killed_bad_parabolic :
-                    case killed_failed_qr :
-                    case killed_identity_impossible :
-                    case killed_elliptic : {
-                        t.aux_word.assign(aux_word);   
-                    }
-                    case killed_bounds :
-                    case killed_parabolics_impossible : {
-                        t.testIndex = new_index;
-                        t.testResult = result;
-                        return true;
-                    }
-                    case open_with_qr : {
-    //                        fprintf(stderr,"Result %d, new qrs len %d\n", result, new_qrs.size());
-                        for (vector<string>::iterator it = new_qrs.begin(); it != new_qrs.end(); ++it) {
-    //                            fprintf(stderr, "New QR is %s\n", (*it).c_str());
-                            box.qr.getName(*it); // Also adds qr to the box's list
-                        }
-                        t.qr_desc = box.qr.min_pow_desc();
-                        break;
-                    }
-                }
+        switch (result) {
+          case variety_nbd : 
+          case killed_no_parabolics :
+          case killed_bad_parabolic :
+          case killed_failed_qr :
+          case killed_identity_impossible :
+          case killed_elliptic : {
+            t.aux_word.assign(aux_word);   
+          }
+          case killed_bounds :
+          case killed_parabolics_impossible : {
+            t.testIndex = new_index;
+            t.testResult = result;
+            return true;
+          }
+          case open_with_qr : {
+//          fprintf(stderr,"Result %d, new qrs len %d\n", result, new_qrs.size());
+            for (vector<string>::iterator it = new_qrs.begin(); it != new_qrs.end(); ++it) {
+//            fprintf(stderr, "New QR is %s\n", (*it).c_str());
+              box.qr.getName(*it); // Also adds qr to the box's list
             }
+            t.qr_desc = box.qr.min_pow_desc();
+            break;
+          }
+        }
+      }
 		}
 	}
 
@@ -321,30 +347,48 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 
 	if (!t.lChild) {
 		if (depth >= g_options.maxDepth || ++g_boxesVisited >= g_options.maxSize || ++newDepth > g_options.inventDepth) {
-//            fprintf(stderr,"Deph %d, max depth %d, boxes_visited %d, max size %d, newDepth %d, invent depth %d\n", depth, g_options.maxDepth, g_boxesVisited, g_options.maxSize, newDepth, g_options.inventDepth);
-	        Params<XComplex> params = box.center();
-	        Params<XComplex> nearer = box.nearer();
-            double area = areaLB(nearer);
-            fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f (%s)\n", box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromic_sqrt.re, params.loxodromic_sqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
-            return false;
+//    fprintf(stderr,"Deph %d, max depth %d, boxes_visited %d, max size %d, newDepth %d, invent depth %d\n", depth,
+//                   g_options.maxDepth, g_boxesVisited, g_options.maxSize, newDepth, g_options.inventDepth);
+      Params<XComplex> params = box.center();
+      Params<XComplex> nearer = box.nearer();
+      double area = areaLB(nearer);
+      fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f (%s)\n",
+                      box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromic_sqrt.re,
+                      params.loxodromic_sqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
+      return false;
 		}
 		t.lChild = new PartialTree();
 		t.rChild = new PartialTree();
 	}
 
+  // Subdivide the remaining e2_todo 
+  // TODO: might make sense to memory manage to keep only one copy of a disk
+  set<Disk> old_disks(box.e2_todo);
+  box.e2_todo.clear();
+  for (auto it = old_disks.begin(); it != old_disks.end(); ++it) {
+    box.e2_todo.insert(it->child(0));
+    box.e2_todo.insert(it->child(1));
+  } 
+
+  fprintf(stderr, "Number of todo boxes %d\n", box.e2_todo.size());
+
 	bool isComplete = true;
 
 	isComplete = refineRecursive(box.child(0), *t.lChild, depth+1, history, place, newDepth, searchedDepth) && isComplete;
-	if (place.size() > depth+1)
+	if (place.size() > depth+1) {
 		place.resize(depth+1); // truncates place for right child
+  }
 	for (int i = 0; i < g_tests.size(); ++i) {
-		if (history[i].size() > depth)
+		if (history[i].size() > depth) {
 			history[i].resize(depth);
+    }
 	}
-	if (searchedDepth > depth)
+	if (searchedDepth > depth) {
 		searchedDepth = depth;
-	if (isComplete || depth < g_options.truncateDepth)
+  }
+	if (isComplete || depth < g_options.truncateDepth) {
 		isComplete = refineRecursive(box.child(1), *t.rChild, depth+1, history, place, newDepth, searchedDepth) && isComplete;
+  }
 	if (oldTestIndex >= 0 && t.testIndex != oldTestIndex) {
 		fprintf(stderr, "invalid box %s(%s) %d %s\n", g_tests.getName(oldTestIndex), box.name.c_str(),
 			treeSize(t), isComplete ? "Patched" : "Unpatched");
@@ -365,43 +409,47 @@ void refineTree(Box box, PartialTree& t)
 
 void printTree(PartialTree& t)
 {
-    char type = 'F';
-//    printf("%d\n", t.testResult);
-    switch (t.testResult) {
-        case open :
-        case open_with_qr : {
-            if (t.lChild && t.rChild) {
-                printf("X\n");
-                printTree(*t.lChild);
-                printTree(*t.rChild);
-            } else {
-		        printf("HOLE (%s)\n", t.qr_desc.c_str());
-            }
-            return;
-        }
-        case killed_bounds : {
-		    printf("%s\n", g_tests.getName(t.testIndex));
-            return;
-        }
-        case killed_no_parabolics : type = 'K'; break;
-        case variety_nbd : type = 'V'; break;
-        case killed_parabolics_impossible : type = 'P'; break;
-        case killed_identity_impossible : type = 'I'; break;
-        case killed_failed_qr : type = 'Q'; break;
-        case killed_bad_parabolic : type = 'L'; break;
-        case killed_elliptic : type = 'E'; break;
+  char type = 'F';
+//printf("%d\n", t.testResult);
+  switch (t.testResult) {
+    case open :
+    case open_with_qr : {
+      if (t.lChild && t.rChild) {
+        printf("X\n");
+        printTree(*t.lChild);
+        printTree(*t.rChild);
+      } else {
+        printf("HOLE (%s)\n", t.qr_desc.c_str());
+      }
+      return;
     }
-//    printf("%c\n", type);
-    string killer;
-    if (type == 'P') {
-        killer = g_tests.getName(t.testIndex);
-    } else if (type == 'E') {
-        killer = g_tests.getName(t.testIndex);
-        killer += "," + t.aux_word; 
-    } else {
-        killer = t.aux_word;
+    case killed_bounds : {
+      printf("%s\n", g_tests.getName(t.testIndex));
+      return;
     }
-    printf("%c(%s)\n", type, killer.c_str());
+    case killed_e2 : {
+      printf("%s(%s)\n", g_tests.getName(t.testIndex), t.e2_killers.c_str());
+      return;
+    }
+    case killed_no_parabolics : type = 'K'; break;
+    case variety_nbd : type = 'V'; break;
+    case killed_parabolics_impossible : type = 'P'; break;
+    case killed_identity_impossible : type = 'I'; break;
+    case killed_failed_qr : type = 'Q'; break;
+    case killed_bad_parabolic : type = 'L'; break;
+    case killed_elliptic : type = 'E'; break;
+  }
+//printf("%c\n", type);
+  string killer;
+  if (type == 'P') {
+    killer = g_tests.getName(t.testIndex);
+  } else if (type == 'E') {
+    killer = g_tests.getName(t.testIndex);
+    killer += "," + t.aux_word; 
+  } else {
+    killer = t.aux_word;
+  }
+  printf("%c(%s)\n", type, killer.c_str());
 }
 
 const char* g_programName;

@@ -42,19 +42,19 @@ void QuasiRelators::addQuasiRelator(string w)
 
 string QuasiRelators::min_pow_desc()
 {
-    vector<string> qrs(nameVector);
-    sort(qrs.begin(), qrs.end(), g_power_sort);
-    int min_power = g_power(qrs.front());
+  vector<string> qrs(nameVector);
+  sort(qrs.begin(), qrs.end(), g_power_sort);
+  int min_power = g_power(qrs.front());
 	string buf;
 	for (vector<string>::iterator it = qrs.begin(); it != qrs.end(); ++it) {
-        if (g_power(*it) > min_power) {
-            break;
-        }
-		if (!buf.empty()) {
-            buf += ",";
-        } 
-		buf += *it;
+    if (g_power(*it) > min_power) {
+       break;
     }
+		if (!buf.empty()) {
+      buf += ",";
+    } 
+		buf += *it;
+  }
 	return buf;
 }
 
