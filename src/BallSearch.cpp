@@ -414,10 +414,19 @@ inline range quad_sol(double a, double b, double c) {
     return range((-b - sq_d)/(2*a), (-b + sq_d)/(2*a));
 }
 
-set<string> find_words(const Params<XComplex> params, int num_words, int max_g_len, vector<string> relators)
+set<string> find_words(const Params<XComplex>& params, int num_words, int max_g_len, const vector<string>& relators,
+                       bool e2_search, const map<string, int>& seen)
 {
     CanonicalName canonicalName;
     set<string> new_words;
+    if (e2_search) {
+      new_words.insert("g");  
+      new_words.insert("Mg");  
+      new_words.insert("Ng");  
+      new_words.insert("NMg");
+      new_words.insert("G");
+      new_words.insert("MG");
+    }
     horoball I = { XComplex(0.0,0.0), 0.0, SL2C(), "" };  
     vector<horoball> level_zero;
     level_zero.push_back(I);
@@ -443,7 +452,7 @@ set<string> find_words(const Params<XComplex> params, int num_words, int max_g_l
             } else {
                 valid["G"] = constructG(params);
                 valid["g"] = inverse(constructG(params));
-            } 
+            }
             // Apply G and g if possible
             for ( const auto &h : valid ) {
                 SL2C h_gamma = h.second * gamma;
@@ -470,7 +479,7 @@ set<string> find_words(const Params<XComplex> params, int num_words, int max_g_l
                 // Keep track of the word and it's representative
                 string h_word = h.first + word;
                 double new_height = horo_image_height_inf(h_gamma, cusp_h);
-                if ( new_height > 1.25 * cusp_h ) {
+                if (new_height > 1.25 * cusp_h && !e2_search) {
                     if ( find(relators.begin(), relators.end(), h_word) == relators.end() ) {
                         new_words.insert(h_word);
                         // new_words.insert(canonicalName.canonical_mirror(h_word));
@@ -480,7 +489,7 @@ set<string> find_words(const Params<XComplex> params, int num_words, int max_g_l
                         }
                     }
                 } else {
-                    if ( new_height < g_height_cutoff + g_eps) {
+                    if (new_height < g_height_cutoff + g_eps) {
                         continue;
                     }
                     string M_word, N_word;
@@ -502,6 +511,14 @@ set<string> find_words(const Params<XComplex> params, int num_words, int max_g_l
 
                     horoball new_ball = { new_center, new_height, new_gamma, new_word };
                     horoballs[d+1].push_back(new_ball);
+
+                    // e2 search wants many horoball in fundamental domain
+                    if (e2_search && seen.find(new_word) == seen.end()) {
+                        new_words.insert(new_word);
+                        if (new_words.size() >= num_words) {
+                            return new_words;
+                        }
+                    }
 
                     // Add translates that will be good for next depth
                     double x = new_center.re;
@@ -534,6 +551,13 @@ set<string> find_words(const Params<XComplex> params, int num_words, int max_g_l
                                     string shift_word = N_word + M_word + h_word;
                                     horoball shift_ball = { shift_center, new_height, shift_gamma, shift_word };
                                     horoballs[d+1].push_back(shift_ball);
+                                    // e2 search wants many horoball in fundamental domain
+                                    if (e2_search && abs(m) <= 1 && abs(n) <= 1 &&  seen.find(shift_word) == seen.end()) {
+                                        new_words.insert(shift_word);
+                                        if (new_words.size() >= num_words) {
+                                            return new_words;
+                                        }
+                                    }
                                 }
                             }
                         }

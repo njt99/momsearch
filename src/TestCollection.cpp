@@ -453,7 +453,7 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
                   state = variety_nbd;
                   break;
                 } else {
-                  fprintf(stderr, "Box in large length word VAR nbd, word : %s N: %d M: %d box : %s\n", word.c_str(), N, M, params.box_name.c_str()); 
+                  // fprintf(stderr, "Box in large length word VAR nbd, word : %s N: %d M: %d box : %s\n", word.c_str(), N, M, params.box_name.c_str()); 
                 }
               }
               if (not_para_fix_inf(w_k)) {
@@ -626,9 +626,27 @@ bool TestCollection::kills_disk_center(int index, const Disk& d, const Box& box)
       return false;
     }
 		case 9: {
-      XComplex L = params.lattice;
       XComplex c = d.center(); 
-      XComplex r = d.radius(); 
+      XComplex r = d.radius();
+      if (absUB(r) + c.im < 0) {
+        return true;
+      }
+      XComplex L = params.lattice;
+      if (L.im > 0 && c.im > L.im + absUB(r)) {
+        return true;
+      }
+      if (L.re > 0 && c.re + absUB(r) < 0) {
+        return true;
+      }
+      if (L.re < 0 && c.re > 1 + absUB(r)) {
+        return true;
+      }
+      if (L.re < 0 && c.re + absUB(r) < L.re) {
+        return true;
+      } 
+      if (L.re > 0 && c.re > 1 + L.re + absUB(r)) {
+        return true;
+      } 
       double d1 = absUB((L + 1).z) + absUB(r);
       if (d1 < absLB(c) || d1 < absLB(((L - c).z + 1).z)) {
         return true;
@@ -662,9 +680,56 @@ bool TestCollection::kills_disk(int index, const Disk& d, const Box& box,
       return false;
     }
 		case 9: {
-      ACJ L = cover.lattice;
       ACJ c = d.c_ACJ(); 
       ACJ r = d.r_ACJ(); 
+      // Disk is below x-axis
+      if (c.f.im < 0) {
+        double d0 = (1+EPS)*(absUB(r) + c.f.im);
+        if (d0 < 0) {
+          return true;
+        }
+      }
+      Params<XComplex> further = box.further();
+      XComplex fL = further.lattice;
+      // Disk is above y = im L
+      if (fL.im > 0 && c.f.im > fL.im) {
+        double dtop = (1+2*EPS)*(absUB(r) + (fL.im - c.f.im));
+        if (dtop < 0) {
+          return true;
+        }
+      }
+      Params<XComplex> nearer = box.nearer();
+      XComplex nL = nearer.lattice;
+      // re L > 0 and disk is left of x = 0
+      if (nL.re > 0 && c.f.re < 0) {
+        double dxeq0 = (1+EPS)*(absUB(r) + c.f.re);
+        if (dxeq0 < 0) {
+          return true;
+        }
+      }
+      // re L < 0 and disk is right of x = 1
+      if (nL.re < 0 && c.f.re > 1) {
+        double dxeq1 = (1+2*EPS)*(absUB(r) + (1 - c.f.re));
+        if (dxeq1 < 0) {
+          return true;
+        }
+      }
+      // re L < 0 and disk is left of x = re L
+      if (fL.re < 0 && c.f.re < fL.re) {
+        double dxreL = (1+2*EPS)*((absUB(r) - fL.re) + c.f.re); 
+        if (dxreL < 0) {
+          return true;
+        }
+      }
+      // re L > 0 and disk is right of x = 1 + re L 
+      if (fL.re > 0 && c.f.re > 1 + fL.re) {
+        double dxreLp1 = (1+3*EPS)*((fL.re + 1) + (absUB(r) - c.f.re)); // 2 * EPS might be enough
+        if (dxreLp1 < 0) {
+          return true;
+        }
+      } 
+      // Might be extra at this point
+      ACJ L = cover.lattice;
       double d1 = (1+EPS)*(absUB(L + 1) + absUB(r));
       if (d1 < absLB(c) || d1 < absLB((L - c) + 1)) {
         return true;

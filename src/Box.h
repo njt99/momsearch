@@ -16,6 +16,7 @@ struct Disk {
 	bool operator< (const Disk& other) const {
 		return name < other.name;
 	}
+  std::string desc() const;
 private:
 	int pos;
 	double center_digits[2];

@@ -56,8 +56,8 @@ struct TestCollection {
                         std::unordered_map<int,ACJ>& para_cache,std::unordered_map<std::string,SL2ACJ>& words_cache);
 	SL2ACJ construct_word_simple(std::string word, const Params<ACJ>& params);
 	SL2C construct_word(std::string word, const Params<XComplex>& params);
-private:
 	std::map<std::string, int> stringIndex;
+private:
 	std::vector<std::string> indexString;
 	box_state evaluate_approx(std::string word, Params<XComplex>& params);
   box_state evaluate_ACJ(std::string word, Params<ACJ>& params, std::string& aux_word, std::vector<std::string>& new_qrs,
@@ -100,9 +100,9 @@ inline bool disk_killed_by(const Disk& d, const SL2ACJ& w) {
   // Returns true if the disk is contained in the "kill radius"
   // of the horoball w(H_infty). A horoball of height h and center x
   // will interesect w(H_infty) if:
-  //       h |S|/|c|^2 > dist(a/c - x)^2
+  //       h |S|/|c|^2 > dist(a/c, x)^2
   // We know that h >= 1/(|S| e_2^2), so an intersection is guaranteed if
-  //      1/e_2 > dist(a - c x)
+  //      1/e_2 > abs(a - c x)
   // Since the disk has a radius, we need to make sure
   //      ONE_OVER_E2_MIN > (1+EPS)*(absUB(a - c center) + absUB(c radius))
   return (1+EPS)*(absUB(w.a - w.c * d.c_ACJ()) + absUB(w.c * d.r_ACJ())) < ONE_OVER_E2_MIN; 

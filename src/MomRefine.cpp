@@ -56,6 +56,7 @@ struct Options {
 
 Options g_options;
 TestCollection g_tests;
+TestCollection g_e2_tests;
 // For each test a list of box_states
 typedef vector< vector< box_state > > TestHistory;
 set<string> g_momVarieties;
@@ -217,17 +218,12 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
     if (result != open && result != open_with_qr) {
       t.aux_word.assign(aux_word);
       t.testResult = result;
-//    fprintf(stderr, "Eliminated %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
       return true;
     } else if (result == open_with_qr) {
-//    fprintf(stderr,"Retested %d, new qrs len %d\n", result, new_qrs.size());
       for (vector<string>::iterator it = new_qrs.begin(); it != new_qrs.end(); ++it) {
-//      fprintf(stderr, "New QR is %s\n", (*it).c_str());
         box.qr.getName(*it); // Also adds qr to the box's list
       }
       t.qr_desc = box.qr.min_pow_desc();
-//  } else { 
-//`   fprintf(stderr, "FAILED to eliminate %s with test %s with result %d\n", box.name.c_str(), g_tests.getName(t.testIndex), result);
     }
   }
 
@@ -241,7 +237,6 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
   for (auto it = quasiRelators.begin(); it != quasiRelators.end(); ++it) {
     // So not idenity and absUB(w.b) < 1
     SL2ACJ w = g_tests.construct_word(*it, cover, para_cache, short_words_cache); 
-    // SL2ACJ w = g_tests.construct_word_simple(*it, cover); 
     if (not_identity(w)) {
       t.aux_word.assign(*it);
       t.testResult = killed_failed_qr;
@@ -285,28 +280,29 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
           }
         }
       }
-      // e2 elimination
-      if (i > 6) {
-        auto it = box.e2_todo.begin();
-        while(it != box.e2_todo.end()) {
-          if (g_tests.kills_disk_center(i, *it, box)) {
-            if (g_tests.kills_disk(i, *it, box, para_cache, short_words_cache)) {
-              box.e2_killers.insert(i);
-              it = box.e2_todo.erase(it); // returns new iterator
-              continue;
-            } 
-          }
-          ++it;
+    }
+    // e2 elimination
+		for (int i = 9; i < g_e2_tests.size(); ++i) {
+      auto it = box.e2_todo.begin();
+      while(it != box.e2_todo.end()) {
+        if (g_e2_tests.kills_disk_center(i, *it, box)) {
+          if (g_e2_tests.kills_disk(i, *it, box, para_cache, short_words_cache)) {
+            box.e2_killers.insert(i);
+            it = box.e2_todo.erase(it); // returns new iterator
+            continue;
+          } 
         }
+        ++it;
       }
       if (box.e2_todo.empty()) {
-        t.testIndex = 7;
+        t.testIndex = 9;
         t.testResult = killed_e2;
         for (auto it = box.e2_killers.begin(); it != box.e2_killers.end(); ++it) {
-          t.e2_killers += g_tests.getName(*it);
+          t.e2_killers += g_e2_tests.getName(*it);
           t.e2_killers += ",";
         }
         t.e2_killers.pop_back(); // should never crash 
+        // fprintf(stderr, "Killed with e2 bounds! With killers %s\n", t.e2_killers.c_str());
         return true;
       }
 		}
@@ -314,9 +310,14 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 
 	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth > 0) {
 		while (depth - searchedDepth > g_options.ballSearchDepth) {
-            // fprintf(stderr, "Looking for words\n");
 			Box& searchPlace = place[++searchedDepth];
-			set<string> search_words = find_words(searchPlace.center(),6,24,box.qr.words());
+			set<string> search_words = find_words(searchPlace.center(), 6, 16, box.qr.words(), false, g_tests.stringIndex);
+      if (g_e2_tests.size() < 6666) {
+        set<string> e2_words = find_words(searchPlace.center(), 512, 16, box.qr.words(), true, g_e2_tests.stringIndex);
+        for (auto e2_it = e2_words.begin(); e2_it != e2_words.end(); ++e2_it) {
+          g_e2_tests.add(*e2_it);
+        }
+      }
       for (auto s_it = search_words.begin(); s_it != search_words.end(); ++s_it) {
         string new_word = *s_it;
 
@@ -378,16 +379,25 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 		t.rChild = new PartialTree();
 	}
 
-  // Subdivide the remaining e2_todo 
+  // Subdivide the remaining e2_todo every 3 divisions of the main box 
   // TODO: might make sense to memory manage to keep only one copy of a disk
-  set<Disk> old_disks(box.e2_todo);
-  box.e2_todo.clear();
-  for (auto it = old_disks.begin(); it != old_disks.end(); ++it) {
-    box.e2_todo.insert(it->child(0));
-    box.e2_todo.insert(it->child(1));
-  } 
+  if (depth % 3 == 0) {
+    set<Disk> old_disks(box.e2_todo);
+    box.e2_todo.clear();
+    for (auto it = old_disks.begin(); it != old_disks.end(); ++it) {
+      box.e2_todo.insert(it->child(0));
+      box.e2_todo.insert(it->child(1));
+    }
+  }
 
-  fprintf(stderr, "Number of todo boxes %d\n", box.e2_todo.size());
+  /* fprintf(stderr, "Number of todo boxes %d\n", box.e2_todo.size());
+  if (box.e2_todo.size() < 20) {
+    for (auto it = box.e2_todo.begin(); it != box.e2_todo.end(); ++it) {
+      fprintf(stderr,it->desc().c_str());
+    }
+  } else {
+    fprintf(stderr,"Box with many disks! Num g tests %d and box %s\n", g_e2_tests.size(), box.name.c_str());
+  } */
 
 	bool isComplete = true;
 
@@ -444,7 +454,7 @@ void printTree(PartialTree& t)
       return;
     }
     case killed_e2 : {
-      printf("%s(%s)\n", g_tests.getName(t.testIndex), t.e2_killers.c_str());
+      printf("%s(%s)\n", g_e2_tests.getName(t.testIndex), t.e2_killers.c_str());
       return;
     }
     case killed_no_parabolics : type = 'K'; break;
@@ -587,12 +597,22 @@ int main(int argc, char** argv)
  //   usleep(30000000);
 
 	Box box;
+  int d = 0; 
 	for (const char* boxP = g_options.boxName; *boxP; ++boxP) {
 		if (*boxP == '0') {
 			box = box.child(0);
 		} else if (*boxP == '1') {
 			box = box.child(1);
 		}
+    ++d;
+    if (d % 6 == 0) {
+      set<Disk> old_disks(box.e2_todo);
+      box.e2_todo.clear();
+      for (auto it = old_disks.begin(); it != old_disks.end(); ++it) {
+        box.e2_todo.insert(it->child(0));
+        box.e2_todo.insert(it->child(1));
+      } 
+    }
 	}
 	
 	g_tests.load(g_options.wordsFile);

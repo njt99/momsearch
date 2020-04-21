@@ -36,6 +36,12 @@ void Disk::compute_center_and_radius() {
   _r_ACJ = ACJ(_radius); 
 }
 
+std::string Disk::desc() const {
+  char buf[100];
+  sprintf(buf, "center: %f + %f i, rad: %f\n", _center.re, _center.im, absUB(_radius));
+  return std::string(buf);   
+}
+
 Disk Disk::child(int dir) const
 {
 	Disk child(*this);
@@ -226,7 +232,7 @@ void Box::compute_further()
 	_further.lattice = XComplex(m[3], m[0]);
 	_further.loxodromic_sqrt = XComplex(m[4], m[1]);
 	_further.parabolic = XComplex(m[5], m[2]);
-    _further.box_name = name;
+  _further.box_name = name;
 }
 
 void Box::compute_greater()
