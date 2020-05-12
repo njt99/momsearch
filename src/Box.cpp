@@ -111,6 +111,7 @@ Box Box::child(int dir) const
 	if (child.pos == 6) { child.pos = 0; }
 
 	child.name.append(1, '0'+dir);
+  child.words_cache.clear();
 
   child.compute_center_and_size();
 	child.compute_cover();

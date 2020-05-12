@@ -45,7 +45,7 @@ struct TestCollection {
 	box_state evaluateCenter(int index, Box& box);
 	box_state evaluateBox(int index, Box& box, std::string& aux_word, std::vector<std::string>& new_qrs,
                         std::unordered_map<int,ACJ>& para_cache,std::unordered_map<std::string,SL2ACJ>& words_cache);
-	bool kills_disk_center(int index, const Disk& d,  const Box& box);
+	bool kills_disk_center(int index, const Disk& d, Box& box);
 	bool kills_disk(int index, const Disk& d, const Box& box,
                   std::unordered_map<int,ACJ>& para_cache,std::unordered_map<std::string,SL2ACJ>& words_cache);
 	const char* getName(int index);
@@ -56,10 +56,11 @@ struct TestCollection {
                         std::unordered_map<int,ACJ>& para_cache,std::unordered_map<std::string,SL2ACJ>& words_cache);
 	SL2ACJ construct_word_simple(std::string word, const Params<ACJ>& params);
 	SL2C construct_word(std::string word, const Params<XComplex>& params);
+	SL2C construct_word_center(std::string word, const Params<XComplex>& params, std::unordered_map<std::string, SL2C>& word_cache);
 	std::map<std::string, int> stringIndex;
 private:
 	std::vector<std::string> indexString;
-	box_state evaluate_approx(std::string word, Params<XComplex>& params);
+	box_state evaluate_approx(std::string word, Params<XComplex>& params, std::unordered_map<std::string, SL2C>& word_cache);
   box_state evaluate_ACJ(std::string word, Params<ACJ>& params, std::string& aux_word, std::vector<std::string>& new_qrs,
                          std::unordered_map<int,ACJ>& para_cache, std::unordered_map<std::string,SL2ACJ>& words_cache);
   bool ready_for_parabolics_test(SL2ACJ& w);

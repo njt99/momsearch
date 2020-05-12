@@ -4,6 +4,7 @@
 #include "ACJ.h"
 #include "QuasiRelators.h"
 #include <set>
+#include <unordered_map>
 
 struct Disk {
 	Disk();
@@ -56,6 +57,7 @@ struct Box {
 	Params<XComplex> further() const { return _further; } // returns all values futher from 0 that in the box
 	Params<XComplex> greater() const { return _greater; } // returns all values greater than in the box
   std::set<std::pair<double,double> > short_slopes;
+  std::unordered_map<std::string, SL2C> words_cache;
 private:
 	int pos;
 	double center_digits[6];

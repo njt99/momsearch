@@ -2,7 +2,7 @@
 
 data_dir="refine_census"
 name="box"
-maxArea="5.7"
+maxArea="5.75"
 minArea="0.0"
 
 if [ ! -d "$data_dir" ]; then

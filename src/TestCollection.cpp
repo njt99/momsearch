@@ -124,6 +124,42 @@ SL2C TestCollection::construct_word(string word, const Params<XComplex>& params)
 	return w;
 }
 
+SL2C TestCollection::construct_word_center(string word, const Params<XComplex>& params, unordered_map<string, SL2C>& words_cache)
+{
+  pair<unordered_map<string,SL2C>::iterator,bool> lookup;
+
+  if (words_cache.size() == 0) {
+    words_cache.emplace("", SL2C(1,0,0,1));
+    lookup = words_cache.emplace("G", constructG(params));
+    words_cache.emplace("g", inverse(lookup.first->second));
+    lookup = words_cache.emplace("M", constructT(params, 1, 0));
+    words_cache.emplace("m", inverse(lookup.first->second));
+    lookup = words_cache.emplace("N", constructT(params, 0, 1));
+    words_cache.emplace("n", inverse(lookup.first->second));
+  }
+
+  // Check, just in case we've already seen this word
+  lookup = words_cache.emplace(word, SL2C());
+  if (lookup.second) {// not found 
+    words_cache.erase(lookup.first);
+  }
+  else {
+    return lookup.first->second;
+  }
+
+  size_t n = word.length();
+  size_t mid = size_t(floor(n/2));
+  SL2C w_left = construct_word_center(word.substr(0,mid), params, words_cache);
+  SL2C w_right = construct_word_center(word.substr(mid, string::npos), params, words_cache);
+
+  if (word.length() < 10) {
+    lookup = words_cache.emplace(word, w_left * w_right);
+    return lookup.first->second;
+  } else {
+    return w_left * w_right; 
+  }
+}
+
 SL2ACJ TestCollection::construct_word(string word, const Params<ACJ>& params, 
                unordered_map<int,ACJ>& para_cache, unordered_map<string,SL2ACJ>& words_cache)
 {
@@ -298,9 +334,9 @@ box_state TestCollection::is_var_intersection(Box& box, string& aux_word,
     return open_with_qr;
 }
 
-box_state TestCollection::evaluate_approx(string word, Params<XComplex>& params)
+box_state TestCollection::evaluate_approx(string word, Params<XComplex>& params, unordered_map<string, SL2C>& words_cache)
 {
-    SL2C w = construct_word(word, params);
+    SL2C w = construct_word_center(word, params, words_cache);
     if (maybe_variety(w)) return variety_center;
     if (!maybe_large_horoball(w,params)) return open;
     return large_horoball_center;
@@ -550,7 +586,7 @@ box_state TestCollection::evaluateCenter(int index, Box& box)
 		}
     case 9: return open;
 		default: {
-			return evaluate_approx(indexString[index - g_num_bnd_tests], params);
+			return evaluate_approx(indexString[index - g_num_bnd_tests], params, box.words_cache);
     }
 	}
 }
@@ -611,7 +647,7 @@ box_state TestCollection::evaluateBox(int index, Box& box, string& aux_word, vec
 	}
 }
 
-bool TestCollection::kills_disk_center(int index, const Disk& d, const Box& box) {
+bool TestCollection::kills_disk_center(int index, const Disk& d, Box& box) {
 	Params<XComplex> params = box.center();
 	switch(index) {
 		case 0: 
@@ -658,7 +694,7 @@ bool TestCollection::kills_disk_center(int index, const Disk& d, const Box& box)
       return false;
 		}
 		default: {
-	    SL2C w = construct_word(indexString[index - g_num_bnd_tests], params);
+	    SL2C w = construct_word_center(indexString[index - g_num_bnd_tests], params, box.words_cache);
       return disk_maybe_killed_by(d, w);  
     }
   }

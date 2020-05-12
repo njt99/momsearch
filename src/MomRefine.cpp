@@ -308,16 +308,18 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 		}
 	}
 
-	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth > 0) {
+  if (g_e2_tests.size() < 6666 && (depth > 6 ||  box.name.length() > 6)) {
+    set<string> e2_words = find_words(box.center(), 512, 16, box.qr.words(), true, g_e2_tests.stringIndex);
+    for (auto e2_it = e2_words.begin(); e2_it != e2_words.end(); ++e2_it) {
+      g_e2_tests.add(*e2_it);
+    }
+  }
+
+	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth > 72 && depth % 12 == 0) {
 		while (depth - searchedDepth > g_options.ballSearchDepth) {
 			Box& searchPlace = place[++searchedDepth];
 			set<string> search_words = find_words(searchPlace.center(), 6, 16, box.qr.words(), false, g_tests.stringIndex);
-      if (g_e2_tests.size() < 6666) {
-        set<string> e2_words = find_words(searchPlace.center(), 512, 16, box.qr.words(), true, g_e2_tests.stringIndex);
-        for (auto e2_it = e2_words.begin(); e2_it != e2_words.end(); ++e2_it) {
-          g_e2_tests.add(*e2_it);
-        }
-      }
+
       for (auto s_it = search_words.begin(); s_it != search_words.end(); ++s_it) {
         string new_word = *s_it;
 
@@ -381,7 +383,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 
   // Subdivide the remaining e2_todo every 3 divisions of the main box 
   // TODO: might make sense to memory manage to keep only one copy of a disk
-  if (depth % 3 == 0) {
+  if (depth % 6 == 0) {
     set<Disk> old_disks(box.e2_todo);
     box.e2_todo.clear();
     for (auto it = old_disks.begin(); it != old_disks.end(); ++it) {
