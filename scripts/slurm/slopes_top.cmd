@@ -14,11 +14,12 @@ bin_dir="$base_dir/bin"
 words_dir=$base_dir
 
 search="$base_dir/scripts/dosearch_slopes_top.py"
-words="$words_dir/words_top"
+words="$words_dir/words_top_new"
+#words="/dev/null"
 powers="$words_dir/powers_combined"
 
 data_dir="/scratch/network/yarmola/run_slopes_top"
 
 cd $bin_dir
 
-python "$search" -i 30 -t 6 -r "$bin_dir/refine_slopes" -w "$words" -p "$powers" -c 39 "$data_dir/source" "$data_dir/output_live" > "$data_dir/refine.log" 2>&1
+python "$search" -i 60 -t 6 -r "$bin_dir/refine_slopes" -w "$words" -p "$powers" -c 39 "$data_dir/source" "$data_dir/output_live" > "$data_dir/refine.log" 2>&1

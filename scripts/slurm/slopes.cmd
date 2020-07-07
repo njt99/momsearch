@@ -14,7 +14,7 @@ bin_dir="$base_dir/bin"
 words_dir=$base_dir
 
 search="$base_dir/scripts/dosearch_slopes.py"
-words="$words_dir/words"
+words="$words_dir/words_5.75_new"
 powers="$words_dir/powers_combined"
 
 data_dir="/scratch/network/yarmola/run_slopes"

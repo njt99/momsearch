@@ -108,12 +108,12 @@ if __name__ == '__main__' :
     inventDepth = '42'
     ballSearchDepth = '6'
     # ballSearchDepth = '-1'
-    maxArea = '5.75'
-    minArea = '0.0'
+    maxArea = '5.92'
+    minArea = '5.85'
     # fillHoles = ' --fillHoles'
     fillHoles = ''
-    # improveTree = ' --improveTree'
-    improveTree = ''
+    improveTree = ' --improveTree'
+    # improveTree = ''
     powers = '/u/yarmola/momsearch/powers_combined'
     wordsFile = '/u/yarmola/momsearch/words'
     e2WordsFile = '/u/yarmola/momsearch/e2_words'
@@ -175,15 +175,15 @@ if __name__ == '__main__' :
         sleep(0.01) # We don't need to to run the main loop to death since we aren't using os.wait
         openHoles = holes - done
         failedHoles = failedHoles - done
-        bestHole = '1'*200
+        bestHole = '1'*400
         deepestHole = ''
         if len(openHoles) == 0 and refineRunCount == 0 and len(done) == 0:
             bestHole = 'root'
         for hole in openHoles:
             if len(hole) < len(bestHole) :
-                bestHole = hole 
+                bestHole = hole    
             if len(hole) > len(deepestHole) :
-                deepestHole = hole   
+                deepestHole = hole    
 
         if len(bestHole) > depth_limit:
             if childCount > 0 :
@@ -214,7 +214,7 @@ if __name__ == '__main__' :
                     print 'Holes: {0} patched, {1} unpatched, {2} open holes\n'.format(numPatched, numUnpatched, int(numHoles))
 
                     boxWords = set()
-                    add_words(boxWords, '{0}/{1}.out'.format(destDir, doneHole))
+                    add_words(boxWords, '{0}/{1}.out'.format(destDir, doneHole))        
                     newWords = boxWords - seenWords
                     seenWords |= newWords
 

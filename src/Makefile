@@ -18,9 +18,11 @@ COPTS=-O3 -std=c++1y
 .C.o:
 	$(CC) $(COPTS) $(CCFLAGS) -c ${@:o=C}
 
+debug: $(REFINEOBJS)
+	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_debug
+
 refine: $(REFINEOBJS)
 	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes
-#	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_debug
 
 test: $(TESTOBJS)
 	$(CPLUSPLUS) $(COPTS) $(TESTOBJS) $(LIBS) -lm -o test

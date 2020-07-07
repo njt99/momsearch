@@ -2,8 +2,9 @@
 
 data_dir="refine_census"
 name="box"
-maxArea="5.75"
+maxArea="5.92"
 minArea="0.0"
+words_file="../words_5.75_new"
 
 if [ ! -d "$data_dir" ]; then
     mkdir "$data_dir"
@@ -24,4 +25,4 @@ if [[ $# > 2 ]]; then
     box="$3"
 fi
 
-echo '1' | ../bin/refine_slopes --fillHoles --box "$box" --maxDepth 330 --truncateDepth 6 --inventDepth 70 --maxSize 3000000 --words ../words --ballSearchDepth 6 --minArea "$minArea" --maxArea "$maxArea" --powers ../powers_combined --mom /dev/null --parameterized /dev/null > "$data_dir/$name.out" 2> "$data_dir/$name.err"
+echo '1' | ../bin/refine_debug --fillHoles --box "$box" --maxDepth 330 --truncateDepth 6 --inventDepth 120 --maxSize 3000000 --words "$words_file" --e2words ../e2_words --ballSearchDepth 6 --minArea "$minArea" --maxArea "$maxArea" --powers ../powers_combined > "$data_dir/$name.out" 2> "$data_dir/$name.err"

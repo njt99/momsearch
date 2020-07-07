@@ -1,6 +1,5 @@
 /*
  *  MomRefine.cpp
- *  mom
  *
  *  Created by Nathaniel Thurston on 10/10/2007.
  *  Copyright 2007 THingith ehf.. All rights reserved.
@@ -29,8 +28,7 @@ struct Options {
     boxName(""), // Binary representation of box
     wordsFile("../words"), // Previously generated words
 		powersFile("null"), // Output from power parabolic.pl
-		momFile("/dev/null"), // TODO: Find what generates
-		parameterizedFile("/dev/null"), // TODO: Find what generates
+		e2WordsFile("/dev/null"), // Words file for e2
 		maxDepth(18), // Maximum depth for a file
     truncateDepth(6), 
     inventDepth(12),
@@ -42,8 +40,7 @@ struct Options {
 	const char* boxName;
 	const char* wordsFile;
 	const char* powersFile;
-	const char* momFile;
-	const char* parameterizedFile;
+	const char* e2WordsFile;
 	int maxDepth;
 	int truncateDepth;
 	int inventDepth;
@@ -59,8 +56,6 @@ TestCollection g_tests;
 TestCollection g_e2_tests;
 // For each test a list of box_states
 typedef vector< vector< box_state > > TestHistory;
-set<string> g_momVarieties;
-set<string> g_parameterizedVarieties;
 static int g_boxesVisited = 0;
 
 struct PartialTree {
@@ -282,43 +277,48 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
       }
     }
     // e2 elimination
-		for (int i = 9; i < g_e2_tests.size(); ++i) {
-      auto it = box.e2_todo.begin();
-      while(it != box.e2_todo.end()) {
-        if (g_e2_tests.kills_disk_center(i, *it, box)) {
-          if (g_e2_tests.kills_disk(i, *it, box, para_cache, short_words_cache)) {
-            box.e2_killers.insert(i);
-            it = box.e2_todo.erase(it); // returns new iterator
-            continue;
-          } 
-        }
-        ++it;
-      }
-      if (box.e2_todo.empty()) {
-        t.testIndex = 9;
-        t.testResult = killed_e2;
-        for (auto it = box.e2_killers.begin(); it != box.e2_killers.end(); ++it) {
-          t.e2_killers += g_e2_tests.getName(*it);
-          t.e2_killers += ",";
-        }
-        t.e2_killers.pop_back(); // should never crash 
-        // fprintf(stderr, "Killed with e2 bounds! With killers %s\n", t.e2_killers.c_str());
-        return true;
-      }
-		}
-	}
 
-  if (g_e2_tests.size() < 6666 && (depth > 6 ||  box.name.length() > 6)) {
-    set<string> e2_words = find_words(box.center(), 512, 16, box.qr.words(), true, g_e2_tests.stringIndex);
+  if (depth % 6 == 0 && depth > 30) {
+      for (int i = 9; i < g_e2_tests.size(); ++i) {
+        auto it = box.e2_todo.begin();
+        while(it != box.e2_todo.end()) {
+          if (g_e2_tests.kills_disk_center(i, *it, box)) {
+            if (g_e2_tests.kills_disk(i, *it, box, para_cache, short_words_cache)) {
+              // box.e2_killers.insert(i);
+              it = box.e2_todo.erase(it); // returns new iterator
+              continue;
+            } 
+          }
+          ++it;
+        }
+        if (box.e2_todo.empty()) {
+          t.testIndex = 9;
+          t.testResult = killed_e2;
+          // for (auto it = box.e2_killers.begin(); it != box.e2_killers.end(); ++it) {
+          //   t.e2_killers += g_e2_tests.getName(*it);
+          //   t.e2_killers += ",";
+          // }
+          // t.e2_killers.pop_back(); // should never crash 
+          // fprintf(stderr, "Killed with e2 bounds! With killers %s\n", t.e2_killers.c_str());
+          return true;
+        }
+      }
+    }
+  }
+
+  // if (g_e2_tests.size() < 6666 && (depth > 6 ||  box.name.length() > 6)) {
+  if (depth % 6 == 0 && depth > 30) {
+    set<string> e2_words = find_words(box.center(), 2, 16, box.qr.words(), true, g_e2_tests.stringIndex);
     for (auto e2_it = e2_words.begin(); e2_it != e2_words.end(); ++e2_it) {
+      fprintf(stderr, "new e2 found: %s\n", e2_it->c_str());
       g_e2_tests.add(*e2_it);
     }
   }
 
-	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth > 72 && depth % 12 == 0) {
+	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth % 6 == 0) {
 		while (depth - searchedDepth > g_options.ballSearchDepth) {
 			Box& searchPlace = place[++searchedDepth];
-			set<string> search_words = find_words(searchPlace.center(), 6, 16, box.qr.words(), false, g_tests.stringIndex);
+			set<string> search_words = find_words(searchPlace.center(), 1, 18, box.qr.words(), false, g_tests.stringIndex);
 
       for (auto s_it = search_words.begin(); s_it != search_words.end(); ++s_it) {
         string new_word = *s_it;
@@ -456,7 +456,8 @@ void printTree(PartialTree& t)
       return;
     }
     case killed_e2 : {
-      printf("%s(%s)\n", g_e2_tests.getName(t.testIndex), t.e2_killers.c_str());
+      // printf("%s(%s)\n", g_e2_tests.getName(t.testIndex), t.e2_killers.c_str());
+      printf("%s\n", g_e2_tests.getName(t.testIndex));
       return;
     }
     case killed_no_parabolics : type = 'K'; break;
@@ -487,8 +488,7 @@ static struct option longOptions[] = {
 	{"box",	required_argument, NULL, 'b' },
 	{"words", required_argument, NULL, 'w' },
 	{"powers", required_argument, NULL, 'p'},
-	{"mom", required_argument, NULL, 'M'},
-	{"parameterized", required_argument, NULL, 'P'},
+	{"e2words", required_argument, NULL, 'e'},
 	{"maxDepth", required_argument, NULL, 'm' },
 	{"inventDepth", required_argument, NULL, 'i' },
 	{"improveTree", no_argument, NULL, 'I'},
@@ -529,10 +529,9 @@ Options controlling which relators eliminate boxes:\n\
 	[ --powers <powers_file> ]\n\
 		File containing impossible relator definitions.\n\
 		See ImpossibleRelators::load(...)\n\
-	[ --mom <mom_varieties_file> ]\n\
-	[ --parameterized <parameterized_varieties_file ]\n\
-		Files containg varieties which the user wishes to ignore.\n\
-		The ony functional difference is that they produce different log messages.\n\
+	[ --e2words <e2 words> ]\n\
+	[ --minArea <v> ]\n\
+		Eliminate boxes which have area < minArea.\n\
 	[ --maxArea <v> ]\n\
 		Eliminate boxes which have area > maxArea.\n\
 \n\
@@ -576,13 +575,12 @@ int main(int argc, char** argv)
 
 	int ch;
 	while ((ch = getopt_long(argc, argv, optStr, longOptions, NULL)) != -1) {
-        fprintf(stderr,"Arg %c, %s\n", ch, optarg);
+    fprintf(stderr,"Arg %c, %s\n", ch, optarg);
 		switch(ch) {
 		case 'b': g_options.boxName = optarg; break;
 		case 'w': g_options.wordsFile = optarg; break;
 		case 'p': g_options.powersFile = optarg; break;
-		case 'M': g_options.momFile = optarg; break;
-		case 'P': g_options.parameterizedFile = optarg; break;
+		case 'e': g_options.e2WordsFile = optarg; break;
 		case 'm': g_options.maxDepth = atoi(optarg); break;
 		case 'i': g_options.inventDepth = atoi(optarg); break;
 		case 'I': g_options.improveTree = true; break;
@@ -619,9 +617,10 @@ int main(int argc, char** argv)
 	
 	g_tests.load(g_options.wordsFile);
 	g_tests.loadImpossibleRelations(g_options.powersFile);
-	loadWords(g_momVarieties, g_options.momFile);
-	loadWords(g_parameterizedVarieties, g_options.parameterizedFile);
+	g_e2_tests.load(g_options.e2WordsFile);
 	
+	// fprintf(stderr, "Loaded %d tests and %d e2 tests\n", g_tests.size(), g_e2_tests.size());
+
 	PartialTree t = readTree();
 	refineTree(box, t);
 	printTree(t);

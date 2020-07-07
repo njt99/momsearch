@@ -414,6 +414,8 @@ inline range quad_sol(double a, double b, double c) {
     return range((-b - sq_d)/(2*a), (-b + sq_d)/(2*a));
 }
 
+#define MAX_SEEN_AGAIN 64
+
 set<string> find_words(const Params<XComplex>& params, int num_words, int max_g_len, const vector<string>& relators,
                        bool e2_search, const map<string, int>& seen)
 {
@@ -436,6 +438,7 @@ set<string> find_words(const Params<XComplex>& params, int num_words, int max_g_
     XComplex lattice = params.lattice;
     double cusp_h = cusp_height(params);
     int d = 0;
+    int seen_count = 0;
     while (d < max_g_len) {
         vector<horoball> level;
         horoballs[d+1] = level;
@@ -479,12 +482,16 @@ set<string> find_words(const Params<XComplex>& params, int num_words, int max_g_
                 // Keep track of the word and it's representative
                 string h_word = h.first + word;
                 double new_height = horo_image_height_inf(h_gamma, cusp_h);
-                if (new_height > 1.25 * cusp_h && !e2_search) {
-                    if ( find(relators.begin(), relators.end(), h_word) == relators.end() ) {
-                        new_words.insert(h_word);
+                if (new_height > (1.15 * cusp_h) && !e2_search) {
+                    if (find(relators.begin(), relators.end(), h_word) == relators.end()) { 
+                        if (seen.find(h_word) == seen.end()) {
+                            new_words.insert(h_word);
+                        } else {
+                            seen_count += 1;
+                        }
                         // new_words.insert(canonicalName.canonical_mirror(h_word));
                         // printf("word %s\n", h_word.c_str());
-                        if (new_words.size() >= num_words) {
+                        if (new_words.size() >= num_words || seen_count > MAX_SEEN_AGAIN) {
                             return new_words;
                         }
                     }
@@ -513,9 +520,13 @@ set<string> find_words(const Params<XComplex>& params, int num_words, int max_g_
                     horoballs[d+1].push_back(new_ball);
 
                     // e2 search wants many horoball in fundamental domain
-                    if (e2_search && seen.find(new_word) == seen.end()) {
-                        new_words.insert(new_word);
-                        if (new_words.size() >= num_words) {
+                    if (e2_search) {
+                        if (seen.find(new_word) == seen.end()) {
+                            new_words.insert(new_word);
+                        }// else {
+                        //    seen_count += 1;
+                        //}
+                        if (new_words.size() >= num_words) {// || seen_count > MAX_SEEN_AGAIN) {
                             return new_words;
                         }
                     }
@@ -552,9 +563,13 @@ set<string> find_words(const Params<XComplex>& params, int num_words, int max_g_
                                     horoball shift_ball = { shift_center, new_height, shift_gamma, shift_word };
                                     horoballs[d+1].push_back(shift_ball);
                                     // e2 search wants many horoball in fundamental domain
-                                    if (e2_search && abs(m) <= 1 && abs(n) <= 1 &&  seen.find(shift_word) == seen.end()) {
-                                        new_words.insert(shift_word);
-                                        if (new_words.size() >= num_words) {
+                                    if (e2_search && abs(m) <= 1 && abs(n) <= 1) {
+                                        if (seen.find(shift_word) == seen.end()) {
+                                            new_words.insert(shift_word);
+                                        }// else {
+                                        //    seen_count += 1;
+                                        //}
+                                        if (new_words.size() >= num_words) {// || seen_count > MAX_SEEN_AGAIN) {
                                             return new_words;
                                         }
                                     }
