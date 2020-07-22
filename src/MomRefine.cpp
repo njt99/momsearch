@@ -208,6 +208,26 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
       }            
     }
 
+    if (t.testIndex == 9) {
+      for (int i = 9; i < g_e2_tests.size(); ++i) {
+        auto it = box.e2_todo.begin();
+        while(it != box.e2_todo.end()) {
+          if (g_e2_tests.kills_disk_center(i, *it, box)) {
+            if (g_e2_tests.kills_disk(i, *it, box, para_cache, short_words_cache)) {
+              it = box.e2_todo.erase(it); // returns new iterator
+              continue;
+            } 
+          }
+          ++it;
+        }
+        if (box.e2_todo.empty()) {
+          t.testIndex = 9;
+          t.testResult = killed_e2;
+          return true;
+        }
+      }
+    }
+
     box_state result = g_tests.evaluateBox(t.testIndex, box, aux_word, new_qrs, para_cache, short_words_cache);
 
     if (result != open && result != open_with_qr) {
@@ -278,7 +298,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
     }
     // e2 elimination
 
-  if (depth % 6 == 0 && depth > 30) {
+  if (depth % 6 == 0 && depth > 18) {
       for (int i = 9; i < g_e2_tests.size(); ++i) {
         auto it = box.e2_todo.begin();
         while(it != box.e2_todo.end()) {
@@ -307,8 +327,8 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
   }
 
   // if (g_e2_tests.size() < 6666 && (depth > 6 ||  box.name.length() > 6)) {
-  if (depth % 6 == 0 && depth > 30) {
-    set<string> e2_words = find_words(box.center(), 2, 16, box.qr.words(), true, g_e2_tests.stringIndex);
+  if (depth % 6 == 0 && depth > 12 ) {
+    set<string> e2_words = find_words(box.center(), 8, 8, box.qr.words(), true, g_e2_tests.stringIndex);
     for (auto e2_it = e2_words.begin(); e2_it != e2_words.end(); ++e2_it) {
       fprintf(stderr, "new e2 found: %s\n", e2_it->c_str());
       g_e2_tests.add(*e2_it);
@@ -392,12 +412,13 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
     }
   }
 
-  /* fprintf(stderr, "Number of todo boxes %d\n", box.e2_todo.size());
+  /*  fprintf(stderr, "Number of todo boxes %d\n", box.e2_todo.size());
   if (box.e2_todo.size() < 20) {
     for (auto it = box.e2_todo.begin(); it != box.e2_todo.end(); ++it) {
       fprintf(stderr,it->desc().c_str());
     }
   } else {
+    fprintf(stderr,box.e2_todo.begin()->desc().c_str());
     fprintf(stderr,"Box with many disks! Num g tests %d and box %s\n", g_e2_tests.size(), box.name.c_str());
   } */
 

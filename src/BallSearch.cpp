@@ -414,7 +414,8 @@ inline range quad_sol(double a, double b, double c) {
     return range((-b - sq_d)/(2*a), (-b + sq_d)/(2*a));
 }
 
-#define MAX_SEEN_AGAIN 64
+#define MAX_SEEN_AGAIN 256
+#define MAX_E2_SEEN_AGAIN 512
 
 set<string> find_words(const Params<XComplex>& params, int num_words, int max_g_len, const vector<string>& relators,
                        bool e2_search, const map<string, int>& seen)
@@ -523,10 +524,16 @@ set<string> find_words(const Params<XComplex>& params, int num_words, int max_g_
                     if (e2_search) {
                         if (seen.find(new_word) == seen.end()) {
                             new_words.insert(new_word);
-                        }// else {
-                        //    seen_count += 1;
-                        //}
-                        if (new_words.size() >= num_words) {// || seen_count > MAX_SEEN_AGAIN) {
+                        } else {
+                            seen_count += 1;
+                        }
+                        if (new_words.size() >= num_words + 6 || seen_count > MAX_E2_SEEN_AGAIN) {
+                            new_words.erase("g");  
+                            new_words.erase("Mg");  
+                            new_words.erase("Ng");  
+                            new_words.erase("NMg");
+                            new_words.erase("G");
+                            new_words.erase("MG");
                             return new_words;
                         }
                     }
@@ -566,10 +573,16 @@ set<string> find_words(const Params<XComplex>& params, int num_words, int max_g_
                                     if (e2_search && abs(m) <= 1 && abs(n) <= 1) {
                                         if (seen.find(shift_word) == seen.end()) {
                                             new_words.insert(shift_word);
-                                        }// else {
-                                        //    seen_count += 1;
-                                        //}
-                                        if (new_words.size() >= num_words) {// || seen_count > MAX_SEEN_AGAIN) {
+                                        } else {
+                                            seen_count += 1;
+                                        }
+                                        if (new_words.size() >= num_words + 6 || seen_count > MAX_E2_SEEN_AGAIN) {
+                                            new_words.erase("g");  
+                                            new_words.erase("Mg");  
+                                            new_words.erase("Ng");  
+                                            new_words.erase("NMg");
+                                            new_words.erase("G");
+                                            new_words.erase("MG");
                                             return new_words;
                                         }
                                     }
@@ -581,6 +594,14 @@ set<string> find_words(const Params<XComplex>& params, int num_words, int max_g_
             }
         }
         d += 1;
+    }
+    if (e2_search) {
+      new_words.erase("g");  
+      new_words.erase("Mg");  
+      new_words.erase("Ng");  
+      new_words.erase("NMg");
+      new_words.erase("G");
+      new_words.erase("MG");
     }
     return new_words;
 }

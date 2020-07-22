@@ -664,6 +664,10 @@ bool TestCollection::kills_disk_center(int index, const Disk& d, Box& box) {
 		case 9: {
       XComplex c = d.center(); 
       XComplex r = d.radius();
+      //fprintf(stderr, d.desc().c_str()); 
+      //fprintf(stderr, "Box %s has center lat: %f + I %f lox: %f + I %f par: %f + I %f (%s)\n",
+      //                box.name.c_str(), params.lattice.re, params.lattice.im, params.loxodromic_sqrt.re,
+      //                params.loxodromic_sqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
       if (absUB(r) + c.im < 0) {
         return true;
       }

@@ -102,7 +102,7 @@ if __name__ == '__main__' :
     # maxDepth = '257'
     # truncateDepth = '211'
     # inventDepth = '207'
-    maxSize = '1000000'
+    maxSize = '3000000'
     maxDepth = '330'
     truncateDepth = '6'
     inventDepth = '42'
@@ -174,13 +174,12 @@ if __name__ == '__main__' :
     while True:
         sleep(0.01) # We don't need to to run the main loop to death since we aren't using os.wait
         openHoles = holes - done
-        failedHoles = failedHoles - done
         bestHole = '1'*200
         deepestHole = ''
         if len(openHoles) == 0 and refineRunCount == 0 and len(done) == 0:
             bestHole = 'root'
         for hole in openHoles:
-            if len(hole) < len(bestHole) :
+            if len(hole) > len(bestHole) or bestHole == '1'*200 :
                 bestHole = hole 
             if len(hole) > len(deepestHole) :
                 deepestHole = hole   
@@ -219,7 +218,7 @@ if __name__ == '__main__' :
                     seenWords |= newWords
 
                     badHoles = command_output('grep HOLE {0}/{1}.err | cut -d " " -f 2; exit 0'.format(destDir, doneHole)).rstrip().split('\n')
-                    failedHoles.union(badHoles)
+                    failedHoles.update(badHoles)
 
                     if len(newWords) > 0: 
                         f = open(wordsFile, 'a')
@@ -299,3 +298,8 @@ if __name__ == '__main__' :
         refineRunCount += 1
         done.add(bestHole)
         activePidToHole[pid] = bestHole
+        doneFailed = set()
+        for h in failedHoles:
+          if h.startswith(bestHole):
+            doneFailed.add(h)
+        failedHoles.difference_update(doneFailed)
