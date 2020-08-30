@@ -274,6 +274,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
           case variety_nbd :
           case two_var_inter :
           case killed_no_parabolics :
+          case killed_g_max_nekl :
           case killed_bad_parabolic :
           case killed_failed_qr :
           case killed_identity_impossible :
@@ -298,7 +299,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
     }
     // e2 elimination
 
-  if (depth % 6 == 0 && depth > 18) {
+  if (depth % 6 == 0 && box.name.length() > 59) {
       for (int i = 9; i < g_e2_tests.size(); ++i) {
         auto it = box.e2_todo.begin();
         while(it != box.e2_todo.end()) {
@@ -327,8 +328,8 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
   }
 
   // if (g_e2_tests.size() < 6666 && (depth > 6 ||  box.name.length() > 6)) {
-  if (depth % 6 == 0 && depth > 12 ) {
-    set<string> e2_words = find_words(box.center(), 8, 8, box.qr.words(), true, g_e2_tests.stringIndex);
+  if (depth % 12 == 0 && box.name.length() > 83) {
+    set<string> e2_words = find_words(box.center(), 1, 16, box.qr.words(), true, g_e2_tests.stringIndex);
     for (auto e2_it = e2_words.begin(); e2_it != e2_words.end(); ++e2_it) {
       fprintf(stderr, "new e2 found: %s\n", e2_it->c_str());
       g_e2_tests.add(*e2_it);
@@ -358,6 +359,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
             case variety_nbd : 
             case two_var_inter : 
             case killed_no_parabolics :
+            case killed_g_max_nekl :
             case killed_bad_parabolic :
             case killed_failed_qr :
             case killed_identity_impossible :
@@ -482,6 +484,7 @@ void printTree(PartialTree& t)
       return;
     }
     case killed_no_parabolics : type = 'K'; break;
+    case killed_g_max_nekl : type = 'S'; break;
     case variety_nbd : type = 'V'; break;
     case two_var_inter : type = 'T'; break;
     case killed_parabolics_impossible : type = 'P'; break;

@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1 # node count
-#SBATCH --ntasks-per-node=39
-#SBATCH -t 239:59:00
+#SBATCH --ntasks-per-node=38
+#SBATCH -t 238:59:00
 #SBATCH --mem=60GB
 # sends mail when process begins, and 
 # when it ends. Make sure you define your email 
@@ -22,4 +22,4 @@ data_dir="/scratch/network/yarmola/run_slopes_top"
 
 cd $bin_dir
 
-python "$search" -i 120 -t 6 -r "$bin_dir/refine_slopes" -w "$words" -p "$powers" -c 39 "$data_dir/source" "$data_dir/output_live" > "$data_dir/refine.log" 2>&1
+python "$search" -i 30 -t 6 -r "$bin_dir/refine_slopes" -w "$words" -p "$powers" -c 38 "$data_dir/source" "$data_dir/output_live" > "$data_dir/refine.log" 2>&1

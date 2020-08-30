@@ -434,6 +434,9 @@ box_state TestCollection::evaluate_ACJ(string word, Params<ACJ>& params, string&
   }
 
   if (large_horoball(w,params)) {
+    if (g_len <= g_max_g_len) {
+      return killed_g_max_nekl;   
+    }
     if (not_para_fix_inf(w)) {
       return killed_no_parabolics;
     } else {
@@ -698,7 +701,12 @@ bool TestCollection::kills_disk_center(int index, const Disk& d, Box& box) {
       return false;
 		}
 		default: {
-	    SL2C w = construct_word_center(indexString[index - g_num_bnd_tests], params, box.words_cache);
+      string word = indexString[index - g_num_bnd_tests];
+      int g_len = g_length(word);
+	    SL2C w = construct_word_center(word, params, box.words_cache);
+      if (g_len > 1 && !maybe_smaller_than_e2_horoball(w, params)) {
+        return false;
+      }
       return disk_maybe_killed_by(d, w);  
     }
   }
@@ -781,7 +789,12 @@ bool TestCollection::kills_disk(int index, const Disk& d, const Box& box,
       return false;
 		}
 		default: {
-	    SL2ACJ w = construct_word(indexString[index - g_num_bnd_tests], cover, para_cache, words_cache);
+      string word = indexString[index - g_num_bnd_tests];
+      int g_len = g_length(word);
+	    SL2ACJ w = construct_word(word, cover, para_cache, words_cache);
+      if (g_len > 1 && !smaller_than_e2_horoball(w, cover)) {
+        return false;
+      }
       return disk_killed_by(d, w);  
     }
   }

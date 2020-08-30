@@ -27,6 +27,7 @@ killed_failed_qr = 2,
 open_with_qr = 6,
 variety_nbd = 7,
 killed_e2 = 15,
+killed_g_max_nekl = 16,
 two_var_inter = 13,
 variety_center = 10,
 two_var_center = 14,
@@ -96,6 +97,14 @@ inline bool large_horoball(SL2ACJ& w, const Params<ACJ>& params) {
 }
 
 #define ONE_OVER_E2_MIN 0.92593
+
+inline const bool maybe_smaller_than_e2_horoball(const SL2C& w, const Params<XComplex>& params) {
+  return absUB((params.loxodromic_sqrt / w.c).z) < ONE_OVER_E2_MIN;
+}
+
+inline bool smaller_than_e2_horoball(SL2ACJ& w, const Params<ACJ>& params) {
+  return absUB(params.loxodromic_sqrt / w.c) < ONE_OVER_E2_MIN;
+}
 
 inline bool disk_killed_by(const Disk& d, const SL2ACJ& w) {
   // Returns true if the disk is contained in the "kill radius"

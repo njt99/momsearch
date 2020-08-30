@@ -174,12 +174,12 @@ if __name__ == '__main__' :
     while True:
         sleep(0.01) # We don't need to to run the main loop to death since we aren't using os.wait
         openHoles = holes - done
-        bestHole = '1'*400
+        bestHole = '1'*1000
         deepestHole = ''
         if len(openHoles) == 0 and refineRunCount == 0 and len(done) == 0:
             bestHole = 'root'
         for hole in openHoles:
-            if len(hole) > len(bestHole) or bestHole == '1'*400 :
+            if len(hole) > len(bestHole) or bestHole == '1'*1000 :
                 bestHole = hole 
             if len(hole) > len(deepestHole) :
                 deepestHole = hole    
@@ -209,7 +209,9 @@ if __name__ == '__main__' :
                     numPatched = command_output('grep -c Patched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
                     numUnpatched = command_output('grep -c Unpatched {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
                     numHoles = command_output('grep -c HOLE {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
+                    new_e2_words = command_output('grep "new e2 found" {0}/{1}.err; exit 0'.format(destDir, doneHole)).rstrip()
                     
+                    print '{}\n'.format(new_e2_words)
                     print 'Holes: {0} patched, {1} unpatched, {2} open holes\n'.format(numPatched, numUnpatched, int(numHoles))
 
                     boxWords = set()
