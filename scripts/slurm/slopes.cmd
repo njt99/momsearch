@@ -21,4 +21,6 @@ data_dir="/scratch/network/yarmola/run_slopes"
 
 cd $bin_dir
 
-python "$search" -i 30 -t 6 -r "$bin_dir/refine_slopes" -w "$words" -p "$powers" -c 38 "$data_dir/source" "$data_dir/output_live" > "$data_dir/refine.log" 2>&1
+cat "$data_dir/refine.log" >> "$data_dir/refine.log.all"
+
+python "$search" -i 18 -t 6 -r "$bin_dir/refine_slopes" -w "$words" -p "$powers" -c 38 "$data_dir/source" "$data_dir/output_live" > "$data_dir/refine.log" 2>&1

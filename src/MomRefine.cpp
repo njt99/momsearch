@@ -299,7 +299,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
     }
     // e2 elimination
 
-  if (depth % 6 == 0 && box.name.length() > 59) {
+  if (depth % 6 == 0 && box.name.length() > 90) {
       for (int i = 9; i < g_e2_tests.size(); ++i) {
         auto it = box.e2_todo.begin();
         while(it != box.e2_todo.end()) {
@@ -328,7 +328,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
   }
 
   // if (g_e2_tests.size() < 6666 && (depth > 6 ||  box.name.length() > 6)) {
-  if (depth % 12 == 0 && box.name.length() > 83) {
+  if (box.name.length() > 60 && box.name.length() % 24 == 0) {
     set<string> e2_words = find_words(box.center(), 1, 16, box.qr.words(), true, g_e2_tests.stringIndex);
     for (auto e2_it = e2_words.begin(); e2_it != e2_words.end(); ++e2_it) {
       fprintf(stderr, "new e2 found: %s\n", e2_it->c_str());
@@ -336,10 +336,11 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
     }
   }
 
-	if (g_options.ballSearchDepth >= 0 && (g_options.improveTree || !t.lChild) && depth % 6 == 0) {
-		while (depth - searchedDepth > g_options.ballSearchDepth) {
-			Box& searchPlace = place[++searchedDepth];
-			set<string> search_words = find_words(searchPlace.center(), 1, 18, box.qr.words(), false, g_tests.stringIndex);
+	if (g_options.ballSearchDepth > 0 && depth > 0 && (g_options.improveTree || !t.lChild) && box.name.length() > 48 &&  depth % g_options.ballSearchDepth == 0) {
+		// while (depth - searchedDepth > g_options.ballSearchDepth) {
+		//	Box& searchPlace = place[++searchedDepth];
+			Box& searchPlace = box; 
+			set<string> search_words = find_words(searchPlace.center(), 1, 14, box.qr.words(), false, g_tests.stringIndex);
 
       for (auto s_it = search_words.begin(); s_it != search_words.end(); ++s_it) {
         string new_word = *s_it;
@@ -380,7 +381,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
               break;
             }
           }
-        }
+        //}
       }
 		}
 	}

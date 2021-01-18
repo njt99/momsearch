@@ -72,11 +72,14 @@ def run_refine(command, destDir) :
 if __name__ == '__main__' :
     def print_usage():
         print('Usage: dosearch [-w,--words <wordsfile>] [-e,--e2_words <wordsfile>] [-p,--powers <powersFile>]' + 
-        '[-c,--child_limit <limit>] [-d,--depth_limit <limit>] [-h,-holes <holesfile>] srcDir destDir')
+        '[-c,--child_limit <limit>] [-d,--depth_limit <limit>] [--h,-holes <holesfile>]' + 
+        '[-r, --refine <refine_binary>] [-i, --invecnt_depth <num>] [-t, --truncate_depth <num>]' +
+        '[-s, --search_depth <num>] [-a,--max_area <num>] [-m, --min_area <num>][ srcDir destDir')
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:],'w:e:p:c:d:h:r:i:t:s:',['words=','e2_words=','powers=',
-        'child_limit=','depth_limit=','holes=','refine=','invent_depth=','truncate_depth','search_depth='])
+        opts, args = getopt.getopt(sys.argv[1:],'w:e:p:c:d:h:r:i:t:s:a:m:',['words=','e2_words=','powers=',
+        'child_limit=','depth_limit=','holes=','refine=','invent_depth=','truncate_depth','search_depth=',
+        'max_area=', 'min_area='])
     except getopt.GetoptError as err:
         print str(err)
         print_usage()
@@ -98,10 +101,6 @@ if __name__ == '__main__' :
     childLimit = 8
     depth_limit = 330
 
-    # maxSize = '25000000'
-    # maxDepth = '257'
-    # truncateDepth = '211'
-    # inventDepth = '207'
     maxSize = '1000000'
     maxDepth = '330'
     truncateDepth = '6'
@@ -110,8 +109,8 @@ if __name__ == '__main__' :
     # ballSearchDepth = '-1'
     maxArea = '5.8'
     minArea = '0.0'
-    # fillHoles = ' --fillHoles'
-    fillHoles = ''
+    fillHoles = ' --fillHoles'
+    # fillHoles = ''
     # improveTree = ' --improveTree'
     improveTree = ''
     powers = '/u/yarmola/momsearch/powers_combined'
@@ -135,13 +134,17 @@ if __name__ == '__main__' :
         if opt in ('-h', '--holes'):
             holes_file = val
         if opt in ('-r', '--refine'):
-	    refine = val
+            refine = val
         if opt in ('-i', '--invent_depth'):
-	    inventDepth = str(int(val))
+            inventDepth = str(int(val))
         if opt in ('-t', '--truncate_depth'):
-	    truncateDepth = str(int(val))
+            truncateDepth = str(int(val))
         if opt in ('-s', '--search_depth'):
-	    ballSearchDepth = str(int(val))
+            ballSearchDepth = str(int(val))
+        if opt in ('-a', '--max_area'):
+            maxArea = str(float(val))
+        if opt in ('-m', '--min_area'):
+            minArea = str(float(val))
             
     add_words(seenWords, wordsFile)
 
@@ -179,10 +182,10 @@ if __name__ == '__main__' :
         if len(openHoles) == 0 and refineRunCount == 0 and len(done) == 0:
             bestHole = 'root'
         for hole in openHoles:
-            if len(hole) > len(bestHole) or bestHole == '1'*1000 :
+            if len(hole) < len(bestHole) or bestHole == '1'*1000 :
                 bestHole = hole 
             if len(hole) > len(deepestHole) :
-                deepestHole = hole   
+                deepestHole = hole    
 
         if len(bestHole) > depth_limit:
             if childCount > 0 :
@@ -256,6 +259,8 @@ if __name__ == '__main__' :
         print 'Deepest hole: {0}\n'.format(deepestHole)
         if len(failedHoles) > 0:
           print 'Deepest failed hole: {}\n'.format(sorted(failedHoles, key=len)[-1])
+          with open('deep_holes_bt', 'w') as fp:
+            fp.write('\n'.join(sorted(failedHoles, key=len)))
         else:
           print 'Deepest failed hole: None\n'
 

@@ -90,7 +90,7 @@ if __name__ == '__main__' :
     treecat = './treecat'
     treeholes = './treecat --open_holes'
     treecheck = './treecat --mark -s'
-    refine = './refine_slopes'
+    refine = './refine_slopes_top'
 
     # Set up the rest of the arguments
     srcDir = args[0]
@@ -106,14 +106,14 @@ if __name__ == '__main__' :
     maxDepth = '330'
     truncateDepth = '6'
     inventDepth = '42'
-    ballSearchDepth = '6'
+    ballSearchDepth = '14'
     # ballSearchDepth = '-1'
     maxArea = '5.92'
     minArea = '5.85'
-    # fillHoles = ' --fillHoles'
-    fillHoles = ''
-    improveTree = ' --improveTree'
-    # improveTree = ''
+    fillHoles = ' --fillHoles'
+    # fillHoles = ''
+    # improveTree = ' --improveTree'
+    improveTree = ''
     powers = '/u/yarmola/momsearch/powers_combined'
     wordsFile = '/u/yarmola/momsearch/words'
     e2WordsFile = '/u/yarmola/momsearch/e2_words'
@@ -135,13 +135,13 @@ if __name__ == '__main__' :
         if opt in ('-h', '--holes'):
             holes_file = val
         if opt in ('-r', '--refine'):
-	    refine = val
+            refine = val
         if opt in ('-i', '--invent_depth'):
-	    inventDepth = str(int(val))
+            inventDepth = str(int(val))
         if opt in ('-t', '--truncate_depth'):
-	    truncateDepth = str(int(val))
+            truncateDepth = str(int(val))
         if opt in ('-s', '--search_depth'):
-	    ballSearchDepth = str(int(val))
+            ballSearchDepth = str(int(val))
             
     add_words(seenWords, wordsFile)
 
@@ -179,7 +179,7 @@ if __name__ == '__main__' :
         if len(openHoles) == 0 and refineRunCount == 0 and len(done) == 0:
             bestHole = 'root'
         for hole in openHoles:
-            if len(hole) > len(bestHole) or bestHole == '1'*1000 :
+            if len(hole) < len(bestHole) or bestHole == '1'*1000 :
                 bestHole = hole 
             if len(hole) > len(deepestHole) :
                 deepestHole = hole    

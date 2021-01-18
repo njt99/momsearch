@@ -24,6 +24,15 @@ debug: $(REFINEOBJS)
 refine: $(REFINEOBJS)
 	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes
 
+top: $(REFINEOBJS)
+	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes_top
+
+mid: $(REFINEOBJS)
+	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes_mid
+
+mt: $(REFINEOBJS)
+	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes_mt
+
 test: $(TESTOBJS)
 	$(CPLUSPLUS) $(COPTS) $(TESTOBJS) $(LIBS) -lm -o test
 
