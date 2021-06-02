@@ -40,13 +40,17 @@ inline const XComplex sq(const XComplex& x) {
     return (x*x).z;
 }
 
-void fill_slope_candidates(Box& box) {
+#define MAX_SLOPE_COUNT 1024
+#define MAX_PASS_COUNT 1048576
+
+bool fill_slope_candidates(Box& box) {
     Params<XComplex> nearer = box.nearer();
     Params<ACJ> cover = box.cover();
     ACJ S = cover.loxodromic_sqrt;
     ACJ L = cover.lattice;
     ACJ SL = S*L;
     double b = 0;
+    int pass_count = 0;
     while (absLB((S*nearer.lattice.im)*b) <= 6) {
         double a = 0; 
         // want a*s <= b*s/2 + sqrt(36 - (b s lattice.im)^2) with s = |S|
@@ -58,16 +62,25 @@ void fill_slope_candidates(Box& box) {
                 // avoid long slopes, non-primatives, and overconting (-1,0) and (1,0) or (0,1)
                 if ((a == 0 && b == 0) || (sgn == -1 && (a == 0 || b == 0)) ||
                     gcd(int(a), int(b)) > 1 || absLB(g) > 6) {
+                    pass_count += 1;
+                    if (pass_count > MAX_PASS_COUNT) {
+                      return false; // necessary when S is bad
+                    }
                     continue;
                 } 
                 slope p(sgn*a, b);
                 box.short_slopes.insert(p);
+                // fprintf(stderr, "Pair (%f, %f) cutoff %f\n", p.first, p.second, cutoff);
+                if (box.short_slopes.size() > MAX_SLOPE_COUNT) {
+                  return false;
+                }
             }
             a += 1;
-            cutoff = (1-EPS)*(absLB(sq(S*(2*a - b))) + absLB(sq((S*nearer.lattice.im)*b)));
+            cutoff = (1-EPS)*(absLB(sq(S*(2*a - b))) + absLB(sq((S*nearer.lattice.im)*b*2)));
         }
         b += 1;
     }
+    return true;
 }
 
 const int short_slopes_max_dist(Box& box) {
@@ -88,8 +101,12 @@ const int short_slopes_max_dist(Box& box) {
     ACJ L = cover.lattice;
     // Compute possible slopes once and then we will remove extras
     if (box.short_slopes.empty()) {
-        fill_slope_candidates(box);
+        if (!fill_slope_candidates(box)) {
+          box.short_slopes.clear();
+          return -1;
+        }
     }
+    // fprintf(stderr, "Filled slopes in box %s\n", box.name.c_str());
     vector<slope> loc_short_slopes; 
     for (auto s_it = box.short_slopes.begin(); s_it != box.short_slopes.end(); ) {
         ACJ g = ((L * s_it->second) + s_it->first)*S;
@@ -98,6 +115,7 @@ const int short_slopes_max_dist(Box& box) {
         } else {
             loc_short_slopes.push_back(*s_it);
             if (loc_short_slopes.size() > 8) { // speed up
+                box.short_slopes.clear();
                 return -1;
             }
             ++s_it;
@@ -109,10 +127,12 @@ const int short_slopes_max_dist(Box& box) {
             if (it1 == it2) { continue; }
             max_dist = max(max_dist, slope_dist(*it1, *it2));
             if (max_dist > 5) { // speed up
+                box.short_slopes.clear();
                 return -1;
             }
         }    
     }
+    box.short_slopes.clear();
     return max_dist;
 }
 
@@ -127,8 +147,12 @@ const int short_slopes_max_dist_center(Box& box) {
         return -1;
     }
     if (box.short_slopes.empty()) {
-        fill_slope_candidates(box);
+        if (!fill_slope_candidates(box)) {
+          box.short_slopes.clear();
+          return -1;
+        }
     }
+    // fprintf(stderr, "Filled slopes in box %s\n", box.name.c_str());
     XComplex S = center.loxodromic_sqrt;
     XComplex L = center.lattice;
     vector<slope> loc_short_slopes; 
@@ -137,6 +161,7 @@ const int short_slopes_max_dist_center(Box& box) {
         if (absLB(g) <= 6) {
             loc_short_slopes.push_back(*s_it);
             if (loc_short_slopes.size() > 8) { // speed up
+                box.short_slopes.clear();
                 return -1;
             }
         }
@@ -147,9 +172,11 @@ const int short_slopes_max_dist_center(Box& box) {
             if (it1 == it2) { continue; }
             max_dist = max(max_dist, slope_dist(*it1, *it2));
             if (max_dist > 5) {
+                box.short_slopes.clear();
                 return -1;
             }
         }    
     }
+    box.short_slopes.clear();
     return max_dist;
 }

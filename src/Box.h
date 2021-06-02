@@ -58,6 +58,7 @@ struct Box {
 	Params<XComplex> greater() const { return _greater; } // returns all values greater than in the box
   std::set<std::pair<double,double> > short_slopes;
   std::unordered_map<std::string, SL2C> words_cache;
+  std::string desc() const;
 private:
 	int pos;
 	double center_digits[6];

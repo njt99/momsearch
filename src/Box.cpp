@@ -1,4 +1,5 @@
 #include "Box.h"
+#include <string.h>
 
 // Initial disk box dimensions are 2^(6/2), 2^(5/2) 
 
@@ -34,6 +35,19 @@ void Disk::compute_center_and_radius() {
   _radius = XComplex(disk_size[1], disk_size[0]);
   _c_ACJ = ACJ(_center); 
   _r_ACJ = ACJ(_radius); 
+}
+
+std::string Box::desc() const {
+  char _desc[10000];
+  sprintf(_desc, "%s\n", name.c_str());
+  sprintf(_desc + strlen(_desc), "lattice = %f + I %f with size %f, absLB %f, and absUB %f\n",
+    _cover.lattice.f.re, _cover.lattice.f.im, size(_cover.lattice), absLB(_cover.lattice), absUB(_cover.lattice));
+  sprintf(_desc + strlen(_desc), "parabolic = %f + I %f with size %f, absLB %f, and absUB %f\n",
+    _cover.parabolic.f.re, _cover.parabolic.f.im, size(_cover.parabolic), absLB(_cover.parabolic), absUB(_cover.parabolic));
+  sprintf(_desc + strlen(_desc), "loxodromic_sqrt = %f + I %f with size %f, absLB %f, and absUB %f\n",
+    _cover.loxodromic_sqrt.f.re, _cover.loxodromic_sqrt.f.im, size(_cover.loxodromic_sqrt), absLB(_cover.loxodromic_sqrt), absUB(_cover.loxodromic_sqrt));
+  std::string s(_desc);
+  return s;   
 }
 
 std::string Disk::desc() const {

@@ -1,6 +1,6 @@
 REFINEOBJS= MomRefine.o BallSearch.o slopes.o TestCollection.o Box.o ImpossibleRelations.o ACJ.o Params.o SL2C.o SL2ACJ.o Complex.o roundoff.o CanonicalName.o QuasiRelators.o
 TREECATOBJS= treecat.o
-STREECATOBJS= simple_tree_cat.o
+STREECATOBJS= simple_treecat.o
 TESTOBJS= test.o BallSearch.o slopes.o TestCollection.o Box.o ImpossibleRelations.o ACJ.o Params.o SL2C.o SL2ACJ.o Complex.o roundoff.o CanonicalName.o QuasiRelators.o
 #CPLUSPLUS= icpc
 #CC= icpc
@@ -19,16 +19,16 @@ COPTS=-O3 -std=c++1y
 	$(CC) $(COPTS) $(CCFLAGS) -c ${@:o=C}
 
 debug: $(REFINEOBJS)
-	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_debug
+	$(CPLUSPLUS) $(COPTS) -g -Wall $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes_debug
 
 refine: $(REFINEOBJS)
 	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes
 
-top: $(REFINEOBJS)
-	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes_top
+profile: $(REFINEOBJS)
+	$(CPLUSPLUS) $(COPTS) -g -pg -Wall $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes_profile
 
 mid: $(REFINEOBJS)
-	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes_mid
+	$(CPLUSPLUS) $(COPTS) -g -Wall $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes_mid
 
 mt: $(REFINEOBJS)
 	$(CPLUSPLUS) $(COPTS) $(REFINEOBJS) $(LIBS) -lm -o ../bin/refine_slopes_mt
@@ -37,7 +37,13 @@ test: $(TESTOBJS)
 	$(CPLUSPLUS) $(COPTS) $(TESTOBJS) $(LIBS) -lm -o test
 
 treecat: $(TREECATOBJS)
-	$(CPLUSPLUS) $(COPTS) $(TREECATOBJS) -o ../bin/treecat_debug
+	$(CPLUSPLUS) $(COPTS) $(TREECATOBJS) -o ../bin/treecat
 
-simple_tree_cat: $(STREECATOBJS)
-	$(CPLUSPLUS) $(COPTS) $(STREECATOBJS) -o ../bin/simple_tree_cat
+simple_treecat: $(STREECATOBJS)
+	$(CPLUSPLUS) $(COPTS) $(STREECATOBJS) -o ../bin/simple_treecat
+
+treemerge: treemerge.o 
+	$(CPLUSPLUS) $(COPTS) treemerge.o -o ../bin/treemerge
+
+roottreemerge: roottreemerge.o 
+	$(CPLUSPLUS) $(COPTS) roottreemerge.o -o ../bin/roottreemerge

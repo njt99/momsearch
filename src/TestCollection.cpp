@@ -31,8 +31,8 @@ double g_maximumArea = 6.0;
 double g_minimumArea = 0.0;
 int g_max_g_len = 7;
 int g_num_bnd_tests = 10;
-int g_var_int_depth = 36; // don't look for var_int unles we are this deep
-int g_slope_dist_depth = 42; 
+int g_var_int_depth = 60; // don't look for var_int unles we are this deep
+int g_slope_dist_depth = 6; 
 
 string g_testCollectionFullWord;
 
@@ -575,18 +575,18 @@ box_state TestCollection::evaluateCenter(int index, Box& box)
 		}
 		case 7: {
             if (box.name.length() < g_slope_dist_depth) {
-                return open;
+              return open;
             } 
             int max_dist = short_slopes_max_dist_center(box);
             return check_bounds_center(max_dist > 0 && max_dist < 6);
 		}
 		case 8: {
-            if (box.qr.words().size() < 2 || box.name.length() < g_var_int_depth) {
-                 if (box.qr.words().size() == 0) { return open; } 
-                 else { return open_with_qr; }
-            }
-		    return two_var_center;
-		}
+              if (box.qr.words().size() < 2 || box.name.length() < g_var_int_depth) {
+               if (box.qr.words().size() == 0) { return open; } 
+               else { return open_with_qr; }
+              }
+              return two_var_center;
+	        	}
     case 9: return open;
 		default: {
 			return evaluate_approx(indexString[index - g_num_bnd_tests], params, box.words_cache);
@@ -701,6 +701,10 @@ bool TestCollection::kills_disk_center(int index, const Disk& d, Box& box) {
       return false;
 		}
 		default: {
+      double area_lb = areaLB(params);
+      if (area_lb < 5.65) {
+        return false;
+      }
       string word = indexString[index - g_num_bnd_tests];
       int g_len = g_length(word);
 	    SL2C w = construct_word_center(word, params, box.words_cache);
@@ -715,6 +719,7 @@ bool TestCollection::kills_disk_center(int index, const Disk& d, Box& box) {
 bool TestCollection::kills_disk(int index, const Disk& d, const Box& box,
                 unordered_map<int,ACJ>& para_cache, unordered_map<string,SL2ACJ>& words_cache) {
   Params<ACJ> cover = box.cover();
+  Params<XComplex> nearer = box.nearer();
 	switch(index) {
 		case 0: 
 		case 1: 
@@ -728,6 +733,7 @@ bool TestCollection::kills_disk(int index, const Disk& d, const Box& box,
       return false;
     }
 		case 9: {
+      Params<XComplex> further = box.further();
       ACJ c = d.c_ACJ(); 
       ACJ r = d.r_ACJ(); 
       // Disk is below x-axis
@@ -737,7 +743,6 @@ bool TestCollection::kills_disk(int index, const Disk& d, const Box& box,
           return true;
         }
       }
-      Params<XComplex> further = box.further();
       XComplex fL = further.lattice;
       // Disk is above y = im L
       if (fL.im > 0 && c.f.im > fL.im) {
@@ -746,7 +751,6 @@ bool TestCollection::kills_disk(int index, const Disk& d, const Box& box,
           return true;
         }
       }
-      Params<XComplex> nearer = box.nearer();
       XComplex nL = nearer.lattice;
       // re L > 0 and disk is left of x = 0
       if (nL.re > 0 && c.f.re < 0) {
@@ -789,6 +793,10 @@ bool TestCollection::kills_disk(int index, const Disk& d, const Box& box,
       return false;
 		}
 		default: {
+      double area_lb = areaLB(nearer);
+      if (area_lb < 5.65) {
+        return false;
+      }
       string word = indexString[index - g_num_bnd_tests];
       int g_len = g_length(word);
 	    SL2ACJ w = construct_word(word, cover, para_cache, words_cache);

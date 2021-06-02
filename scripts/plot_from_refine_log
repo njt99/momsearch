@@ -1,3 +1,12 @@
 #!/bin/bash
 
-grep Open "$1" | cut -d ' ' -f 4 | gnuplot -e "set terminal jpeg; plot '/dev/stdin'" > "$2"
+data=`mktemp`
+grep Open "$1" | cut -d ' ' -f 4 > $data
+
+max=`cat $data | sort -n | tail -1`
+min=`cat $data | sort -n -r | tail -1`
+num=`cat $data| wc -l`
+
+ratio=`echo "scale=4;($max-$min)/$num" | bc`
+
+cat $data | gnuplot -e "set terminal pdf; set size ratio $ratio; set style line 1 lc rgb 'red' pt 7 ps 0.01; plot '/dev/stdin' with points ls 1" > "$2"

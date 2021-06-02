@@ -415,7 +415,7 @@ inline range quad_sol(double a, double b, double c) {
 }
 
 #define MAX_SEEN_AGAIN 2
-#define MAX_E2_SEEN_AGAIN 1024
+#define MAX_E2_SEEN_AGAIN 128
 
 set<string> find_words(const Params<XComplex>& params, int num_words, int max_g_len, const vector<string>& relators,
                        bool e2_search, const map<string, int>& seen)

@@ -14,13 +14,13 @@ bin_dir="$base_dir/bin"
 words_dir=$base_dir
 
 search="$base_dir/scripts/dosearch_slopes.py"
-words="$words_dir/words_5.75_new"
-powers="$words_dir/powers_combined"
+words="$words_dir/words_final"
+powers="$words_dir/powers_final"
 
-data_dir="/scratch/network/yarmola/run_slopes"
+data_dir="/scratch/network/yarmola/slopes"
 
 cd $bin_dir
 
 cat "$data_dir/refine.log" >> "$data_dir/refine.log.all"
 
-python "$search" -i 18 -t 6 -r "$bin_dir/refine_slopes" -w "$words" -p "$powers" -c 38 "$data_dir/source" "$data_dir/output_live" > "$data_dir/refine.log" 2>&1
+python "$search" -i 42 -t 12 -r "$bin_dir/refine_slopes" -w "$words" -p "$powers" -c 38 "$data_dir/source" "$data_dir/output_live" > "$data_dir/refine.log" 2>&1

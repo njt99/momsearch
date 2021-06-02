@@ -194,6 +194,9 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
   para_cache.clear();
   short_words_cache.clear();
 
+  Params<XComplex> nearer = box.nearer();
+  double area_LB = areaLB(nearer);
+
   string aux_word;
 	if (t.testIndex >= 0) {
     if (t.testIndex == 8) {
@@ -208,7 +211,10 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
       }            
     }
 
-    if (t.testIndex == 9) {
+    if (t.testIndex == 9 && area_LB >= 5.65) {
+      t.testIndex = 9;
+      t.testResult = killed_e2;
+      return true; // TODO SPEEEED HACK!!!
       for (int i = 9; i < g_e2_tests.size(); ++i) {
         auto it = box.e2_todo.begin();
         while(it != box.e2_todo.end()) {
@@ -230,6 +236,7 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 
     box_state result = g_tests.evaluateBox(t.testIndex, box, aux_word, new_qrs, para_cache, short_words_cache);
 
+	  // fprintf(stderr, "box %s test %d and result %d\n", box.name.c_str(), t.testIndex, result);
     if (result != open && result != open_with_qr) {
       t.aux_word.assign(aux_word);
       t.testResult = result;
@@ -260,8 +267,12 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
   }
 
 	if (g_options.improveTree || !t.lChild) {
+	  // fprintf(stderr, "Fixing box %s\n", box.name.c_str());
 		for (int i = 0; i < g_tests.size(); ++i) {
-			vector<box_state>& th = history[i];
+      // if (i % 200 == 7) {
+      //  fprintf(stderr, "  test %d of %d: %s\n", i, g_tests.size(), g_tests.getName(i));
+      // }
+      vector<box_state>& th = history[i];
 			while (th.size() <= depth && (th.size() < depth-6 || th.empty() || th.back() == open)) {
 				box_state result = g_tests.evaluateCenter(i, place[th.size()]);
 				th.push_back(result);
@@ -299,36 +310,41 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
     }
     // e2 elimination
 
-  if (depth % 6 == 0 && box.name.length() > 90) {
-      for (int i = 9; i < g_e2_tests.size(); ++i) {
-        auto it = box.e2_todo.begin();
-        while(it != box.e2_todo.end()) {
+    if (depth % 6 == 0 && box.name.length() > 30 && area_LB >= 5.65) {
+      auto it = box.e2_todo.begin();
+      while(it != box.e2_todo.end()) {
+        bool disk_killed = false;
+	      //fprintf(stderr, "box %s disk %s\n", box.name.c_str(), it->desc().c_str());
+        for (int i = 9; i < g_e2_tests.size(); ++i) {
           if (g_e2_tests.kills_disk_center(i, *it, box)) {
             if (g_e2_tests.kills_disk(i, *it, box, para_cache, short_words_cache)) {
               // box.e2_killers.insert(i);
+              disk_killed = true;
               it = box.e2_todo.erase(it); // returns new iterator
-              continue;
+              break;
             } 
           }
-          ++it;
         }
-        if (box.e2_todo.empty()) {
-          t.testIndex = 9;
-          t.testResult = killed_e2;
-          // for (auto it = box.e2_killers.begin(); it != box.e2_killers.end(); ++it) {
-          //   t.e2_killers += g_e2_tests.getName(*it);
-          //   t.e2_killers += ",";
-          // }
-          // t.e2_killers.pop_back(); // should never crash 
-          // fprintf(stderr, "Killed with e2 bounds! With killers %s\n", t.e2_killers.c_str());
-          return true;
+        if (!disk_killed) {
+          break; // we couldn't kill this disk, do try later 
         }
+      }
+      if (box.e2_todo.empty()) {
+        t.testIndex = 9;
+        t.testResult = killed_e2;
+        // for (auto it = box.e2_killers.begin(); it != box.e2_killers.end(); ++it) {
+        //   t.e2_killers += g_e2_tests.getName(*it);
+        //   t.e2_killers += ",";
+        // }
+        // t.e2_killers.pop_back(); // should never crash 
+        // fprintf(stderr, "Killed with e2 bounds! With killers %s\n", t.e2_killers.c_str());
+        return true;
       }
     }
   }
 
   // if (g_e2_tests.size() < 6666 && (depth > 6 ||  box.name.length() > 6)) {
-  if (box.name.length() > 60 && box.name.length() % 24 == 0) {
+  if (box.name.length() > 120 && box.name.length() % 24 == 0) {
     set<string> e2_words = find_words(box.center(), 1, 16, box.qr.words(), true, g_e2_tests.stringIndex);
     for (auto e2_it = e2_words.begin(); e2_it != e2_words.end(); ++e2_it) {
       fprintf(stderr, "new e2 found: %s\n", e2_it->c_str());
@@ -393,10 +409,8 @@ bool refineRecursive(Box box, PartialTree& t, int depth, TestHistory& history, v
 //    fprintf(stderr,"Deph %d, max depth %d, boxes_visited %d, max size %d, newDepth %d, invent depth %d\n", depth,
 //                   g_options.maxDepth, g_boxesVisited, g_options.maxSize, newDepth, g_options.inventDepth);
       Params<XComplex> params = box.center();
-      Params<XComplex> nearer = box.nearer();
-      double area = areaLB(nearer);
       fprintf(stderr, "HOLE %s has min area: %f center lat: %f + I %f lox: %f + I %f par: %f + I %f (%s)\n",
-                      box.name.c_str(), area, params.lattice.re, params.lattice.im, params.loxodromic_sqrt.re,
+                      box.name.c_str(), area_LB, params.lattice.re, params.lattice.im, params.loxodromic_sqrt.re,
                       params.loxodromic_sqrt.im, params.parabolic.re,params.parabolic.im, box.qr.desc().c_str());
       return false;
 		}
@@ -644,10 +658,10 @@ int main(int argc, char** argv)
 	g_tests.loadImpossibleRelations(g_options.powersFile);
 	g_e2_tests.load(g_options.e2WordsFile);
 	
-	// fprintf(stderr, "Loaded %d tests and %d e2 tests\n", g_tests.size(), g_e2_tests.size());
-
 	PartialTree t = readTree();
-	refineTree(box, t);
+	fprintf(stderr, "Loaded tree and %d tests + %d e2 tests\n", g_tests.size(), g_e2_tests.size());
+	fprintf(stderr, box.desc().c_str());
+  refineTree(box, t);
 	printTree(t);
 	fprintf(stderr, "%d nodes added\n", g_boxesVisited);
 }
